@@ -1,0 +1,57 @@
+# Costruisce e pubblica il Cruscotto Economia Italia ogni volta che arrivano letture nuove
+# (dal PC dell'utente o dall'estensione degli aiutanti) e ogni sera per il DEF aggiornato.
+# Copia di riferimento nel vault: 07 Allegati/Diplomacia/Strumenti/sito/cruscotto.yml
+name: Costruisci cruscotto
+
+on:
+  push:
+    branches: [main]
+    paths: ["dati/**", "strumenti/**", ".github/workflows/**"]
+  schedule:
+    - cron: "50 19 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: cruscotto
+  cancel-in-progress: false
+
+jobs:
+  costruisci:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.pubblica.outputs.page_url }}
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install openpyxl==3.1.5
+      - name: Controlla le letture
+        run: python strumenti/controlla_letture.py dati
+      - name: Scarica il DEF
+        run: curl -fsSL --retry 3 -o DEF.xlsx "https://docs.google.com/spreadsheets/d/1lb9EH-AeHW-JN09ElLPROnmwmVZTaxRqHpGKGVVaagc/export?format=xlsx"
+      - name: Costruisci il cruscotto
+        run: |
+          mkdir -p build sito
+          cp dati/cruscotto/* build/
+          mv build/pagina.html build/index.html
+          python strumenti/costruisci_cruscotto.py DEF.xlsx dati/statistiche build
+          python strumenti/verifica_cruscotto.py build || echo "::warning::verifica_cruscotto.py ha trovato errori nei conti"
+          python strumenti/cruscotto_offline.py build sito/index.html
+          sed -i 's#<meta charset="utf-8">#<meta charset="utf-8"><meta name="robots" content="noindex, nofollow">#' sito/index.html
+          printf 'User-agent: *\nDisallow: /\n' > sito/robots.txt
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: sito
+      - id: pubblica
+        uses: actions/deploy-pages@v4
