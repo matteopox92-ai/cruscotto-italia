@@ -1,12 +1,13 @@
 {
- "data": "2026-10-21 ora 17:23",
+ "data": "2026-10-21 ora 16:31",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 223,
+   "slug": "Venedik",
+   "gioc": 225,
    "fab": 71,
-   "gov": "ANNFIGMA",
+   "gov": "Laisius Mathias",
    "ind": [
     3,
     8,
@@ -53,14 +54,14 @@
     "4804.8",
     "14997",
     "17226"
-   ],
-   "slug": "Venedik"
+   ]
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 238,
+   "slug": "Lombardiya",
+   "gioc": 241,
    "fab": 116,
-   "gov": "Gatto Randagio",
+   "gov": "A",
    "ind": [
     9,
     2,
@@ -107,14 +108,14 @@
     "6771.6",
     "12780",
     "16353"
-   ],
-   "slug": "Lombardiya"
+   ]
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 27,
+   "slug": "Marsilya",
+   "gioc": 28,
    "fab": 21,
-   "gov": "Solovej",
+   "gov": "BULL 1515",
    "ind": [
     8,
     2,
@@ -161,14 +162,14 @@
     "5121.6",
     "12285",
     "14970"
-   ],
-   "slug": "Marsilya"
+   ]
   },
   {
    "p": "NAPOLI",
-   "gioc": 222,
-   "fab": 77,
-   "gov": "Caesar Santae Urbis Roma",
+   "slug": "Napoli",
+   "gioc": 223,
+   "fab": 78,
+   "gov": "Pilerio de Longobardi",
    "ind": [
     9,
     6,
@@ -215,12 +216,12 @@
     "5293.2",
     "11676",
     "14469"
-   ],
-   "slug": "Napoli"
+   ]
   },
   {
    "p": "ROMA",
-   "gioc": 226,
+   "slug": "Roma",
+   "gioc": 225,
    "fab": 113,
    "gov": "Modigliani",
    "ind": [
@@ -269,12 +270,12 @@
     "5253.6",
     "10989",
     "13752"
-   ],
-   "slug": "Roma"
+   ]
   },
   {
    "p": "FIRENZE",
-   "gioc": 182,
+   "slug": "Floransa",
+   "gioc": 183,
    "fab": 67,
    "gov": "Antonio Pol",
    "ind": [
@@ -310,7 +311,7 @@
    "st": {
     "n": 443,
     "indice": 6,
-    "prossimo": "+210 edifici → Indice 7 (diamante +21% · risorsa +14%)"
+    "prossimo": "+212 edifici → Indice 7 (diamante +21% · risorsa +14%)"
    },
    "os": {
     "n": 271,
@@ -323,12 +324,12 @@
     "3841.2",
     "7875",
     "9681"
-   ],
-   "slug": "Floransa"
+   ]
   },
   {
    "p": "PALERMO",
-   "gioc": 155,
+   "slug": "Palermo",
+   "gioc": 156,
    "fab": 89,
    "gov": "FangYuan",
    "ind": [
@@ -338,7 +339,7 @@
     8
    ],
    "tes": [
-    "7.782.500",
+    "7.782.503",
     "12026",
     "20599",
     "13026",
@@ -377,9 +378,8 @@
     "4118.4",
     "7020",
     "9024"
-   ],
-   "slug": "Palermo"
+   ]
   }
  ],
- "letto_il": "2026-10-21T15:23:56Z"
+ "letto_il": "2026-10-21T16:31:44Z"
 }
