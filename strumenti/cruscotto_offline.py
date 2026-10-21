@@ -11,22 +11,17 @@ from pathlib import Path
 DATASET = ["oggi", "storico", "prezzi", "classifiche", "costi", "piano", "obiettivi", "diario", "donazioni", "donazioni_totali", "governi"]
 
 STILE = """
-:root { color-scheme: light;
-  --color-bg: #f6f7f9; --color-panel: #ffffff; --color-fg: #1b2330; --color-fg-muted: #5d6878; --color-border-line: #dde2e9;
-  --color-ok: #1e7b4a; --color-warn: #a86a00; --color-bad: #c0352b;
-  --cds-chart-grid: #e7ebf0; --cds-chart-axis: #b8c1cc; --cds-chart-reference: #8a95a3; --cds-chart-status-critical: #d2483d;
-  --cds-surface-popover: #ffffff; --cds-border: #d3d9e1; --cds-shadow-popover: 0 4px 16px rgba(20,30,45,.14);
+:root { color-scheme: dark; /* sempre scuro: preferenza dell'utente (22/10/2026) */
+  --color-bg: #12161c; --color-panel: #1a2029; --color-fg: #e6eaf0; --color-fg-muted: #9aa5b3; --color-border-line: #2c3440;
+  --color-ok: #5cc98e; --color-warn: #e0a83a; --color-bad: #f07167;
+  --cds-chart-grid: #262e39; --cds-chart-axis: #4a5462; --cds-chart-reference: #7c8796; --cds-chart-status-critical: #f07167;
+  --cds-surface-popover: #222a35; --cds-border: #3a4350; --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.4);
   --font-anthropic-sans: "Segoe UI", Arial, sans-serif; --font-anthropic-serif: Georgia, "Times New Roman", serif;
   --cds-font-size-caption: 12px; --cds-font-size-body: 14px; --cds-font-size-heading: 16px; --cds-font-size-title: 26px;
   --cds-font-weight-medium: 600; --cds-radius: 8px;
   --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 12px; --cds-gap-lg: 20px; --cds-gap-xl: 28px;
   --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 16px; --cds-pad-xl: 24px;
   --cds-dur-slow: .3s; --cds-ease-out: ease-out; }
-@media (prefers-color-scheme: dark) { :root { color-scheme: dark;
-  --color-bg: #12161c; --color-panel: #1a2029; --color-fg: #e6eaf0; --color-fg-muted: #9aa5b3; --color-border-line: #2c3440;
-  --color-ok: #5cc98e; --color-warn: #e0a83a; --color-bad: #f07167;
-  --cds-chart-grid: #262e39; --cds-chart-axis: #4a5462; --cds-chart-reference: #7c8796; --cds-chart-status-critical: #f07167;
-  --cds-surface-popover: #222a35; --cds-border: #3a4350; --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.4); } }
 html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: 14px; }
 #dash-root { max-width: 1280px; margin: 0 auto; padding: 20px max(16px, 3vw) 40px; }
 .offline-nota { font-size: 12px; color: var(--color-fg-muted); margin: 0 0 12px; }
