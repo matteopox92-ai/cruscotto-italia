@@ -1,12 +1,12 @@
 {
- "data": "2026-10-21 mattina",
+ "data": "2026-10-21 ora 16:22",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
-   "p": "VENEZIA",
    "slug": "Venedik",
-   "gioc": 228,
-   "fab": 74,
+   "p": "VENEZIA",
+   "gioc": 229,
+   "fab": 71,
    "gov": "ANNFIGMA",
    "ind": [
     3,
@@ -36,12 +36,12 @@
    "ba": {
     "n": 136,
     "indice": 8,
-    "prossimo": "+39 edifici → Indice 9 (+18%)"
+    "prossimo": "+41 edifici → Indice 9 (+18%)"
    },
    "st": {
     "n": 852,
     "indice": 8,
-    "prossimo": "+58 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+78 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 349,
@@ -57,10 +57,10 @@
    ]
   },
   {
-   "p": "LOMBARDIA",
    "slug": "Lombardiya",
-   "gioc": 226,
-   "fab": 106,
+   "p": "LOMBARDIA",
+   "gioc": 231,
+   "fab": 115,
    "gov": "Gatto Randagio",
    "ind": [
     9,
@@ -90,12 +90,12 @@
    "ba": {
     "n": 35,
     "indice": 2,
-    "prossimo": "+4 edifici → Indice 3 (+6%)"
+    "prossimo": "+6 edifici → Indice 3 (+6%)"
    },
    "st": {
     "n": 769,
     "indice": 8,
-    "prossimo": "+141 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+161 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 348,
@@ -111,9 +111,9 @@
    ]
   },
   {
-   "p": "MARSIGLIA",
    "slug": "Marsilya",
-   "gioc": 29,
+   "p": "MARSIGLIA",
+   "gioc": 27,
    "fab": 21,
    "gov": "Solovej",
    "ind": [
@@ -144,12 +144,12 @@
    "ba": {
     "n": 29,
     "indice": 2,
-    "prossimo": "+10 edifici → Indice 3 (+6%)"
+    "prossimo": "+12 edifici → Indice 3 (+6%)"
    },
    "st": {
     "n": 793,
     "indice": 8,
-    "prossimo": "+117 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+137 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 269,
@@ -165,9 +165,9 @@
    ]
   },
   {
-   "p": "NAPOLI",
    "slug": "Napoli",
-   "gioc": 221,
+   "p": "NAPOLI",
+   "gioc": 222,
    "fab": 77,
    "gov": "Caesar Santae Urbis Roma",
    "ind": [
@@ -198,7 +198,7 @@
    "ba": {
     "n": 94,
     "indice": 6,
-    "prossimo": "+12 edifici → Indice 7 (+14%)"
+    "prossimo": "+13 edifici → Indice 7 (+14%)"
    },
    "st": {
     "n": 675,
@@ -219,10 +219,10 @@
    ]
   },
   {
-   "p": "ROMA",
    "slug": "Roma",
+   "p": "ROMA",
    "gioc": 226,
-   "fab": 111,
+   "fab": 112,
    "gov": "Modigliani",
    "ind": [
     9,
@@ -273,10 +273,10 @@
    ]
   },
   {
-   "p": "FIRENZE",
    "slug": "Floransa",
-   "gioc": 168,
-   "fab": 63,
+   "p": "FIRENZE",
+   "gioc": 181,
+   "fab": 66,
    "gov": "Antonio Pol",
    "ind": [
     3,
@@ -285,11 +285,11 @@
     8
    ],
    "tes": [
-    "8.870.300",
-    "732808",
+    "8.370.300",
+    "730308",
     "9471",
-    "26525",
-    "152525"
+    "24525",
+    "150525"
    ],
    "bon": [
     "13",
@@ -306,12 +306,12 @@
    "ba": {
     "n": 10,
     "indice": 1,
-    "prossimo": "+11 edifici → Indice 2 (+4%)"
+    "prossimo": "+14 edifici → Indice 2 (+4%)"
    },
    "st": {
-    "n": 438,
+    "n": 443,
     "indice": 6,
-    "prossimo": "+215 edifici → Indice 7 (diamante +21% · risorsa +14%)"
+    "prossimo": "+210 edifici → Indice 7 (diamante +21% · risorsa +14%)"
    },
    "os": {
     "n": 271,
@@ -319,18 +319,18 @@
     "prossimo": "+70 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
-    "2.304.300",
-    "6900",
+    "2.319.300",
+    "6975",
     "3841.2",
-    "7815",
-    "9621"
+    "7875",
+    "9681"
    ]
   },
   {
-   "p": "PALERMO",
    "slug": "Palermo",
-   "gioc": 150,
-   "fab": 87,
+   "p": "PALERMO",
+   "gioc": 153,
+   "fab": 89,
    "gov": "FangYuan",
    "ind": [
     5,
@@ -360,12 +360,12 @@
    "ba": {
     "n": 33,
     "indice": 2,
-    "prossimo": "+6 edifici → Indice 3 (+6%)"
+    "prossimo": "+8 edifici → Indice 3 (+6%)"
    },
    "st": {
     "n": 351,
     "indice": 5,
-    "prossimo": "+88 edifici → Indice 6 (diamante +18% · risorsa +12%)"
+    "prossimo": "+93 edifici → Indice 6 (diamante +18% · risorsa +12%)"
    },
    "os": {
     "n": 268,
@@ -381,5 +381,5 @@
    ]
   }
  ],
- "letto_il": "2026-10-21T08:45:23Z"
+ "letto_il": "2026-10-21T14:23:27Z"
 }
