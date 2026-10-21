@@ -1,11 +1,10 @@
 {
- "data": "2026-10-21 ora 16:22",
+ "data": "2026-10-21 ora 17:23",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
-   "slug": "Venedik",
    "p": "VENEZIA",
-   "gioc": 229,
+   "gioc": 223,
    "fab": 71,
    "gov": "ANNFIGMA",
    "ind": [
@@ -54,13 +53,13 @@
     "4804.8",
     "14997",
     "17226"
-   ]
+   ],
+   "slug": "Venedik"
   },
   {
-   "slug": "Lombardiya",
    "p": "LOMBARDIA",
-   "gioc": 231,
-   "fab": 115,
+   "gioc": 238,
+   "fab": 116,
    "gov": "Gatto Randagio",
    "ind": [
     9,
@@ -108,10 +107,10 @@
     "6771.6",
     "12780",
     "16353"
-   ]
+   ],
+   "slug": "Lombardiya"
   },
   {
-   "slug": "Marsilya",
    "p": "MARSIGLIA",
    "gioc": 27,
    "fab": 21,
@@ -162,10 +161,10 @@
     "5121.6",
     "12285",
     "14970"
-   ]
+   ],
+   "slug": "Marsilya"
   },
   {
-   "slug": "Napoli",
    "p": "NAPOLI",
    "gioc": 222,
    "fab": 77,
@@ -216,13 +215,13 @@
     "5293.2",
     "11676",
     "14469"
-   ]
+   ],
+   "slug": "Napoli"
   },
   {
-   "slug": "Roma",
    "p": "ROMA",
    "gioc": 226,
-   "fab": 112,
+   "fab": 113,
    "gov": "Modigliani",
    "ind": [
     9,
@@ -270,13 +269,13 @@
     "5253.6",
     "10989",
     "13752"
-   ]
+   ],
+   "slug": "Roma"
   },
   {
-   "slug": "Floransa",
    "p": "FIRENZE",
-   "gioc": 181,
-   "fab": 66,
+   "gioc": 182,
+   "fab": 67,
    "gov": "Antonio Pol",
    "ind": [
     3,
@@ -324,12 +323,12 @@
     "3841.2",
     "7875",
     "9681"
-   ]
+   ],
+   "slug": "Floransa"
   },
   {
-   "slug": "Palermo",
    "p": "PALERMO",
-   "gioc": 153,
+   "gioc": 155,
    "fab": 89,
    "gov": "FangYuan",
    "ind": [
@@ -378,8 +377,9 @@
     "4118.4",
     "7020",
     "9024"
-   ]
+   ],
+   "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-21T14:23:27Z"
+ "letto_il": "2026-10-21T15:23:56Z"
 }

@@ -64,6 +64,10 @@ def main(cart):
                 continue
             pos_alta = 1 + sum(1 for x in v if x > n)  # posizione migliore a parità
             pos_bassa = sum(1 for x in v if x >= n)   # posizione peggiore a parità
+            if pos_bassa < pos_alta:
+                # numero di edifici cambiato dopo la lettura della classifica (che si rilegge una volta al giorno):
+                # la provincia è ancora nella classifica con il valore vecchio, sopra o sotto
+                pos_bassa, pos_alta = pos_alta, max(1, pos_alta - 1)
             ammessi = {indice_da_posizione(p, b) for p in range(pos_alta, pos_bassa + 1)}
             k = r[campo[e]]
             controlla(k in ammessi or (k == 10 and 11 in ammessi),
