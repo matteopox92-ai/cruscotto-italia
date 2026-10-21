@@ -1,5 +1,5 @@
 {
- "data": "2026-10-22 ora 00:24",
+ "data": "2026-10-22 ora 00:27",
  "nota": "Gettito fiscale delle 7 province (Vedi Gettito Fiscale) e costo di frontiera dalla pagina Paese; giorni dal più vecchio a oggi; valori letti con leggi_gettito.js",
  "confini_per_provincia": 1210000,
  "confini_addebiti": {
@@ -14,7 +14,7 @@
  "province": {
   "Venezia": {
    "tot7": {
-    "denaro": 44726265,
+    "denaro": 44678133,
     "pelle": 201,
     "oro": 28374,
     "petrolio": 1244,
@@ -27,13 +27,13 @@
     8000000,
     8100000,
     8300000,
-    577700
+    529600
    ],
-   "tassazioniOggi": 271
+   "tassazioniOggi": 249
   },
   "Lombardia": {
    "tot7": {
-    "denaro": 22920290,
+    "denaro": 22929731,
     "pelle": 51470,
     "oro": 64,
     "petrolio": 0,
@@ -46,13 +46,13 @@
     3400000,
     3100000,
     2700000,
-    279000
+    288500
    ],
-   "tassazioniOggi": 188
+   "tassazioniOggi": 194
   },
   "Marsiglia": {
    "tot7": {
-    "denaro": 23727672,
+    "denaro": 23729368,
     "pelle": 0,
     "oro": 0,
     "petrolio": 96441,
@@ -65,9 +65,9 @@
     4200000,
     7400000,
     3700000,
-    189500
+    191200
    ],
-   "tassazioniOggi": 110
+   "tassazioniOggi": 111
   },
   "Napoli": {
    "tot7": {
@@ -111,7 +111,7 @@
    "tot7": {
     "denaro": 5867908,
     "pelle": 0,
-    "oro": 122660,
+    "oro": 122760,
     "petrolio": 0,
     "nte": 0
    },
@@ -124,11 +124,11 @@
     601600,
     41800
    ],
-   "tassazioniOggi": 101
+   "tassazioniOggi": 104
   },
   "Palermo": {
    "tot7": {
-    "denaro": 3667214,
+    "denaro": 3668429,
     "pelle": 209,
     "oro": 60,
     "petrolio": 0,
@@ -141,10 +141,10 @@
     366100,
     861800,
     662300,
-    47100
+    48300
    ],
-   "tassazioniOggi": 51
+   "tassazioniOggi": 52
   }
  },
- "letto_il": "2026-10-21T22:24:39Z"
+ "letto_il": "2026-10-21T22:27:43Z"
 }

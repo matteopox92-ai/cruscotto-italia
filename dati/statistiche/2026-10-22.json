@@ -1,10 +1,10 @@
 {
- "data": "2026-10-22 ora 00:24",
+ "data": "2026-10-22 ora 00:27",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 232,
+   "gioc": 233,
    "fab": 75,
    "gov": "Laisius Mathias",
    "ind": [
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-21T22:24:39Z"
+ "letto_il": "2026-10-21T22:27:43Z"
 }
