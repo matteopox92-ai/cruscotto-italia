@@ -44,6 +44,7 @@
 .ei-tile .big.ei-ris { font-size: var(--cds-font-size-heading); line-height: 1.4; }
 #piano-calendario td:nth-child(3), #piano-calendario td:nth-child(4) { white-space: normal; text-align: left; min-width: 14rem; }
 #piano-controlli td:nth-child(3) { white-space: normal; }
+#tabella-province td:nth-child(3) { white-space: normal; text-align: left; min-width: 12rem; font-weight: var(--cds-font-weight-medium); }
 [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
 [data-dash-source-state=empty] { color: transparent; }
 </style>
@@ -168,6 +169,7 @@
           <thead><tr>
             <th data-field="provincia">Provincia</th>
             <th data-field="stato">Stato</th>
+            <th data-field="manca_denaro">Da mandare per stanotte</th>
             <th data-field="giocatori">Giocatori</th>
             <th data-field="fabbriche">Fabbriche</th>
             <th data-field="gettito_medio">Gettito/giorno</th>
@@ -179,7 +181,6 @@
             <th data-field="notti_oro">Notti oro</th>
             <th data-field="notti_petrolio">Notti petrolio</th>
             <th data-field="notti_nte">Notti NTE</th>
-            <th data-field="manca_denaro">Da mandare per stanotte</th>
             <th data-field="gettito_per_giocatore">Gettito/giocatore</th>
             <th data-field="costo_equiv_giorno">Costo equiv./giorno</th>
           </tr></thead>
@@ -656,11 +657,11 @@ const tabella = (sel, src, cols) => {
 const disegnaProvince = () => {
   tabella('#tabella-province', 'analisi', [
     ['provincia'], ['stato', (v) => v, (v) => v === 'critico' ? 'bad' : v === 'attenzione' ? 'warn' : 'ok'],
+    ['manca_denaro', (v, r) => F.testoManca(r), (v, r) => r.provincia === 'Napoli' ? '' : F.testoManca(r) === 'niente' ? 'ok' : 'bad'],
     ['giocatori', F.fmtN], ['fabbriche', F.fmtN], ['gettito_medio', F.fmtE], ['costi_giorno', F.fmtE],
     ['saldo_giorno', F.fmtE, (v) => v < 0 ? 'bad' : 'ok'], ['tesoro_eur', F.fmtE],
     ['notti_denaro', F.fmtNotti, F.classeNotti], ['notti_pelle', F.fmtNotti, F.classeNotti], ['notti_oro', F.fmtNotti, F.classeNotti],
     ['notti_petrolio', F.fmtNotti, F.classeNotti], ['notti_nte', F.fmtNotti, F.classeNotti],
-    ['manca_denaro', (v, r) => F.testoManca(r), (v, r) => r.provincia === 'Napoli' ? '' : F.testoManca(r) === 'niente' ? 'ok' : 'bad'],
     ['gettito_per_giocatore', F.fmtE], ['costo_equiv_giorno', F.fmtE],
   ]);
   tabella('#tabella-indici-attuali', 'oggi', [
