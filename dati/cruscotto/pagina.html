@@ -104,6 +104,17 @@
       <div class="ei-tile"><span class="lab">Saldo risorse a notte</span><span class="big ei-ris" data-source="obiettivi">—</span><span class="sub ei-ris-sub" data-source="obiettivi">—</span></div>
       <div class="ei-tile"><span class="lab">Prossima decisione</span><span class="big" data-source="piano_stato" data-field="prossima_decisione">—</span><span class="sub ei-esito" data-source="piano_stato">—</span></div>
     </div>
+    <div class="ei-card" id="napoli-invio">
+      <h2>Da inviare a Napoli oggi</h2>
+      <p class="note" id="ni-nota">—</p>
+      <div class="ei-scroll">
+        <table data-source="napoli_invio" data-row-key="riga">
+          <thead><tr><th data-field="riga"></th><th data-field="denaro">Soldi</th><th data-field="pelle">Pelle</th><th data-field="oro">Oro</th><th data-field="petrolio">Petrolio</th><th data-field="nte">NTE</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note" id="ni-avviso">—</p>
+    </div>
     <div class="ei-grid">
       <div class="ei-card" id="piano-controlli">
         <h2>Controlli di oggi</h2>
@@ -151,7 +162,7 @@
   <section id="province" class="ei-pane" hidden>
     <div class="ei-card" id="tabella-province">
       <h2>Le 7 province, oggi</h2>
-      <p class="note">Notti coperte = tesoro della provincia ÷ manutenzione di una notte, senza contare le donazioni dello Stato (il gettito non entra nel tesoro della provincia). «∞» = nessuna manutenzione di quel tipo. Saldo/giorno = quanto la provincia rende all'Italia.</p>
+      <p class="note">Notti coperte = tesoro della provincia ÷ manutenzione di una notte, senza contare le donazioni dello Stato (il gettito non entra nel tesoro della provincia). «∞» = nessuna manutenzione di quel tipo. «Da mandare per stanotte» = soldi e risorse che mancano nel tesoro per arrivare a 1 notte (mantenimento della notte − tesoro), da mandare prima delle 23:00; Napoli esclusa, perché nel piano non deve pagare. Saldo/giorno = quanto la provincia rende all'Italia.</p>
       <div class="ei-scroll">
         <table data-source="analisi" data-row-key="provincia">
           <thead><tr>
@@ -168,6 +179,7 @@
             <th data-field="notti_oro">Notti oro</th>
             <th data-field="notti_petrolio">Notti petrolio</th>
             <th data-field="notti_nte">Notti NTE</th>
+            <th data-field="manca_denaro">Da mandare per stanotte</th>
             <th data-field="gettito_per_giocatore">Gettito/giocatore</th>
             <th data-field="costo_equiv_giorno">Costo equiv./giorno</th>
           </tr></thead>
@@ -412,6 +424,11 @@ dash.calc('analisi', {
         costo_equiv_giorno: Math.round(costi + ['pelle', 'oro', 'petrolio', 'nte'].reduce((s, k) => s + r['manutenzione_' + k] * (p[k] || 0), 0)),
       };
       for (const k of ['pelle', 'oro', 'petrolio', 'nte']) out['notti_' + k] = notti(r['tesoro_' + k], r['manutenzione_' + k]);
+      // quanto manca per arrivare a 1 notte (pagare il mantenimento di stanotte); Napoli no: nel piano non deve pagare
+      for (const k of ['denaro', 'pelle', 'oro', 'petrolio', 'nte']) {
+        const tes = k === 'denaro' ? r.tesoro_eur : r['tesoro_' + k], man = k === 'denaro' ? r.manutenzione_eur : r['manutenzione_' + k];
+        out['manca_' + k] = r.provincia === 'Napoli' ? null : Math.max(0, Math.ceil((man || 0) - (tes || 0)));
+      }
       const minimo = Math.min(...['denaro', 'pelle', 'oro', 'petrolio', 'nte'].map((k) => out['notti_' + k] ?? Infinity));
       out.stato = minimo < 1 ? 'critico' : minimo < 3 ? 'attenzione' : 'ok';
       return out;
@@ -476,7 +493,8 @@ dash.calc('allarmi', {
       if (!corte.length) continue;
       const valore = r['notti_' + corte[0]];
       out.push({ chiave: r.provincia + '-notti', provincia: r.provincia, cosa: corte[0], valore, tipo: 'notti', gravita: valore < 1 ? 2 : 1,
-        dettaglio: corte.map((k) => k + ' ' + r['notti_' + k]) });
+        dettaglio: corte.map((k) => k + ' ' + r['notti_' + k]),
+        ...Object.fromEntries(['denaro', 'pelle', 'oro', 'petrolio', 'nte'].map((k) => ['manca_' + k, r['manca_' + k]])) });
     }
     for (const r of indici) if (r.notti_al_calo != null && r.notti_al_calo <= 1)
       out.push({ chiave: r.provincia + '-' + r.edificio, provincia: r.provincia, cosa: r.edificio, valore: r.margine, tipo: 'indice', gravita: 1 });
@@ -525,7 +543,16 @@ const nomeRis = { denaro: 'denaro', pelle: 'pelle', oro: 'oro', petrolio: 'petro
 const nomeEd = { scuole: 'scuole', basi: 'basi militari', strade: 'strade', ospedali: 'ospedali' };
 const indiceDi = { scuole: 'istruzione', basi: 'militare', strade: 'sviluppo', ospedali: 'salute' };
 const classeNotti = (x) => x == null ? 'ok' : x < 1 ? 'bad' : x < 3 ? 'warn' : 'ok';
-window.eiFmt = { fmtE, fmtN, fmtP, fmtNotti, classeNotti, nomeRis, nomeEd, indiceDi };
+// soldi e risorse che mancano per arrivare a 1 notte (campi manca_* dell'analisi)
+// cifre esatte, con il punto delle migliaia anche sotto 10.000: servono per fare l'invio
+const fmtEsatto = (x) => x == null ? '—' : Math.round(x).toLocaleString('it-IT', { useGrouping: 'always' });
+const testoManca = (r) => {
+  if (r.provincia === 'Napoli') return 'non deve pagare (piano)';
+  const parti = ['denaro', 'pelle', 'oro', 'petrolio', 'nte'].filter((k) => r['manca_' + k] > 0)
+    .map((k) => k === 'denaro' ? fmtEsatto(r.manca_denaro) + ' €' : fmtEsatto(r['manca_' + k]) + ' ' + nomeRis[k]);
+  return parti.length ? parti.join(' · ') : 'niente';
+};
+window.eiFmt = { fmtE, fmtN, fmtP, fmtNotti, classeNotti, nomeRis, nomeEd, indiceDi, testoManca, fmtEsatto };
 
 // schede
 const tabs = [...document.querySelectorAll('.ei-tabs button')];
@@ -587,7 +614,8 @@ const disegnaQuadro = () => {
       pill.textContent = r.gravita === 2 ? 'stanotte' : 'presto';
       const txt = document.createElement('span');
       txt.textContent = r.tipo === 'notti'
-        ? ` ${r.provincia}, notti coperte: ` + r.dettaglio.map((x) => { const [k, v] = x.split(' '); return `${nomeRis[k]} ${fmtNotti(+v)}`; }).join(' · ')
+        ? ` ${r.provincia}, notti coperte: ` + r.dettaglio.map((x) => { const [k, v] = x.split(' '); return `${nomeRis[k]} ${fmtNotti(+v)}`; }).join(' · ') +
+          (r.gravita === 2 ? (r.provincia === 'Napoli' ? ' (non deve pagare: piano)' : ` — da mandare per stanotte: ${testoManca(r)}`) : '')
         : ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} scende con una notte non pagata (margine ${fmtN(r.valore)} ${nomeEd[r.cosa]})`;
       li.append(pill, txt); ul.append(li);
     }
@@ -632,6 +660,7 @@ const disegnaProvince = () => {
     ['saldo_giorno', F.fmtE, (v) => v < 0 ? 'bad' : 'ok'], ['tesoro_eur', F.fmtE],
     ['notti_denaro', F.fmtNotti, F.classeNotti], ['notti_pelle', F.fmtNotti, F.classeNotti], ['notti_oro', F.fmtNotti, F.classeNotti],
     ['notti_petrolio', F.fmtNotti, F.classeNotti], ['notti_nte', F.fmtNotti, F.classeNotti],
+    ['manca_denaro', (v, r) => F.testoManca(r), (v, r) => r.provincia === 'Napoli' ? '' : F.testoManca(r) === 'niente' ? 'ok' : 'bad'],
     ['gettito_per_giocatore', F.fmtE], ['costo_equiv_giorno', F.fmtE],
   ]);
   tabella('#tabella-indici-attuali', 'oggi', [
@@ -714,6 +743,26 @@ dash.calc('piano_controlli', {
   },
 });
 
+dash.calc('napoli_invio', {
+  title: 'Da inviare a Napoli',
+  description: 'Strade e ospedali che mancano a Napoli per tornare agli obiettivi del piano (dall\'ultima lettura), il loro costo, quello che c\'è già nel tesoro di Napoli e la differenza da inviare.',
+  inputs: ['oggi', 'obiettivi', 'costi'],
+  fn: (oggi, obiettivi, costi) => {
+    const na = oggi.find((r) => r.provincia === 'Napoli'), o = obiettivi[0];
+    if (!na || !o) return [];
+    const strade = Math.max(0, o.napoli_strade_meta - na.strade), ospedali = Math.max(0, o.napoli_ospedali_meta - na.ospedali);
+    const c = (e) => costi.find((r) => r.edificio === e) || {};
+    const info = { strade, ospedali, strade_meta: o.napoli_strade_meta, ospedali_meta: o.napoli_ospedali_meta, data: na.data, tesoro_eur: na.tesoro_eur, manutenzione_eur: na.manutenzione_eur };
+    const costo = { riga: 'costo', ...info }, tesoro = { riga: 'tesoro', ...info }, invio = { riga: 'invio', ...info };
+    for (const k of ['denaro', 'pelle', 'oro', 'petrolio', 'nte']) {
+      costo[k] = strade * (c('strade')[k] || 0) + ospedali * (c('ospedali')[k] || 0);
+      tesoro[k] = (k === 'denaro' ? na.tesoro_eur : na['tesoro_' + k]) || 0;
+      invio[k] = Math.max(0, costo[k] - tesoro[k]);
+    }
+    return [costo, tesoro, invio];
+  },
+});
+
 dash.calc('piano_crescita', {
   title: 'Crescita di Palermo',
   description: 'Fabbriche, lavori del giorno e giocatori di Palermo contro partenza e soglie delle due decisioni.',
@@ -761,6 +810,20 @@ window.eiPiano = () => {
     const o = ob.data[0];
     document.querySelector('#piano .ei-ris').textContent = `${segno(o.saldo_notte_pelle)} pelle · ${segno(o.saldo_notte_oro)} oro · ${segno(o.saldo_notte_petrolio)} petrolio · ${segno(o.saldo_notte_nte)} NTE`;
     document.querySelector('#piano .ei-ris-sub').textContent = `valgono ${segno(o.valore_risorse_notte)}; con i soldi ${segno(o.saldo_totale_notte)} a notte. In pari: pelle giorno ${o.pareggio_pelle}, NTE ${o.pareggio_nte}, petrolio ${o.pareggio_petrolio}, oro ${o.pareggio_oro}`;
+  }
+  const ni = dash.data('napoli_invio');
+  if (ni.status === 'ok' && ni.data.length) {
+    const r0 = ni.data[0], nomi = { costo: `Costo: ${r0.strade} strade + ${r0.ospedali} ospedali`, tesoro: 'Già nel tesoro di Napoli', invio: 'Da inviare' };
+    const fmtR = (r, k) => P.fmtEsatto(r[k]) + (k === 'denaro' ? ' €' : '');
+    corpo('#napoli-invio', ni.data, (r) => [nomi[r.riga], ...['denaro', 'pelle', 'oro', 'petrolio', 'nte'].map((k) => fmtR(r, k))],
+      (r, i) => r.riga === 'invio' && i > 0 ? (r[['denaro', 'pelle', 'oro', 'petrolio', 'nte'][i - 1]] > 0 ? 'warn' : 'ok') : '');
+    document.querySelector('#ni-nota').textContent = r0.strade + r0.ospedali === 0
+      ? `Lettura del ${giornoIt(r0.data)}: strade e ospedali sono già agli obiettivi (${r0.strade_meta} e ${r0.ospedali_meta}), oggi non c'è niente da ricostruire.`
+      : `Lettura del ${giornoIt(r0.data)}: per tornare agli obiettivi del piano mancano ${r0.strade} strade e ${r0.ospedali} ospedali (di solito 21 e 9 dopo ogni notte). Da inviare = costo − quello che c'è già nel tesoro di Napoli.`;
+    const av = document.querySelector('#ni-avviso');
+    av.textContent = `Costruire prima delle 23:00 (mezzanotte del gioco): se a quell'ora nel tesoro di Napoli c'è almeno il mantenimento della notte (${P.fmtE(r0.manutenzione_eur)}), Napoli lo paga e il piano salta per quel giorno.` +
+      (r0.tesoro_eur >= r0.manutenzione_eur ? ` ATTENZIONE: adesso il tesoro (${P.fmtE(r0.tesoro_eur)}) basta già a pagarlo.` : '');
+    av.className = 'note ' + (r0.tesoro_eur >= r0.manutenzione_eur ? 'bad' : 'warn');
   }
   const c = dash.data('piano_controlli');
   if (c.status === 'ok') corpo('#piano-controlli', c.data, (r) => [r.controllo, r.valore, r.obiettivo, r.esito],
