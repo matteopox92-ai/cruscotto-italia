@@ -15,7 +15,7 @@
   "Venezia": {
    "tot7": {
     "denaro": 50202394,
-    "pelle": 328,
+    "pelle": 338,
     "oro": 30673,
     "petrolio": 1247,
     "nte": 26972
@@ -29,12 +29,12 @@
     8100000,
     8300000
    ],
-   "tassazioniOggi": 3895
+   "tassazioniOggi": 3896
   },
   "Lombardia": {
    "tot7": {
-    "denaro": 26451570,
-    "pelle": 50299,
+    "denaro": 26522489,
+    "pelle": 50395,
     "oro": 64,
     "petrolio": 0,
     "nte": 34565
@@ -46,16 +46,16 @@
     3900000,
     3400000,
     3100000,
-    2100000
+    2200000
    ],
-   "tassazioniOggi": 2035
+   "tassazioniOggi": 2082
   },
   "Marsiglia": {
    "tot7": {
-    "denaro": 24953511,
+    "denaro": 24989514,
     "pelle": 0,
     "oro": 0,
-    "petrolio": 120055,
+    "petrolio": 120115,
     "nte": 0
    },
    "giorni": [
@@ -65,13 +65,13 @@
     3200000,
     4200000,
     7400000,
-    3300000
+    3400000
    ],
-   "tassazioniOggi": 1935
+   "tassazioniOggi": 1958
   },
   "Napoli": {
    "tot7": {
-    "denaro": 4079215,
+    "denaro": 4088420,
     "pelle": 7759,
     "oro": 77,
     "petrolio": 68,
@@ -84,16 +84,16 @@
     511600,
     437700,
     514400,
-    330700
+    339900
    ],
-   "tassazioniOggi": 447
+   "tassazioniOggi": 460
   },
   "Roma": {
    "tot7": {
-    "denaro": 17319918,
+    "denaro": 17357420,
     "pelle": 10796,
     "oro": 3058,
-    "petrolio": 6646,
+    "petrolio": 6652,
     "nte": 58
    },
    "giorni": [
@@ -103,15 +103,15 @@
     2400000,
     3000000,
     2700000,
-    2300000
+    2400000
    ],
-   "tassazioniOggi": 1464
+   "tassazioniOggi": 1488
   },
   "Firenze": {
    "tot7": {
-    "denaro": 6621917,
+    "denaro": 6632556,
     "pelle": 0,
-    "oro": 137034,
+    "oro": 137558,
     "petrolio": 0,
     "nte": 0
    },
@@ -122,17 +122,17 @@
     1200000,
     979900,
     1000000,
-    516500
+    527100
    ],
-   "tassazioniOggi": 1708
+   "tassazioniOggi": 1736
   },
   "Palermo": {
    "tot7": {
-    "denaro": 4123252,
+    "denaro": 4131332,
     "pelle": 285,
     "oro": 72,
     "petrolio": 0,
-    "nte": 16916
+    "nte": 17102
    },
    "giorni": [
     598600,
@@ -141,10 +141,10 @@
     514900,
     366100,
     861800,
-    566900
+    575000
    ],
-   "tassazioniOggi": 700
+   "tassazioniOggi": 710
   }
  },
- "letto_il": "2026-10-21T18:18:58Z"
+ "letto_il": "2026-10-21T18:37:16Z"
 }

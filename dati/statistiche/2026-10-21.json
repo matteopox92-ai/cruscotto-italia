@@ -5,7 +5,7 @@
   {
    "p": "VENEZIA",
    "gioc": 222,
-   "fab": 71,
+   "fab": 72,
    "gov": "Laisius Mathias",
    "ind": [
     3,
@@ -58,7 +58,7 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 248,
+   "gioc": 249,
    "fab": 117,
    "gov": "A",
    "ind": [
@@ -251,7 +251,7 @@
    "ba": {
     "n": 52,
     "indice": 3,
-    "prossimo": "+5 edifici → Indice 4 (+8%)"
+    "prossimo": "+7 edifici → Indice 4 (+8%)"
    },
    "st": {
     "n": 659,
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-21T18:18:36Z"
+ "letto_il": "2026-10-21T18:37:16Z"
 }
