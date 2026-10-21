@@ -76,14 +76,20 @@ def main(cart):
     print("== Piano: costi, risparmi, saldi")
     m_ped = {k: c["ospedali"][k] * 0.03 for k in ["denaro"] + ris}
     na = next(r for r in oggi if r["provincia"] == "Napoli")
-    risp = {"denaro": na["manutenzione_eur"], **{k: na["manutenzione_" + k] for k in ris}}
-    ricos = {k: ob["napoli_ospedali_giorno"] * c["ospedali"][k] + ob["napoli_strade_giorno"] * c["strade"][k] for k in ["denaro"] + ris}
-    n_osp = ob["palermo_ospedali_meta"] - next(r for r in oggi if r["provincia"] == "Palermo")["ospedali"]
-    giorno1 = {k: 3 * c["strade"][k] + 3 * c["ospedali"][k] + n_osp * c["ospedali"][k] for k in ["denaro"] + ris}
+    # risparmio fissato nel piano (dal 22/10/2026); prima era la manutenzione di Napoli dell'ultima lettura
+    risp = {"denaro": ob.get("risparmio_notte", na["manutenzione_eur"]), **{k: ob.get("risparmio_notte_" + k, na["manutenzione_" + k]) for k in ris}}
+    n_osp = ob.get("palermo_ospedali_nuovi", ob["palermo_ospedali_meta"] - next(r for r in oggi if r["provincia"] == "Palermo")["ospedali"])
+
+    def spesa_giorno(g, k):
+        # edifici ricostruiti a Napoli quel giorno (dal 22/10/2026 scritti in ogni riga del piano)
+        st = g.get("napoli_strade", 3 if g["giorno"] == 1 else ob["napoli_strade_giorno"])
+        osp = g.get("napoli_ospedali", 3 if g["giorno"] == 1 else ob["napoli_ospedali_giorno"])
+        return st * c["strade"][k] + osp * c["ospedali"][k] + (n_osp * c["ospedali"][k] if g["giorno"] == 1 else 0) + n_osp * m_ped[k]
+
     acc = defaultdict(float)
     for g in piano:
         for k in ["denaro"] + ris:
-            spesa = (giorno1[k] if g["giorno"] == 1 else ricos[k]) + n_osp * m_ped[k]
+            spesa = spesa_giorno(g, k)
             saldo = risp[k] - spesa
             acc[k] += saldo
             nome_s, nome_a = ("saldo", "accumulato") if k == "denaro" else ("saldo_" + k, "accumulato_" + k)
@@ -91,12 +97,21 @@ def main(cart):
                 controlla(abs(g["speso"] - spesa) < 1, f"giorno {g['giorno']} speso {g['speso']:,.0f} = {spesa:,.0f}")
             controlla(abs(g[nome_s] - saldo) < 1 and abs(g[nome_a] - acc[k]) < 1,
                       f"giorno {g['giorno']} {k}: saldo {g[nome_s]:,.0f} accumulato {g[nome_a]:,.0f}")
-    pareggio = next(g["giorno"] for g in piano if g["accumulato"] >= 0)
+    a, pareggio = 0.0, "mai"  # oltre le due settimane si ripete il saldo dell'ultimo giorno
+    for n in range(1, 400):
+        a += piano[min(n, len(piano)) - 1]["saldo"]
+        if a >= 0:
+            pareggio = n
+            break
     controlla(pareggio == ob["giorno_pareggio"], f"pareggio in soldi al giorno {pareggio} (obiettivi: {ob['giorno_pareggio']})")
     for k in ris:
-        s1 = piano[0]["saldo_" + k]
-        sn = piano[1]["saldo_" + k]
-        g = 1 if s1 >= 0 else 1 + math.ceil(-s1 / sn)
+        # dopo le due settimane si ripete il saldo dell'ultimo giorno; «mai» se il saldo a regime è negativo
+        a, g = 0.0, "mai"
+        for n in range(1, 400):
+            a += piano[min(n, len(piano)) - 1]["saldo_" + k]
+            if a >= 0:
+                g = n
+                break
         controlla(g == ob["pareggio_" + k], f"pareggio {k} al giorno {g} (obiettivi: {ob['pareggio_' + k]})")
     p = ob.get("prezzi_piano") or prezzi[-1]  # i prezzi con cui è stato calcolato il piano
     val = sum(ob["saldo_notte_" + k] * p[k] for k in ris)
