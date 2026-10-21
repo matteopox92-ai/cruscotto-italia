@@ -1,0 +1,151 @@
+{
+ "data": "2026-10-21 mattina",
+ "nota": "Gettito fiscale dal gioco (Vedi Gettito Fiscale). Giorni da GIO 15/10 a MER 21/10 (oggi, parziale). Sopra il milione il gioco arrotonda a 0,1 milioni.",
+ "confini_per_provincia": 1170000,
+ "confini_addebiti": {
+  "2026-10-14": 7140000,
+  "2026-10-15": 6580000,
+  "2026-10-16": 6020000,
+  "2026-10-17": 5950000,
+  "2026-10-18": 8610000,
+  "2026-10-19": 9800000,
+  "2026-10-20": 8960000
+ },
+ "stato_giorni_coperti_confini": 97,
+ "province": {
+  "Venezia": {
+   "tot7": {
+    "denaro": 47641308,
+    "pelle": 271,
+    "oro": 30656,
+    "petrolio": 1101,
+    "nte": 26970
+   },
+   "giorni": [
+    6100000,
+    6200000,
+    6100000,
+    7400000,
+    8000000,
+    8100000,
+    5800000
+   ],
+   "tassazioniOggi": 2695
+  },
+  "Lombardia": {
+   "tot7": {
+    "denaro": 24977303,
+    "pelle": 34496,
+    "oro": 59,
+    "petrolio": 0,
+    "nte": 34545
+   },
+   "giorni": [
+    4400000,
+    5300000,
+    4200000,
+    3900000,
+    3400000,
+    3100000,
+    669000
+   ],
+   "tassazioniOggi": 840
+  },
+  "Marsiglia": {
+   "tot7": {
+    "denaro": 23745317,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 118294,
+    "nte": 0
+   },
+   "giorni": [
+    1800000,
+    2700000,
+    2500000,
+    3200000,
+    4200000,
+    7400000,
+    2100000
+   ],
+   "tassazioniOggi": 1207
+  },
+  "Napoli": {
+   "tot7": {
+    "denaro": 3886964,
+    "pelle": 7759,
+    "oro": 77,
+    "petrolio": 55,
+    "nte": 0
+   },
+   "giorni": [
+    680000,
+    902000,
+    702800,
+    511600,
+    437700,
+    514400,
+    138500
+   ],
+   "tassazioniOggi": 197
+  },
+  "Roma": {
+   "tot7": {
+    "denaro": 16264490,
+    "pelle": 10796,
+    "oro": 2994,
+    "petrolio": 6622,
+    "nte": 58
+   },
+   "giorni": [
+    2000000,
+    2800000,
+    2000000,
+    2400000,
+    3000000,
+    2700000,
+    1300000
+   ],
+   "tassazioniOggi": 801
+  },
+  "Firenze": {
+   "tot7": {
+    "denaro": 4813862,
+    "pelle": 0,
+    "oro": 91912,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giorni": [
+    881000,
+    1200000,
+    800000,
+    1200000,
+    979900,
+    1000000,
+    246900
+   ],
+   "tassazioniOggi": 918
+  },
+  "Palermo": {
+   "tot7": {
+    "denaro": 3905797,
+    "pelle": 284,
+    "oro": 72,
+    "petrolio": 0,
+    "nte": 11687
+   },
+   "giorni": [
+    598600,
+    806400,
+    408600,
+    514900,
+    366100,
+    861800,
+    356600
+   ],
+   "tassazioniOggi": 443
+  }
+ },
+ "letto_il": "2026-10-21T09:00:42Z"
+}

@@ -1,0 +1,385 @@
+{
+ "data": "2026-10-21 mattina",
+ "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
+ "province": [
+  {
+   "p": "VENEZIA",
+   "slug": "Venedik",
+   "gioc": 228,
+   "fab": 74,
+   "gov": "ANNFIGMA",
+   "ind": [
+    3,
+    8,
+    8,
+    10
+   ],
+   "tes": [
+    "4.362.747",
+    "18525",
+    "62637",
+    "19862",
+    "22059"
+   ],
+   "bon": [
+    "14",
+    "8",
+    "6",
+    "6",
+    "7"
+   ],
+   "sc": {
+    "n": 15,
+    "indice": 3,
+    "prossimo": "+13 edifici → Indice 4 (+8%)"
+   },
+   "ba": {
+    "n": 136,
+    "indice": 8,
+    "prossimo": "+39 edifici → Indice 9 (+18%)"
+   },
+   "st": {
+    "n": 852,
+    "indice": 8,
+    "prossimo": "+58 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 349,
+    "indice": 10,
+    "prossimo": "+132 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
+   },
+   "man": [
+    "4.242.300",
+    "14184",
+    "4804.8",
+    "14997",
+    "17226"
+   ]
+  },
+  {
+   "p": "LOMBARDIA",
+   "slug": "Lombardiya",
+   "gioc": 226,
+   "fab": 106,
+   "gov": "Gatto Randagio",
+   "ind": [
+    9,
+    2,
+    8,
+    10
+   ],
+   "tes": [
+    "10.202.768",
+    "13856",
+    "12319",
+    "12935",
+    "16505"
+   ],
+   "bon": [
+    "16",
+    "14",
+    "7",
+    "6",
+    "8"
+   ],
+   "sc": {
+    "n": 165,
+    "indice": 9,
+    "prossimo": "+176 edifici → Indice 10 (+20%)"
+   },
+   "ba": {
+    "n": 35,
+    "indice": 2,
+    "prossimo": "+4 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 769,
+    "indice": 8,
+    "prossimo": "+141 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 348,
+    "indice": 10,
+    "prossimo": "+133 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
+   },
+   "man": [
+    "4.076.400",
+    "13830",
+    "6771.6",
+    "12780",
+    "16353"
+   ]
+  },
+  {
+   "p": "MARSIGLIA",
+   "slug": "Marsilya",
+   "gioc": 29,
+   "fab": 21,
+   "gov": "Solovej",
+   "ind": [
+    8,
+    2,
+    8,
+    8
+   ],
+   "tes": [
+    "13.009.007",
+    "15046",
+    "17028",
+    "17136",
+    "16339"
+   ],
+   "bon": [
+    "12",
+    "5",
+    "3",
+    "10",
+    "6"
+   ],
+   "sc": {
+    "n": 119,
+    "indice": 8,
+    "prossimo": "+7 edifici → Indice 9 (+18%)"
+   },
+   "ba": {
+    "n": 29,
+    "indice": 2,
+    "prossimo": "+10 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 793,
+    "indice": 8,
+    "prossimo": "+117 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 269,
+    "indice": 8,
+    "prossimo": "+72 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": [
+    "3.728.100",
+    "13584",
+    "5121.6",
+    "12285",
+    "14970"
+   ]
+  },
+  {
+   "p": "NAPOLI",
+   "slug": "Napoli",
+   "gioc": 221,
+   "fab": 77,
+   "gov": "Caesar Santae Urbis Roma",
+   "ind": [
+    9,
+    6,
+    7,
+    8
+   ],
+   "tes": [
+    "4.445.782",
+    "16554",
+    "9045",
+    "17063",
+    "22138"
+   ],
+   "bon": [
+    "9",
+    "13",
+    "4",
+    "9",
+    "6"
+   ],
+   "sc": {
+    "n": 129,
+    "indice": 9,
+    "prossimo": "+212 edifici → Indice 10 (+20%)"
+   },
+   "ba": {
+    "n": 94,
+    "indice": 6,
+    "prossimo": "+12 edifici → Indice 7 (+14%)"
+   },
+   "st": {
+    "n": 675,
+    "indice": 7,
+    "prossimo": "+64 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+   },
+   "os": {
+    "n": 272,
+    "indice": 8,
+    "prossimo": "+69 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": [
+    "3.648.000",
+    "12519",
+    "5293.2",
+    "11676",
+    "14469"
+   ]
+  },
+  {
+   "p": "ROMA",
+   "slug": "Roma",
+   "gioc": 226,
+   "fab": 111,
+   "gov": "Modigliani",
+   "ind": [
+    9,
+    3,
+    7,
+    8
+   ],
+   "tes": [
+    "9.596.379",
+    "322046",
+    "16335",
+    "10362",
+    "3801"
+   ],
+   "bon": [
+    "14",
+    "11",
+    "7",
+    "7",
+    "5"
+   ],
+   "sc": {
+    "n": 125,
+    "indice": 9,
+    "prossimo": "+216 edifici → Indice 10 (+20%)"
+   },
+   "ba": {
+    "n": 52,
+    "indice": 3,
+    "prossimo": "+5 edifici → Indice 4 (+8%)"
+   },
+   "st": {
+    "n": 659,
+    "indice": 7,
+    "prossimo": "+80 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+   },
+   "os": {
+    "n": 273,
+    "indice": 8,
+    "prossimo": "+68 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": [
+    "3.440.100",
+    "11853",
+    "5253.6",
+    "10989",
+    "13752"
+   ]
+  },
+  {
+   "p": "FIRENZE",
+   "slug": "Floransa",
+   "gioc": 168,
+   "fab": 63,
+   "gov": "Antonio Pol",
+   "ind": [
+    3,
+    1,
+    6,
+    8
+   ],
+   "tes": [
+    "8.870.300",
+    "732808",
+    "9471",
+    "26525",
+    "152525"
+   ],
+   "bon": [
+    "13",
+    "16",
+    "10",
+    "4",
+    "5"
+   ],
+   "sc": {
+    "n": 20,
+    "indice": 3,
+    "prossimo": "+8 edifici → Indice 4 (+8%)"
+   },
+   "ba": {
+    "n": 10,
+    "indice": 1,
+    "prossimo": "+11 edifici → Indice 2 (+4%)"
+   },
+   "st": {
+    "n": 438,
+    "indice": 6,
+    "prossimo": "+215 edifici → Indice 7 (diamante +21% · risorsa +14%)"
+   },
+   "os": {
+    "n": 271,
+    "indice": 8,
+    "prossimo": "+70 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": [
+    "2.304.300",
+    "6900",
+    "3841.2",
+    "7815",
+    "9621"
+   ]
+  },
+  {
+   "p": "PALERMO",
+   "slug": "Palermo",
+   "gioc": 150,
+   "fab": 87,
+   "gov": "FangYuan",
+   "ind": [
+    5,
+    2,
+    5,
+    8
+   ],
+   "tes": [
+    "7.782.500",
+    "12026",
+    "20599",
+    "13026",
+    "14644"
+   ],
+   "bon": [
+    "17",
+    "10",
+    "5",
+    "8",
+    "14"
+   ],
+   "sc": {
+    "n": 44,
+    "indice": 5,
+    "prossimo": "+10 edifici → Indice 6 (+12%)"
+   },
+   "ba": {
+    "n": 33,
+    "indice": 2,
+    "prossimo": "+6 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 351,
+    "indice": 5,
+    "prossimo": "+88 edifici → Indice 6 (diamante +18% · risorsa +12%)"
+   },
+   "os": {
+    "n": 268,
+    "indice": 8,
+    "prossimo": "+73 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": [
+    "2.188.200",
+    "6090",
+    "4118.4",
+    "7020",
+    "9024"
+   ]
+  }
+ ],
+ "letto_il": "2026-10-21T08:45:23Z"
+}

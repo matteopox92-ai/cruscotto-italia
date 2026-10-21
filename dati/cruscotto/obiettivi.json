@@ -1,0 +1,42 @@
+[
+{
+"inizio": "2026-10-21",
+"napoli_salute": 8,
+"napoli_sviluppo": 7,
+"palermo_salute": 10,
+"palermo_ospedali_meta": 344,
+"palermo_strade_6": 442,
+"palermo_strade_8": 742,
+"soglia_fabbriche_1": 100,
+"soglia_lavori_1": 900,
+"soglia_fabbriche_2": 120,
+"soglia_lavori_2": 1200,
+"notti_minime_tesoro": 3,
+"palermo_fabbriche_partenza": 87,
+"palermo_giocatori_partenza": 150,
+"napoli_ospedali_giorno": 8,
+"napoli_strade_giorno": 20,
+"risparmio_notte": 3648000.0,
+"saldo_notte": 517200.0,
+"giorno_pareggio": 12,
+"saldo_notte_pelle": 2519,
+"saldo_notte_oro": 770,
+"saldo_notte_petrolio": 592,
+"saldo_notte_nte": 1329,
+"pareggio_pelle": 1,
+"pareggio_oro": 41,
+"pareggio_petrolio": 25,
+"pareggio_nte": 22,
+"valore_risorse_notte": 470935,
+"saldo_totale_notte": 988135,
+"napoli_strade_meta": 678,
+"napoli_ospedali_meta": 275,
+"prezzi_piano": {
+"data": "2026-10-20",
+"pelle": 52.12,
+"oro": 195.0,
+"petrolio": 133.0,
+"nte": 83.34
+}
+}
+]

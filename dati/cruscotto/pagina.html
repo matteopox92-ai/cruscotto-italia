@@ -1,0 +1,1256 @@
+<style>
+#dash-root { --dash-gutter: clamp(12px, 3vw, 32px); }
+.ei { font-family: var(--font-anthropic-sans); color: var(--color-fg); display: grid; gap: var(--cds-gap-lg); }
+.ei-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+.ei-head p { margin: var(--cds-gap-xs) 0 0; color: var(--color-fg-muted); max-width: 70ch; }
+.ei-tabs { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); }
+.ei-tabs button { font: inherit; background: none; border: 0; border-bottom: 2px solid transparent; padding: var(--cds-pad-xs) var(--cds-pad-sm); color: var(--color-fg-muted); cursor: pointer; }
+.ei-tabs button[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); }
+.ei-tabs button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.ei-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-md); }
+.ei-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: grid; gap: var(--cds-gap-xs); align-content: start; }
+.ei-tile .lab { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.ei-tile .big { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
+.ei-tile .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.ei-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); }
+.ei-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; display: grid; gap: var(--cds-gap-sm); align-content: start; }
+.ei-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.ei-card .note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; }
+.ei-scroll { overflow-x: auto; }
+.ei table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-body); }
+.ei th, .ei td { padding: var(--cds-pad-xs) var(--cds-pad-sm); text-align: right; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.ei th:first-child, .ei td:first-child { text-align: left; }
+.ei th { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); }
+.pill { display: inline-block; padding: 0 var(--cds-pad-xs); border-radius: 999px; font-size: var(--cds-font-size-caption); border: 1px solid currentColor; }
+.ok { color: var(--color-ok); } .warn { color: var(--color-warn); } .bad { color: var(--color-bad); }
+.ei-list { margin: 0; padding-left: 1.2em; display: grid; gap: var(--cds-gap-xs); }
+.ei-crit { display: grid; gap: var(--cds-gap-md); max-width: 75ch; }
+.ei-crit h3 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+.ei-crit p { margin: var(--cds-gap-xs) 0 0; }
+.ei-crit ol.ei-list { margin-top: var(--cds-gap-xs); }
+.ei-chart { position: relative; min-height: 220px; }
+.ei-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; }
+.ei-filtri { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); align-items: end; }
+.ei-filtri label { display: grid; gap: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.ei-filtri select, .ei-filtri input, .ei-filtri button { font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 4px 8px; }
+.ei-filtri button { cursor: pointer; }
+.ei-filtri button[aria-pressed="true"] { border-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.ei-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.ei-chips button { display: inline-flex; align-items: center; gap: 6px; }
+.ei-chips i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.ei-chips button[aria-pressed="false"] { opacity: .5; }
+.ei-legenda { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; padding: 0; list-style: none; }
+.ei-legenda i { display: inline-block; width: 14px; height: 2px; vertical-align: middle; margin-right: 6px; }
+.ei-tile .big.ei-ris { font-size: var(--cds-font-size-heading); line-height: 1.4; }
+#piano-calendario td:nth-child(3), #piano-calendario td:nth-child(4) { white-space: normal; text-align: left; min-width: 14rem; }
+#piano-controlli td:nth-child(3) { white-space: normal; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+</style>
+
+<div class="ei">
+  <header class="ei-head" id="testa">
+    <h1>Cruscotto Economia Italia</h1>
+    <p class="ei-take" data-source="totali">—</p>
+  </header>
+
+  <nav class="ei-tabs" role="tablist" aria-label="Sezioni">
+    <button role="tab" id="t-quadro" data-tab="quadro" aria-selected="true">Quadro</button>
+    <button role="tab" id="t-piano" data-tab="piano" aria-selected="false">Piano Napoli e Palermo</button>
+    <button role="tab" id="t-province" data-tab="province" aria-selected="false">Province</button>
+    <button role="tab" id="t-indici" data-tab="indici" aria-selected="false">Indici e soglie</button>
+    <button role="tab" id="t-donazioni" data-tab="donazioni" aria-selected="false">Donazioni</button>
+    <button role="tab" id="t-storico" data-tab="storico" aria-selected="false">Storico</button>
+    <button role="tab" id="t-andamento" data-tab="andamento" aria-selected="false">Andamento</button>
+    <button role="tab" id="t-criteri" data-tab="criteri" aria-selected="false">Guida</button>
+  </nav>
+
+  <section id="quadro" class="ei-pane" style="display:grid; gap: var(--cds-gap-lg);">
+    <div class="ei-tiles">
+      <div class="ei-tile"><span class="lab">Saldo al giorno (province)</span><span class="big dash-skeleton" data-source="totali" data-field="saldo_giorno">—</span><span class="sub">gettito medio − manutenzione − confini</span></div>
+      <div class="ei-tile"><span class="lab">Saldo al giorno con le donazioni</span><span class="big dash-skeleton" data-source="totali" data-field="saldo_con_donazioni">—</span><span class="sub ei-don-sub">—</span></div>
+      <div class="ei-tile"><span class="lab">Gettito medio al giorno</span><span class="big dash-skeleton" data-source="totali" data-field="gettito_medio">—</span><span class="sub">media degli ultimi 6 giorni completi</span></div>
+      <div class="ei-tile"><span class="lab">Costi al giorno</span><span class="big dash-skeleton" data-source="totali" data-field="costi_giorno">—</span><span class="sub">manutenzione + confini, in denaro</span></div>
+      <div class="ei-tile"><span class="lab">Copertura dei costi</span><span class="big dash-skeleton" data-source="totali" data-field="copertura">—</span><span class="sub">gettito ÷ costi</span></div>
+      <div class="ei-tile"><span class="lab">Tesoro dello Stato</span><span class="big dash-skeleton" data-source="stato_ultimo" data-field="tesoro_eur">—</span><span class="sub" data-source="stato_ultimo" data-field="data">—</span></div>
+      <div class="ei-tile"><span class="lab">Tesori delle province</span><span class="big dash-skeleton" data-source="totali" data-field="tesori_province">—</span><span class="sub">somma delle 7 province, oggi</span></div>
+    </div>
+
+    <div class="ei-grid">
+      <div class="ei-card" id="allarmi">
+        <h2>Da sistemare subito</h2>
+        <p class="note">Province con denaro o risorse sotto 3 notti di mantenimento (senza donazioni dello Stato), e indici che scendono con una sola notte non pagata. «Stanotte» = sotto 1 notte: senza una donazione la provincia non paga e perde il 3% degli edifici.</p>
+        <ul class="ei-list" data-source="allarmi"></ul>
+      </div>
+      <div class="ei-card" id="occasioni">
+        <h2>Occasioni a buon mercato</h2>
+        <p class="note">Gli indici che salgono con la spesa più bassa, in denaro equivalente ai prezzi medi di mercato.</p>
+        <ul class="ei-list" data-source="occasioni"></ul>
+      </div>
+    </div>
+
+    <div class="ei-card" id="saldo-province">
+      <h2>Quanto rende ogni provincia all'Italia, al giorno</h2>
+      <p class="note">Gettito medio degli ultimi 6 giorni meno manutenzione e quota dei confini. Il gettito va allo Stato, che paga i confini e dona alle province: sotto lo zero la provincia costa all'Italia più di quanto le porta.</p>
+      <div class="ei-chart" data-source="analisi"></div>
+    </div>
+  </section>
+
+  <section id="piano" class="ei-pane" hidden>
+    <div class="ei-tiles">
+      <div class="ei-tile"><span class="lab">Giorno del piano</span><span class="big" data-source="piano_stato" data-field="giorno">—</span><span class="sub" data-source="piano_stato" data-field="data">—</span></div>
+      <div class="ei-tile"><span class="lab">Saldo accumulato previsto</span><span class="big" data-source="piano_stato" data-field="accumulato">—</span><span class="sub">risparmio di Napoli − spese, fino a oggi</span></div>
+      <div class="ei-tile"><span class="lab">Saldo a notte (regime)</span><span class="big" data-source="obiettivi" data-field="saldo_notte">—</span><span class="sub ei-pareggio" data-source="obiettivi">—</span></div>
+      <div class="ei-tile"><span class="lab">Saldo risorse a notte</span><span class="big ei-ris" data-source="obiettivi">—</span><span class="sub ei-ris-sub" data-source="obiettivi">—</span></div>
+      <div class="ei-tile"><span class="lab">Prossima decisione</span><span class="big" data-source="piano_stato" data-field="prossima_decisione">—</span><span class="sub ei-esito" data-source="piano_stato">—</span></div>
+    </div>
+    <div class="ei-grid">
+      <div class="ei-card" id="piano-controlli">
+        <h2>Controlli di oggi</h2>
+        <p class="note">Dall'ultima lettura del gioco. Verde = in regola, giallo = da fare oggi, rosso = da sistemare subito.</p>
+        <div class="ei-scroll">
+          <table data-source="piano_controlli" data-row-key="controllo">
+            <thead><tr><th data-field="controllo">Controllo</th><th data-field="valore">Oggi</th><th data-field="obiettivo">Obiettivo</th><th data-field="esito">Esito</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="ei-card" id="piano-crescita">
+        <h2>Palermo cresce? (serve per le strade)</h2>
+        <p class="note">Le due decisioni sulle strade dipendono da fabbriche e lavori al giorno a Palermo.</p>
+        <div class="ei-scroll">
+          <table data-source="piano_crescita" data-row-key="misura">
+            <thead><tr><th data-field="misura">Misura</th><th data-field="partenza">Partenza</th><th data-field="oggi">Oggi</th><th data-field="soglia_1">Per Sviluppo 6</th><th data-field="soglia_2">Per Sviluppo 8</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="ei-card" id="piano-calendario">
+      <h2>Calendario delle prime due settimane</h2>
+      <p class="note">Saldo = mantenimento che Napoli non paga − (costruzioni + ricostruzione di Napoli + mantenimento in più di Palermo), in soldi. Le strade delle decisioni non sono incluse.</p>
+      <div class="ei-scroll">
+        <table data-source="piano" data-row-key="giorno">
+          <thead><tr><th data-field="giorno">Giorno</th><th data-field="data">Data</th><th data-field="napoli">Napoli</th><th data-field="palermo">Palermo</th><th data-field="speso">Spesi</th><th data-field="risparmio">Risparmiati</th><th data-field="saldo">Saldo soldi</th><th data-field="accumulato">Soldi accumulati</th><th data-field="saldo_pelle">Pelle</th><th data-field="accumulato_pelle">Pelle acc.</th><th data-field="saldo_oro">Oro</th><th data-field="accumulato_oro">Oro acc.</th><th data-field="saldo_petrolio">Petrolio</th><th data-field="accumulato_petrolio">Petrolio acc.</th><th data-field="saldo_nte">NTE</th><th data-field="accumulato_nte">NTE acc.</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ei-card" id="piano-diario">
+      <h2>Diario: Napoli e Palermo lettura per lettura</h2>
+      <p class="note">Una riga a ogni aggiornamento del cruscotto. A Napoli scuole e caserme devono calare (mantenimento non pagato), strade e ospedali no.</p>
+      <div class="ei-scroll">
+        <table data-source="diario" data-row-key="chiave">
+          <thead><tr><th data-field="data">Data</th><th data-field="provincia">Provincia</th><th data-field="scuole">Scuole</th><th data-field="caserme">Caserme</th><th data-field="strade">Strade</th><th data-field="ospedali">Ospedali</th><th data-field="istruzione">Istr.</th><th data-field="militare">Mil.</th><th data-field="sviluppo">Svil.</th><th data-field="salute">Sal.</th><th data-field="tesoro_eur">Tesoro</th><th data-field="fabbriche">Fabbriche</th><th data-field="lavori_oggi">Lavori oggi</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="province" class="ei-pane" hidden>
+    <div class="ei-card" id="tabella-province">
+      <h2>Le 7 province, oggi</h2>
+      <p class="note">Notti coperte = tesoro della provincia ÷ manutenzione di una notte, senza contare le donazioni dello Stato (il gettito non entra nel tesoro della provincia). «∞» = nessuna manutenzione di quel tipo. Saldo/giorno = quanto la provincia rende all'Italia.</p>
+      <div class="ei-scroll">
+        <table data-source="analisi" data-row-key="provincia">
+          <thead><tr>
+            <th data-field="provincia">Provincia</th>
+            <th data-field="stato">Stato</th>
+            <th data-field="giocatori">Giocatori</th>
+            <th data-field="fabbriche">Fabbriche</th>
+            <th data-field="gettito_medio">Gettito/giorno</th>
+            <th data-field="costi_giorno">Costi/giorno</th>
+            <th data-field="saldo_giorno">Saldo/giorno</th>
+            <th data-field="tesoro_eur">Tesoro</th>
+            <th data-field="notti_denaro">Notti €</th>
+            <th data-field="notti_pelle">Notti pelle</th>
+            <th data-field="notti_oro">Notti oro</th>
+            <th data-field="notti_petrolio">Notti petrolio</th>
+            <th data-field="notti_nte">Notti NTE</th>
+            <th data-field="gettito_per_giocatore">Gettito/giocatore</th>
+            <th data-field="costo_equiv_giorno">Costo equiv./giorno</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ei-card" id="tabella-indici-attuali">
+      <h2>Indici e bonus</h2>
+      <p class="note">Indici da 1 a 10 (10+ = primo al mondo) e bonus sulle risorse prodotte nella provincia.</p>
+      <div class="ei-scroll">
+        <table data-source="oggi" data-row-key="provincia">
+          <thead><tr>
+            <th data-field="provincia">Provincia</th>
+            <th data-field="indice_istruzione">Istruzione</th>
+            <th data-field="indice_militare">Militare</th>
+            <th data-field="indice_sviluppo">Sviluppo</th>
+            <th data-field="indice_salute">Salute</th>
+            <th data-field="bonus_diamante">Bonus diamante %</th>
+            <th data-field="bonus_pelle">Pelle %</th>
+            <th data-field="bonus_oro">Oro %</th>
+            <th data-field="bonus_petrolio">Petrolio %</th>
+            <th data-field="bonus_nte">NTE %</th>
+            <th data-field="governatore">Governatore</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="indici" class="ei-pane" hidden>
+    <div class="ei-card" id="tabella-soglie">
+      <h2>Margini e soglie, edificio per edificio</h2>
+      <p class="note">Margine = edifici che si possono perdere restando sicuri nell'indice. Notti = mancati pagamenti (−3% a notte) prima di scendere. Per salire: edifici mancanti e costo in denaro equivalente.</p>
+      <div class="ei-scroll">
+        <table data-source="indici" data-row-key="provincia,edificio">
+          <thead><tr>
+            <th data-field="provincia">Provincia</th>
+            <th data-field="edificio">Edificio</th>
+            <th data-field="edifici">Edifici</th>
+            <th data-field="indice">Indice</th>
+            <th data-field="margine">Margine</th>
+            <th data-field="notti_al_calo">Notti al calo</th>
+            <th data-field="mancanti">Per salire</th>
+            <th data-field="costo_salire">Costo per salire</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="donazioni" class="ei-pane" hidden>
+    <div class="ei-tiles">
+      <div class="ei-tile"><span class="lab">Donazioni allo Stato, ultimi 7 giorni</span><span class="big" data-source="donazioni_quadro" data-field="stato_denaro">—</span><span class="sub ei-don-stato">—</span></div>
+      <div class="ei-tile"><span class="lab">Donazioni alle province, ultimi 7 giorni</span><span class="big" data-source="donazioni_quadro" data-field="province_denaro">—</span><span class="sub ei-don-prov">—</span></div>
+      <div class="ei-tile"><span class="lab">Tesoro dello Stato</span><span class="big" data-source="stato_ultimo" data-field="tesoro_eur">—</span><span class="sub ei-don-tes">—</span></div>
+      <div class="ei-tile"><span class="lab">Donato allo Stato da sempre</span><span class="big" data-source="donazioni_totali" data-where="destinatario=Stato" data-field="totale_denaro">—</span><span class="sub">solo denaro, dalla nascita del Paese</span></div>
+    </div>
+    <div class="ei-card" id="donazioni-giorno">
+      <h2>Donazioni per giorno</h2>
+      <p class="note">Denaro più risorse ai prezzi medi di mercato. Lo Stato riceve dai giocatori; le province dai giocatori (e dallo Stato, ma quei trasferimenti il gioco non li elenca).</p>
+      <div class="ei-chart" data-source="donazioni_giorno"></div>
+    </div>
+    <div class="ei-card" id="donazioni-destinatari">
+      <h2>Chi riceve: Stato e province</h2>
+      <p class="note ei-don-periodo">Ultimi 7 giorni.</p>
+      <div class="ei-scroll">
+        <table data-source="donazioni_riepilogo" data-row-key="destinatario">
+          <thead><tr><th data-field="destinatario">Tesoro</th><th data-field="denaro_7g">Denaro</th><th data-field="pelle_7g">Pelle</th><th data-field="oro_7g">Oro</th><th data-field="petrolio_7g">Petrolio</th><th data-field="nte_7g">NTE</th><th data-field="valore_7g">Valore totale</th><th data-field="numero_7g">Donazioni</th><th data-field="totale_denaro">Denaro da sempre</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">Il gioco mostra solo le ultime 50 donazioni di ogni tesoro: per lo Stato coprono circa 8 giorni, quindi la lettura serale serve a non perderne. «*» = l'elenco del gioco non arriva a coprire tutti i 7 giorni.</p>
+    </div>
+  </section>
+
+  <section id="storico" class="ei-pane" hidden>
+    <div class="ei-card" id="storico-filtri">
+      <div class="ei-filtri">
+        <label>Periodo<span class="ei-chips" id="st-preset"><button type="button" data-giorni="7">7 giorni</button><button type="button" data-giorni="14">14 giorni</button><button type="button" data-giorni="0">Tutto</button></span></label>
+        <label>Dal<input type="date" id="st-dal" min="2026-01-01" max="2099-12-31" aria-label="Dal"></label>
+        <label>Al<input type="date" id="st-al" min="2026-01-01" max="2099-12-31" aria-label="Al"></label>
+        <label>Governo<select id="st-gov" data-source="governi" aria-label="Governo"></select></label>
+        <label>Misura<select id="st-misura" aria-label="Misura">
+          <option value="tesoro">Tesoro</option><option value="gettito">Gettito</option><option value="manutenzione">Manutenzione</option>
+          <option value="confini">Confini</option><option value="donazioni">Donazioni ricevute</option><option value="contributo">Contributo all'Italia</option><option value="tassazioni">Tassazioni</option>
+        </select></label>
+        <label>Risorsa<select id="st-ris" aria-label="Risorsa">
+          <option value="eur">Denaro</option><option value="valore">Valore totale (denaro + risorse)</option><option value="pelle">Pelle</option><option value="oro">Oro</option><option value="petrolio">Petrolio</option><option value="nte">NTE</option>
+        </select></label>
+        <button type="button" id="st-reset">Azzera filtri</button>
+      </div>
+      <label class="ei-filtri" style="margin-top: var(--cds-gap-sm)">Province<span class="ei-chips" id="st-prov"></span></label>
+      <p class="note" id="st-nota">—</p>
+    </div>
+    <div class="ei-tiles" id="storico-riquadri">
+      <div class="ei-tile"><span class="lab">Gettito nel periodo</span><span class="big" id="st-t-gettito">—</span><span class="sub" id="st-t-gettito-s">—</span></div>
+      <div class="ei-tile"><span class="lab">Manutenzione + confini</span><span class="big" id="st-t-costi">—</span><span class="sub" id="st-t-costi-s">—</span></div>
+      <div class="ei-tile"><span class="lab">Donazioni ricevute</span><span class="big" id="st-t-don">—</span><span class="sub" id="st-t-don-s">—</span></div>
+      <div class="ei-tile"><span class="lab">Saldo del periodo</span><span class="big" id="st-t-saldo">—</span><span class="sub">gettito − manutenzione − confini, senza donazioni</span></div>
+      <div class="ei-tile"><span class="lab">Tesoro dello Stato</span><span class="big" id="st-t-stato">—</span><span class="sub" id="st-t-stato-s">—</span></div>
+    </div>
+    <div class="ei-card" id="storico-italia">
+      <h2>L'Italia giorno per giorno</h2>
+      <p class="note">Province scelte, nella risorsa scelta. Le fasce di sfondo sono i governi. Solo i giorni con i dati di almeno 6 province.</p>
+      <ul class="ei-legenda" id="st-leg-italia"></ul>
+      <div class="ei-chart" data-source="storico_lungo"></div>
+    </div>
+    <div class="ei-card" id="storico-province">
+      <h2 id="st-titolo-prov">Province a confronto</h2>
+      <p class="note">La misura e la risorsa scelte nei filtri, una linea per provincia (ogni provincia ha sempre lo stesso colore).</p>
+      <ul class="ei-legenda" id="st-leg-prov"></ul>
+      <div class="ei-chart" data-source="storico_lungo"></div>
+    </div>
+    <div class="ei-grid">
+      <div class="ei-card" id="storico-stato">
+        <h2>Tesoro dello Stato</h2>
+        <p class="note">Nella risorsa scelta (valore totale = denaro + risorse ai prezzi medi). Fino al 20/10 dal DEF, poi dal gioco. L'asse non parte da zero, per vedere le variazioni.</p>
+        <div class="ei-chart" data-source="storico_lungo"></div>
+      </div>
+      <div class="ei-card" id="storico-classifica">
+        <h2 id="st-titolo-class">Classifica del periodo</h2>
+        <p class="note">Totale della misura nel periodo (per il tesoro: l'ultimo valore). Province scelte.</p>
+        <div class="ei-chart" data-source="storico_lungo"></div>
+      </div>
+    </div>
+    <div class="ei-card" id="storico-governi">
+      <h2>Bilancio per governo</h2>
+      <p class="note">In denaro, tutte le province (Bahrein compreso finché era italiano), solo i giorni completi: coincide con il «Riepilogo di fine mandato» del DEF. Saldo = gettito − manutenzione − confini; le donazioni sono a parte. Non dipende dal periodo scelto.</p>
+      <div class="ei-chart" data-source="storico_governi"></div>
+      <div class="ei-scroll">
+        <table data-source="storico_governi" data-row-key="governo">
+          <thead><tr><th data-field="governo">Governo</th><th data-field="dal">Dal</th><th data-field="al">Al</th><th data-field="giorni">Giorni</th><th data-field="gettito">Gettito</th><th data-field="manutenzione">Manutenzione</th><th data-field="confini">Confini</th><th data-field="saldo">Saldo</th><th data-field="saldo_giorno">Saldo al giorno</th><th data-field="donazioni_province">Donazioni alle province</th><th data-field="donazioni_stato">Donazioni allo Stato</th><th data-field="tesoro_stato_fine">Tesoro Stato a fine</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="andamento" class="ei-pane" hidden>
+    <div class="ei-card" id="andamento-italia">
+      <h2>Gettito e costi dell'Italia, giorno per giorno</h2>
+      <p class="note">Somma delle 7 province. Dati del Documento di Economia e Finanza; gli ultimi giorni dal gettito del gioco (arrotondato a 0,1 milioni sopra il milione).</p>
+      <div class="ei-chart" data-source="giornaliero"></div>
+    </div>
+    <div class="ei-card" id="andamento-stato">
+      <h2>Tesoro dello Stato</h2>
+      <p class="note">Dal DEF, a fine giornata.</p>
+      <div class="ei-chart" data-source="storico"></div>
+    </div>
+  </section>
+
+  <section id="criteri" class="ei-pane" hidden>
+    <div class="ei-card ei-crit" id="guida">
+      <h2>Guida al cruscotto</h2>
+      <p class="note">Come leggere ogni scheda, cosa vogliono dire i numeri e i colori, da dove arrivano. I dati si aggiornano da soli ogni ora (al minuto 5) e ogni sera alle 21:45, con l'app Claude e Chrome con il gioco aperti.</p>
+
+      <div><h3>In 2 minuti, ogni sera</h3>
+        <ol class="ei-list">
+          <li><b>Piano Napoli e Palermo → «Controlli di oggi»</b>: tutto verde = il piano va. Giallo = oggi c'è da fare qualcosa (costruire o ricostruire). Rosso = da sistemare subito.</li>
+          <li><b>Quadro → «Da sistemare subito»</b>: le righe <span class="bad">stanotte</span> sono province che nel tesoro non hanno la manutenzione della notte. Se nessuno dona prima delle 23:00 (dal 25/10 le 22:00), quella provincia non paga e perde il 3% di tutti gli edifici. Napoli va ignorata: non paga per scelta.</li>
+          <li><b>Quadro → «Saldo al giorno con le donazioni»</b>: se è rosso, l'Italia nel complesso perde soldi ogni giorno e il tesoro dello Stato scende.</li>
+          <li>Nei giorni di decisione (27/10 e 3/11): <b>Piano → «Prossima decisione»</b> dice se Palermo ha raggiunto la soglia per le strade.</li>
+        </ol>
+      </div>
+
+      <div><h3>Come girano i soldi nel gioco</h3>
+        <p>Ci sono due casse diverse. <b>Lo Stato</b> incassa le tasse delle fabbriche (il <b>gettito</b>) e le donazioni dei giocatori, e paga ogni notte i <b>confini</b> chiusi (oggi 1,17 milioni a provincia). <b>Ogni provincia</b> ha il suo tesoro, che ogni notte paga la <b>manutenzione</b> dei suoi edifici (il 3% di quanto sono costati) e si riempie solo con le donazioni, dei giocatori o dello Stato. Le tasse non entrano mai nel tesoro della provincia: per questo le province vivono di donazioni. Verificato su 134 giorni del DEF.</p>
+      </div>
+
+      <div><h3>Scheda «Quadro»: la situazione di oggi</h3>
+        <p><b>Saldo al giorno</b> = tasse incassate (media degli ultimi 6 giorni completi) − manutenzione di tutte le province − confini. È quanto l'Italia perde o guadagna in un giorno «normale», senza regali. <b>Saldo con le donazioni</b> = lo stesso, più quello che i giocatori hanno donato in media negli ultimi 7 giorni: è il risultato vero di una giornata. <b>Copertura</b> = quanta parte dei costi coprono le tasse (100% = in pari). <b>Tesoro dello Stato</b>: letto dal gioco. <b>Tesori delle province</b>: la somma delle 7 casse.</p>
+        <p><b>Occasioni a buon mercato</b>: gli aumenti di indice che costano meno. <b>Quanto rende ogni provincia</b>: barre a destra = la provincia porta all'Italia più di quanto costa; a sinistra (rosse) = costa più di quanto porta.</p>
+      </div>
+
+      <div><h3>Scheda «Piano Napoli e Palermo»</h3>
+        <p>Segue il piano deciso il 21/10: Napoli non paga la manutenzione e ricostruisce ogni giorno 8 ospedali e 20 strade; Palermo sale a salute 10 subito, e alle strade ci pensa con due decisioni. <b>Giorno del piano</b> (1 di 14). <b>Saldo accumulato previsto</b>: quanto si è guadagnato finora secondo il piano, in negativo i primi giorni per la spesa iniziale e in pari dal giorno 12. <b>Saldo a notte</b>: +517.200 € quando il piano va a regime, più le risorse risparmiate. <b>Controlli di oggi</b>: i numeri del gioco confrontati con gli obiettivi. <b>Palermo cresce?</b>: fabbriche e lavori del giorno contro le soglie delle decisioni. <b>Calendario</b>: cosa fare giorno per giorno. <b>Diario</b>: una riga a ogni lettura del gioco.</p>
+      </div>
+
+      <div><h3>Scheda «Province»</h3>
+        <p>Una riga per provincia. <b>Notti coperte</b> (soldi e ogni risorsa) = tesoro ÷ manutenzione di una notte: quante notti la provincia paga da sola se nessuno le dona niente. Sotto 1 = <span class="bad">stanotte non paga</span>; tra 1 e 3 = <span class="warn">da rifornire presto</span>; 3 o più = <span class="ok">tranquilla</span>. «∞» = non ha manutenzione di quel tipo. <b>Stato</b> della provincia = il peggiore dei suoi numeri. Sotto ci sono gli indici (da 1 a 10) e i bonus sulle risorse.</p>
+      </div>
+
+      <div><h3>Scheda «Indici e soglie»</h3>
+        <p>Gli indici non hanno soglie fisse: dipendono dalla classifica mondiale. Le province del mondo con almeno un edificio di quel tipo sono divise in 10 fasce uguali; il primo al mondo è «10+». Per ogni provincia ed edificio trovi: <b>Margine</b> = quanti edifici si possono perdere restando sicuri nell'indice di oggi; <b>Notti al calo</b> = quante notti senza pagare prima di scendere di indice (rosso = 1 o meno); <b>Per salire</b> = quanti edifici mancano per l'indice sopra e quanto costano, soldi più risorse ai prezzi di mercato. Le soglie si spostano quando costruiscono gli altri Paesi.</p>
+      </div>
+
+      <div><h3>Scheda «Donazioni»</h3>
+        <p>Quanto hanno donato i giocatori, allo Stato e a ogni provincia, negli ultimi 7 giorni. Per le risorse c'è anche il <b>valore totale</b>, cioè soldi più risorse ai prezzi di mercato. Il grafico mostra giorno per giorno lo Stato (blu) contro le province (arancio). Attenzione: il gioco mostra solo le ultime 50 donazioni di ogni cassa, e i trasferimenti dallo Stato alle province non compaiono in nessun elenco.</p>
+      </div>
+
+      <div><h3>Scheda «Storico»: tutto il DEF, con i filtri</h3>
+        <p>In alto scegli cosa guardare, e tutti i grafici sotto cambiano insieme. <b>Periodo</b>: 7 giorni, 14 giorni, tutto, oppure le date. <b>Governo</b>: prende da solo le date di quel governo. <b>Misura</b>: tesoro, gettito (tasse), manutenzione, confini, donazioni ricevute, contributo all'Italia (gettito − manutenzione − confini), tassazioni (quante volte i giocatori hanno lavorato). <b>Risorsa</b>: denaro, una risorsa, oppure il valore totale. <b>Province</b>: clicca per accenderle o spegnerle; ogni provincia ha sempre lo stesso colore. Il Bahrein, in grigio, è stato italiano fino al 9/10.</p>
+        <p>I grafici: <b>riquadri del periodo</b>; <b>l'Italia giorno per giorno</b>, con le fasce dei governi sullo sfondo; <b>province a confronto</b>; <b>tesoro dello Stato</b>, con l'asse che non parte da zero per vedere bene le variazioni; <b>classifica</b> delle province nel periodo; <b>bilancio per governo</b>, che coincide con il «Riepilogo di fine mandato» del DEF. Passa il mouse sopra un grafico per leggere i numeri di quel giorno.</p>
+      </div>
+
+      <div><h3>Scheda «Andamento»</h3>
+        <p>Tasse e costi dell'Italia giorno per giorno, e il tesoro dello Stato. È la versione semplice dello Storico, senza filtri.</p>
+      </div>
+
+      <div><h3>Colori e segni</h3>
+        <p><span class="ok">Verde</span> = va bene. <span class="warn">Giallo</span> = da tenere d'occhio o da fare oggi. <span class="bad">Rosso</span> = problema o numero negativo. «—» = dato non disponibile. «*» nella tabella delle donazioni = l'elenco del gioco non copre tutti i 7 giorni. «10+» = primo al mondo.</p>
+      </div>
+
+      <div><h3>Da dove arrivano i numeri e quanto sono precisi</h3>
+        <p>Dal gioco, letto con Chrome: pagine delle province, gettito fiscale, classifiche, pagina del Paese, storici delle donazioni. Dal <b>DEF</b> del governo, il foglio Google: lo storico giorno per giorno dal 28/09 e i prezzi medi delle risorse. Ogni sera un controllo automatico rifà tutti i conti in modo indipendente. Limiti: sopra il milione il gioco arrotonda il gettito giornaliero a 0,1 milioni; i prezzi delle risorse sono medie della settimana, non prezzi garantiti; i trasferimenti dallo Stato alle province non si leggono.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const PROV_ORD = ['Venezia', 'Lombardia', 'Marsiglia', 'Napoli', 'Roma', 'Firenze', 'Palermo'];
+const RIS = ['pelle', 'oro', 'petrolio', 'nte'];
+
+dash.calc('prezzo_attuale', {
+  title: 'Prezzi di mercato usati',
+  description: 'Ultima riga dei prezzi medi settimanali del DEF.',
+  inputs: ['prezzi'],
+  fn: (prezzi) => prezzi.filter((r) => r.pelle).slice(-1),
+});
+
+dash.calc('analisi', {
+  title: 'Analisi per provincia',
+  description: 'Saldo, copertura e notti coperte per provincia, da fotografia di oggi e prezzi medi.',
+  inputs: ['oggi', 'prezzo_attuale'],
+  fn: (oggi, prezzo_attuale) => {
+    const p = prezzo_attuale[0] || {};
+    return oggi.map((r) => {
+      const costi = r.manutenzione_eur + r.confini_eur;
+      const saldo = r.gettito_medio_eur - costi;
+      // il tesoro della provincia paga solo la manutenzione: gettito e confini passano dallo Stato
+      const notti = (tes, uscita) => uscita > 0 ? Math.round((tes / uscita) * 10) / 10 : null;
+      const out = {
+        provincia: r.provincia, giocatori: r.giocatori, fabbriche: r.fabbriche,
+        gettito_medio: r.gettito_medio_eur, costi_giorno: costi, saldo_giorno: saldo,
+        copertura: r.gettito_medio_eur / costi, tesoro_eur: r.tesoro_eur,
+        notti_denaro: notti(r.tesoro_eur, r.manutenzione_eur),
+        gettito_per_giocatore: Math.round(r.gettito_medio_eur / r.giocatori),
+        costo_equiv_giorno: Math.round(costi + ['pelle', 'oro', 'petrolio', 'nte'].reduce((s, k) => s + r['manutenzione_' + k] * (p[k] || 0), 0)),
+      };
+      for (const k of ['pelle', 'oro', 'petrolio', 'nte']) out['notti_' + k] = notti(r['tesoro_' + k], r['manutenzione_' + k]);
+      const minimo = Math.min(...['denaro', 'pelle', 'oro', 'petrolio', 'nte'].map((k) => out['notti_' + k] ?? Infinity));
+      out.stato = minimo < 1 ? 'critico' : minimo < 3 ? 'attenzione' : 'ok';
+      return out;
+    });
+  },
+});
+
+dash.calc('totali', {
+  title: 'Totali Italia',
+  description: 'Somme delle 7 province: gettito, costi, saldo, copertura, tesori.',
+  inputs: ['analisi', 'donazioni_quadro'],
+  fn: (analisi, donazioni_quadro) => {
+    const s = (k) => analisi.reduce((a, r) => a + r[k], 0);
+    const g = s('gettito_medio'), c = s('costi_giorno');
+    // donazioni dei giocatori a Stato e province, media al giorno degli ultimi 7 giorni (solo denaro)
+    const d = donazioni_quadro[0], don = d ? Math.round((d.stato_denaro + d.province_denaro) / 7) : null;
+    return [{ gettito_medio: g, costi_giorno: c, saldo_giorno: g - c, copertura: g / c, tesori_province: s('tesoro_eur'),
+      donazioni_giorno: don, saldo_con_donazioni: don == null ? null : g - c + don,
+      critiche: analisi.filter((r) => r.stato === 'critico').length, in_deficit: analisi.filter((r) => r.saldo_giorno < 0).length }];
+  },
+});
+
+dash.calc('indici', {
+  title: 'Margini e soglie degli indici',
+  description: 'Per ogni provincia e tipo di edificio: soglie dalla classifica mondiale divisa in 10 fasce, margine, notti al calo, costo per salire.',
+  inputs: ['oggi', 'classifiche', 'costi', 'prezzo_attuale'],
+  fn: (oggi, classifiche, costi, prezzo_attuale) => {
+    const p = prezzo_attuale[0] || {};
+    const campo = { scuole: 'indice_istruzione', basi: 'indice_militare', strade: 'indice_sviluppo', ospedali: 'indice_salute' };
+    const righe = [];
+    for (const ed of ['scuole', 'basi', 'strade', 'ospedali']) {
+      const v = classifiche.filter((r) => r.edificio === ed).sort((a, b) => a.posizione - b.posizione).map((r) => r.edifici);
+      const b = Math.floor(v.length / 10);
+      const ultimo = (k) => 1 + (11 - k) * b; // ultima posizione della fascia k
+      const c = costi.find((r) => r.edificio === ed);
+      const prezzo = c.denaro + ['pelle', 'oro', 'petrolio', 'nte'].reduce((s, k) => s + c[k] * (p[k] || 0), 0);
+      for (const r of oggi) {
+        const n = r[ed], k = r[campo[ed]];
+        const sotto = n > 0 && k >= 1 && k <= 10 ? v[ultimo(k)] : null; // prima provincia della fascia sotto
+        const margine = sotto == null ? null : Math.max(0, n - sotto - 1); // a pari edifici con la fascia sotto si rischia
+        let notti = null;
+        if (sotto != null) { let x = n; notti = 0; while (Math.floor(x) > sotto && notti < 60) { x *= 0.97; notti++; } }
+        const sopra = k < 10 ? v[ultimo(k + 1) - 1] + 1 : null;
+        const mancanti = sopra == null ? null : Math.max(0, sopra - n);
+        righe.push({ provincia: r.provincia, edificio: ed, edifici: n, indice: k, margine, notti_al_calo: notti, mancanti,
+          costo_salire: mancanti == null ? null : Math.round(mancanti * prezzo) });
+      }
+    }
+    return righe;
+  },
+});
+
+dash.calc('allarmi', {
+  title: 'Allarmi',
+  description: 'Risorse sotto 3 notti coperte e indici che scendono con una notte non pagata.',
+  inputs: ['analisi', 'indici'],
+  fn: (analisi, indici) => {
+    const out = [];
+    for (const r of analisi) {
+      const corte = ['denaro', 'pelle', 'oro', 'petrolio', 'nte'].filter((k) => r['notti_' + k] != null && r['notti_' + k] < 3)
+        .sort((a, b) => r['notti_' + a] - r['notti_' + b]);
+      if (!corte.length) continue;
+      const valore = r['notti_' + corte[0]];
+      out.push({ chiave: r.provincia + '-notti', provincia: r.provincia, cosa: corte[0], valore, tipo: 'notti', gravita: valore < 1 ? 2 : 1,
+        dettaglio: corte.map((k) => k + ' ' + r['notti_' + k]) });
+    }
+    for (const r of indici) if (r.notti_al_calo != null && r.notti_al_calo <= 1)
+      out.push({ chiave: r.provincia + '-' + r.edificio, provincia: r.provincia, cosa: r.edificio, valore: r.margine, tipo: 'indice', gravita: 1 });
+    return out.sort((a, b) => b.gravita - a.gravita || a.valore - b.valore);
+  },
+});
+
+dash.calc('occasioni', {
+  title: 'Occasioni',
+  description: 'I 6 aumenti di indice meno cari in denaro equivalente.',
+  inputs: ['indici'],
+  fn: (indici) => indici.filter((r) => r.mancanti > 0).sort((a, b) => a.costo_salire - b.costo_salire).slice(0, 6)
+    .map((r) => ({ chiave: r.provincia + '-' + r.edificio, provincia: r.provincia, edificio: r.edificio, indice: r.indice, mancanti: r.mancanti, costo_salire: r.costo_salire })),
+});
+
+dash.calc('stato_ultimo', {
+  title: 'Tesoro dello Stato, ultimo dato',
+  description: 'Ultima riga «Stato» dello storico: dal gioco (pagina del Paese) quando c\'è, altrimenti dal DEF.',
+  inputs: ['storico'],
+  fn: (storico) => storico.filter((r) => r.provincia === 'Stato' && r.tesoro_eur).slice(-1),
+});
+
+dash.calc('giornaliero', {
+  title: 'Totali Italia per giorno',
+  description: 'Somma per giorno di gettito, manutenzione e confini delle 7 province.',
+  inputs: ['storico'],
+  fn: (storico) => {
+    const m = new Map();
+    for (const r of storico) {
+      if (r.provincia === 'Stato' || r.gettito_eur == null) continue;
+      const g = m.get(r.data) || { data: r.data, gettito: 0, costi: 0, province: 0 };
+      g.gettito += r.gettito_eur; g.costi += (r.manutenzione_eur || 0) + (r.confini_eur || 0); g.province++;
+      m.set(r.data, g);
+    }
+    return [...m.values()].filter((g) => g.province >= 6).sort((a, b) => a.data.localeCompare(b.data)).map((g) => ({ ...g, saldo: g.gettito - g.costi }));
+  },
+});
+</script>
+
+<script>
+const fmtE = (x) => x == null ? '—' : (Math.abs(x) >= 1e6 ? (x / 1e6).toLocaleString('it-IT', { maximumFractionDigits: 2, minimumFractionDigits: 2 }) + ' M€' : Math.round(x).toLocaleString('it-IT') + ' €');
+const fmtN = (x) => x == null ? '—' : Math.round(x).toLocaleString('it-IT');
+const fmtP = (x) => x == null ? '—' : (x * 100).toLocaleString('it-IT', { maximumFractionDigits: 0 }) + '%';
+const fmtNotti = (x) => x == null ? '∞' : x.toLocaleString('it-IT', { maximumFractionDigits: 1 });
+const nomeRis = { denaro: 'denaro', pelle: 'pelle', oro: 'oro', petrolio: 'petrolio', nte: 'NTE' };
+const nomeEd = { scuole: 'scuole', basi: 'basi militari', strade: 'strade', ospedali: 'ospedali' };
+const indiceDi = { scuole: 'istruzione', basi: 'militare', strade: 'sviluppo', ospedali: 'salute' };
+const classeNotti = (x) => x == null ? 'ok' : x < 1 ? 'bad' : x < 3 ? 'warn' : 'ok';
+window.eiFmt = { fmtE, fmtN, fmtP, fmtNotti, classeNotti, nomeRis, nomeEd, indiceDi };
+
+// schede
+const tabs = [...document.querySelectorAll('.ei-tabs button')];
+const mostra = (id) => {
+  for (const b of tabs) b.setAttribute('aria-selected', String(b.dataset.tab === id));
+  for (const s of document.querySelectorAll('.ei-pane')) s.hidden = s.id !== id;
+  dash.setLink(id);
+  window.eiDisegna && window.eiDisegna();
+};
+for (const b of tabs) b.addEventListener('click', () => mostra(b.dataset.tab));
+const iniziale = location.hash.slice(1);
+if (tabs.some((b) => b.dataset.tab === iniziale)) mostra(iniziale);
+
+const clean = (el) => el.classList.remove('dash-skeleton');
+const fill = (sel, src, field, fmt) => {
+  const el = document.querySelector(`[data-source="${src}"][data-field="${field}"]${sel}`);
+  if (!el) return;
+  const d = dash.data(src);
+  if (d.status !== 'ok' || !d.data.length) { el.textContent = '—'; if (d.status !== 'loading') clean(el); return; }
+  el.textContent = fmt(d.data[0][field]); clean(el);
+};
+
+const disegnaQuadro = () => {
+  const t = dash.data('totali');
+  fill('', 'totali', 'saldo_giorno', fmtE);
+  fill('', 'totali', 'gettito_medio', fmtE);
+  fill('', 'totali', 'saldo_con_donazioni', fmtE);
+  const conDon = document.querySelector('[data-field="saldo_con_donazioni"].big'), subDon = document.querySelector('.ei-don-sub');
+  if (t.status === 'ok' && t.data.length && t.data[0].donazioni_giorno != null) {
+    conDon.className = 'big ' + (t.data[0].saldo_con_donazioni < 0 ? 'bad' : 'ok');
+    subDon.textContent = `saldo ${fmtE(t.data[0].saldo_giorno)} + donazioni dei giocatori ${fmtE(t.data[0].donazioni_giorno)} al giorno (media 7 giorni)`;
+  } else subDon.textContent = '—';
+  fill('', 'totali', 'costi_giorno', fmtE);
+  fill('', 'totali', 'copertura', fmtP);
+  fill('', 'totali', 'tesori_province', fmtE);
+  fill('.big', 'stato_ultimo', 'tesoro_eur', fmtE);
+  fill('.sub', 'stato_ultimo', 'data', (d) => 'letto il ' + new Date(d).toLocaleDateString('it-IT', { timeZone: 'UTC' }));
+  const sal = document.querySelector('[data-field="saldo_giorno"].big');
+  if (t.status === 'ok' && t.data.length) sal.className = 'big ' + (t.data[0].saldo_giorno < 0 ? 'bad' : 'ok');
+  const take = document.querySelector('.ei-take');
+  if (t.status === 'ok' && t.data.length) {
+    const r = t.data[0];
+    take.textContent = `L'Italia incassa ${fmtE(r.gettito_medio)} al giorno di tasse e spende ${fmtE(r.costi_giorno)} tra manutenzione e confini: ` +
+      `${r.saldo_giorno < 0 ? 'mancano ' + fmtE(-r.saldo_giorno) : 'avanzano ' + fmtE(r.saldo_giorno)} al giorno` +
+      (r.donazioni_giorno != null ? `; con le donazioni dei giocatori (${fmtE(r.donazioni_giorno)} al giorno) ${r.saldo_con_donazioni < 0 ? 'mancano ' + fmtE(-r.saldo_con_donazioni) : 'avanzano ' + fmtE(r.saldo_con_donazioni)}. ` : '. ') +
+      `${r.in_deficit} province su 7 costano più di quanto rendono` +
+      `${r.critiche ? '; ' + (r.critiche === 1 ? '1 non ha' : r.critiche + ' non hanno') + ' nel tesoro tutta la manutenzione di stanotte (serve una donazione)' : ''}.`;
+  } else take.textContent = '—';
+
+  const ul = document.querySelector('ul[data-source="allarmi"]');
+  const a = dash.data('allarmi');
+  ul.replaceChildren();
+  if (a.status === 'ok') {
+    if (!a.data.length) { const li = document.createElement('li'); li.textContent = 'Nessun allarme.'; ul.append(li); }
+    for (const r of a.data) {
+      const li = document.createElement('li');
+      const pill = document.createElement('span');
+      pill.className = 'pill ' + (r.gravita === 2 ? 'bad' : 'warn');
+      pill.textContent = r.gravita === 2 ? 'stanotte' : 'presto';
+      const txt = document.createElement('span');
+      txt.textContent = r.tipo === 'notti'
+        ? ` ${r.provincia}, notti coperte: ` + r.dettaglio.map((x) => { const [k, v] = x.split(' '); return `${nomeRis[k]} ${fmtNotti(+v)}`; }).join(' · ')
+        : ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} scende con una notte non pagata (margine ${fmtN(r.valore)} ${nomeEd[r.cosa]})`;
+      li.append(pill, txt); ul.append(li);
+    }
+  }
+  const uo = document.querySelector('ul[data-source="occasioni"]');
+  const o = dash.data('occasioni');
+  uo.replaceChildren();
+  if (o.status === 'ok') for (const r of o.data) {
+    const li = document.createElement('li');
+    li.textContent = `${r.provincia}, ${indiceDi[r.edificio]} da ${r.indice} a ${r.indice + 1}: +${fmtN(r.mancanti)} ${nomeEd[r.edificio]}, circa ${fmtE(r.costo_salire)}`;
+    uo.append(li);
+  }
+};
+window.eiQuadro = disegnaQuadro;
+</script>
+
+<script>
+const F = window.eiFmt;
+const tabella = (sel, src, cols) => {
+  const tb = document.querySelector(sel + ' tbody');
+  const d = dash.data(src);
+  tb.replaceChildren();
+  if (d.status !== 'ok') return;
+  const ordine = (r) => { const i = ['Venezia', 'Lombardia', 'Marsiglia', 'Napoli', 'Roma', 'Firenze', 'Palermo'].indexOf(r.provincia); return i < 0 ? 99 : i; };
+  for (const r of [...d.data].sort((a, b) => ordine(a) - ordine(b))) {
+    const tr = document.createElement('tr');
+    for (const [k, f, cls] of cols) {
+      const td = document.createElement('td');
+      td.textContent = f ? f(r[k], r) : r[k];
+      const c = cls && cls(r[k], r);
+      if (c) td.className = c;
+      tr.append(td);
+    }
+    tb.append(tr);
+  }
+};
+
+const disegnaProvince = () => {
+  tabella('#tabella-province', 'analisi', [
+    ['provincia'], ['stato', (v) => v, (v) => v === 'critico' ? 'bad' : v === 'attenzione' ? 'warn' : 'ok'],
+    ['giocatori', F.fmtN], ['fabbriche', F.fmtN], ['gettito_medio', F.fmtE], ['costi_giorno', F.fmtE],
+    ['saldo_giorno', F.fmtE, (v) => v < 0 ? 'bad' : 'ok'], ['tesoro_eur', F.fmtE],
+    ['notti_denaro', F.fmtNotti, F.classeNotti], ['notti_pelle', F.fmtNotti, F.classeNotti], ['notti_oro', F.fmtNotti, F.classeNotti],
+    ['notti_petrolio', F.fmtNotti, F.classeNotti], ['notti_nte', F.fmtNotti, F.classeNotti],
+    ['gettito_per_giocatore', F.fmtE], ['costo_equiv_giorno', F.fmtE],
+  ]);
+  tabella('#tabella-indici-attuali', 'oggi', [
+    ['provincia'], ['indice_istruzione'], ['indice_militare'], ['indice_sviluppo'], ['indice_salute'],
+    ['bonus_diamante'], ['bonus_pelle'], ['bonus_oro'], ['bonus_petrolio'], ['bonus_nte'], ['governatore'],
+  ]);
+};
+
+const disegnaIndici = () => {
+  const tb = document.querySelector('#tabella-soglie tbody');
+  const d = dash.data('indici');
+  tb.replaceChildren();
+  if (d.status !== 'ok') return;
+  const ord = ['Venezia', 'Lombardia', 'Marsiglia', 'Napoli', 'Roma', 'Firenze', 'Palermo'];
+  const eds = ['scuole', 'basi', 'strade', 'ospedali'];
+  const righe = [...d.data].sort((a, b) => ord.indexOf(a.provincia) - ord.indexOf(b.provincia) || eds.indexOf(a.edificio) - eds.indexOf(b.edificio));
+  for (const r of righe) {
+    const tr = document.createElement('tr');
+    tr.dataset.key = encodeURIComponent(r.provincia) + ',' + encodeURIComponent(r.edificio);
+    const celle = [r.provincia, F.nomeEd[r.edificio], F.fmtN(r.edifici), r.indice > 10 ? '10+' : String(r.indice),
+      r.margine == null ? '—' : F.fmtN(r.margine), r.notti_al_calo == null ? '—' : String(r.notti_al_calo),
+      r.mancanti == null ? 'massimo' : '+' + F.fmtN(r.mancanti), r.costo_salire == null ? '—' : F.fmtE(r.costo_salire)];
+    celle.forEach((t, i) => {
+      const td = document.createElement('td'); td.textContent = t;
+      if (i === 5 && r.notti_al_calo != null) td.className = r.notti_al_calo <= 1 ? 'bad' : r.notti_al_calo <= 3 ? 'warn' : '';
+      tr.append(td);
+    });
+    tb.append(tr);
+  }
+};
+window.eiProvince = disegnaProvince;
+window.eiIndici = disegnaIndici;
+</script>
+
+<script>
+dash.calc('piano_stato', {
+  title: 'Stato del piano',
+  description: 'Giorno del piano, saldo previsto fino a oggi e prossima decisione, dall\'ultima riga del diario.',
+  inputs: ['obiettivi', 'diario', 'piano'],
+  fn: (obiettivi, diario, piano) => {
+    const o = obiettivi[0];
+    const ultima = diario.map((r) => r.data).sort().slice(-1)[0];
+    if (!o || !ultima) return [];
+    const giorno = Math.round((new Date(ultima) - new Date(o.inizio)) / 86400000) + 1;
+    const fatti = piano.filter((r) => r.giorno <= giorno);
+    const prossima = piano.find((r) => r.decisione && r.giorno >= giorno);
+    const pal = diario.filter((r) => r.provincia === 'Palermo' && r.data === ultima)[0] || {};
+    const n = prossima && prossima.giorno === 7 ? 1 : 2;
+    const ok = pal.fabbriche >= o['soglia_fabbriche_' + n] || (pal.lavori_oggi || 0) >= o['soglia_lavori_' + n];
+    return [{ giorno, data: ultima, accumulato: fatti.length ? fatti[fatti.length - 1].accumulato : 0,
+      prossima_decisione: prossima ? prossima.data : null, numero_decisione: n,
+      esito_decisione: prossima ? (ok ? 'oggi la soglia è raggiunta: si costruisce' : 'soglia non ancora raggiunta: si aspetta') : 'nessuna' }];
+  },
+});
+
+dash.calc('piano_controlli', {
+  title: 'Controlli del piano',
+  description: 'Indici, edifici e tesoro di Napoli e Palermo confrontati con gli obiettivi del piano.',
+  inputs: ['obiettivi', 'diario'],
+  fn: (obiettivi, diario) => {
+    const o = obiettivi[0];
+    const date = [...new Set(diario.map((r) => r.data))].sort();
+    const ultima = date[date.length - 1], prima = date[date.length - 2];
+    const riga = (p, d) => diario.find((r) => r.provincia === p && r.data === d) || {};
+    const na = riga('Napoli', ultima), pa = riga('Palermo', ultima), naPrima = riga('Napoli', prima);
+    const esito = (buono, medio) => (buono ? 'ok' : medio ? 'attenzione' : 'critico');
+    const notti = pa.manutenzione_eur ? pa.tesoro_eur / pa.manutenzione_eur : null;
+    return [
+      { controllo: 'Napoli · Salute', valore: na.salute, obiettivo: o.napoli_salute, esito: esito(na.salute >= o.napoli_salute, false) },
+      { controllo: 'Napoli · Sviluppo', valore: na.sviluppo, obiettivo: o.napoli_sviluppo, esito: esito(na.sviluppo >= o.napoli_sviluppo, false) },
+      { controllo: 'Napoli · Strade', valore: na.strade, obiettivo: o.napoli_strade_meta, esito: esito(na.strade >= o.napoli_strade_meta, na.strade >= o.napoli_strade_meta - o.napoli_strade_giorno) },
+      { controllo: 'Napoli · Ospedali', valore: na.ospedali, obiettivo: o.napoli_ospedali_meta, esito: esito(na.ospedali >= o.napoli_ospedali_meta, na.ospedali >= o.napoli_ospedali_meta - o.napoli_ospedali_giorno) },
+      { controllo: 'Napoli · Scuole in calo (mantenimento non pagato)', valore: na.scuole, obiettivo: naPrima.scuole != null ? 'meno di ' + naPrima.scuole : 'serve la lettura di domani',
+        esito: naPrima.scuole == null ? 'attenzione' : esito(na.scuole < naPrima.scuole, false) },
+      { controllo: 'Palermo · Salute', valore: pa.salute, obiettivo: o.palermo_salute, esito: esito(pa.salute >= o.palermo_salute, true) },
+      { controllo: 'Palermo · Ospedali', valore: pa.ospedali, obiettivo: o.palermo_ospedali_meta, esito: esito(pa.ospedali >= o.palermo_ospedali_meta, true) },
+      { controllo: 'Palermo · Notti coperte dal tesoro', valore: notti == null ? null : Math.round(notti * 10) / 10, obiettivo: 'almeno ' + o.notti_minime_tesoro,
+        esito: notti == null ? 'attenzione' : esito(notti >= o.notti_minime_tesoro, notti >= 1) },
+    ];
+  },
+});
+
+dash.calc('piano_crescita', {
+  title: 'Crescita di Palermo',
+  description: 'Fabbriche, lavori del giorno e giocatori di Palermo contro partenza e soglie delle due decisioni.',
+  inputs: ['obiettivi', 'diario'],
+  fn: (obiettivi, diario) => {
+    const o = obiettivi[0];
+    const pal = diario.filter((r) => r.provincia === 'Palermo').sort((a, b) => a.data.localeCompare(b.data));
+    const ultima = pal[pal.length - 1] || {};
+    return [
+      { misura: 'Fabbriche', partenza: o.palermo_fabbriche_partenza, oggi: ultima.fabbriche, soglia_1: o.soglia_fabbriche_1, soglia_2: o.soglia_fabbriche_2 },
+      { misura: 'Lavori del giorno', partenza: pal[0] ? pal[0].lavori_oggi : null, oggi: ultima.lavori_oggi, soglia_1: o.soglia_lavori_1, soglia_2: o.soglia_lavori_2 },
+      { misura: 'Giocatori', partenza: o.palermo_giocatori_partenza, oggi: ultima.giocatori, soglia_1: null, soglia_2: null },
+    ];
+  },
+});
+</script>
+
+<script>
+const P = window.eiFmt;
+const corpo = (sel, righe, celle, colore) => {
+  const tb = document.querySelector(sel + ' tbody');
+  tb.replaceChildren();
+  for (const r of righe) {
+    const tr = document.createElement('tr');
+    celle(r).forEach((t, i) => { const td = document.createElement('td'); td.textContent = t == null ? '—' : t; const c = colore && colore(r, i); if (c) td.className = c; tr.append(td); });
+    tb.append(tr);
+  }
+};
+const segno = (x) => x == null ? '—' : (x >= 0 ? '+' : '−') + Math.abs(Math.round(x)).toLocaleString('it-IT', { useGrouping: 'always' });
+const giornoIt = (d) => new Date(d).toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'numeric', timeZone: 'UTC' });
+window.eiPiano = () => {
+  const st = dash.data('piano_stato'), ob = dash.data('obiettivi');
+  const set = (src, field, txt) => { const el = document.querySelector(`#piano [data-source="${src}"][data-field="${field}"]`); if (el) el.textContent = txt; };
+  if (st.status === 'ok' && st.data.length) {
+    const r = st.data[0];
+    set('piano_stato', 'giorno', r.giorno > 14 ? 'concluso (giorno ' + r.giorno + ')' : r.giorno < 1 ? 'non iniziato' : r.giorno + ' di 14');
+    set('piano_stato', 'data', 'ultima lettura: ' + giornoIt(r.data));
+    set('piano_stato', 'accumulato', segno(r.accumulato));
+    set('piano_stato', 'prossima_decisione', r.prossima_decisione ? giornoIt(r.prossima_decisione) : '—');
+    document.querySelector('#piano .ei-esito').textContent = 'Decisione ' + r.numero_decisione + ': ' + r.esito_decisione;
+  }
+  if (ob.status === 'ok' && ob.data.length) {
+    set('obiettivi', 'saldo_notte', segno(ob.data[0].saldo_notte));
+    document.querySelector('#piano .ei-pareggio').textContent = 'spesa del primo giorno ripagata al giorno ' + ob.data[0].giorno_pareggio;
+    const o = ob.data[0];
+    document.querySelector('#piano .ei-ris').textContent = `${segno(o.saldo_notte_pelle)} pelle · ${segno(o.saldo_notte_oro)} oro · ${segno(o.saldo_notte_petrolio)} petrolio · ${segno(o.saldo_notte_nte)} NTE`;
+    document.querySelector('#piano .ei-ris-sub').textContent = `valgono ${segno(o.valore_risorse_notte)}; con i soldi ${segno(o.saldo_totale_notte)} a notte. In pari: pelle giorno ${o.pareggio_pelle}, NTE ${o.pareggio_nte}, petrolio ${o.pareggio_petrolio}, oro ${o.pareggio_oro}`;
+  }
+  const c = dash.data('piano_controlli');
+  if (c.status === 'ok') corpo('#piano-controlli', c.data, (r) => [r.controllo, r.valore, r.obiettivo, r.esito],
+    (r, i) => i === 3 ? (r.esito === 'ok' ? 'ok' : r.esito === 'attenzione' ? 'warn' : 'bad') : '');
+  const cr = dash.data('piano_crescita');
+  if (cr.status === 'ok') corpo('#piano-crescita', cr.data, (r) => [r.misura, r.partenza, r.oggi, r.soglia_1, r.soglia_2],
+    (r, i) => i === 2 && r.soglia_1 != null && r.oggi != null ? (r.oggi >= r.soglia_2 ? 'ok' : r.oggi >= r.soglia_1 ? 'warn' : '') : '');
+  const pi = dash.data('piano'), oggiG = st.status === 'ok' && st.data.length ? st.data[0].giorno : 0;
+  if (pi.status === 'ok') corpo('#piano-calendario', pi.data, (r) => [r.giorno, giornoIt(r.data), r.napoli, r.palermo,
+    Math.round(r.speso).toLocaleString('it-IT'), Math.round(r.risparmio).toLocaleString('it-IT'), segno(r.saldo), segno(r.accumulato),
+    segno(r.saldo_pelle), segno(r.accumulato_pelle), segno(r.saldo_oro), segno(r.accumulato_oro),
+    segno(r.saldo_petrolio), segno(r.accumulato_petrolio), segno(r.saldo_nte), segno(r.accumulato_nte)],
+    (r, i) => {
+      const campi = [null, null, null, null, null, null, 'saldo', 'accumulato', 'saldo_pelle', 'accumulato_pelle', 'saldo_oro', 'accumulato_oro',
+        'saldo_petrolio', 'accumulato_petrolio', 'saldo_nte', 'accumulato_nte'];
+      if (campi[i]) return r[campi[i]] >= 0 ? 'ok' : 'bad';
+      return i === 0 && r.giorno === oggiG ? 'warn' : '';
+    });
+  const di = dash.data('diario');
+  if (di.status === 'ok') corpo('#piano-diario', [...di.data].sort((a, b) => b.data.localeCompare(a.data) || a.provincia.localeCompare(b.provincia)),
+    (r) => [giornoIt(r.data), r.provincia, r.scuole, r.caserme, r.strade, r.ospedali, r.istruzione, r.militare, r.sviluppo, r.salute,
+      P.fmtE(r.tesoro_eur), r.fabbriche, r.lavori_oggi]);
+};
+</script>
+
+<script>
+const G = window.eiFmt;
+const tip = (box) => { let t = box.querySelector('.ei-tip'); if (!t) { t = document.createElement('div'); t.className = 'ei-tip'; t.hidden = true; box.append(t); } return t; };
+const etichetteAsse = (g) => g.attr('font-size', null).attr('font-family', null).call((s) => s.selectAll('text').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)')).call((s) => s.selectAll('line,path').attr('stroke', 'var(--cds-chart-axis)'));
+const mil = (x) => (x / 1e6).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' M';
+
+const barreSaldo = () => {
+  const box = document.querySelector('#saldo-province .ei-chart');
+  const d = dash.data('analisi');
+  box.querySelector('svg')?.remove();
+  if (d.status !== 'ok' || !box.clientWidth) return;
+  const rows = [...d.data].sort((a, b) => a.saldo_giorno - b.saldo_giorno);
+  const W = box.clientWidth, rowH = 28, M = { t: 8, r: 16, b: 24, l: 84 }, H = M.t + M.b + rows.length * rowH;
+  const ext = d3.extent([0, ...rows.map((r) => r.saldo_giorno)]);
+  const x = d3.scaleLinear(ext, [M.l, W - M.r]).nice();
+  const y = d3.scaleBand(rows.map((r) => r.provincia), [M.t, H - M.b]).padding(0.3);
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.floor(W / 110))).tickFormat(mil)).call(etichetteAsse);
+  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).tickSize(0)).call(etichetteAsse).call((g) => g.select('.domain').remove());
+  svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--cds-chart-reference)');
+  const t = tip(box);
+  svg.append('g').selectAll('rect').data(rows).join('rect')
+    .attr('x', (r) => Math.min(x(0), x(r.saldo_giorno))).attr('width', (r) => Math.abs(x(r.saldo_giorno) - x(0)))
+    .attr('y', (r) => y(r.provincia)).attr('height', y.bandwidth()).attr('rx', 4)
+    .attr('fill', (r) => r.saldo_giorno < 0 ? 'var(--cds-chart-status-critical)' : dash.colors[0])
+    .on('mousemove', (ev, r) => { const [mx, my] = d3.pointer(ev, box); t.hidden = false; t.textContent = `${r.provincia}: ${G.fmtE(r.saldo_giorno)} al giorno`; t.style.left = Math.min(mx + 12, W - 180) + 'px'; t.style.top = (my + 12) + 'px'; })
+    .on('mouseleave', () => { t.hidden = true; });
+};
+
+const lineeGiornaliero = () => {
+  const box = document.querySelector('#andamento-italia .ei-chart');
+  const d = dash.data('giornaliero');
+  box.querySelector('svg')?.remove();
+  if (d.status !== 'ok' || !box.clientWidth || !d.data.length) return;
+  const rows = d.data.map((r) => ({ ...r, d: new Date(r.data) }));
+  const W = box.clientWidth, H = 240, M = { t: 12, r: 70, b: 24, l: 44 };
+  const x = d3.scaleUtc(d3.extent(rows, (r) => r.d), [M.l, W - M.r]);
+  const y = d3.scaleLinear([0, d3.max(rows, (r) => Math.max(r.gettito, r.costi))], [H - M.b, M.t]).nice();
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.floor(W / 100))).tickFormat((v) => v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' }))).call(etichetteAsse);
+  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(mil).tickSize(-(W - M.l - M.r))).call(etichetteAsse).call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
+  const serie = [['gettito', 'Gettito', dash.colors[0]], ['costi', 'Costi', 'var(--cds-chart-status-critical)']];
+  for (const [k, nome, col] of serie) {
+    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('d', d3.line((r) => x(r.d), (r) => y(r[k])));
+    const last = rows[rows.length - 1];
+    svg.append('text').attr('x', W - M.r + 6).attr('y', y(last[k])).attr('dy', '0.35em').attr('fill', col).style('font-size', 'var(--cds-font-size-caption)').text(nome);
+  }
+  const t = tip(box);
+  const dot = svg.append('line').attr('stroke', 'var(--cds-chart-reference)').attr('y1', M.t).attr('y2', H - M.b).attr('visibility', 'hidden');
+  svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
+    .on('mousemove', (ev) => {
+      const [mx, my] = d3.pointer(ev, box);
+      const i = d3.bisectCenter(rows.map((r) => +r.d), +x.invert(mx));
+      const r = rows[i]; dot.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('visibility', 'visible');
+      t.hidden = false;
+      t.textContent = `${r.d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · gettito ${G.fmtE(r.gettito)} · costi ${G.fmtE(r.costi)} · saldo ${G.fmtE(r.saldo)}`;
+      t.style.left = Math.max(0, Math.min(mx + 12, W - 320)) + 'px'; t.style.top = (my + 12) + 'px';
+    })
+    .on('mouseleave', () => { t.hidden = true; dot.attr('visibility', 'hidden'); });
+};
+
+const lineaStato = () => {
+  const box = document.querySelector('#andamento-stato .ei-chart');
+  const d = dash.data('storico');
+  box.querySelector('svg')?.remove();
+  if (d.status !== 'ok' || !box.clientWidth) return;
+  const rows = d.data.filter((r) => r.provincia === 'Stato' && r.tesoro_eur).map((r) => ({ d: new Date(r.data), v: r.tesoro_eur }));
+  if (!rows.length) return;
+  const W = box.clientWidth, H = 220, M = { t: 12, r: 70, b: 24, l: 52 };
+  const x = d3.scaleUtc(d3.extent(rows, (r) => r.d), [M.l, W - M.r]);
+  const y = d3.scaleLinear(d3.extent(rows, (r) => r.v), [H - M.b, M.t]).nice();
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.floor(W / 100))).tickFormat((v) => v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' }))).call(etichetteAsse);
+  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(mil).tickSize(-(W - M.l - M.r))).call(etichetteAsse).call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
+  svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', dash.colors[0]).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('d', d3.line((r) => x(r.d), (r) => y(r.v)));
+  const last = rows[rows.length - 1];
+  svg.append('circle').attr('cx', x(last.d)).attr('cy', y(last.v)).attr('r', 3.5).attr('fill', dash.colors[0]);
+  svg.append('text').attr('x', x(last.d) + 6).attr('y', y(last.v)).attr('dy', '0.35em').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(mil(last.v));
+};
+
+// ——— Storico: dati in forma lunga, bilancio per governo, filtri e grafici ———
+const PROVS = ['Venezia', 'Lombardia', 'Marsiglia', 'Napoli', 'Roma', 'Firenze', 'Palermo'];
+const PROVS_ST = [...PROVS, 'Bahrein']; // il Bahrein fu italiano fino al 9/10: grigio neutro, le 8 tinte sono di 7 province e Stato
+const colore = (p) => (p === 'Stato' ? dash.colors[7] : p === 'Bahrein' ? 'var(--color-fg-muted)' : dash.colors[PROVS.indexOf(p)]); // ogni provincia ha sempre il suo colore
+const RIS_ST = ['eur', 'pelle', 'oro', 'petrolio', 'nte'];
+
+dash.calc('storico_lungo', {
+  title: 'Storico giorno per giorno',
+  description: 'Un valore per giorno, provincia (o Stato), misura e risorsa. «valore» = denaro + risorse ai prezzi medi (solo se ci sono tutte); contributo = gettito − manutenzione − confini.',
+  inputs: ['storico', 'prezzo_attuale'],
+  fn: (storico, prezzo_attuale) => {
+    const p = prezzo_attuale[0] || {};
+    const prezzo = { eur: 1, pelle: p.pelle || 0, oro: p.oro || 0, petrolio: p.petrolio || 0, nte: p.nte || 0 };
+    const out = [];
+    const put = (r, misura, risorsa, v) => { if (v != null && Number.isFinite(v)) out.push({ data: r.data, provincia: r.provincia, governo: r.governo, misura, risorsa, valore: v }); };
+    const valore = (r, m) => (RIS_ST.every((k) => r[m + '_' + k] != null) ? RIS_ST.reduce((a, k) => a + r[m + '_' + k] * prezzo[k], 0) : null);
+    for (const r of storico) {
+      for (const m of ['tesoro', 'gettito', 'manutenzione', 'donazioni']) {
+        for (const k of RIS_ST) put(r, m, k, r[m + '_' + k]);
+        put(r, m, 'valore', valore(r, m) == null ? null : Math.round(valore(r, m)));
+      }
+      if (r.confini_eur != null) { put(r, 'confini', 'eur', r.confini_eur); put(r, 'confini', 'valore', r.confini_eur); }
+      if (r.tassazioni != null) put(r, 'tassazioni', 'n', r.tassazioni);
+      if (r.gettito_eur != null && r.manutenzione_eur != null) {
+        put(r, 'contributo', 'eur', r.gettito_eur - r.manutenzione_eur - (r.confini_eur || 0));
+        for (const k of RIS_ST.slice(1)) if (r['gettito_' + k] != null && r['manutenzione_' + k] != null) put(r, 'contributo', k, r['gettito_' + k] - r['manutenzione_' + k]);
+        const vg = valore(r, 'gettito'), vm = valore(r, 'manutenzione');
+        if (vg != null && vm != null) put(r, 'contributo', 'valore', Math.round(vg - vm - (r.confini_eur || 0)));
+      }
+    }
+    return out;
+  },
+});
+
+dash.calc('storico_governi', {
+  title: 'Bilancio per governo',
+  description: 'Per ogni governo, sui giorni con i dati di almeno 6 province: gettito, manutenzione, confini e saldo in denaro; donazioni a province e Stato; tesoro dello Stato a fine periodo.',
+  inputs: ['storico', 'governi'],
+  fn: (storico, governi) => {
+    const ultimo = storico.map((r) => r.data).sort().slice(-1)[0];
+    return governi.map((g) => {
+      const al = g.fine < ultimo ? g.fine : ultimo;
+      const righe = storico.filter((r) => r.data >= g.inizio && r.data <= al);
+      const prov = righe.filter((r) => r.provincia !== 'Stato');
+      const conta = new Map();
+      for (const r of prov) if (r.gettito_eur != null) conta.set(r.data, (conta.get(r.data) || 0) + 1);
+      const completi = new Set([...conta].filter(([, n]) => n >= 6).map(([d]) => d));
+      const s = (k) => prov.filter((r) => completi.has(r.data)).reduce((a, r) => a + (r[k] || 0), 0);
+      const tes = righe.filter((r) => r.provincia === 'Stato' && r.tesoro_eur != null).sort((a, b) => a.data.localeCompare(b.data));
+      const giorni = completi.size, saldo = s('gettito_eur') - s('manutenzione_eur') - s('confini_eur');
+      return { governo: g.governo, dal: g.inizio, al, giorni,
+        gettito: giorni ? s('gettito_eur') : null, manutenzione: giorni ? s('manutenzione_eur') : null, confini: giorni ? s('confini_eur') : null,
+        saldo: giorni ? saldo : null, saldo_giorno: giorni ? Math.round(saldo / giorni) : null,
+        donazioni_province: prov.reduce((a, r) => a + (r.donazioni_eur || 0), 0),
+        donazioni_stato: righe.filter((r) => r.provincia === 'Stato').reduce((a, r) => a + (r.donazioni_eur || 0), 0),
+        tesoro_stato_fine: tes.length ? tes[tes.length - 1].tesoro_eur : null };
+    });
+  },
+});
+
+// filtri: valori nei parametri della dashboard (nessuna query li usa: cambiano solo il disegno)
+const ST_BASE = { st_dal: null, st_al: null, st_prov: PROVS_ST, st_misura: 'gettito', st_ris: 'eur' };
+const stP = () => { const q = dash.params ? dash.params() : {}; const o = { ...ST_BASE }; for (const k in q) if (q[k] != null) o[k] = q[k]; return o; };
+const stSet = (o) => dash.setParams(o);
+const giornoMs = (d) => Date.parse(d + 'T00:00:00Z');
+const isoMeno = (d, n) => new Date(giornoMs(d) - n * 86400000).toISOString().slice(0, 10);
+const nomeMisura = { tesoro: 'Tesoro', gettito: 'Gettito', manutenzione: 'Manutenzione', confini: 'Confini', donazioni: 'Donazioni ricevute', contributo: "Contributo all'Italia", tassazioni: 'Tassazioni' };
+const nomeRisSt = { eur: 'denaro', valore: 'valore totale', pelle: 'pelle', oro: 'oro', petrolio: 'petrolio', nte: 'NTE', n: 'numero' };
+const fmtRis = (ris) => (ris === 'eur' || ris === 'valore' ? G.fmtE : (v) => G.fmtN(v));
+const fmtAsse = (ris) => (v) => (ris === 'eur' || ris === 'valore' ? mil(v) : Math.abs(v) >= 1e6 ? (v / 1e6).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' M' : Math.abs(v) >= 1e3 ? (v / 1e3).toLocaleString('it-IT', { maximumFractionDigits: 0 }) + ' k' : String(v));
+const dataIt = (d) => new Date(giornoMs(d)).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+
+// filtri: costruiti una volta, aggiornati a ogni disegno
+(() => {
+  const chips = document.getElementById('st-prov');
+  for (const p of PROVS_ST) {
+    const b = document.createElement('button'); b.type = 'button'; b.dataset.prov = p;
+    const i = document.createElement('i'); i.style.background = colore(p); b.append(i, document.createTextNode(p)); chips.append(b);
+    b.addEventListener('click', () => {
+      const scelte = new Set(stP().st_prov);
+      if (scelte.has(p)) { if (scelte.size > 1) scelte.delete(p); } else scelte.add(p);
+      stSet({ st_prov: PROVS_ST.filter((x) => scelte.has(x)) });
+    });
+  }
+  document.querySelectorAll('#st-preset button').forEach((b) => b.addEventListener('click', () => {
+    const lungo = dash.data('storico_lungo'); if (lungo.status !== 'ok' || !lungo.data.length) return;
+    const date = lungo.data.map((r) => r.data).sort(), al = date[date.length - 1], n = +b.dataset.giorni;
+    stSet({ st_dal: n ? isoMeno(al, n - 1) : date[0], st_al: al, st_gov: null });
+  }));
+  for (const [id, chiave] of [['st-dal', 'st_dal'], ['st-al', 'st_al']]) {
+    const el = document.getElementById(id);
+    el.addEventListener('change', () => {
+      if (!el.value || !el.validity.valid || el.value < '2026-01-01') return;
+      const o = { [chiave]: el.value, st_gov: null }, q = stP();
+      // un periodo rovesciato diventa un solo giorno
+      if (chiave === 'st_dal' && q.st_al && el.value > q.st_al) o.st_al = el.value;
+      if (chiave === 'st_al' && q.st_dal && el.value < q.st_dal) o.st_dal = el.value;
+      stSet(o);
+    });
+    el.addEventListener('blur', () => { el.value = stP()[chiave] || ''; });
+  }
+  document.getElementById('st-gov').addEventListener('change', (e) => {
+    const g = (dash.data('governi').data || []).find((x) => x.governo === e.target.value);
+    if (g) stSet({ st_gov: g.governo, st_dal: g.inizio, st_al: g.fine }); else stSet({ st_gov: null, st_dal: null, st_al: null });
+  });
+  document.getElementById('st-misura').addEventListener('change', (e) => stSet({ st_misura: e.target.value }));
+  document.getElementById('st-ris').addEventListener('change', (e) => stSet({ st_ris: e.target.value }));
+  document.getElementById('st-reset').addEventListener('click', () => (dash.resetParams ? dash.resetParams() : null));
+})();
+
+// grafico a linee con fasce dei governi e mirino: serie = [{nome, col, valori: Map(data → numero)}]
+const grafLinee = (box, serie, ris, governi, zero = true) => {
+  box.querySelector('svg')?.remove();
+  const tutte = [...new Set(serie.flatMap((s) => [...s.valori.keys()]))].sort();
+  if (!box.clientWidth || !tutte.length) return;
+  const W = box.clientWidth, H = 260, M = { t: 22, r: 16, b: 24, l: 52 };
+  const ext = d3.extent(tutte, giornoMs);
+  if (ext[0] === ext[1]) { ext[0] -= 43200000; ext[1] += 43200000; }
+  const x = d3.scaleUtc(ext, [M.l, W - M.r]);
+  const vals = serie.flatMap((s) => [...s.valori.values()]);
+  // un livello (il tesoro) si legge meglio senza lo zero; i flussi partono da zero
+  const y = d3.scaleLinear(zero ? [Math.min(0, d3.min(vals)), Math.max(0, d3.max(vals))] : d3.extent(vals), [H - M.b, M.t]).nice();
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+  (governi || []).forEach((g, i) => {
+    const a = Math.max(ext[0], giornoMs(g.inizio) - 43200000), b = Math.min(ext[1], giornoMs(g.fine) + 43200000);
+    if (b <= a) return;
+    svg.append('rect').attr('x', x(a)).attr('width', x(b) - x(a)).attr('y', M.t).attr('height', H - M.b - M.t).attr('fill', 'var(--color-border-line)').attr('opacity', i % 2 ? 0.35 : 0.15);
+    if (x(b) - x(a) > 60) svg.append('text').attr('x', x(a) + 4).attr('y', M.t - 6).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(g.governo.replace('Governo ', ''));
+  });
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.floor(W / 90))).tickFormat((v) => v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' }))).call(etichetteAsse);
+  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(fmtAsse(ris)).tickSize(-(W - M.l - M.r))).call(etichetteAsse).call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
+  if (y.domain()[0] < 0 && y.domain()[1] > 0) svg.append('line').attr('x1', M.l).attr('x2', W - M.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-reference)');
+  for (const s of serie) {
+    const pts = tutte.map((d) => [d, s.valori.get(d)]);
+    svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', s.col).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+      .attr('d', d3.line().defined((p) => p[1] != null).x((p) => x(giornoMs(p[0]))).y((p) => y(p[1])));
+    if (tutte.length <= 20) svg.append('g').selectAll('circle').data(pts.filter((p) => p[1] != null)).join('circle').attr('cx', (p) => x(giornoMs(p[0]))).attr('cy', (p) => y(p[1])).attr('r', 2.5).attr('fill', s.col);
+  }
+  const tp = tip(box), f = fmtRis(ris);
+  const riga = svg.append('line').attr('stroke', 'var(--cds-chart-reference)').attr('y1', M.t).attr('y2', H - M.b).attr('visibility', 'hidden');
+  svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
+    .on('mousemove', (ev) => {
+      const [mx, my] = d3.pointer(ev, box);
+      const d = tutte[d3.bisectCenter(tutte.map(giornoMs), +x.invert(mx))];
+      riga.attr('x1', x(giornoMs(d))).attr('x2', x(giornoMs(d))).attr('visibility', 'visible');
+      tp.replaceChildren(); tp.hidden = false;
+      const t = document.createElement('div'); t.textContent = dataIt(d); tp.append(t);
+      for (const s of serie) { const v = s.valori.get(d); if (v == null) continue; const r = document.createElement('div'); const k = document.createElement('i'); k.style.cssText = `display:inline-block;width:12px;height:2px;margin-right:6px;vertical-align:middle;background:${s.col}`; const b = document.createElement('b'); b.textContent = f(v) + ' '; r.append(k, b, document.createTextNode(s.nome)); tp.append(r); }
+      tp.style.left = Math.max(0, Math.min(mx + 12, W - 230)) + 'px'; tp.style.top = (my + 12) + 'px';
+    })
+    .on('mouseleave', () => { tp.hidden = true; riga.attr('visibility', 'hidden'); });
+};
+const legenda = (ul, serie) => { ul.replaceChildren(...serie.map((s) => { const li = document.createElement('li'); const i = document.createElement('i'); i.style.background = s.col; li.append(i, document.createTextNode(s.nome)); return li; })); };
+
+const disegnaStorico = () => {
+  const lungo = dash.data('storico_lungo'), gov = dash.data('governi'), sg = dash.data('storico_governi');
+  const p = stP(), governi = gov.status === 'ok' ? gov.data : [];
+  // controlli
+  const selGov = document.getElementById('st-gov');
+  selGov.replaceChildren(new Option('Tutti i governi', ''), ...governi.map((g) => new Option(g.governo.replace('Governo ', ''), g.governo)));
+  selGov.value = p.st_gov || '';
+  document.getElementById('st-misura').value = p.st_misura;
+  const selRis = document.getElementById('st-ris');
+  for (const o of selRis.options) o.disabled = (p.st_misura === 'confini' && !['eur', 'valore'].includes(o.value)) || p.st_misura === 'tassazioni';
+  selRis.value = p.st_ris;
+  document.querySelectorAll('#st-prov button').forEach((b) => b.setAttribute('aria-pressed', String(p.st_prov.includes(b.dataset.prov))));
+  if (lungo.status !== 'ok' || !lungo.data.length) { document.getElementById('st-nota').textContent = '—'; return; }
+  const tutteDate = [...new Set(lungo.data.map((r) => r.data))].sort();
+  const dal = p.st_dal || tutteDate[0], al = p.st_al || tutteDate[tutteDate.length - 1];
+  for (const [id, v] of [['st-dal', dal], ['st-al', al]]) { const el = document.getElementById(id); if (el !== document.activeElement) el.value = v; }
+  const giorniPeriodo = tutteDate.filter((d) => d >= dal && d <= al).length;
+  document.querySelectorAll('#st-preset button').forEach((b) => { const n = +b.dataset.giorni; b.setAttribute('aria-pressed', String(!p.st_gov && al === tutteDate[tutteDate.length - 1] && (n ? dal === isoMeno(al, n - 1) : dal === tutteDate[0]))); });
+  const nel = (r) => r.data >= dal && r.data <= al;
+  const scelte = new Set(p.st_prov);
+  const ris = p.st_misura === 'tassazioni' ? 'n' : (p.st_misura === 'confini' && !['eur', 'valore'].includes(p.st_ris)) ? 'eur' : p.st_ris;
+  // giorni completi: almeno 6 province con il gettito in denaro
+  const conta = new Map();
+  for (const r of lungo.data) if (r.misura === 'gettito' && r.risorsa === 'eur' && r.provincia !== 'Stato') conta.set(r.data, (conta.get(r.data) || 0) + 1);
+  const completi = new Set([...conta].filter(([, n]) => n >= 6).map(([d]) => d));
+  const rIt = (m, risorsa) => lungo.data.filter((r) => r.misura === m && r.risorsa === risorsa && nel(r) && scelte.has(r.provincia));
+  const somma = (rows, filtroGiorno) => { const mp = new Map(); for (const r of rows) if (!filtroGiorno || filtroGiorno(r.data)) mp.set(r.data, (mp.get(r.data) || 0) + r.valore); return mp; };
+  const risIt = ['eur', 'valore'].includes(ris) || ris === 'n' ? (ris === 'n' ? 'eur' : ris) : ris;
+  const giorniCompleti = [...completi].filter((d) => d >= dal && d <= al);
+  document.getElementById('st-nota').textContent = `Dal ${dataIt(dal)} al ${dataIt(al)}: ${giorniPeriodo} giorni con dati, ${giorniCompleti.length} completi. ` +
+    `${scelte.size === PROVS_ST.length ? 'Tutte le province (Bahrein compreso, italiano fino al 9/10)' : scelte.size + (scelte.size === 1 ? ' provincia su ' : ' province su ') + PROVS_ST.length}. Misura: ${nomeMisura[p.st_misura]}, ${nomeRisSt[ris]}.` + (ris === 'valore' ? ' Il valore totale c\'è solo nei giorni del DEF, che registra anche le risorse.' : '');
+  // riquadri
+  const fI = fmtRis(risIt), tot = (mp) => [...mp.values()].reduce((a, v) => a + v, 0);
+  const get = somma(rIt('gettito', risIt), (d) => completi.has(d)), man = somma(rIt('manutenzione', risIt), (d) => completi.has(d));
+  const conf = ['eur', 'valore'].includes(risIt) ? somma(rIt('confini', risIt), (d) => completi.has(d)) : new Map();
+  const donP = somma(rIt('donazioni', risIt));
+  const donS = somma(lungo.data.filter((r) => r.provincia === 'Stato' && r.misura === 'donazioni' && r.risorsa === risIt && nel(r)));
+  const set = (id, t) => { document.getElementById(id).textContent = t; };
+  set('st-t-gettito', get.size ? fI(tot(get)) : '—'); set('st-t-gettito-s', `${get.size} giorni completi · ${nomeRisSt[risIt]}`);
+  set('st-t-costi', man.size ? fI(tot(man) + tot(conf)) : '—'); set('st-t-costi-s', man.size ? `manutenzione ${fI(tot(man))}` + (conf.size ? ` · confini ${fI(tot(conf))}` : '') : '—');
+  set('st-t-don', fI(tot(donP) + tot(donS))); set('st-t-don-s', `province ${fI(tot(donP))} · Stato ${fI(tot(donS))}`);
+  set('st-t-saldo', get.size ? fI(tot(get) - tot(man) - tot(conf)) : '—');
+  const tesS = lungo.data.filter((r) => r.provincia === 'Stato' && r.misura === 'tesoro' && r.risorsa === risIt && nel(r)).sort((a, b) => a.data.localeCompare(b.data));
+  set('st-t-stato', tesS.length ? fI(tesS[tesS.length - 1].valore) : '—');
+  set('st-t-stato-s', tesS.length > 1 ? `${tesS[tesS.length - 1].valore >= tesS[0].valore ? '+' : '−'}${fI(Math.abs(tesS[tesS.length - 1].valore - tesS[0].valore))} dal ${dataIt(tesS[0].data)}` : tesS.length ? 'letto il ' + dataIt(tesS[0].data) : 'nessun dato nel periodo');
+  // Italia giorno per giorno
+  const serieIt = [
+    { nome: 'Gettito', col: dash.colors[0], valori: get },
+    { nome: 'Manutenzione', col: dash.colors[1], valori: man },
+    ...(conf.size ? [{ nome: 'Confini', col: dash.colors[2], valori: conf }] : []),
+    { nome: 'Donazioni alle province', col: dash.colors[3], valori: somma(rIt('donazioni', risIt), (d) => completi.has(d)) },
+    { nome: 'Donazioni allo Stato', col: dash.colors[4], valori: somma(lungo.data.filter((r) => r.provincia === 'Stato' && r.misura === 'donazioni' && r.risorsa === risIt && nel(r)), (d) => completi.has(d)) },
+  ].filter((s) => s.valori.size);
+  legenda(document.getElementById('st-leg-italia'), serieIt);
+  grafLinee(document.querySelector('#storico-italia .ei-chart'), serieIt, risIt, governi);
+  // province a confronto
+  const mis = p.st_misura;
+  document.getElementById('st-titolo-prov').textContent = `${nomeMisura[mis]} per provincia (${nomeRisSt[ris]})`;
+  const serieP = PROVS_ST.filter((x) => scelte.has(x)).map((x) => ({ nome: x, col: colore(x),
+    valori: new Map(lungo.data.filter((r) => r.provincia === x && r.misura === mis && r.risorsa === ris && nel(r)).map((r) => [r.data, r.valore])) })).filter((s) => s.valori.size);
+  legenda(document.getElementById('st-leg-prov'), serieP);
+  grafLinee(document.querySelector('#storico-province .ei-chart'), serieP, ris, governi, mis !== 'tesoro');
+  // tesoro dello Stato
+  grafLinee(document.querySelector('#storico-stato .ei-chart'), [{ nome: 'Stato', col: colore('Stato'), valori: new Map(tesS.map((r) => [r.data, r.valore])) }], risIt, governi, false);
+  // classifica del periodo
+  document.getElementById('st-titolo-class').textContent = `Classifica: ${nomeMisura[mis].toLowerCase()} (${nomeRisSt[ris]})`;
+  const box = document.querySelector('#storico-classifica .ei-chart');
+  box.querySelector('svg')?.remove();
+  const righe = PROVS_ST.filter((x) => scelte.has(x)).map((x) => {
+    const rs = lungo.data.filter((r) => r.provincia === x && r.misura === mis && r.risorsa === ris && nel(r)).sort((a, b) => a.data.localeCompare(b.data));
+    return { provincia: x, v: !rs.length ? null : mis === 'tesoro' ? rs[rs.length - 1].valore : rs.reduce((a, r) => a + r.valore, 0) };
+  }).filter((r) => r.v != null).sort((a, b) => b.v - a.v);
+  if (righe.length && box.clientWidth) {
+    const W = box.clientWidth, rowH = 28, M = { t: 8, r: 16, b: 24, l: 84 }, H = M.t + M.b + righe.length * rowH;
+    const xs = d3.scaleLinear(d3.extent([0, ...righe.map((r) => r.v)]), [M.l, W - M.r]).nice();
+    const ys = d3.scaleBand(righe.map((r) => r.provincia), [M.t, H - M.b]).padding(0.3);
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(xs).ticks(Math.max(2, Math.floor(W / 110))).tickFormat(fmtAsse(ris))).call(etichetteAsse);
+    svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(ys).tickSize(0)).call(etichetteAsse).call((g) => g.select('.domain').remove());
+    svg.append('line').attr('x1', xs(0)).attr('x2', xs(0)).attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--cds-chart-reference)');
+    const tp = tip(box), f = fmtRis(ris);
+    svg.append('g').selectAll('rect').data(righe).join('rect').attr('x', (r) => Math.min(xs(0), xs(r.v))).attr('width', (r) => Math.max(1, Math.abs(xs(r.v) - xs(0))))
+      .attr('y', (r) => ys(r.provincia)).attr('height', ys.bandwidth()).attr('rx', 4).attr('fill', (r) => colore(r.provincia))
+      .on('mousemove', (ev, r) => { const [mx, my] = d3.pointer(ev, box); tp.hidden = false; tp.textContent = `${r.provincia}: ${f(r.v)}`; tp.style.left = Math.min(mx + 12, W - 200) + 'px'; tp.style.top = (my + 12) + 'px'; })
+      .on('mouseleave', () => { tp.hidden = true; });
+  }
+  // bilancio per governo
+  const tb = document.querySelector('#storico-governi tbody');
+  tb.replaceChildren();
+  const bg = document.querySelector('#storico-governi .ei-chart');
+  bg.querySelector('svg')?.remove();
+  if (sg.status === 'ok') {
+    for (const r of sg.data) {
+      const tr = document.createElement('tr'); tr.dataset.key = encodeURIComponent(r.governo);
+      [r.governo.replace('Governo ', ''), dataIt(r.dal), dataIt(r.al), r.giorni, G.fmtE(r.gettito), G.fmtE(r.manutenzione), G.fmtE(r.confini), G.fmtE(r.saldo), G.fmtE(r.saldo_giorno),
+        G.fmtE(r.donazioni_province), G.fmtE(r.donazioni_stato), G.fmtE(r.tesoro_stato_fine)].forEach((t, i) => {
+        const td = document.createElement('td'); td.textContent = t; if ((i === 7 || i === 8) && r.saldo != null) td.className = r.saldo < 0 ? 'bad' : 'ok'; tr.append(td);
+      });
+      tb.append(tr);
+    }
+    const dati = sg.data.filter((r) => r.saldo_giorno != null);
+    if (dati.length && bg.clientWidth) {
+      const W = bg.clientWidth, H = 200, M = { t: 12, r: 12, b: 24, l: 52 };
+      const xs = d3.scaleBand(dati.map((r) => r.governo), [M.l, W - M.r]).padding(0.35);
+      const ys = d3.scaleLinear(d3.extent([0, ...dati.map((r) => r.saldo_giorno)]), [H - M.b, M.t]).nice();
+      const svg = d3.select(bg).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+      svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(xs).tickFormat((g) => g.replace('Governo ', ''))).call(etichetteAsse);
+      svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(ys).ticks(4).tickFormat(mil).tickSize(-(W - M.l - M.r))).call(etichetteAsse).call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
+      svg.append('line').attr('x1', M.l).attr('x2', W - M.r).attr('y1', ys(0)).attr('y2', ys(0)).attr('stroke', 'var(--cds-chart-reference)');
+      const tp = tip(bg);
+      svg.append('g').selectAll('rect').data(dati).join('rect').attr('x', (r) => xs(r.governo)).attr('width', xs.bandwidth())
+        .attr('y', (r) => Math.min(ys(0), ys(r.saldo_giorno))).attr('height', (r) => Math.max(1, Math.abs(ys(r.saldo_giorno) - ys(0)))).attr('rx', 4)
+        .attr('fill', (r) => (r.saldo_giorno < 0 ? 'var(--cds-chart-status-critical)' : dash.colors[0]))
+        .on('mousemove', (ev, r) => { const [mx, my] = d3.pointer(ev, bg); tp.hidden = false; tp.textContent = `${r.governo}: saldo ${G.fmtE(r.saldo_giorno)} al giorno (${r.giorni} giorni)`; tp.style.left = Math.min(mx + 12, W - 260) + 'px'; tp.style.top = (my + 12) + 'px'; })
+        .on('mouseleave', () => { tp.hidden = true; });
+    }
+  }
+};
+
+dash.calc('donazioni_riepilogo', {
+  title: 'Donazioni degli ultimi 7 giorni',
+  description: 'Per Stato e province: donazioni dei giocatori negli ultimi 7 giorni, valore ai prezzi medi, totale di sempre.',
+  inputs: ['donazioni', 'donazioni_totali', 'prezzo_attuale'],
+  fn: (donazioni, donazioni_totali, prezzo_attuale) => {
+    const p = prezzo_attuale[0] || {};
+    const al = donazioni_totali.map((r) => r.letto).sort().slice(-1)[0];
+    if (!al) return [];
+    const dal = new Date(Date.parse(al + 'T00:00:00Z') - 6 * 86400000).toISOString().slice(0, 10);
+    return donazioni_totali.map((t) => {
+      const righe = donazioni.filter((r) => r.destinatario === t.destinatario && r.data >= dal && r.data <= al);
+      const s = (k) => righe.reduce((a, r) => a + (r[k] || 0), 0);
+      const out = { destinatario: t.destinatario, dal, al, completo: !t.elenco_dal || t.elenco_dal <= dal, numero_7g: s('numero'), totale_denaro: t.totale_denaro };
+      for (const k of ['denaro', 'pelle', 'oro', 'petrolio', 'nte']) out[k + '_7g'] = s(k);
+      out.valore_7g = Math.round(out.denaro_7g + ['pelle', 'oro', 'petrolio', 'nte'].reduce((a, k) => a + out[k + '_7g'] * (p[k] || 0), 0));
+      return out;
+    });
+  },
+});
+
+dash.calc('donazioni_quadro', {
+  title: 'Donazioni: Stato e province',
+  description: 'Somme degli ultimi 7 giorni: allo Stato e alle 7 province insieme.',
+  inputs: ['donazioni_riepilogo'],
+  fn: (donazioni_riepilogo) => {
+    const st = donazioni_riepilogo.filter((r) => r.destinatario === 'Stato'), pr = donazioni_riepilogo.filter((r) => r.destinatario !== 'Stato');
+    const s = (rows, k) => rows.reduce((a, r) => a + r[k], 0);
+    if (!donazioni_riepilogo.length) return [];
+    return [{ stato_denaro: s(st, 'denaro_7g'), stato_valore: s(st, 'valore_7g'), stato_numero: s(st, 'numero_7g'),
+      province_denaro: s(pr, 'denaro_7g'), province_valore: s(pr, 'valore_7g'), province_numero: s(pr, 'numero_7g'),
+      dal: donazioni_riepilogo[0].dal, al: donazioni_riepilogo[0].al }];
+  },
+});
+
+dash.calc('donazioni_giorno', {
+  title: 'Donazioni per giorno',
+  description: 'Valore delle donazioni di ogni giorno (denaro + risorse ai prezzi medi), allo Stato e alle province.',
+  inputs: ['donazioni', 'prezzo_attuale'],
+  fn: (donazioni, prezzo_attuale) => {
+    const p = prezzo_attuale[0] || {};
+    const m = new Map();
+    for (const r of donazioni) {
+      const g = m.get(r.data) || { data: r.data, stato: 0, province: 0 };
+      const v = r.denaro + ['pelle', 'oro', 'petrolio', 'nte'].reduce((a, k) => a + (r[k] || 0) * (p[k] || 0), 0);
+      if (r.destinatario === 'Stato') g.stato += v; else g.province += v;
+      m.set(r.data, g);
+    }
+    return [...m.values()].sort((a, b) => a.data.localeCompare(b.data)).map((g) => ({ ...g, stato: Math.round(g.stato), province: Math.round(g.province) }));
+  },
+});
+
+const disegnaDonazioni = () => {
+  const q = dash.data('donazioni_quadro'), r = dash.data('donazioni_riepilogo'), st = dash.data('stato_ultimo');
+  const set = (sel, txt) => { const el = document.querySelector('#donazioni ' + sel); if (el) el.textContent = txt; };
+  if (q.status === 'ok' && q.data.length) {
+    const x = q.data[0];
+    set('[data-field="stato_denaro"]', G.fmtE(x.stato_denaro));
+    set('[data-field="province_denaro"]', G.fmtE(x.province_denaro));
+    set('.ei-don-stato', `${x.stato_numero} donazioni; con le risorse valgono ${G.fmtE(x.stato_valore)}`);
+    set('.ei-don-prov', `${x.province_numero} donazioni dei giocatori; con le risorse ${G.fmtE(x.province_valore)}`);
+    set('.ei-don-periodo', `Dal ${new Date(x.dal).toLocaleDateString('it-IT', { timeZone: 'UTC' })} al ${new Date(x.al).toLocaleDateString('it-IT', { timeZone: 'UTC' })}. Valore totale = denaro + risorse ai prezzi medi di mercato.`);
+  } else { set('[data-field="stato_denaro"]', '—'); set('[data-field="province_denaro"]', '—'); }
+  if (st.status === 'ok' && st.data.length) {
+    set('[data-source="stato_ultimo"][data-field="tesoro_eur"]', G.fmtE(st.data[0].tesoro_eur));
+    set('.ei-don-tes', 'letto il ' + new Date(st.data[0].data).toLocaleDateString('it-IT', { timeZone: 'UTC' }));
+  }
+  const tot = dash.data('donazioni_totali');
+  const t = tot.status === 'ok' ? tot.data.find((x) => x.destinatario === 'Stato') : null;
+  set('[data-source="donazioni_totali"]', t ? G.fmtE(t.totale_denaro) : '—');
+  const tb = document.querySelector('#donazioni-destinatari tbody');
+  tb.replaceChildren();
+  if (r.status === 'ok') for (const x of r.data) {
+    const tr = document.createElement('tr');
+    [x.destinatario + (x.completo ? '' : ' *'), G.fmtE(x.denaro_7g), G.fmtN(x.pelle_7g), G.fmtN(x.oro_7g), G.fmtN(x.petrolio_7g), G.fmtN(x.nte_7g),
+      G.fmtE(x.valore_7g), G.fmtN(x.numero_7g), G.fmtE(x.totale_denaro)].forEach((v) => { const td = document.createElement('td'); td.textContent = v; tr.append(td); });
+    tb.append(tr);
+  }
+  const box = document.querySelector('#donazioni-giorno .ei-chart');
+  const d = dash.data('donazioni_giorno');
+  box.querySelector('svg')?.remove();
+  if (d.status !== 'ok' || !box.clientWidth || !d.data.length) return;
+  const rows = d.data, serie = [['stato', 'Stato', dash.colors[0]], ['province', 'Province', dash.colors[1]]];
+  const W = box.clientWidth, H = 240, M = { t: 24, r: 12, b: 24, l: 44 };
+  const x0 = d3.scaleBand(rows.map((r) => r.data), [M.l, W - M.r]).padding(0.2);
+  const x1 = d3.scaleBand(serie.map((s) => s[0]), [0, x0.bandwidth()]).padding(0.1);
+  const y = d3.scaleLinear([0, d3.max(rows, (r) => Math.max(r.stato, r.province)) || 1], [H - M.b, M.t]).nice();
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+  const passo = Math.max(1, Math.ceil(rows.length / Math.max(2, Math.floor(W / 70))));
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x0).tickValues(rows.map((r) => r.data).filter((_, i) => i % passo === 0))
+    .tickFormat((v) => new Date(v).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' }))).call(etichetteAsse);
+  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(mil).tickSize(-(W - M.l - M.r))).call(etichetteAsse)
+    .call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
+  const leg = svg.append('g').attr('transform', `translate(${M.l},10)`);
+  serie.forEach(([, nome, col], i) => { leg.append('rect').attr('x', i * 90).attr('y', -6).attr('width', 10).attr('height', 10).attr('rx', 2).attr('fill', col);
+    leg.append('text').attr('x', i * 90 + 14).attr('y', 3).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(nome); });
+  const tp = tip(box);
+  for (const [k, nome, col] of serie) svg.append('g').selectAll('rect').data(rows).join('rect')
+    .attr('x', (r) => x0(r.data) + x1(k)).attr('width', x1.bandwidth()).attr('y', (r) => y(r[k])).attr('height', (r) => y(0) - y(r[k])).attr('rx', 2).attr('fill', col)
+    .on('mousemove', (ev, r) => { const [mx, my] = d3.pointer(ev, box); tp.hidden = false; tp.textContent = `${new Date(r.data).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${nome}: ${G.fmtE(r[k])}`; tp.style.left = Math.max(0, Math.min(mx + 12, W - 220)) + 'px'; tp.style.top = (my + 12) + 'px'; })
+    .on('mouseleave', () => { tp.hidden = true; });
+};
+
+window.eiDisegna = () => {
+  window.eiQuadro();
+  if (!document.getElementById('donazioni').hidden) disegnaDonazioni();
+  if (!document.getElementById('storico').hidden) disegnaStorico();
+  const vis = (id) => !document.getElementById(id).hidden;
+  if (vis('piano')) window.eiPiano();
+  if (vis('quadro')) barreSaldo();
+  if (vis('province')) window.eiProvince();
+  if (vis('indici')) window.eiIndici();
+  if (vis('andamento')) { lineeGiornaliero(); lineaStato(); }
+};
+dash.onData(() => window.eiDisegna());
+</script>
