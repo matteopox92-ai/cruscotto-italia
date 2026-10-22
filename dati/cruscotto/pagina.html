@@ -23,6 +23,8 @@
 .ei th { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); }
 .pill { display: inline-block; padding: 0 var(--cds-pad-xs); border-radius: 999px; font-size: var(--cds-font-size-caption); border: 1px solid currentColor; }
 .ok { color: var(--color-ok); } .warn { color: var(--color-warn); } .bad { color: var(--color-bad); }
+#tabella-comprare tr.sub td, #tabella-comprare tfoot td { font-weight: var(--cds-font-weight-medium); }
+#tabella-comprare tfoot tr:last-child td { border-top: 2px solid var(--color-border-line); }
 .ei-list { margin: 0; padding-left: 1.2em; display: grid; gap: var(--cds-gap-xs); }
 .ei-crit { display: grid; gap: var(--cds-gap-md); max-width: 75ch; }
 .ei-crit h3 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
@@ -243,6 +245,20 @@
         </table>
       </div>
     </div>
+    <div class="ei-card" id="tabella-comprare">
+      <h2>Da comprare per restare al riparo dal calo</h2>
+      <p class="note">Province ed edifici con meno di 3 notti al calo: quanti edifici comprare per arrivare ad almeno 3 notti senza pagare prima di scendere di indice, e quanto costano in denaro e risorse (valore = denaro più risorse ai prezzi medi di mercato). Sotto ogni provincia il suo totale; in fondo i totali per edificio e il totale generale. Le soglie vengono dalla classifica mondiale e si spostano quando costruiscono gli altri Paesi. Napoli nel piano non paga la manutenzione.</p>
+      <div class="ei-scroll">
+        <table>
+          <thead><tr>
+            <th>Provincia</th><th>Edificio</th><th>Edifici</th><th>Indice</th><th>Notti al calo</th><th>Da comprare</th>
+            <th>Denaro</th><th>Pelle</th><th>Oro</th><th>Petrolio</th><th>NTE</th><th>Valore</th>
+          </tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </div>
   </section>
 
   <section id="donazioni" class="ei-pane" hidden>
@@ -389,7 +405,7 @@
       </div>
 
       <div><h3>Scheda «Indici e soglie»</h3>
-        <p>Gli indici non hanno soglie fisse: dipendono dalla classifica mondiale. Le province del mondo con almeno un edificio di quel tipo sono divise in 10 fasce uguali; il primo al mondo è «10+». Per ogni provincia ed edificio trovi: <b>Margine</b> = quanti edifici si possono perdere restando sicuri nell'indice di oggi; <b>Notti al calo</b> = quante notti senza pagare prima di scendere di indice (rosso = 1 o meno); <b>Per salire</b> = quanti edifici mancano per l'indice sopra e quanto costano, soldi più risorse ai prezzi di mercato. Le soglie si spostano quando costruiscono gli altri Paesi.</p>
+        <p>Gli indici non hanno soglie fisse: dipendono dalla classifica mondiale. Le province del mondo con almeno un edificio di quel tipo sono divise in 10 fasce uguali; il primo al mondo è «10+». Per ogni provincia ed edificio trovi: <b>Margine</b> = quanti edifici si possono perdere restando sicuri nell'indice di oggi; <b>Notti al calo</b> = quante notti senza pagare prima di scendere di indice (rosso = 1 o meno); <b>Per salire</b> = quanti edifici mancano per l'indice sopra e quanto costano, soldi più risorse ai prezzi di mercato. Le soglie si spostano quando costruiscono gli altri Paesi. Sotto, <b>Da comprare per restare al riparo dal calo</b>: per ogni provincia ed edificio con meno di 3 notti al calo, quanti edifici comprare per arrivare ad almeno 3 notti e quanto costano (denaro, pelle, oro, petrolio, NTE e valore totale), con i totali per provincia, per edificio e generale.</p>
       </div>
 
       <div><h3>Scheda «Donazioni»</h3>
@@ -507,10 +523,36 @@ dash.calc('indici', {
         const crescita = sp == null ? null : (sotto - sp) / gp; // edifici in più al giorno per restare nella fascia
         const giorni_inflazione = margine == null || crescita == null || crescita <= 0 ? null : Math.floor(margine / crescita);
         righe.push({ provincia: r.provincia, edificio: ed, edifici: n, indice: k, margine, notti_al_calo: notti, mancanti,
-          costo_salire: mancanti == null ? null : Math.round(mancanti * prezzo), crescita_soglia: crescita, giorni_inflazione });
+          costo_salire: mancanti == null ? null : Math.round(mancanti * prezzo), crescita_soglia: crescita, giorni_inflazione,
+          soglia_sotto: sotto });
       }
     }
     return righe;
+  },
+});
+
+dash.calc('da_comprare', {
+  title: 'Edifici da comprare per restare a 3 notti dal calo',
+  description: 'Province ed edifici con meno di 3 notti al calo: edifici da comprare per arrivare a 3 notti e il loro costo in denaro e risorse.',
+  inputs: ['indici', 'costi', 'prezzo_attuale'],
+  fn: (indici, costi, prezzo_attuale) => {
+    const p = prezzo_attuale[0] || {};
+    const ris = ['pelle', 'oro', 'petrolio', 'nte'];
+    // stesso conto di «Notti al calo» nella tabella sopra
+    const notti = (n, sotto) => { let x = n, k = 0; while (Math.floor(x) > sotto && k < 60) { x *= 0.97; k++; } return k; };
+    const out = [];
+    for (const r of indici) {
+      if (r.notti_al_calo == null || r.notti_al_calo >= 3 || r.soglia_sotto == null) continue;
+      let m = r.edifici;
+      while (notti(m, r.soglia_sotto) < 3 && m < r.edifici + 100000) m++;
+      const q = m - r.edifici, c = costi.find((x) => x.edificio === r.edificio);
+      const riga = { provincia: r.provincia, edificio: r.edificio, edifici: r.edifici, indice: r.indice, notti_al_calo: r.notti_al_calo,
+        da_comprare: q, denaro: q * c.denaro };
+      for (const k of ris) riga[k] = q * c[k];
+      riga.valore = Math.round(riga.denaro + ris.reduce((s, k) => s + riga[k] * (p[k] || 0), 0));
+      out.push(riga);
+    }
+    return out;
   },
 });
 
@@ -738,6 +780,38 @@ const disegnaIndici = () => {
     });
     tb.append(tr);
   }
+  disegnaComprare(ord, eds);
+};
+
+const disegnaComprare = (ord, eds) => {
+  const tb = document.querySelector('#tabella-comprare tbody'), tf = document.querySelector('#tabella-comprare tfoot');
+  const d = dash.data('da_comprare');
+  tb.replaceChildren(); tf.replaceChildren();
+  if (d.status !== 'ok') return;
+  const voci = ['da_comprare', 'denaro', 'pelle', 'oro', 'petrolio', 'nte', 'valore'];
+  const somma = (rr) => Object.fromEntries(voci.map((k) => [k, rr.reduce((s, r) => s + r[k], 0)]));
+  const riga = (dove, celle, classe) => {
+    const tr = document.createElement('tr');
+    if (classe) tr.className = classe;
+    celle.forEach(([t, c]) => { const td = document.createElement('td'); td.textContent = t; if (c) td.className = c; tr.append(td); });
+    dove.append(tr);
+  };
+  const numeri = (s) => [['+' + F.fmtN(s.da_comprare)], [F.fmtE(s.denaro)], [F.fmtN(s.pelle)], [F.fmtN(s.oro)], [F.fmtN(s.petrolio)],
+    [F.fmtN(s.nte)], [F.fmtE(s.valore)]];
+  if (!d.data.length) { riga(tb, [['Nessuna provincia sotto 3 notti al calo.'], ...Array(11).fill([''])]); return; }
+  for (const p of ord) {
+    const rr = d.data.filter((r) => r.provincia === p).sort((a, b) => eds.indexOf(a.edificio) - eds.indexOf(b.edificio));
+    if (!rr.length) continue;
+    for (const r of rr)
+      riga(tb, [[r.provincia], [F.nomeEd[r.edificio]], [F.fmtN(r.edifici)], [r.indice > 10 ? '10+' : String(r.indice)],
+        [String(r.notti_al_calo), r.notti_al_calo <= 1 ? 'bad' : 'warn'], ...numeri(r)]);
+    if (rr.length > 1) riga(tb, [['Totale ' + p], [''], [''], [''], [''], ...numeri(somma(rr))], 'sub');
+  }
+  for (const e of eds) {
+    const rr = d.data.filter((r) => r.edificio === e);
+    if (rr.length) riga(tf, [['Totale ' + F.nomeEd[e]], [''], [''], [''], [''], ...numeri(somma(rr))]);
+  }
+  riga(tf, [['Totale generale'], [''], [''], [''], [''], ...numeri(somma(d.data))]);
 };
 window.eiProvince = disegnaProvince;
 window.eiIndici = disegnaIndici;
