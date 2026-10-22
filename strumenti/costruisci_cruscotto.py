@@ -87,7 +87,7 @@ def storico_def(xlsx):
                 "data": giorno, "provincia": nome,
                 **gruppo("manutenzione", 2, -1), "confini_eur": -(num(row[7]) or 0),
                 **gruppo("gettito", 8), "tassazioni": num(row[13]),
-                **{k: v or 0 for k, v in gruppo("donazioni", 14).items()}, **gruppo("tesoro", 24),
+                **gruppo("donazioni", 14), **gruppo("tesoro", 24),
                 "governo": governo, "fonte": f"DEF · {ws.title}",
             })
     elenco = sorted(({"governo": g, "inizio": min(d), "fine": max(d)} for g, d in governi.items()), key=lambda r: r["inizio"])
@@ -217,7 +217,8 @@ def applica_giornate(storico, giornate, governi):
             if chi != "Stato" and conf is not None:
                 nuovi["confini_eur"] = conf / 7  # nel DEF ogni provincia ha 1/7 dei confini
             for k, v in nuovi.items():
-                if riga.get(k) is None:
+                # una formula del DEF senza dati (confini =H/7 con H vuoto) vale 0: in quel caso conta la nostra lettura
+                if riga.get(k) is None or (k == "confini_eur" and not riga.get(k)):
                     riga[k] = v
             riga["provvisorio"] = not g["chiusa"]
             riga["fonte"] = "DEF aggiornato · giornata italiana 00–24" + ("" if g["chiusa"] else " (in corso)")
