@@ -80,7 +80,7 @@
     <div class="ei-grid">
       <div class="ei-card" id="allarmi">
         <h2>Da sistemare subito</h2>
-        <p class="note">Province con denaro o risorse sotto 3 notti di mantenimento (senza donazioni dello Stato), e indici che scendono con una sola notte non pagata. «Stanotte» = sotto 1 notte: senza una donazione la provincia non paga e perde il 3% degli edifici.</p>
+        <p class="note">Province con denaro o risorse sotto 3 notti di mantenimento (senza donazioni dello Stato), indici che scendono con una sola notte non pagata, e indici che scendono per l'inflazione delle soglie (nel mondo si costruisce e la soglia sale). «Stanotte» = sotto 1 notte: senza una donazione la provincia non paga e perde il 3% degli edifici.</p>
         <ul class="ei-list" data-source="allarmi"></ul>
       </div>
       <div class="ei-card" id="occasioni">
@@ -461,7 +461,10 @@ dash.calc('indici', {
     const campo = { scuole: 'indice_istruzione', basi: 'indice_militare', strade: 'indice_sviluppo', ospedali: 'indice_salute' };
     const righe = [];
     for (const ed of ['scuole', 'basi', 'strade', 'ospedali']) {
-      const v = classifiche.filter((r) => r.edificio === ed).sort((a, b) => a.posizione - b.posizione).map((r) => r.edifici);
+      const cl = classifiche.filter((r) => r.edificio === ed).sort((a, b) => a.posizione - b.posizione);
+      const v = cl.map((r) => r.edifici);
+      // stessa posizione nella classifica precedente: di quanto sale la soglia al giorno («inflazione» degli indici)
+      const vp = cl.map((r) => r.edifici_prec), gp = cl.length && cl[0].giorni_prec ? cl[0].giorni_prec : null;
       const b = Math.floor(v.length / 10);
       const ultimo = (k) => 1 + (11 - k) * b; // ultima posizione della fascia k
       const c = costi.find((r) => r.edificio === ed);
@@ -474,8 +477,11 @@ dash.calc('indici', {
         if (sotto != null) { let x = n; notti = 0; while (Math.floor(x) > sotto && notti < 60) { x *= 0.97; notti++; } }
         const sopra = k < 10 ? v[ultimo(k + 1) - 1] + 1 : null;
         const mancanti = sopra == null ? null : Math.max(0, sopra - n);
+        const sp = sotto == null || !gp ? null : vp[ultimo(k)];
+        const crescita = sp == null ? null : (sotto - sp) / gp; // edifici in più al giorno per restare nella fascia
+        const giorni_inflazione = margine == null || crescita == null || crescita <= 0 ? null : Math.floor(margine / crescita);
         righe.push({ provincia: r.provincia, edificio: ed, edifici: n, indice: k, margine, notti_al_calo: notti, mancanti,
-          costo_salire: mancanti == null ? null : Math.round(mancanti * prezzo) });
+          costo_salire: mancanti == null ? null : Math.round(mancanti * prezzo), crescita_soglia: crescita, giorni_inflazione });
       }
     }
     return righe;
@@ -499,6 +505,17 @@ dash.calc('allarmi', {
     }
     for (const r of indici) if (r.notti_al_calo != null && r.notti_al_calo <= 1)
       out.push({ chiave: r.provincia + '-' + r.edificio, provincia: r.provincia, cosa: r.edificio, valore: r.margine, tipo: 'indice', gravita: 1 });
+    // inflazione degli indici (richiesta dell'utente del 22/10/2026): la soglia sale perché nel mondo si costruisce;
+    // con due classifiche si stima fra quanti giorni l'indice scende anche senza perdere edifici, con una sola si segnala il margine quasi nullo
+    for (const r of indici) {
+      if (r.margine == null || r.indice <= 1) continue;
+      if (r.giorni_inflazione != null && r.giorni_inflazione <= 3)
+        out.push({ chiave: r.provincia + '-' + r.edificio + '-infl', provincia: r.provincia, cosa: r.edificio, valore: r.margine,
+          giorni: r.giorni_inflazione, crescita: r.crescita_soglia, tipo: 'inflazione', gravita: r.giorni_inflazione < 1 ? 2 : 1 });
+      else if (r.crescita_soglia == null && r.margine <= 2)
+        out.push({ chiave: r.provincia + '-' + r.edificio + '-infl', provincia: r.provincia, cosa: r.edificio, valore: r.margine,
+          tipo: 'inflazione', gravita: 1 });
+    }
     return out.sort((a, b) => b.gravita - a.gravita || a.valore - b.valore);
   },
 });
@@ -617,6 +634,10 @@ const disegnaQuadro = () => {
       txt.textContent = r.tipo === 'notti'
         ? ` ${r.provincia}, notti coperte: ` + r.dettaglio.map((x) => { const [k, v] = x.split(' '); return `${nomeRis[k]} ${fmtNotti(+v)}`; }).join(' · ') +
           (r.gravita === 2 ? (r.provincia === 'Napoli' ? ' (non deve pagare: piano)' : ` — da mandare per stanotte: ${testoManca(r)}`) : '')
+        : r.tipo === 'inflazione'
+        ? (r.giorni != null
+          ? ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} scende per l'inflazione ${r.giorni < 1 ? 'entro oggi' : 'fra circa ' + r.giorni + (r.giorni === 1 ? ' giorno' : ' giorni')} (la soglia sale di ${r.crescita.toLocaleString('it-IT', { maximumFractionDigits: 1 })} ${nomeEd[r.cosa]} al giorno, margine ${fmtN(r.valore)})`
+          : ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} è al limite della soglia (margine ${fmtN(r.valore)} ${nomeEd[r.cosa]}): scende appena altre province costruiscono, anche senza perdite`)
         : ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} scende con una notte non pagata (margine ${fmtN(r.valore)} ${nomeEd[r.cosa]})`;
       li.append(pill, txt); ul.append(li);
     }

@@ -199,10 +199,22 @@ def main(xlsx, stat_dir, out_dir):
             "data": oggi_data,
         })
 
+    # classifica precedente (giorno diverso): serve a misurare quanto salgono le soglie («inflazione» degli indici)
+    file_clas = sorted(stat_dir.glob("classifiche-*.json"))
+    d_clas = date.fromisoformat(file_clas[-1].stem.split("-", 1)[1])
+    prec, giorni_prec = None, None
+    for f in reversed(file_clas[:-1]):
+        d_f = date.fromisoformat(f.stem.split("-", 1)[1])
+        if d_f < d_clas:
+            prec, giorni_prec = json.loads(f.read_text(encoding="utf-8")), (d_clas - d_f).days
+            break
     righe_clas = []
     for edificio in ("scuole", "basi", "strade", "ospedali"):
         for pos, n in enumerate(clas[edificio], start=1):
-            righe_clas.append({"edificio": edificio, "posizione": pos, "edifici": n})
+            riga = {"edificio": edificio, "posizione": pos, "edifici": n}
+            if prec and pos <= len(prec[edificio]):
+                riga.update({"edifici_prec": prec[edificio][pos - 1], "giorni_prec": giorni_prec})
+            righe_clas.append(riga)
 
     costi = [
         {"edificio": "scuole", "denaro": 100000, "pelle": 400, "oro": 440, "petrolio": 0, "nte": 300},
