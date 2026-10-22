@@ -48,6 +48,14 @@
 #piano-calendario td:nth-child(3), #piano-calendario td:nth-child(4) { white-space: normal; text-align: left; min-width: 14rem; }
 #piano-controlli td:nth-child(3) { white-space: normal; }
 #tabella-province td:nth-child(3) { white-space: normal; text-align: left; min-width: 12rem; font-weight: var(--cds-font-weight-medium); }
+#storico [hidden] { display: none !important; }
+.ei-filtri .st-campo { display: grid; gap: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.st-testa { display: flex; justify-content: space-between; align-items: center; gap: var(--cds-gap-sm); flex-wrap: wrap; }
+.st-bottone { font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 4px 8px; cursor: pointer; }
+#st-come summary { cursor: pointer; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-xs) 0; }
+#st-come[open] summary { margin-bottom: var(--cds-gap-sm); }
+#st-tab td.bad { color: var(--color-bad); }
+#st-tab thead th { position: sticky; top: 0; background: var(--color-panel); }
 [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
 [data-dash-source-state=empty] { color: transparent; }
 </style>
@@ -264,59 +272,68 @@
 
   <section id="storico" class="ei-pane" hidden>
     <div class="ei-card" id="storico-filtri">
+      <h2>Cosa vuoi vedere</h2>
+      <p class="note">Ogni giornata va dalle 00:00 alle 24:00, ora italiana: gli stessi numeri del DEF e del bollettino. Scegli qui sotto; riquadri, grafico e tabella cambiano insieme.</p>
       <div class="ei-filtri">
-        <label>Periodo<span class="ei-chips" id="st-preset"><button type="button" data-giorni="7">7 giorni</button><button type="button" data-giorni="14">14 giorni</button><button type="button" data-giorni="0">Tutto</button></span></label>
+        <div class="st-campo" role="group" aria-label="Periodo"><span>Periodo</span><span class="ei-chips" id="st-preset"><button type="button" data-p="oggi">Oggi</button><button type="button" data-p="ieri">Ieri</button><button type="button" data-p="7">7 giorni</button><button type="button" data-p="14">14 giorni</button><button type="button" data-p="30">30 giorni</button><button type="button" data-p="0">Tutto</button></span></div>
         <label>Dal<input type="date" id="st-dal" min="2026-01-01" max="2099-12-31" aria-label="Dal"></label>
         <label>Al<input type="date" id="st-al" min="2026-01-01" max="2099-12-31" aria-label="Al"></label>
         <label>Governo<select id="st-gov" data-source="governi" aria-label="Governo"></select></label>
-        <label>Misura<select id="st-misura" aria-label="Misura">
-          <option value="tesoro">Tesoro</option><option value="gettito">Gettito</option><option value="manutenzione">Manutenzione</option>
-          <option value="confini">Confini</option><option value="donazioni">Donazioni ricevute</option><option value="contributo">Contributo all'Italia</option><option value="tassazioni">Tassazioni</option>
-        </select></label>
+      </div>
+      <div class="ei-filtri">
+        <div class="st-campo" role="group" aria-label="Confronta"><span>Confronta</span><span class="ei-chips" id="st-modo"><button type="button" data-v="voci">Le voci del bilancio</button><button type="button" data-v="province">Le province tra loro</button></span></div>
+        <label id="st-misura-l">Misura<select id="st-misura" aria-label="Misura"></select></label>
         <label>Risorsa<select id="st-ris" aria-label="Risorsa">
           <option value="eur">Denaro</option><option value="valore">Valore totale (denaro + risorse)</option><option value="pelle">Pelle</option><option value="oro">Oro</option><option value="petrolio">Petrolio</option><option value="nte">NTE</option>
         </select></label>
-        <label>Dettaglio<span class="ei-chips" id="st-dett"><button type="button" data-dett="giorni">Giorni</button><button type="button" data-dett="ore">Ore</button></span></label>
-        <label>Picchi<span class="ei-chips" id="st-picchi"><button type="button" data-picchi="no">Mostra tutto</button><button type="button" data-picchi="si">Taglia i picchi</button></span></label>
-        <button type="button" id="st-reset">Azzera filtri</button>
       </div>
-      <label class="ei-filtri" style="margin-top: var(--cds-gap-sm)">Province<span class="ei-chips" id="st-prov"></span></label>
-      <p class="note" id="st-nota">—</p>
+      <div class="ei-filtri" id="st-voci-riga"><div class="st-campo" role="group" aria-label="Voci"><span>Voci da disegnare</span><span class="ei-chips" id="st-voci"></span></div></div>
+      <div class="ei-filtri"><div class="st-campo" role="group" aria-label="Province"><span>Province</span><span class="ei-chips" id="st-prov"></span></div>
+        <div class="st-campo" role="group" aria-label="Scelte rapide"><span>&nbsp;</span><span class="ei-chips"><button type="button" id="st-prov-7">Le 7 di oggi</button><button type="button" id="st-prov-tutte">Tutte (con il Bahrein)</button><button type="button" id="st-somma" data-v="si">+ linea della somma</button></span></div></div>
+      <details id="st-come">
+        <summary>Come mostrarlo</summary>
+        <div class="ei-filtri">
+          <div class="st-campo" role="group" aria-label="Raggruppa"><span>Raggruppa</span><span class="ei-chips" id="st-gruppo"><button type="button" data-v="ora">Ora</button><button type="button" data-v="giorno">Giorno</button><button type="button" data-v="settimana">Settimana</button><button type="button" data-v="governo">Governo</button></span></div>
+          <div class="st-campo" role="group" aria-label="Valori"><span>Valori</span><span class="ei-chips" id="st-vista"></span></div>
+          <div class="st-campo" role="group" aria-label="Grafico"><span>Grafico</span><span class="ei-chips" id="st-tipo"><button type="button" data-v="linee">Linee</button><button type="button" data-v="barre">Barre</button><button type="button" data-v="impilate">Barre impilate</button></span></div>
+          <div class="st-campo" role="group" aria-label="Asse"><span>Asse verticale</span><span class="ei-chips" id="st-asse"><button type="button" data-v="auto">Automatico</button><button type="button" data-v="zero">Da zero</button><button type="button" data-v="adatta">Adatta ai dati</button></span></div>
+          <div class="st-campo" role="group" aria-label="Picchi"><span>Picchi</span><span class="ei-chips" id="st-picchi"><button type="button" data-v="no">Mostra tutto</button><button type="button" data-v="si">Taglia i picchi</button></span></div>
+          <div class="st-campo" role="group" aria-label="Confronto"><span>Confronto</span><span class="ei-chips" id="st-prima"><button type="button" data-v="no">Nessuno</button><button type="button" data-v="si">Con il periodo prima</button></span></div>
+        </div>
+      </details>
+      <div class="ei-filtri"><button type="button" id="st-reset">Azzera tutto</button><p class="note" id="st-nota" style="flex:1 1 20rem">—</p></div>
+    </div>
+    <div class="ei-card" id="storico-breve">
+      <h2>In breve</h2>
+      <p id="st-breve" style="margin:0; max-width:75ch">—</p>
     </div>
     <div class="ei-tiles" id="storico-riquadri">
-      <div class="ei-tile"><span class="lab">Gettito nel periodo</span><span class="big" id="st-t-gettito">—</span><span class="sub" id="st-t-gettito-s">—</span></div>
-      <div class="ei-tile"><span class="lab">Manutenzione + confini</span><span class="big" id="st-t-costi">—</span><span class="sub" id="st-t-costi-s">—</span></div>
+      <div class="ei-tile"><span class="lab">Gettito (tasse)</span><span class="big" id="st-t-gettito">—</span><span class="sub" id="st-t-gettito-s">—</span></div>
+      <div class="ei-tile"><span class="lab">Costi</span><span class="big" id="st-t-costi">—</span><span class="sub" id="st-t-costi-s">—</span></div>
+      <div class="ei-tile"><span class="lab">Saldo</span><span class="big" id="st-t-saldo">—</span><span class="sub">gettito − costi, senza donazioni</span></div>
+      <div class="ei-tile"><span class="lab">Copertura dei costi</span><span class="big" id="st-t-cop">—</span><span class="sub">quanta parte dei costi pagano le tasse</span></div>
       <div class="ei-tile"><span class="lab">Donazioni ricevute</span><span class="big" id="st-t-don">—</span><span class="sub" id="st-t-don-s">—</span></div>
-      <div class="ei-tile"><span class="lab">Saldo del periodo</span><span class="big" id="st-t-saldo">—</span><span class="sub">gettito − manutenzione − confini, senza donazioni</span></div>
       <div class="ei-tile"><span class="lab">Tesoro dello Stato</span><span class="big" id="st-t-stato">—</span><span class="sub" id="st-t-stato-s">—</span></div>
     </div>
-    <div class="ei-card" id="storico-italia">
-      <h2 id="st-titolo-italia">L'Italia giorno per giorno</h2>
-      <p class="note" id="st-nota-italia">Province scelte, nella risorsa scelta. Le fasce di sfondo sono i governi. Solo i giorni con i dati di almeno 6 province. Clicca una voce della legenda per nasconderla o mostrarla.</p>
-      <ul class="ei-legenda" id="st-leg-italia"></ul>
-      <div class="ei-chart" data-source="storico_lungo"></div>
+    <div class="ei-card" id="storico-grafico">
+      <h2 id="st-titolo">—</h2>
+      <p class="note" id="st-nota-graf">—</p>
+      <ul class="ei-legenda" id="st-leg"></ul>
+      <div class="ei-chart" data-source="storico"></div>
     </div>
-    <div class="ei-card" id="storico-province">
-      <h2 id="st-titolo-prov">Province a confronto</h2>
-      <p class="note" id="st-nota-prov">La misura e la risorsa scelte nei filtri, una linea per provincia (ogni provincia ha sempre lo stesso colore). Clicca una provincia nella legenda per nasconderla o mostrarla.</p>
-      <ul class="ei-legenda" id="st-leg-prov"></ul>
-      <div class="ei-chart" data-source="storico_lungo"></div>
+    <div class="ei-card" id="storico-tabella">
+      <div class="st-testa"><h2>I numeri del grafico</h2><button type="button" id="st-csv" class="st-bottone">Scarica CSV</button></div>
+      <p class="note" id="st-nota-tab">Una riga per punto del grafico. «in corso» = giornata non ancora finita.</p>
+      <div class="ei-scroll" style="max-height: 26rem; overflow-y: auto"><table id="st-tab"><thead></thead><tbody></tbody></table></div>
     </div>
-    <div class="ei-grid">
-      <div class="ei-card" id="storico-stato">
-        <h2>Tesoro dello Stato</h2>
-        <p class="note" id="st-nota-stato">Nella risorsa scelta (valore totale = denaro + risorse ai prezzi medi). Fino al 20/10 dal DEF, poi dal gioco. L'asse non parte da zero, per vedere le variazioni.</p>
-        <div class="ei-chart" data-source="storico_lungo"></div>
-      </div>
-      <div class="ei-card" id="storico-classifica">
-        <h2 id="st-titolo-class">Classifica del periodo</h2>
-        <p class="note">Totale della misura nel periodo (per il tesoro: l'ultimo valore). Province scelte.</p>
-        <div class="ei-chart" data-source="storico_lungo"></div>
-      </div>
+    <div class="ei-card" id="storico-classifica">
+      <h2 id="st-titolo-class">Classifica del periodo</h2>
+      <p class="note" id="st-nota-class">—</p>
+      <div class="ei-chart" data-source="storico"></div>
     </div>
     <div class="ei-card" id="storico-governi">
       <h2>Bilancio per governo</h2>
-      <p class="note">In denaro, tutte le province (Bahrein compreso finché era italiano), solo i giorni completi: coincide con il «Riepilogo di fine mandato» del DEF. Saldo = gettito − manutenzione − confini; le donazioni sono a parte. Non dipende dal periodo scelto.</p>
+      <p class="note">In denaro, tutte le province (Bahrein compreso finché era italiano), solo i giorni completi: coincide con il «Riepilogo di fine mandato» del DEF. Saldo = gettito − manutenzione − confini; le donazioni sono a parte. Non dipende dai filtri.</p>
       <div class="ei-chart" data-source="storico_governi"></div>
       <div class="ei-scroll">
         <table data-source="storico_governi" data-row-key="governo">
@@ -330,7 +347,7 @@
   <section id="andamento" class="ei-pane" hidden>
     <div class="ei-card" id="andamento-italia">
       <h2>Gettito e costi dell'Italia, giorno per giorno</h2>
-      <p class="note">Somma delle 7 province. Dati del Documento di Economia e Finanza; gli ultimi giorni dal gettito del gioco (arrotondato a 0,1 milioni sopra il milione).</p>
+      <p class="note">Somma delle 7 province, giornate dalle 00:00 alle 24:00. Dati del Documento di Economia e Finanza (dal 21/10 la nostra copia aggiornata ogni notte).</p>
       <div class="ei-chart" data-source="giornaliero"></div>
     </div>
     <div class="ei-card" id="andamento-stato">
@@ -343,7 +360,7 @@
   <section id="criteri" class="ei-pane" hidden>
     <div class="ei-card ei-crit" id="guida">
       <h2>Guida al cruscotto</h2>
-      <p class="note">Come leggere ogni scheda, cosa vogliono dire i numeri e i colori, da dove arrivano. I dati si aggiornano da soli ogni ora (al minuto 5) e ogni sera alle 21:45, con l'app Claude e Chrome con il gioco aperti.</p>
+      <p class="note">Come leggere ogni scheda, cosa vogliono dire i numeri e i colori, da dove arrivano. I dati si aggiornano da soli ogni ora (dalle 1 alle 21, al minuto 5) e ogni notte subito dopo mezzanotte, quando si chiude la giornata, con l'app Claude e Chrome con il gioco aperti.</p>
 
       <div><h3>In 2 minuti, ogni sera</h3>
         <ol class="ei-list">
@@ -379,9 +396,13 @@
         <p>Quanto hanno donato i giocatori, allo Stato e a ogni provincia, negli ultimi 7 giorni. Per le risorse c'è anche il <b>valore totale</b>, cioè soldi più risorse ai prezzi di mercato. Il grafico mostra giorno per giorno lo Stato (blu) contro le province (arancio). Attenzione: il gioco mostra solo le ultime 50 donazioni di ogni cassa, e i trasferimenti dallo Stato alle province non compaiono in nessun elenco.</p>
       </div>
 
-      <div><h3>Scheda «Storico»: tutto il DEF, con i filtri</h3>
-        <p>In alto scegli cosa guardare, e tutti i grafici sotto cambiano insieme. <b>Periodo</b>: 7 giorni, 14 giorni, tutto, oppure le date. <b>Governo</b>: prende da solo le date di quel governo. <b>Misura</b>: tesoro, gettito (tasse), manutenzione, confini, donazioni ricevute, contributo all'Italia (gettito − manutenzione − confini), tassazioni (quante volte i giocatori hanno lavorato). <b>Risorsa</b>: denaro, una risorsa, oppure il valore totale. <b>Province</b>: clicca per accenderle o spegnerle; ogni provincia ha sempre lo stesso colore. Il Bahrein, in grigio, è stato italiano fino al 9/10.</p>
-        <p>I grafici: <b>riquadri del periodo</b>; <b>l'Italia giorno per giorno</b>, con le fasce dei governi sullo sfondo; <b>province a confronto</b>; <b>tesoro dello Stato</b>, con l'asse che non parte da zero per vedere bene le variazioni; <b>classifica</b> delle province nel periodo; <b>bilancio per governo</b>, che coincide con il «Riepilogo di fine mandato» del DEF. Passa il mouse sopra un grafico per leggere i numeri di quel giorno.</p>
+      <div><h3>Scheda «Storico»: un grafico che costruisci tu</h3>
+        <p>In alto scegli <b>cosa vuoi vedere</b>; riquadri, grafico, tabella e classifica cambiano insieme. <b>Periodo</b>: oggi, ieri, 7, 14 o 30 giorni, tutto, le date che vuoi o un governo. <b>Confronta</b>: «le voci del bilancio» disegna più voci insieme (gettito, manutenzione, confini, costi, saldo, donazioni, tesori, tassazioni, copertura) sommate sulle province scelte; «le province tra loro» disegna una misura, una linea per provincia, e volendo la linea della somma. <b>Risorsa</b>: denaro, una risorsa, oppure il valore totale (risorse ai prezzi medi). <b>Province</b>: clicca per accenderle o spegnerle; il Bahrein, in grigio, è stato italiano fino al 9/10.</p>
+        <p>In «Come mostrarlo»: <b>raggruppa</b> per ora (dalle letture di ogni ora), giorno, settimana o governo; <b>valori</b> del giorno, sommati dall'inizio del periodo, o media di 7 giorni (per ora: dalla mezzanotte o tra una lettura e l'altra); <b>grafico</b> a linee, barre o barre impilate; <b>asse</b> da zero o adattato; <b>taglia i picchi</b> quando un giorno eccezionale schiaccia tutto; <b>confronto con il periodo prima</b> (linee tratteggiate). «In breve» racconta il periodo in una frase; «I numeri del grafico» ha tutti i valori e si scarica in CSV per Excel. Il <b>bilancio per governo</b> coincide con il «Riepilogo di fine mandato» del DEF.</p>
+      </div>
+
+      <div><h3>La giornata va dalle 00:00 alle 24:00</h3>
+        <p>Dal 22/10 (scelta del governo) tutte le analisi contano la giornata italiana, da mezzanotte a mezzanotte: cruscotto, DEF, bollettino e donazioni danno gli stessi numeri. Il gioco invece ragiona dalle 23 alle 23 (dal 26/10 dalle 22 alle 22): per questo ogni notte, subito dopo mezzanotte, una lettura divide il gettito tra un giorno e l'altro. <b>Gettito e tassazioni</b> = quanto è entrato tra la lettura di mezzanotte e quella della notte dopo. <b>Manutenzione e confini</b> = l'addebito che il gioco fa durante la giornata (alle 23, dal 25/10 sera alle 22); se una provincia non lo paga conta 0. <b>Tesori</b> = alle 24:00. <b>Donazioni</b> = per data e ora italiana. I giorni fino al 20/10 sono quelli scritti dal governo nel DEF; il 21/10 ha il gettito dalle 23 alle 23 perché quella notte non c'era ancora la lettura di mezzanotte.</p>
       </div>
 
       <div><h3>Scheda «Andamento»</h3>
@@ -1018,35 +1039,111 @@ dash.calc('storico_governi', {
 
 dash.calc('orario_lungo', {
   title: 'Storico ora per ora',
-  description: 'Dalle letture orarie: tesoro al momento della lettura; gettito, tassazioni e donazioni dall’inizio della giornata fino a quell’ora (il gettito riparte a mezzanotte del gioco, GMT+3; le donazioni a mezzanotte italiana).',
+  description: 'Dalle letture orarie: tesoro al momento della lettura; gettito, tassazioni e donazioni dalla mezzanotte italiana fino a quell’ora (giornata 00–24, come nel DEF e nel bollettino).',
   inputs: ['orario', 'prezzo_attuale'],
   fn: (orario, prezzo_attuale) => {
     const p = prezzo_attuale[0] || {};
     const prezzo = { eur: 1, pelle: p.pelle || 0, oro: p.oro || 0, petrolio: p.petrolio || 0, nte: p.nte || 0 };
     const out = [];
-    const put = (r, misura, risorsa, v) => { if (v != null && Number.isFinite(v)) out.push({ ts: r.ts, data: r.ts.slice(0, 10), provincia: r.provincia, misura, risorsa, valore: v }); };
+    const put = (r, misura, risorsa, v) => { if (v != null && Number.isFinite(v)) out.push({ ts: r.ts, data: r.data_it, provincia: r.provincia, misura, risorsa, valore: v }); };
     for (const r of orario) {
-      for (const [misura, pref] of [['tesoro', 'tesoro_'], ['gettito', 'gettito_oggi_'], ['donazioni', 'donazioni_oggi_']]) {
+      for (const [misura, pref] of [['tesoro', 'tesoro_'], ['gettito', 'gettito_it_'], ['donazioni', 'donazioni_oggi_']]) {
         for (const k of RIS_ST) put(r, misura, k, r[pref + k]);
         if (RIS_ST.every((k) => r[pref + k] != null)) put(r, misura, 'valore', Math.round(RIS_ST.reduce((a, k) => a + r[pref + k] * prezzo[k], 0)));
       }
-      put(r, 'tassazioni', 'n', r.tassazioni_oggi);
+      put(r, 'tassazioni', 'n', r.tassazioni_it);
     }
     return out;
   },
 });
 
-// filtri: valori nei parametri della dashboard (nessuna query li usa: cambiano solo il disegno)
-const ST_BASE = { st_dal: null, st_al: null, st_prov: PROVS_ST, st_misura: 'gettito', st_ris: 'eur', st_dett: 'giorni', st_picchi: 'no', st_nasc: [] };
-const stP = () => { const q = dash.params ? dash.params() : {}; const o = { ...ST_BASE }; for (const k in q) if (q[k] != null) o[k] = q[k]; return o; };
+// ——— Storico: cosa guardare (parametri della dashboard: nessuna query li usa, cambiano solo il disegno) ———
+const ST_BASE = { st_dal: null, st_al: null, st_gov: null, st_prov: PROVS, st_modo: 'voci', st_voci: ['gettito', 'costi', 'saldo'],
+  st_misura: 'gettito', st_ris: 'eur', st_gruppo: 'giorno', st_vista: 'valore', st_tipo: 'linee', st_asse: 'auto', st_picchi: 'no',
+  st_prima: 'no', st_somma: 'no', st_nasc: [] };
+const stP = () => { const q = dash.params ? dash.params() : {}; const o = { ...ST_BASE }; for (const k in q) if (q[k] != null && k in ST_BASE) o[k] = q[k]; return o; };
 const stSet = (o) => dash.setParams(o);
 const giornoMs = (d) => Date.parse(d + 'T00:00:00Z');
-const isoMeno = (d, n) => new Date(giornoMs(d) - n * 86400000).toISOString().slice(0, 10);
-const nomeMisura = { tesoro: 'Tesoro', gettito: 'Gettito', manutenzione: 'Manutenzione', confini: 'Confini', donazioni: 'Donazioni ricevute', contributo: "Contributo all'Italia", tassazioni: 'Tassazioni' };
-const nomeRisSt = { eur: 'denaro', valore: 'valore totale', pelle: 'pelle', oro: 'oro', petrolio: 'petrolio', nte: 'NTE', n: 'numero' };
-const fmtRis = (ris) => (ris === 'eur' || ris === 'valore' ? G.fmtE : (v) => G.fmtN(v));
-const fmtAsse = (ris) => (v) => (ris === 'eur' || ris === 'valore' ? mil(v) : Math.abs(v) >= 1e6 ? (v / 1e6).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' M' : Math.abs(v) >= 1e3 ? (v / 1e3).toLocaleString('it-IT', { maximumFractionDigits: 0 }) + ' k' : String(v));
+const isoPiu = (d, n) => new Date(giornoMs(d) + n * 86400000).toISOString().slice(0, 10);
+const isoMeno = (d, n) => isoPiu(d, -n);
 const dataIt = (d) => new Date(giornoMs(d)).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+const chiaveMs = (k) => (k.length === 10 ? giornoMs(k) : Date.parse(k));
+const oraIt = (k) => new Date(Date.parse(k)).toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' });
+const lunedi = (d) => isoMeno(d, (new Date(giornoMs(d)).getUTCDay() + 6) % 7);
+
+const VOCI_ST = [
+  { id: 'gettito', nome: 'Gettito (tasse)', ore: true },
+  { id: 'manutenzione', nome: 'Manutenzione' },
+  { id: 'confini', nome: 'Confini' },
+  { id: 'costi', nome: 'Costi (manutenzione + confini)' },
+  { id: 'saldo', nome: 'Saldo (gettito − costi)' },
+  { id: 'donazioni', nome: 'Donazioni alle province', ore: true },
+  { id: 'don_stato', nome: 'Donazioni allo Stato', ore: true, stato: true },
+  { id: 'saldo_don', nome: 'Saldo con le donazioni' },
+  { id: 'tesoro', nome: 'Tesoro delle province', ore: true, stock: true },
+  { id: 'tesoro_stato', nome: 'Tesoro dello Stato', ore: true, stock: true, stato: true },
+  { id: 'tassazioni', nome: 'Tassazioni (lavori nelle fabbriche)', ore: true, unita: 'n' },
+  { id: 'copertura', nome: 'Copertura dei costi (%)', unita: '%' },
+];
+const VOCE = Object.fromEntries(VOCI_ST.map((v) => [v.id, v]));
+const MISURE_PROV = ['gettito', 'manutenzione', 'confini', 'costi', 'saldo', 'donazioni', 'saldo_don', 'tesoro', 'tassazioni', 'copertura'];
+const nomeProvMisura = { donazioni: 'Donazioni ricevute', tesoro: 'Tesoro', saldo_don: 'Saldo con le donazioni ricevute' };
+const nomeRisSt = { eur: 'denaro', valore: 'valore totale', pelle: 'pelle', oro: 'oro', petrolio: 'petrolio', nte: 'NTE' };
+const COL_VOCE = { gettito: 0, manutenzione: 1, confini: 2, costi: 1, saldo: 5, donazioni: 3, don_stato: 4, saldo_don: 6, tesoro: 2, tesoro_stato: 7, tassazioni: 5, copertura: 0 };
+const unitaDi = (voce, ris) => VOCE[voce].unita || (ris === 'eur' || ris === 'valore' ? '€' : ris);
+const fmtU = (u) => (u === '€' ? G.fmtE : u === '%' ? (v) => (v == null ? '—' : v.toLocaleString('it-IT', { maximumFractionDigits: 0 }) + '%') : (v) => G.fmtN(v));
+const fmtAsseU = (u) => (v) => (u === '€' ? mil(v) : u === '%' ? v + '%' : Math.abs(v) >= 1e6 ? (v / 1e6).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' M' : Math.abs(v) >= 1e3 ? (v / 1e3).toLocaleString('it-IT', { maximumFractionDigits: 0 }) + ' k' : String(v));
+
+// numeri di una riga (dello storico o di una lettura oraria) per risorsa; «valore» = denaro + risorse ai prezzi medi
+const prezziSt = () => { const p = (dash.data('prezzo_attuale').data || [])[0] || {}; return { eur: 1, pelle: p.pelle || 0, oro: p.oro || 0, petrolio: p.petrolio || 0, nte: p.nte || 0 }; };
+const pezzo = (r, pref, ris, P) => {
+  if (!r) return null;
+  if (ris === 'valore') return RIS_ST.every((k) => r[pref + k] != null) ? RIS_ST.reduce((a, k) => a + r[pref + k] * P[k], 0) : null;
+  return r[pref + ris] ?? null;
+};
+const BASI = ['gettito', 'manutenzione', 'confini', 'donazioni', 'tesoro', 'tassazioni', 'don_stato', 'tesoro_stato'];
+const FLUSSI_A = ['gettito', 'manutenzione', 'confini']; // contano solo nei giorni in cui ci sono tutti e tre
+const basiGiorno = (r, ris, P) => (!r ? null : {
+  gettito: pezzo(r, 'gettito_', ris, P), manutenzione: pezzo(r, 'manutenzione_', ris, P),
+  confini: r.confini_eur == null ? null : (ris === 'eur' || ris === 'valore' ? r.confini_eur : 0),
+  donazioni: pezzo(r, 'donazioni_', ris, P) ?? 0, tesoro: pezzo(r, 'tesoro_', ris, P), tassazioni: r.tassazioni ?? null });
+const basiOra = (r, ris, P) => (!r ? null : {
+  gettito: pezzo(r, 'gettito_it_', ris, P), donazioni: pezzo(r, 'donazioni_oggi_', ris, P), tesoro: pezzo(r, 'tesoro_', ris, P),
+  tassazioni: r.tassazioni_it ?? null, manutenzione: null, confini: null });
+// somma su più province: null se a qualcuna manca il dato
+const sommaBasi = (lista) => {
+  const out = {};
+  for (const k of ['gettito', 'manutenzione', 'confini', 'donazioni', 'tesoro', 'tassazioni']) {
+    const xs = lista.map((b) => (b ? b[k] : null));
+    out[k] = !xs.length || xs.some((x) => x == null) ? null : xs.reduce((a, x) => a + x, 0);
+  }
+  return out;
+};
+// da un insieme di basi (giorno o gruppo di giorni) alla voce chiesta
+const voceDa = (b, voce) => {
+  if (!b) return null;
+  const tutti = (...xs) => !xs.some((x) => x == null);
+  switch (voce) {
+    case 'costi': return tutti(b.manutenzione, b.confini) ? b.manutenzione + b.confini : null;
+    case 'saldo': return tutti(b.gettito, b.manutenzione, b.confini) ? b.gettito - b.manutenzione - b.confini : null;
+    case 'saldo_don': { const s = voceDa(b, 'saldo'); return s == null ? null : s + (b.donazioni || 0) + (b.don_stato || 0); }
+    case 'copertura': { const c = voceDa(b, 'costi'); return b.gettito == null || !c ? null : (b.gettito / c) * 100; }
+    default: return b[voce] ?? null;
+  }
+};
+// più giorni insieme (settimana, governo, periodo): i flussi si sommano, i tesori sono quelli dell'ultimo giorno
+const unisci = (giorni) => {
+  const out = Object.fromEntries(BASI.map((k) => [k, null]));
+  let n = 0;
+  for (const b of giorni) {
+    if (!b) continue;
+    if (FLUSSI_A.every((k) => b[k] != null)) { n++; for (const k of FLUSSI_A) out[k] = (out[k] || 0) + b[k]; }
+    for (const k of ['donazioni', 'don_stato', 'tassazioni']) if (b[k] != null) out[k] = (out[k] || 0) + b[k];
+    for (const k of ['tesoro', 'tesoro_stato']) if (b[k] != null) out[k] = b[k];
+  }
+  out.giorni = n;
+  return out;
+};
 
 // filtri: costruiti una volta, aggiornati a ogni disegno
 (() => {
@@ -1060,18 +1157,33 @@ const dataIt = (d) => new Date(giornoMs(d)).toLocaleDateString('it-IT', { day: '
       stSet({ st_prov: PROVS_ST.filter((x) => scelte.has(x)) });
     });
   }
+  const voci = document.getElementById('st-voci');
+  for (const v of VOCI_ST) {
+    const b = document.createElement('button'); b.type = 'button'; b.dataset.v = v.id;
+    const i = document.createElement('i'); i.style.background = dash.colors[COL_VOCE[v.id]]; b.append(i, document.createTextNode(v.nome)); voci.append(b);
+    b.addEventListener('click', () => {
+      const s = stP().st_voci.filter((x) => VOCE[x]);
+      stSet({ st_voci: s.includes(v.id) ? (s.length > 1 ? s.filter((x) => x !== v.id) : s) : [...s, v.id] });
+    });
+  }
+  const mis = document.getElementById('st-misura');
+  mis.replaceChildren(...MISURE_PROV.map((m) => new Option(nomeProvMisura[m] || VOCE[m].nome, m)));
+  mis.addEventListener('change', () => stSet({ st_misura: mis.value }));
+  document.getElementById('st-ris').addEventListener('change', (e) => stSet({ st_ris: e.target.value }));
   document.querySelectorAll('#st-preset button').forEach((b) => b.addEventListener('click', () => {
-    const lungo = dash.data('storico_lungo'); if (lungo.status !== 'ok' || !lungo.data.length) return;
-    const date = lungo.data.map((r) => r.data).sort(), al = date[date.length - 1], n = +b.dataset.giorni;
-    stSet({ st_dal: n ? isoMeno(al, n - 1) : date[0], st_al: al, st_gov: null });
+    const date = dateStorico(); if (!date.length) return;
+    const ultimo = date[date.length - 1], chiusa = ultimaChiusa(date), q = b.dataset.p;
+    if (q === 'oggi') return stSet({ st_dal: ultimo, st_al: ultimo, st_gov: null, st_gruppo: 'ora' });
+    if (q === 'ieri') return stSet({ st_dal: chiusa, st_al: chiusa, st_gov: null, st_gruppo: 'ora' });
+    const n = +q;
+    stSet({ st_dal: n ? isoMeno(ultimo, n - 1) : date[0], st_al: ultimo, st_gov: null, ...(stP().st_gruppo === 'ora' ? { st_gruppo: 'giorno' } : {}) });
   }));
   for (const [id, chiave] of [['st-dal', 'st_dal'], ['st-al', 'st_al']]) {
     const el = document.getElementById(id);
     el.addEventListener('change', () => {
       if (!el.value || !el.validity.valid || el.value < '2026-01-01') return;
       const o = { [chiave]: el.value, st_gov: null }, q = stP();
-      // un periodo rovesciato diventa un solo giorno
-      if (chiave === 'st_dal' && q.st_al && el.value > q.st_al) o.st_al = el.value;
+      if (chiave === 'st_dal' && q.st_al && el.value > q.st_al) o.st_al = el.value; // periodo rovesciato: un giorno solo
       if (chiave === 'st_al' && q.st_dal && el.value < q.st_dal) o.st_dal = el.value;
       stSet(o);
     });
@@ -1081,88 +1193,139 @@ const dataIt = (d) => new Date(giornoMs(d)).toLocaleDateString('it-IT', { day: '
     const g = (dash.data('governi').data || []).find((x) => x.governo === e.target.value);
     if (g) stSet({ st_gov: g.governo, st_dal: g.inizio, st_al: g.fine }); else stSet({ st_gov: null, st_dal: null, st_al: null });
   });
-  document.getElementById('st-misura').addEventListener('change', (e) => stSet({ st_misura: e.target.value }));
-  document.getElementById('st-ris').addEventListener('change', (e) => stSet({ st_ris: e.target.value }));
-  document.querySelectorAll('#st-dett button').forEach((b) => b.addEventListener('click', () => stSet({ st_dett: b.dataset.dett })));
-  document.querySelectorAll('#st-picchi button').forEach((b) => b.addEventListener('click', () => stSet({ st_picchi: b.dataset.picchi })));
+  const chipUno = (id, chiave) => document.querySelectorAll(`#${id} button`).forEach((b) => b.addEventListener('click', () => stSet({ [chiave]: b.dataset.v })));
+  chipUno('st-modo', 'st_modo'); chipUno('st-gruppo', 'st_gruppo'); chipUno('st-tipo', 'st_tipo'); chipUno('st-asse', 'st_asse');
+  chipUno('st-picchi', 'st_picchi'); chipUno('st-prima', 'st_prima');
+  document.getElementById('st-vista').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) stSet({ st_vista: b.dataset.v }); });
+  document.getElementById('st-prov-7').addEventListener('click', () => stSet({ st_prov: PROVS }));
+  document.getElementById('st-prov-tutte').addEventListener('click', () => stSet({ st_prov: PROVS_ST }));
+  document.getElementById('st-somma').addEventListener('click', () => stSet({ st_somma: stP().st_somma === 'si' ? 'no' : 'si' }));
   document.getElementById('st-reset').addEventListener('click', () => (dash.resetParams ? dash.resetParams() : null));
+  document.getElementById('st-csv').addEventListener('click', () => {
+    const t = window.__stTabella; if (!t) return;
+    const cella = (x) => (typeof x === 'number' ? String(Math.round(x * 100) / 100).replace('.', ',') : `"${String(x ?? '').replace(/"/g, '""')}"`);
+    const testo = '﻿' + [t.testa, ...t.righe].map((r) => r.map(cella).join(';')).join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([testo], { type: 'text/csv;charset=utf-8' }));
+    a.download = t.nome; document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  });
 })();
 
-// grafico a linee con fasce dei governi e mirino: serie = [{nome, col, valori: Map(chiave → numero), nascosta?}]
-// chiave = giorno «AAAA-MM-GG» oppure ora ISO «AAAA-MM-GGTHH:MM+02:00» (dettaglio Ore).
-// opz.taglia: l'asse si ferma sotto i picchi isolati (2 × il 90° percentile); i punti fuori scala restano sul bordo
-// con un triangolo e il valore vero, così il resto del grafico si legge.
-const chiaveMs = (k) => (k.length === 10 ? giornoMs(k) : Date.parse(k));
-const quandoIt = (k) => (k.length === 10 ? dataIt(k) : new Date(Date.parse(k)).toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' }));
-const grafLinee = (box, serieTutte, ris, governi, zero = true, opz = {}) => {
-  box.querySelector('svg')?.remove();
-  box.querySelector('.ei-vuoto')?.remove();
+const dateStorico = () => { const s = dash.data('storico'); return s.status === 'ok' ? [...new Set(s.data.map((r) => r.data))].sort() : []; };
+const ultimaChiusa = (date) => {
+  const s = dash.data('storico'), aperti = new Set((s.data || []).filter((r) => r.provvisorio).map((r) => r.data));
+  return [...date].reverse().find((d) => !aperti.has(d)) || date[date.length - 1];
+};
+
+// grafico: linee (asse del tempo) o barre (affiancate o impilate). serie = [{nome, col, valori: Map, nascosta?, tratteggio?, gruppo?}]
+const graficoSt = (box, chiavi, serieTutte, o) => {
+  box.querySelector('svg')?.remove(); box.querySelector('.ei-vuoto')?.remove();
   const serie = serieTutte.filter((s) => !s.nascosta);
-  const tutte = [...new Set(serie.flatMap((s) => [...s.valori.keys()]))].sort((a, b) => chiaveMs(a) - chiaveMs(b));
+  const keys = chiavi.filter((k) => serie.some((s) => s.valori.get(k) != null));
   if (!box.clientWidth) return { tagliati: 0 };
-  if (!tutte.length) { const v = document.createElement('p'); v.className = 'note ei-vuoto'; v.textContent = serieTutte.length ? 'Tutte le linee sono nascoste: clicca una voce della legenda.' : 'Nessun dato nel periodo scelto.'; box.append(v); return { tagliati: 0 }; }
-  const ore = tutte[0].length > 10;
-  const W = box.clientWidth, H = 260, M = { t: 22, r: 16, b: 24, l: 52 };
-  const ext = d3.extent(tutte, chiaveMs);
-  if (ext[0] === ext[1]) { ext[0] -= ore ? 1800000 : 43200000; ext[1] += ore ? 1800000 : 43200000; }
-  const x = d3.scaleUtc(ext, [M.l, W - M.r]);
-  const vals = serie.flatMap((s) => [...s.valori.values()]).filter((v) => v != null);
-  let lo = zero ? Math.min(0, d3.min(vals)) : d3.min(vals), hi = zero ? Math.max(0, d3.max(vals)) : d3.max(vals);
-  if (opz.taglia && vals.length >= 4) {
+  if (!keys.length) {
+    const v = document.createElement('p'); v.className = 'note ei-vuoto';
+    v.textContent = serieTutte.length && !serie.length ? 'Tutte le linee sono nascoste: clicca una voce della legenda.' : 'Nessun dato per questa scelta nel periodo.';
+    box.append(v); return { tagliati: 0 };
+  }
+  const W = box.clientWidth, H = 290, M = { t: 22, r: 16, b: 28, l: 58 };
+  const tempo = o.tipo === 'linee' && o.asseX !== 'cat';
+  let x, bw = 0;
+  if (tempo) {
+    const ext = d3.extent(keys, chiaveMs);
+    if (ext[0] === ext[1]) { ext[0] -= o.asseX === 'ora' ? 1800000 : 43200000; ext[1] += o.asseX === 'ora' ? 1800000 : 43200000; }
+    const xs = d3.scaleUtc(ext, [M.l, W - M.r]); x = (k) => xs(chiaveMs(k)); x.scala = xs;
+  } else {
+    const xs = d3.scaleBand(keys, [M.l, W - M.r]).padding(o.tipo === 'linee' ? 0.5 : 0.18); bw = xs.bandwidth();
+    x = (k) => xs(k) + bw / 2; x.scala = xs;
+  }
+  // valori sull'asse verticale (le barre impilate sommano positivi e negativi separati)
+  let pile = null, vals;
+  if (o.tipo === 'impilate') {
+    const righe = keys.map((k) => Object.fromEntries(serie.map((s) => [s.nome, s.valori.get(k) ?? 0])));
+    pile = d3.stack().keys(serie.map((s) => s.nome)).offset(d3.stackOffsetDiverging)(righe);
+    vals = pile.flatMap((l) => l.flatMap((p) => [p[0], p[1]]));
+  } else vals = serie.flatMap((s) => keys.map((k) => s.valori.get(k))).filter((v) => v != null);
+  const zero = o.asse === 'zero' || (o.asse === 'auto' && !o.stock) || o.tipo !== 'linee';
+  let lo = d3.min(vals), hi = d3.max(vals);
+  if (zero) { lo = Math.min(0, lo); hi = Math.max(0, hi); }
+  if (o.taglia && vals.length >= 4) {
     const ass = vals.map(Math.abs).sort(d3.ascending), q = d3.quantile(ass, 0.9), lim = 2 * q;
     if (q > 0 && hi > lim) hi = lim;
     if (q > 0 && lo < -lim) lo = -lim;
   }
+  if (lo === hi) { lo -= Math.abs(lo) * 0.1 || 1; hi += Math.abs(hi) * 0.1 || 1; }
   const y = d3.scaleLinear([lo, hi], [H - M.b, M.t]).nice();
-  const [y0, y1] = y.domain();
-  const yc = (v) => y(Math.max(y0, Math.min(y1, v)));
+  const [y0, y1] = y.domain(), yc = (v) => y(Math.max(y0, Math.min(y1, v)));
   const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
-  (governi || []).forEach((g, i) => {
-    const a = Math.max(ext[0], giornoMs(g.inizio) - (ore ? 0 : 43200000)), b = Math.min(ext[1], giornoMs(g.fine) + (ore ? 86400000 : 43200000));
+  if (tempo && o.governi) o.governi.forEach((g, i) => {
+    const [e0, e1] = x.scala.domain().map(Number), ora = o.asseX === 'ora';
+    const a = Math.max(e0, giornoMs(g.inizio) - (ora ? 0 : 43200000)), b = Math.min(e1, giornoMs(g.fine) + (ora ? 86400000 : 43200000));
     if (b <= a) return;
-    svg.append('rect').attr('x', x(a)).attr('width', x(b) - x(a)).attr('y', M.t).attr('height', H - M.b - M.t).attr('fill', 'var(--color-border-line)').attr('opacity', i % 2 ? 0.35 : 0.15);
-    if (x(b) - x(a) > 60) svg.append('text').attr('x', x(a) + 4).attr('y', M.t - 6).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(g.governo.replace('Governo ', ''));
+    svg.append('rect').attr('x', x.scala(a)).attr('width', x.scala(b) - x.scala(a)).attr('y', M.t).attr('height', H - M.b - M.t).attr('fill', 'var(--color-border-line)').attr('opacity', i % 2 ? 0.35 : 0.15);
+    if (x.scala(b) - x.scala(a) > 60) svg.append('text').attr('x', x.scala(a) + 4).attr('y', M.t - 6).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(g.governo.replace('Governo ', ''));
   });
-  const fmtX = ore
-    ? (v) => v.toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', timeZone: 'Europe/Rome' })
-    : (v) => v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' });
-  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.floor(W / (ore ? 120 : 90)))).tickFormat(fmtX)).call(etichetteAsse);
-  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(fmtAsse(ris)).tickSize(-(W - M.l - M.r))).call(etichetteAsse).call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
+  const asseX = tempo
+    ? d3.axisBottom(x.scala).ticks(Math.max(2, Math.floor(W / (o.asseX === 'ora' ? 120 : 90)))).tickFormat((v) => (o.asseX === 'ora'
+      ? v.toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', timeZone: 'Europe/Rome' })
+      : v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' })))
+    : d3.axisBottom(x.scala).tickValues(keys.filter((_, i) => i % Math.max(1, Math.ceil(keys.length / Math.max(2, Math.floor(W / 80)))) === 0)).tickFormat(o.etichetta);
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(asseX).call(etichetteAsse);
+  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(fmtAsseU(o.unita)).tickSize(-(W - M.l - M.r))).call(etichetteAsse).call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
   if (y0 < 0 && y1 > 0) svg.append('line').attr('x1', M.l).attr('x2', W - M.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-reference)');
-  const f = fmtRis(ris);
+  const f = fmtU(o.unita);
   let tagliati = 0;
-  for (const s of serie) {
-    let pts = tutte.map((d) => [d, s.valori.get(d)]);
-    if (s.gruppo) { // giornate diverse: la linea si interrompe (i totali «da inizio giornata» ripartono da zero)
-      const spezzati = []; let g0 = null;
-      for (const pt of pts) { if (pt[1] == null) continue; const g = s.gruppo(pt[0]); if (g0 != null && g !== g0) spezzati.push([pt[0], null]); spezzati.push(pt); g0 = g; }
-      pts = spezzati;
+  const segnaFuori = (cx, v, col) => {
+    const su = v > y1, cy = su ? M.t : H - M.b;
+    tagliati++;
+    svg.append('path').attr('d', su ? `M${cx - 5},${cy + 7}L${cx + 5},${cy + 7}L${cx},${cy - 1}Z` : `M${cx - 5},${cy - 7}L${cx + 5},${cy - 7}L${cx},${cy + 1}Z`).attr('fill', col).attr('stroke', 'var(--color-panel)');
+    const dx = cx + 90 < W - M.r;
+    svg.append('text').attr('x', dx ? cx + 8 : cx - 8).attr('y', su ? cy + 8 : cy - 4).attr('text-anchor', dx ? 'start' : 'end').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(f(v));
+  };
+  if (o.tipo === 'linee') {
+    for (const s of serie) {
+      let pts = keys.map((k) => [k, s.valori.get(k) ?? null]);
+      if (s.gruppo) { const sp = []; let g0 = null; for (const p of pts) { if (p[1] == null) continue; const g = s.gruppo(p[0]); if (g0 != null && g !== g0) sp.push([p[0], null]); sp.push(p); g0 = g; } pts = sp; }
+      svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', s.col).attr('stroke-width', 2).attr('stroke-dasharray', s.tratteggio ? '5 4' : null).attr('opacity', s.tratteggio ? 0.75 : 1).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+        .attr('d', d3.line().defined((p) => p[1] != null).x((p) => x(p[0])).y((p) => yc(p[1])));
+      // punti vuoti = giornata non ancora finita
+      const aperto = (k) => o.asseX !== 'ora' && o.provvisorio && o.provvisorio(k);
+      if (keys.length <= 45) svg.append('g').selectAll('circle').data(pts.filter((p) => p[1] != null)).join('circle').attr('cx', (p) => x(p[0])).attr('cy', (p) => yc(p[1]))
+        .attr('r', (p) => (aperto(p[0]) ? 3.5 : 2.5)).attr('fill', (p) => (aperto(p[0]) ? 'var(--color-panel)' : s.col)).attr('stroke', s.col).attr('stroke-width', 1.5).attr('opacity', s.tratteggio ? 0.75 : 1);
+      for (const [k, v] of pts) if (v != null && (v > y1 || v < y0)) segnaFuori(x(k), v, s.col);
     }
-    svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', s.col).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
-      .attr('d', d3.line().defined((p) => p[1] != null).x((p) => x(chiaveMs(p[0]))).y((p) => yc(p[1])));
-    if (tutte.length <= 40) svg.append('g').selectAll('circle').data(pts.filter((p) => p[1] != null)).join('circle').attr('cx', (p) => x(chiaveMs(p[0]))).attr('cy', (p) => yc(p[1])).attr('r', 2.5).attr('fill', s.col);
-    // punti fuori scala: triangolo sul bordo e valore vero
-    const fuori = pts.filter((p) => p[1] != null && (p[1] > y1 || p[1] < y0));
-    tagliati += fuori.length;
-    for (const [d, v] of fuori) {
-      const cx = x(chiaveMs(d)), su = v > y1, cy = su ? M.t : H - M.b;
-      svg.append('path').attr('d', su ? `M${cx - 5},${cy + 7}L${cx + 5},${cy + 7}L${cx},${cy - 1}Z` : `M${cx - 5},${cy - 7}L${cx + 5},${cy - 7}L${cx},${cy + 1}Z`).attr('fill', s.col).attr('stroke', 'var(--color-panel)').attr('stroke-width', 1);
-      const aDestra = cx + 90 < W - M.r;
-      svg.append('text').attr('x', aDestra ? cx + 8 : cx - 8).attr('y', su ? cy + 8 : cy - 4).attr('text-anchor', aDestra ? 'start' : 'end').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(f(v));
+  } else if (o.tipo === 'barre') {
+    const dentro = d3.scaleBand(serie.map((s) => s.nome), [0, bw]).padding(0.08);
+    for (const s of serie) for (const k of keys) {
+      const v = s.valori.get(k); if (v == null) continue;
+      const xx = x.scala(k) + dentro(s.nome);
+      svg.append('rect').attr('x', xx).attr('width', Math.max(1, dentro.bandwidth())).attr('y', Math.min(yc(v), y(0))).attr('height', Math.max(1, Math.abs(yc(v) - y(0)))).attr('rx', 2).attr('fill', s.col).attr('opacity', s.tratteggio ? 0.45 : 1);
+      if (v > y1 || v < y0) segnaFuori(xx + dentro.bandwidth() / 2, v, s.col);
     }
+  } else {
+    pile.forEach((l, i) => { const s = serie[i]; l.forEach((p, j) => {
+      if (p[0] === p[1]) return;
+      svg.append('rect').attr('x', x.scala(keys[j])).attr('width', Math.max(1, bw)).attr('y', yc(Math.max(p[0], p[1]))).attr('height', Math.max(1, Math.abs(yc(p[1]) - yc(p[0])))).attr('fill', s.col).attr('stroke', 'var(--color-panel)').attr('stroke-width', 0.5);
+    }); });
   }
+  // mirino e numeri al passaggio del mouse (o del dito)
   const tp = tip(box);
   const riga = svg.append('line').attr('stroke', 'var(--cds-chart-reference)').attr('y1', M.t).attr('y2', H - M.b).attr('visibility', 'hidden');
-  const msTutte = tutte.map(chiaveMs);
+  const posizioni = keys.map((k) => x(k));
   svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
     .on('mousemove', (ev) => {
       const [mx, my] = d3.pointer(ev, box);
-      const d = tutte[d3.bisectCenter(msTutte, +x.invert(mx))];
-      riga.attr('x1', x(chiaveMs(d))).attr('x2', x(chiaveMs(d))).attr('visibility', 'visible');
+      const k = keys[d3.bisectCenter(posizioni, mx)];
+      riga.attr('x1', x(k)).attr('x2', x(k)).attr('visibility', 'visible');
       tp.replaceChildren(); tp.hidden = false;
-      const t = document.createElement('div'); t.textContent = quandoIt(d); tp.append(t);
-      for (const s of serie) { const v = s.valori.get(d); if (v == null) continue; const r = document.createElement('div'); const k = document.createElement('i'); k.style.cssText = `display:inline-block;width:12px;height:2px;margin-right:6px;vertical-align:middle;background:${s.col}`; const b = document.createElement('b'); b.textContent = f(v) + ' '; r.append(k, b, document.createTextNode(s.nome)); tp.append(r); }
-      tp.style.left = Math.max(0, Math.min(mx + 12, W - 230)) + 'px'; tp.style.top = (my + 12) + 'px';
+      const t = document.createElement('div'); t.textContent = o.etichetta(k) + (o.provvisorio && o.provvisorio(k) ? ' · in corso' : ''); tp.append(t);
+      for (const s of serie) {
+        const v = s.valori.get(k); if (v == null) continue;
+        const r = document.createElement('div'), q = document.createElement('i'), b = document.createElement('b');
+        q.style.cssText = `display:inline-block;width:12px;height:${s.tratteggio ? 1 : 2}px;margin-right:6px;vertical-align:middle;background:${s.col}`;
+        b.textContent = f(v) + ' '; r.append(q, b, document.createTextNode(s.nome)); tp.append(r);
+      }
+      tp.style.left = Math.max(0, Math.min(mx + 12, W - 250)) + 'px'; tp.style.top = (my + 12) + 'px';
     })
     .on('mouseleave', () => { tp.hidden = true; riga.attr('visibility', 'hidden'); });
   return { tagliati };
@@ -1171,140 +1334,244 @@ const grafLinee = (box, serieTutte, ris, governi, zero = true, opz = {}) => {
 const legenda = (ul, serie, alClic) => {
   ul.replaceChildren(...serie.map((s) => {
     const li = document.createElement('li'), b = document.createElement('button'), i = document.createElement('i');
-    b.type = 'button'; b.setAttribute('aria-pressed', String(!s.nascosta)); b.title = s.nascosta ? 'Mostra la linea' : 'Nascondi la linea';
-    i.style.background = s.col; b.append(i, document.createTextNode(s.nome));
+    b.type = 'button'; b.setAttribute('aria-pressed', String(!s.nascosta)); b.title = s.nascosta ? 'Mostra' : 'Nascondi';
+    i.style.background = s.col; if (s.tratteggio) i.style.opacity = '0.6';
+    b.append(i, document.createTextNode(s.nome));
     if (alClic) b.addEventListener('click', () => alClic(s.nome)); else b.disabled = true;
     li.append(b); return li;
   }));
 };
 
 const disegnaStorico = () => {
-  const lungo = dash.data('storico_lungo'), gov = dash.data('governi'), sg = dash.data('storico_governi');
-  const p = stP(), governi = gov.status === 'ok' ? gov.data : [];
+  const sto = dash.data('storico'), gov = dash.data('governi'), sg = dash.data('storico_governi');
+  const p = stP(), governi = gov.status === 'ok' ? gov.data : [], P = prezziSt();
+  const premi = (id, v) => document.querySelectorAll(`#${id} button`).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
   // controlli
   const selGov = document.getElementById('st-gov');
   selGov.replaceChildren(new Option('Tutti i governi', ''), ...governi.map((g) => new Option(g.governo.replace('Governo ', ''), g.governo)));
   selGov.value = p.st_gov || '';
-  document.getElementById('st-misura').value = p.st_misura;
-  const selRis = document.getElementById('st-ris');
-  for (const o of selRis.options) o.disabled = (p.st_misura === 'confini' && !['eur', 'valore'].includes(o.value)) || p.st_misura === 'tassazioni';
-  selRis.value = p.st_ris;
+  premi('st-modo', p.st_modo); premi('st-gruppo', p.st_gruppo); premi('st-tipo', p.st_tipo); premi('st-asse', p.st_asse); premi('st-picchi', p.st_picchi); premi('st-prima', p.st_prima);
+  const modoVoci = p.st_modo !== 'province';
+  document.getElementById('st-voci-riga').hidden = !modoVoci;
+  document.getElementById('st-misura-l').hidden = modoVoci;
+  document.getElementById('st-misura').value = MISURE_PROV.includes(p.st_misura) ? p.st_misura : 'gettito';
+  document.getElementById('st-ris').value = p.st_ris;
+  document.getElementById('st-somma').hidden = modoVoci;
+  document.getElementById('st-somma').setAttribute('aria-pressed', String(p.st_somma === 'si'));
+  const vociScelte = p.st_voci.filter((v) => VOCE[v]);
+  document.querySelectorAll('#st-voci button').forEach((b) => b.setAttribute('aria-pressed', String(vociScelte.includes(b.dataset.v))));
   document.querySelectorAll('#st-prov button').forEach((b) => b.setAttribute('aria-pressed', String(p.st_prov.includes(b.dataset.prov))));
-  if (lungo.status !== 'ok' || !lungo.data.length) { document.getElementById('st-nota').textContent = '—'; return; }
-  const tutteDate = [...new Set(lungo.data.map((r) => r.data))].sort();
+  const ore = p.st_gruppo === 'ora';
+  const viste = ore ? [['valore', 'Dalla mezzanotte'], ['orario', 'Tra una lettura e l’altra']]
+    : p.st_gruppo === 'giorno' ? [['valore', 'Del giorno'], ['cumulato', 'Sommati dall’inizio'], ['media7', 'Media di 7 giorni']]
+      : [['valore', 'Del periodo'], ['cumulato', 'Sommati dall’inizio']];
+  const vista = viste.some(([v]) => v === p.st_vista) ? p.st_vista : 'valore';
+  document.getElementById('st-vista').replaceChildren(...viste.map(([v, t]) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.v = v; b.textContent = t; b.setAttribute('aria-pressed', String(v === vista)); return b; }));
+  if (sto.status !== 'ok' || !sto.data.length) { document.getElementById('st-nota').textContent = 'Storico non ancora caricato.'; return; }
+
+  // periodo
+  const tutteDate = [...new Set(sto.data.map((r) => r.data))].sort();
   const dal = p.st_dal || tutteDate[0], al = p.st_al || tutteDate[tutteDate.length - 1];
   for (const [id, v] of [['st-dal', dal], ['st-al', al]]) { const el = document.getElementById(id); if (el !== document.activeElement) el.value = v; }
-  const giorniPeriodo = tutteDate.filter((d) => d >= dal && d <= al).length;
-  document.querySelectorAll('#st-preset button').forEach((b) => { const n = +b.dataset.giorni; b.setAttribute('aria-pressed', String(!p.st_gov && al === tutteDate[tutteDate.length - 1] && (n ? dal === isoMeno(al, n - 1) : dal === tutteDate[0]))); });
-  const nel = (r) => r.data >= dal && r.data <= al;
-  const scelte = new Set(p.st_prov);
-  const ris = p.st_misura === 'tassazioni' ? 'n' : (p.st_misura === 'confini' && !['eur', 'valore'].includes(p.st_ris)) ? 'eur' : p.st_ris;
-  // giorni completi: almeno 6 province con il gettito in denaro
-  const conta = new Map();
-  for (const r of lungo.data) if (r.misura === 'gettito' && r.risorsa === 'eur' && r.provincia !== 'Stato') conta.set(r.data, (conta.get(r.data) || 0) + 1);
-  const completi = new Set([...conta].filter(([, n]) => n >= 6).map(([d]) => d));
-  const rIt = (m, risorsa) => lungo.data.filter((r) => r.misura === m && r.risorsa === risorsa && nel(r) && scelte.has(r.provincia));
-  const somma = (rows, filtroGiorno) => { const mp = new Map(); for (const r of rows) if (!filtroGiorno || filtroGiorno(r.data)) mp.set(r.data, (mp.get(r.data) || 0) + r.valore); return mp; };
-  const risIt = ['eur', 'valore'].includes(ris) || ris === 'n' ? (ris === 'n' ? 'eur' : ris) : ris;
-  const giorniCompleti = [...completi].filter((d) => d >= dal && d <= al);
-  document.getElementById('st-nota').textContent = `Dal ${dataIt(dal)} al ${dataIt(al)}: ${giorniPeriodo} giorni con dati, ${giorniCompleti.length} completi. ` +
-    `${scelte.size === PROVS_ST.length ? 'Tutte le province (Bahrein compreso, italiano fino al 9/10)' : scelte.size + (scelte.size === 1 ? ' provincia su ' : ' province su ') + PROVS_ST.length}. Misura: ${nomeMisura[p.st_misura]}, ${nomeRisSt[ris]}.` + (ris === 'valore' ? ' Il valore totale c\'è solo nei giorni del DEF, che registra anche le risorse.' : '');
-  // riquadri
-  const fI = fmtRis(risIt), tot = (mp) => [...mp.values()].reduce((a, v) => a + v, 0);
-  const get = somma(rIt('gettito', risIt), (d) => completi.has(d)), man = somma(rIt('manutenzione', risIt), (d) => completi.has(d));
-  const conf = ['eur', 'valore'].includes(risIt) ? somma(rIt('confini', risIt), (d) => completi.has(d)) : new Map();
-  const donP = somma(rIt('donazioni', risIt));
-  const donS = somma(lungo.data.filter((r) => r.provincia === 'Stato' && r.misura === 'donazioni' && r.risorsa === risIt && nel(r)));
-  const set = (id, t) => { document.getElementById(id).textContent = t; };
-  set('st-t-gettito', get.size ? fI(tot(get)) : '—'); set('st-t-gettito-s', `${get.size} giorni completi · ${nomeRisSt[risIt]}`);
-  set('st-t-costi', man.size ? fI(tot(man) + tot(conf)) : '—'); set('st-t-costi-s', man.size ? `manutenzione ${fI(tot(man))}` + (conf.size ? ` · confini ${fI(tot(conf))}` : '') : '—');
-  set('st-t-don', fI(tot(donP) + tot(donS))); set('st-t-don-s', `province ${fI(tot(donP))} · Stato ${fI(tot(donS))}`);
-  set('st-t-saldo', get.size ? fI(tot(get) - tot(man) - tot(conf)) : '—');
-  const tesS = lungo.data.filter((r) => r.provincia === 'Stato' && r.misura === 'tesoro' && r.risorsa === risIt && nel(r)).sort((a, b) => a.data.localeCompare(b.data));
-  set('st-t-stato', tesS.length ? fI(tesS[tesS.length - 1].valore) : '—');
-  set('st-t-stato-s', tesS.length > 1 ? `${tesS[tesS.length - 1].valore >= tesS[0].valore ? '+' : '−'}${fI(Math.abs(tesS[tesS.length - 1].valore - tesS[0].valore))} dal ${dataIt(tesS[0].data)}` : tesS.length ? 'letto il ' + dataIt(tesS[0].data) : 'nessun dato nel periodo');
-  // Italia giorno per giorno, oppure ora per ora (letture orarie: flussi tra una lettura e la precedente)
-  const ore = p.st_dett === 'ore', taglia = p.st_picchi === 'si';
-  document.querySelectorAll('#st-dett button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.dett === p.st_dett)));
-  document.querySelectorAll('#st-picchi button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.picchi === p.st_picchi)));
-  const orL = dash.data('orario_lungo'), orRighe = orL.status === 'ok' ? orL.data : [];
-  const nelOre = (r) => r.data >= dal && r.data <= al;
-  // somma delle province a ogni lettura; le letture in cui manca qualche provincia si saltano (il totale sarebbe più basso)
-  const sommaOre = (rows) => {
-    const mp = new Map(), n = new Map();
-    for (const r of rows) { mp.set(r.ts, (mp.get(r.ts) || 0) + r.valore); n.set(r.ts, (n.get(r.ts) || 0) + 1); }
-    const max = Math.max(0, ...n.values());
-    for (const [k, c] of n) if (c < max) mp.delete(k);
-    return mp;
-  };
-  const rOre = (m, risorsa, chi) => orRighe.filter((r) => r.misura === m && r.risorsa === risorsa && nelOre(r) && chi(r.provincia));
-  const nasc = new Set(p.st_nasc || []);
-  const giornoGioco = (k) => new Date(Date.parse(k) + 3 * 3600000).toISOString().slice(0, 10); // mezzanotte GMT+3
-  const giornoIt = (k) => new Date(Date.parse(k)).toLocaleDateString('sv-SE', { timeZone: 'Europe/Rome' });
-  const serieIt = (ore ? [
-    { nome: 'Gettito', col: dash.colors[0], gruppo: giornoGioco, valori: sommaOre(rOre('gettito', risIt, (x) => x !== 'Stato' && scelte.has(x))) },
-    { nome: 'Donazioni alle province', col: dash.colors[3], gruppo: giornoIt, valori: sommaOre(rOre('donazioni', risIt, (x) => x !== 'Stato' && scelte.has(x))) },
-    { nome: 'Donazioni allo Stato', col: dash.colors[4], gruppo: giornoIt, valori: sommaOre(rOre('donazioni', risIt, (x) => x === 'Stato')) },
-  ] : [
-    { nome: 'Gettito', col: dash.colors[0], valori: get },
-    { nome: 'Manutenzione', col: dash.colors[1], valori: man },
-    ...(conf.size ? [{ nome: 'Confini', col: dash.colors[2], valori: conf }] : []),
-    { nome: 'Donazioni alle province', col: dash.colors[3], valori: somma(rIt('donazioni', risIt), (d) => completi.has(d)) },
-    { nome: 'Donazioni allo Stato', col: dash.colors[4], valori: somma(lungo.data.filter((r) => r.provincia === 'Stato' && r.misura === 'donazioni' && r.risorsa === risIt && nel(r)), (d) => completi.has(d)) },
-  ]).filter((s) => s.valori.size).map((s) => ({ ...s, nascosta: nasc.has(s.nome) }));
-  legenda(document.getElementById('st-leg-italia'), serieIt, (nome) => { const n = new Set(stP().st_nasc || []); if (n.has(nome)) n.delete(nome); else n.add(nome); stSet({ st_nasc: [...n] }); });
-  const tIt = grafLinee(document.querySelector('#storico-italia .ei-chart'), serieIt, risIt, governi, true, { taglia });
-  const avvisoPicchi = (t) => (t.tagliati ? ` Picchi tagliati: ${t.tagliati === 1 ? '1 punto è' : t.tagliati + ' punti sono'} oltre la scala, segnati sul bordo con ▲ e il valore vero.` : '');
-  const oreDal = orRighe.length ? quandoIt(orRighe.map((r) => r.ts).sort((a, b) => Date.parse(a) - Date.parse(b))[0]) : '—';
-  document.getElementById('st-titolo-italia').textContent = ore ? "L'Italia ora per ora" : "L'Italia giorno per giorno";
-  document.getElementById('st-nota-italia').textContent = (ore
-    ? `Province scelte, nella risorsa scelta: a ogni lettura (ogni ora, di notte più rade; ore disponibili dal ${oreDal}) quanto è entrato dall'inizio della giornata fino a quell'ora. Il gettito riparte alla mezzanotte del gioco (le 23 italiane, dal 26/10 le 22), le donazioni alla mezzanotte italiana: lì la linea si interrompe. Manutenzione e confini si pagano una volta a notte: si vedono nel dettaglio Giorni. Fino al 22/10 il gettito orario è arrotondato a 0,1 milioni.`
-    : 'Province scelte, nella risorsa scelta. Le fasce di sfondo sono i governi. Solo i giorni con i dati di almeno 6 province.') + ' Clicca una voce della legenda per nasconderla o mostrarla.' + avvisoPicchi(tIt);
-  // province a confronto (legenda e filtri «Province» sono la stessa scelta)
-  const mis = p.st_misura;
-  const oreProv = ore && ['tesoro', 'gettito', 'donazioni', 'tassazioni'].includes(mis);
-  document.getElementById('st-titolo-prov').textContent = `${nomeMisura[mis]} per provincia (${nomeRisSt[ris]})${oreProv ? ', ora per ora' : ''}`;
-  const serieP = PROVS_ST.map((x) => ({ nome: x, col: colore(x), nascosta: !scelte.has(x),
-    gruppo: oreProv && mis !== 'tesoro' ? (mis === 'donazioni' ? giornoIt : giornoGioco) : null,
-    valori: oreProv
-      ? new Map(orRighe.filter((r) => r.provincia === x && r.misura === mis && r.risorsa === ris && nelOre(r)).map((r) => [r.ts, r.valore]))
-      : new Map(lungo.data.filter((r) => r.provincia === x && r.misura === mis && r.risorsa === ris && nel(r)).map((r) => [r.data, r.valore])) })).filter((s) => s.valori.size);
-  legenda(document.getElementById('st-leg-prov'), serieP, (nome) => {
-    const sc = new Set(stP().st_prov);
-    if (sc.has(nome)) { if (sc.size > 1) sc.delete(nome); } else sc.add(nome);
-    stSet({ st_prov: PROVS_ST.filter((x) => sc.has(x)) });
+  const ultimo = tutteDate[tutteDate.length - 1], chiusa = ultimaChiusa(tutteDate);
+  document.querySelectorAll('#st-preset button').forEach((b) => {
+    const q = b.dataset.p, n = +q;
+    const ok = !p.st_gov && (q === 'oggi' ? dal === ultimo && al === ultimo : q === 'ieri' ? dal === chiusa && al === chiusa && chiusa !== ultimo
+      : al === ultimo && (n ? dal === isoMeno(ultimo, n - 1) : dal === tutteDate[0]));
+    b.setAttribute('aria-pressed', String(ok));
   });
-  const tP = grafLinee(document.querySelector('#storico-province .ei-chart'), serieP, ris, governi, mis !== 'tesoro', { taglia });
-  document.getElementById('st-nota-prov').textContent = 'La misura e la risorsa scelte nei filtri, una linea per provincia (ogni provincia ha sempre lo stesso colore). Clicca una provincia nella legenda per nasconderla o mostrarla.'
-    + (ore && !oreProv ? ' Manutenzione, confini e contributo si contano una volta a notte: qui restano per giorno.' : oreProv && mis !== 'tesoro' ? ' Ora per ora: quanto è entrato dall’inizio della giornata fino a quell’ora (la linea si interrompe a ogni nuovo giorno).' : '') + avvisoPicchi(tP);
-  // tesoro dello Stato
-  const tesSOre = rOre('tesoro', risIt, (x) => x === 'Stato');
-  grafLinee(document.querySelector('#storico-stato .ei-chart'), [{ nome: 'Stato', col: colore('Stato'), valori: ore ? new Map(tesSOre.map((r) => [r.ts, r.valore])) : new Map(tesS.map((r) => [r.data, r.valore])) }], risIt, governi, false);
-  document.getElementById('st-nota-stato').textContent = ore
-    ? 'Nella risorsa scelta, a ogni lettura oraria del gioco. L\'asse non parte da zero, per vedere le variazioni: di notte si vede il pagamento dei confini.'
-    : 'Nella risorsa scelta (valore totale = denaro + risorse ai prezzi medi). Fino al 20/10 dal DEF, poi dal gioco. L\'asse non parte da zero, per vedere le variazioni.';
-  // classifica del periodo
-  document.getElementById('st-titolo-class').textContent = `Classifica: ${nomeMisura[mis].toLowerCase()} (${nomeRisSt[ris]})`;
+  const aperti = new Set(sto.data.filter((r) => r.provvisorio).map((r) => r.data));
+  const scelte = PROVS_ST.filter((x) => p.st_prov.includes(x));
+  const ris = p.st_ris;
+
+  // indice giorno → provincia → riga
+  const idx = new Map();
+  for (const r of sto.data) { if (!idx.has(r.data)) idx.set(r.data, new Map()); idx.get(r.data).set(r.provincia, r); }
+  const basiDi = (d, chi) => {  // chi = elenco di province (somma) oppure una provincia
+    const m = idx.get(d); if (!m) return null;
+    const lista = chi.filter((x) => m.has(x));
+    if (!lista.length) return null;
+    const b = sommaBasi(lista.map((x) => basiGiorno(m.get(x), ris, P)));
+    const st = m.get('Stato');
+    b.don_stato = st ? (pezzo(st, 'donazioni_', ris, P) ?? 0) : null;
+    b.tesoro_stato = st ? pezzo(st, 'tesoro_', ris, P) : null;
+    return b;
+  };
+  const giorniTra = (a, b) => tutteDate.filter((d) => d >= a && d <= b);
+  const govDi = (d) => (governi.filter((g) => g.inizio <= d).slice(-1)[0] || {}).governo || '—';
+  const chiaveGruppo = (d) => (p.st_gruppo === 'settimana' ? lunedi(d) : p.st_gruppo === 'governo' ? govDi(d) : d);
+  const etichetta = ore ? oraIt : p.st_gruppo === 'settimana' ? (k) => 'sett. dal ' + dataIt(k) : p.st_gruppo === 'governo' ? (k) => k.replace('Governo ', '') : dataIt;
+
+  // serie per giorni (raggruppati) di un periodo; chi = funzione che dà le basi di un giorno
+  const serieGiorni = (a, b, basi, voce) => {
+    const gruppi = new Map();
+    for (const d of giorniTra(a, b)) { const k = chiaveGruppo(d); if (!gruppi.has(k)) gruppi.set(k, []); gruppi.get(k).push(basi(d)); }
+    const out = new Map();
+    for (const [k, lista] of gruppi) { const v = voceDa(p.st_gruppo === 'giorno' ? lista[0] : unisci(lista), voce); if (v != null) out.set(k, v); }
+    return out;
+  };
+  // serie per ore: righe orarie del periodo, somma delle province scelte a ogni lettura
+  const or = dash.data('orario'), righeOre = or.status === 'ok' ? or.data : [];
+  const serieOre = (a, b, chi, voce) => {
+    const per = new Map();
+    for (const r of righeOre) { if (r.data_it < a || r.data_it > b) continue; if (!per.has(r.ts)) per.set(r.ts, new Map()); per.get(r.ts).set(r.provincia, r); }
+    const out = new Map();
+    for (const [ts, m] of per) {
+      let v = null;
+      if (voce === 'don_stato' || voce === 'tesoro_stato') v = pezzo(m.get('Stato'), voce === 'don_stato' ? 'donazioni_oggi_' : 'tesoro_', ris, P);
+      else { const lista = chi.filter((x) => PROVS.includes(x)); if (lista.length && lista.every((x) => m.has(x))) v = sommaBasi(lista.map((x) => basiOra(m.get(x), ris, P)))[voce]; }
+      if (v != null) out.set(ts, v);
+    }
+    const ordinate = [...out.keys()].sort((x, y) => Date.parse(x) - Date.parse(y));
+    const ris_ = new Map(ordinate.map((k) => [k, out.get(k)]));
+    if (vista === 'orario') { // differenza con la lettura prima (i flussi ripartono a mezzanotte)
+      const dif = new Map(); let prec = null;
+      for (const k of ordinate) {
+        const g = new Date(Date.parse(k)).toLocaleDateString('sv-SE', { timeZone: 'Europe/Rome' });
+        dif.set(k, VOCE[voce].stock ? (prec ? ris_.get(k) - prec.v : null) : (prec && prec.g === g ? ris_.get(k) - prec.v : ris_.get(k)));
+        prec = { v: ris_.get(k), g };
+      }
+      for (const [k, v] of dif) if (v == null) dif.delete(k);
+      return dif;
+    }
+    return ris_;
+  };
+  const giornoIt = (k) => new Date(Date.parse(k)).toLocaleDateString('sv-SE', { timeZone: 'Europe/Rome' });
+  const trasforma = (m, voce) => { // cumulati e medie (sui giorni o sui gruppi)
+    const ks = [...m.keys()];
+    if (vista === 'cumulato' && !VOCE[voce].stock && voce !== 'copertura') { let s = 0; return new Map(ks.map((k) => [k, (s += m.get(k))])); }
+    if (vista === 'media7') return new Map(ks.map((k, i) => { const w = ks.slice(Math.max(0, i - 6), i + 1).map((x) => m.get(x)); return [k, w.reduce((a, v) => a + v, 0) / w.length]; }));
+    return m;
+  };
+  const costruisci = (a, b, chi, voce) => trasforma(ore ? serieOre(a, b, chi, voce) : serieGiorni(a, b, (d) => basiDi(d, chi), voce), voce);
+
+  // quali serie
+  const note = [];
+  let elenco = [];
+  let unita;
+  if (modoVoci) {
+    let voci = vociScelte;
+    if (ore) { const no = voci.filter((v) => !VOCE[v].ore); if (no.length) note.push(`Ora per ora non ci sono ${no.map((v) => VOCE[v].nome.toLowerCase()).join(', ')}: si pagano una volta a notte, si vedono raggruppando per giorno.`); voci = voci.filter((v) => VOCE[v].ore); }
+    unita = voci.length ? unitaDi(voci[0], ris) : '€';
+    const altre = voci.filter((v) => unitaDi(v, ris) !== unita);
+    if (altre.length) note.push(`${altre.map((v) => VOCE[v].nome).join(', ')} ${altre.length > 1 ? 'hanno' : 'ha'} un'altra unità di misura: ${altre.length > 1 ? 'scegline' : 'sceglila'} da sola per vederla.`);
+    voci = voci.filter((v) => unitaDi(v, ris) === unita);
+    elenco = voci.map((v) => ({ nome: VOCE[v].nome, col: dash.colors[COL_VOCE[v]], voce: v, chi: scelte, stock: !!VOCE[v].stock }));
+  } else {
+    const m = MISURE_PROV.includes(p.st_misura) ? p.st_misura : 'gettito';
+    if (ore && !VOCE[m].ore) note.push(`${VOCE[m].nome} ora per ora non c'è (si paga una volta a notte): raggruppa per giorno.`);
+    unita = unitaDi(m, ris);
+    elenco = PROVS_ST.filter((x) => scelte.includes(x)).map((x) => ({ nome: x, col: colore(x), voce: m, chi: [x], stock: !!VOCE[m].stock }));
+    if (p.st_somma === 'si' && scelte.length > 1) elenco.push({ nome: 'Somma delle province scelte', col: 'var(--color-fg)', voce: m, chi: scelte, stock: !!VOCE[m].stock });
+    if (ore && !VOCE[m].ore) elenco = [];
+  }
+  if (ris !== 'eur' && ris !== 'valore' && elenco.some((s) => s.voce === 'confini')) note.push('I confini si pagano solo in denaro: nelle risorse valgono 0.');
+  const nasc = new Set(p.st_nasc || []);
+  const serie = elenco.map((s) => ({ ...s, valori: costruisci(dal, al, s.chi, s.voce), gruppo: ore && vista === 'valore' && !s.stock ? giornoIt : null,
+    nascosta: modoVoci ? nasc.has(s.nome) : false }));
+  // confronto con il periodo prima, spostato in avanti per stare sotto lo stesso asse
+  const nGiorni = Math.round((giornoMs(al) - giornoMs(dal)) / 86400000) + 1;
+  const prima = p.st_prima === 'si' && p.st_gruppo !== 'governo';
+  if (prima) {
+    const a2 = isoMeno(dal, nGiorni), b2 = isoMeno(al, nGiorni);
+    for (const s of [...serie]) {
+      const m = costruisci(a2, b2, s.chi, s.voce), sp = new Map();
+      for (const [k, v] of m) sp.set(k.length === 10 ? isoPiu(k, nGiorni) : new Date(Date.parse(k) + nGiorni * 86400000).toISOString(), v);
+      serie.push({ ...s, nome: s.nome + ' · periodo prima', valori: sp, tratteggio: true, nascosta: s.nascosta || (modoVoci && nasc.has(s.nome + ' · periodo prima')) });
+    }
+    note.push(`Tratteggio: lo stesso numero di giorni subito prima (dal ${dataIt(a2)} al ${dataIt(b2)}), spostato in avanti per confrontarlo.`);
+  }
+  if (p.st_tipo === 'impilate' && modoVoci && serie.some((s) => !s.nascosta && ['costi', 'saldo', 'saldo_don', 'copertura'].includes(s.voce))) note.push('Barre impilate: attenzione, costi e saldi contengono già altre voci, sommarli conta due volte.');
+  if (vista === 'cumulato' && serie.some((s) => s.stock || s.voce === 'copertura')) note.push('Tesori e copertura non si sommano: restano il valore di ogni punto.');
+  if (modoVoci && serie.some((s) => !s.nascosta && s.stock) && serie.some((s) => !s.nascosta && !s.stock)) note.push('I tesori sono molto più grandi delle entrate di un giorno e schiacciano le altre linee: guardali da soli, o nascondili dalla legenda.');
+  const chiavi = [...new Set(serie.flatMap((s) => [...s.valori.keys()]))].sort((x, y) => chiaveMs(x) - chiaveMs(y));
+  if (p.st_gruppo === 'governo') chiavi.sort((x, y) => (governi.findIndex((g) => g.governo === x) - governi.findIndex((g) => g.governo === y)));
+  const provvisorio = (k) => (ore ? false : p.st_gruppo === 'giorno' ? aperti.has(k) : giorniTra(dal, al).some((d) => aperti.has(d) && chiaveGruppo(d) === k));
+
+  // nota sotto i filtri
+  const nomiProv = scelte.length === PROVS.length && PROVS.every((x) => scelte.includes(x)) ? 'le 7 province' : scelte.length === PROVS_ST.length ? 'tutte le province (Bahrein compreso, italiano fino al 9/10)' : scelte.join(', ');
+  document.getElementById('st-nota').textContent = `Dal ${dataIt(dal)} al ${dataIt(al)} (${giorniTra(dal, al).length} giornate${giorniTra(dal, al).some((d) => aperti.has(d)) ? ', l\'ultima in corso' : ''}) · ${nomiProv} · ${nomeRisSt[ris]}` + (ris === 'valore' ? ' (risorse ai prezzi medi di oggi; c\'è solo nei giorni con tutte le risorse)' : '') + '.';
+
+  // In breve e riquadri: tutto il periodo, sulle province scelte
+  const tot = unisci(giorniTra(dal, al).map((d) => basiDi(d, scelte)));
+  const fE = fmtU(ris === 'eur' || ris === 'valore' ? '€' : ris);
+  const set = (id, t) => { document.getElementById(id).textContent = t; };
+  const costi = voceDa(tot, 'costi'), saldo = voceDa(tot, 'saldo'), cop = voceDa(tot, 'copertura');
+  set('st-t-gettito', tot.gettito == null ? '—' : fE(tot.gettito)); set('st-t-gettito-s', `${tot.giorni} giornate complete · ${nomeRisSt[ris]}`);
+  set('st-t-costi', costi == null ? '—' : fE(costi)); set('st-t-costi-s', costi == null ? '—' : `manutenzione ${fE(tot.manutenzione)} · confini ${fE(tot.confini)}`);
+  set('st-t-saldo', saldo == null ? '—' : fE(saldo));
+  document.getElementById('st-t-saldo').className = 'big' + (saldo == null ? '' : saldo < 0 ? ' bad' : ' ok');
+  set('st-t-cop', cop == null ? '—' : fmtU('%')(cop));
+  set('st-t-don', fE((tot.donazioni || 0) + (tot.don_stato || 0))); set('st-t-don-s', `province ${fE(tot.donazioni || 0)} · Stato ${fE(tot.don_stato || 0)}`);
+  const tesS = giorniTra(dal, al).map((d) => [d, (basiDi(d, scelte) || {}).tesoro_stato]).filter(([, v]) => v != null);
+  set('st-t-stato', tesS.length ? fE(tesS[tesS.length - 1][1]) : '—');
+  set('st-t-stato-s', tesS.length > 1 ? `${tesS[tesS.length - 1][1] >= tesS[0][1] ? '+' : '−'}${fE(Math.abs(tesS[tesS.length - 1][1] - tesS[0][1]))} dal ${dataIt(tesS[0][0])}` : tesS.length ? 'a fine ' + dataIt(tesS[0][0]) : 'nessun dato nel periodo');
+  const saldoDon = voceDa(tot, 'saldo_don');
+  set('st-breve', tot.gettito == null && tot.donazioni == null ? 'Nessun dato nel periodo scelto.'
+    : `Dal ${dataIt(dal)} al ${dataIt(al)}, per ${nomiProv}: le tasse hanno portato ${fE(tot.gettito)} e i costi sono stati ${costi == null ? '—' : fE(costi)} (manutenzione ${fE(tot.manutenzione)}, confini ${fE(tot.confini)}), quindi il saldo è ${saldo == null ? '—' : fE(saldo)}`
+      + (cop == null ? '. ' : `: le tasse pagano il ${fmtU('%')(cop)} dei costi. `)
+      + `I giocatori hanno donato ${fE(tot.donazioni || 0)} alle province e ${fE(tot.don_stato || 0)} allo Stato; con le donazioni il saldo è ${saldoDon == null ? '—' : fE(saldoDon)}. `
+      + (tesS.length > 1 ? `Il tesoro dello Stato è passato da ${fE(tesS[0][1])} (fine ${dataIt(tesS[0][0])}) a ${fE(tesS[tesS.length - 1][1])} (fine ${dataIt(tesS[tesS.length - 1][0])}).` : '')
+      + (giorniTra(dal, al).some((d) => aperti.has(d)) ? ' L\'ultima giornata non è finita: i suoi numeri cambiano fino a mezzanotte.' : ''));
+
+  // grafico
+  const nomeVista = Object.fromEntries(viste)[vista];
+  document.getElementById('st-titolo').textContent = (modoVoci ? 'Le voci del bilancio' : `${nomeProvMisura[p.st_misura] || VOCE[p.st_misura]?.nome || 'Gettito'} per provincia`)
+    + ` · ${({ ora: 'ora per ora', giorno: 'giorno per giorno', settimana: 'settimana per settimana', governo: 'per governo' })[p.st_gruppo]}` + (vista !== 'valore' ? ` · ${nomeVista.toLowerCase()}` : '');
+  const stock = serie.filter((s) => !s.nascosta).every((s) => s.stock);
+  const t = graficoSt(document.querySelector('#storico-grafico .ei-chart'), chiavi, serie, {
+    tipo: p.st_tipo, asse: p.st_asse, taglia: p.st_picchi === 'si', unita, etichetta, stock, provvisorio,
+    asseX: ore ? 'ora' : p.st_gruppo === 'giorno' ? 'giorno' : 'cat', governi: ore || p.st_gruppo === 'giorno' ? governi : null });
+  legenda(document.getElementById('st-leg'), serie, modoVoci
+    ? (nome) => { const n = new Set(stP().st_nasc || []); if (n.has(nome)) n.delete(nome); else n.add(nome); stSet({ st_nasc: [...n] }); }
+    : (nome) => { if (!PROVS_ST.includes(nome)) return; const sc = new Set(stP().st_prov); if (sc.has(nome)) { if (sc.size > 1) sc.delete(nome); } else sc.add(nome); stSet({ st_prov: PROVS_ST.filter((x) => sc.has(x)) }); });
+  const spiega = ore
+    ? (vista === 'valore' ? 'A ogni lettura del gioco (circa ogni ora): quanto è entrato dalla mezzanotte italiana fino a quell\'ora; a mezzanotte la linea riparte. I tesori sono quelli del momento.' : 'Quanto è entrato tra una lettura e la precedente (per i tesori: quanto sono cambiati).') + ' Le letture orarie partono dal 21/10; prima del 22/10 il gettito orario c\'è solo dove c\'è la lettura di mezzanotte.'
+    : p.st_gruppo === 'giorno' ? 'Un punto per giornata (00:00–24:00). Le fasce di sfondo sono i governi.' : p.st_gruppo === 'settimana' ? 'Settimane da lunedì a domenica: i flussi sono sommati, i tesori sono quelli dell\'ultimo giorno.' : 'Un valore per governo: i flussi sono sommati sui suoi giorni, i tesori sono quelli dell\'ultimo giorno.';
+  document.getElementById('st-nota-graf').textContent = [spiega, ...note, t.tagliati ? `Picchi tagliati: ${t.tagliati === 1 ? '1 punto è' : t.tagliati + ' punti sono'} oltre la scala, segnati sul bordo con ▲ e il valore vero.` : '', 'Clicca una voce della legenda per nasconderla o mostrarla.'].filter(Boolean).join(' ');
+
+  // tabella e CSV
+  const visibili = serie.filter((s) => !s.nascosta), fT = fmtU(unita);
+  const thead = document.querySelector('#st-tab thead'), tbody = document.querySelector('#st-tab tbody');
+  const trh = document.createElement('tr');
+  for (const h of ['Quando', ...visibili.map((s) => s.nome)]) { const th = document.createElement('th'); th.textContent = h; trh.append(th); }
+  thead.replaceChildren(trh);
+  const chiaviTab = chiavi.filter((k) => visibili.some((s) => s.valori.get(k) != null));
+  tbody.replaceChildren(...chiaviTab.map((k) => {
+    const tr = document.createElement('tr'), td0 = document.createElement('td');
+    td0.textContent = etichetta(k) + (provvisorio(k) ? ' (in corso)' : ''); tr.append(td0);
+    for (const s of visibili) { const td = document.createElement('td'); const v = s.valori.get(k); td.textContent = v == null ? '—' : fT(v); if (v != null && v < 0 && unita !== '%') td.className = 'bad'; tr.append(td); }
+    return tr;
+  }));
+  window.__stTabella = { nome: `storico ${dal} ${al}.csv`, testa: ['Quando', ...visibili.map((s) => s.nome + (unita === '€' ? ' (€)' : unita === '%' ? ' (%)' : ` (${unita})`))],
+    righe: chiaviTab.map((k) => [etichetta(k) + (provvisorio(k) ? ' (in corso)' : ''), ...visibili.map((s) => s.valori.get(k) ?? '')]) };
+
+  // classifica delle province nel periodo (misura scelta, o la prima voce che vale per le province)
+  const mC = modoVoci ? (vociScelte.find((v) => MISURE_PROV.includes(v)) || 'gettito') : (MISURE_PROV.includes(p.st_misura) ? p.st_misura : 'gettito');
+  const uC = unitaDi(mC, ris), fC = fmtU(uC);
+  document.getElementById('st-titolo-class').textContent = `Classifica del periodo: ${(nomeProvMisura[mC] || VOCE[mC].nome).toLowerCase()} (${uC === '€' ? nomeRisSt[ris] : uC === '%' ? 'percentuale' : uC === 'n' ? 'numero' : nomeRisSt[ris]})`;
+  document.getElementById('st-nota-class').textContent = VOCE[mC].stock ? 'Valore alla fine del periodo. Province scelte.' : mC === 'copertura' ? 'Gettito ÷ costi su tutto il periodo. Province scelte.' : 'Totale del periodo. Province scelte.';
   const box = document.querySelector('#storico-classifica .ei-chart');
   box.querySelector('svg')?.remove();
-  const righe = PROVS_ST.filter((x) => scelte.has(x)).map((x) => {
-    const rs = lungo.data.filter((r) => r.provincia === x && r.misura === mis && r.risorsa === ris && nel(r)).sort((a, b) => a.data.localeCompare(b.data));
-    return { provincia: x, v: !rs.length ? null : mis === 'tesoro' ? rs[rs.length - 1].valore : rs.reduce((a, r) => a + r.valore, 0) };
-  }).filter((r) => r.v != null).sort((a, b) => b.v - a.v);
+  const righe = scelte.map((x) => ({ provincia: x, v: voceDa(unisci(giorniTra(dal, al).map((d) => basiDi(d, [x]))), mC) })).filter((r) => r.v != null).sort((a, b) => b.v - a.v);
   if (righe.length && box.clientWidth) {
     const W = box.clientWidth, rowH = 28, M = { t: 8, r: 16, b: 24, l: 84 }, H = M.t + M.b + righe.length * rowH;
     const xs = d3.scaleLinear(d3.extent([0, ...righe.map((r) => r.v)]), [M.l, W - M.r]).nice();
     const ys = d3.scaleBand(righe.map((r) => r.provincia), [M.t, H - M.b]).padding(0.3);
     const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
-    svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(xs).ticks(Math.max(2, Math.floor(W / 110))).tickFormat(fmtAsse(ris))).call(etichetteAsse);
+    svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(xs).ticks(Math.max(2, Math.floor(W / 110))).tickFormat(fmtAsseU(uC))).call(etichetteAsse);
     svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(ys).tickSize(0)).call(etichetteAsse).call((g) => g.select('.domain').remove());
     svg.append('line').attr('x1', xs(0)).attr('x2', xs(0)).attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--cds-chart-reference)');
-    const tp = tip(box), f = fmtRis(ris);
+    const tp = tip(box);
     svg.append('g').selectAll('rect').data(righe).join('rect').attr('x', (r) => Math.min(xs(0), xs(r.v))).attr('width', (r) => Math.max(1, Math.abs(xs(r.v) - xs(0))))
       .attr('y', (r) => ys(r.provincia)).attr('height', ys.bandwidth()).attr('rx', 4).attr('fill', (r) => colore(r.provincia))
-      .on('mousemove', (ev, r) => { const [mx, my] = d3.pointer(ev, box); tp.hidden = false; tp.textContent = `${r.provincia}: ${f(r.v)}`; tp.style.left = Math.min(mx + 12, W - 200) + 'px'; tp.style.top = (my + 12) + 'px'; })
+      .on('mousemove', (ev, r) => { const [mx, my] = d3.pointer(ev, box); tp.hidden = false; tp.textContent = `${r.provincia}: ${fC(r.v)}`; tp.style.left = Math.min(mx + 12, W - 200) + 'px'; tp.style.top = (my + 12) + 'px'; })
       .on('mouseleave', () => { tp.hidden = true; });
+    svg.append('g').selectAll('text.val').data(righe).join('text').attr('class', 'val').attr('x', (r) => (r.v >= 0 ? xs(r.v) - 6 : xs(r.v) + 6)).attr('y', (r) => ys(r.provincia) + ys.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', (r) => (r.v >= 0 ? 'end' : 'start')).attr('fill', '#fff').style('font-size', 'var(--cds-font-size-caption)')
+      .text((r) => (Math.abs(xs(r.v) - xs(0)) > 70 ? fC(r.v) : ''));
   }
+
   // bilancio per governo
   const tb = document.querySelector('#storico-governi tbody');
   tb.replaceChildren();
