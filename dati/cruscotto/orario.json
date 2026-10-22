@@ -725,7 +725,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 0,
+"tassazioni_it": 0
 },
 {
 "ts": "2026-10-22T00:24+02:00",
@@ -743,7 +745,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 0,
+"tassazioni_it": 0
 },
 {
 "ts": "2026-10-22T00:24+02:00",
@@ -761,7 +765,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 0,
+"tassazioni_it": 0
 },
 {
 "ts": "2026-10-22T00:24+02:00",
@@ -779,7 +785,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 0,
+"tassazioni_it": 0
 },
 {
 "ts": "2026-10-22T00:24+02:00",
@@ -797,7 +805,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 0,
+"tassazioni_it": 0
 },
 {
 "ts": "2026-10-22T00:24+02:00",
@@ -815,7 +825,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 0,
+"tassazioni_it": 0
 },
 {
 "ts": "2026-10-22T00:24+02:00",
@@ -849,7 +861,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 0,
+"tassazioni_it": 0
 },
 {
 "ts": "2026-10-22T00:27+02:00",
@@ -867,7 +881,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 0,
+"tassazioni_it": 3
 },
 {
 "ts": "2026-10-22T00:27+02:00",
@@ -885,7 +901,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 9500,
+"tassazioni_it": 6
 },
 {
 "ts": "2026-10-22T00:27+02:00",
@@ -903,7 +921,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 1700,
+"tassazioni_it": 1
 },
 {
 "ts": "2026-10-22T00:27+02:00",
@@ -921,7 +941,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 1200,
+"tassazioni_it": 1
 },
 {
 "ts": "2026-10-22T00:27+02:00",
@@ -973,7 +995,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 275900,
+"tassazioni_it": 626
 },
 {
 "ts": "2026-10-22T09:37+02:00",
@@ -991,7 +1015,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 1821000,
+"tassazioni_it": 1217
 },
 {
 "ts": "2026-10-22T09:37+02:00",
@@ -1009,7 +1035,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 1010500,
+"tassazioni_it": 568
 },
 {
 "ts": "2026-10-22T09:37+02:00",
@@ -1027,7 +1055,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 245300,
+"tassazioni_it": 361
 },
 {
 "ts": "2026-10-22T09:37+02:00",
@@ -1045,7 +1075,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 259900,
+"tassazioni_it": 283
 },
 {
 "ts": "2026-10-22T09:37+02:00",
@@ -1063,7 +1095,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 943800,
+"tassazioni_it": 601
 },
 {
 "ts": "2026-10-22T09:37+02:00",
@@ -1097,7 +1131,9 @@
 "donazioni_oggi_pelle": 50000,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 20000
+"donazioni_oggi_nte": 20000,
+"gettito_it_eur": 3522300,
+"tassazioni_it": 1686
 },
 {
 "ts": "2026-10-22T11:24+02:00",
@@ -1115,7 +1151,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 342600,
+"tassazioni_it": 750
 },
 {
 "ts": "2026-10-22T11:24+02:00",
@@ -1133,7 +1171,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 2121000,
+"tassazioni_it": 1404
 },
 {
 "ts": "2026-10-22T11:24+02:00",
@@ -1151,7 +1191,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 1110500,
+"tassazioni_it": 649
 },
 {
 "ts": "2026-10-22T11:24+02:00",
@@ -1169,7 +1211,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 292100,
+"tassazioni_it": 423
 },
 {
 "ts": "2026-10-22T11:24+02:00",
@@ -1187,7 +1231,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 325900,
+"tassazioni_it": 349
 },
 {
 "ts": "2026-10-22T11:24+02:00",
@@ -1205,7 +1251,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 1143800,
+"tassazioni_it": 708
 },
 {
 "ts": "2026-10-22T11:24+02:00",
@@ -1239,7 +1287,9 @@
 "donazioni_oggi_pelle": 50000,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 20000
+"donazioni_oggi_nte": 20000,
+"gettito_it_eur": 4222300,
+"tassazioni_it": 2011
 },
 {
 "ts": "2026-10-22T12:24+02:00",
@@ -1257,7 +1307,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 373600,
+"tassazioni_it": 817
 },
 {
 "ts": "2026-10-22T12:24+02:00",
@@ -1275,7 +1327,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 2321000,
+"tassazioni_it": 1510
 },
 {
 "ts": "2026-10-22T12:24+02:00",
@@ -1293,7 +1347,9 @@
 "donazioni_oggi_pelle": 5000,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 5000,
-"donazioni_oggi_nte": 5000
+"donazioni_oggi_nte": 5000,
+"gettito_it_eur": 1210500,
+"tassazioni_it": 703
 },
 {
 "ts": "2026-10-22T12:24+02:00",
@@ -1311,7 +1367,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 321300,
+"tassazioni_it": 467
 },
 {
 "ts": "2026-10-22T12:24+02:00",
@@ -1329,7 +1387,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 359900,
+"tassazioni_it": 382
 },
 {
 "ts": "2026-10-22T12:24+02:00",
@@ -1347,7 +1407,9 @@
 "donazioni_oggi_pelle": 0,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 0
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 1243800,
+"tassazioni_it": 767
 },
 {
 "ts": "2026-10-22T12:24+02:00",
@@ -1381,6 +1443,164 @@
 "donazioni_oggi_pelle": 50000,
 "donazioni_oggi_oro": 0,
 "donazioni_oggi_petrolio": 0,
-"donazioni_oggi_nte": 20000
+"donazioni_oggi_nte": 20000,
+"gettito_it_eur": 4522300,
+"tassazioni_it": 2197
+},
+{
+"ts": "2026-10-22T15:28+02:00",
+"provincia": "Firenze",
+"data_it": "2026-10-22",
+"giorno_gioco": "2026-10-22",
+"tesoro_eur": 3951000.0,
+"tesoro_pelle": 712833.0,
+"tesoro_oro": 5630.0,
+"tesoro_petrolio": 8250.0,
+"tesoro_nte": 132444.0,
+"tassazioni_oggi": 1150,
+"gettito_oggi_eur": 526800,
+"donazioni_oggi_eur": 0,
+"donazioni_oggi_pelle": 0,
+"donazioni_oggi_oro": 0,
+"donazioni_oggi_petrolio": 0,
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 485000,
+"tassazioni_it": 1049
+},
+{
+"ts": "2026-10-22T15:28+02:00",
+"provincia": "Lombardia",
+"data_it": "2026-10-22",
+"giorno_gioco": "2026-10-22",
+"tesoro_eur": 6126368.0,
+"tesoro_pelle": 26.0,
+"tesoro_oro": 5547.0,
+"tesoro_petrolio": 155.0,
+"tesoro_nte": 152.0,
+"tassazioni_oggi": 2047,
+"gettito_oggi_eur": 3100000,
+"donazioni_oggi_eur": 0,
+"donazioni_oggi_pelle": 0,
+"donazioni_oggi_oro": 0,
+"donazioni_oggi_petrolio": 0,
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 2821000,
+"tassazioni_it": 1859
+},
+{
+"ts": "2026-10-22T15:28+02:00",
+"provincia": "Marsiglia",
+"data_it": "2026-10-22",
+"giorno_gioco": "2026-10-22",
+"tesoro_eur": 11280907.0,
+"tesoro_pelle": 16462.0,
+"tesoro_oro": 11907.0,
+"tesoro_petrolio": 14971.0,
+"tesoro_nte": 11369.0,
+"tassazioni_oggi": 967,
+"gettito_oggi_eur": 1600000,
+"donazioni_oggi_eur": 0,
+"donazioni_oggi_pelle": 10000,
+"donazioni_oggi_oro": 0,
+"donazioni_oggi_petrolio": 10000,
+"donazioni_oggi_nte": 10000,
+"gettito_it_eur": 1410500,
+"tassazioni_it": 857
+},
+{
+"ts": "2026-10-22T15:28+02:00",
+"provincia": "Napoli",
+"data_it": "2026-10-22",
+"giorno_gioco": "2026-10-22",
+"tesoro_eur": 0.0,
+"tesoro_pelle": 0.0,
+"tesoro_oro": 0.0,
+"tesoro_petrolio": 0.0,
+"tesoro_nte": 0.0,
+"tassazioni_oggi": 614,
+"gettito_oggi_eur": 426000,
+"donazioni_oggi_eur": 0,
+"donazioni_oggi_pelle": 0,
+"donazioni_oggi_oro": 0,
+"donazioni_oggi_petrolio": 0,
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 392800,
+"tassazioni_it": 565
+},
+{
+"ts": "2026-10-22T15:28+02:00",
+"provincia": "Palermo",
+"data_it": "2026-10-22",
+"giorno_gioco": "2026-10-22",
+"tesoro_eur": 8194303.0,
+"tesoro_pelle": 5936.0,
+"tesoro_oro": 16480.0,
+"tesoro_petrolio": 6006.0,
+"tesoro_nte": 5620.0,
+"tassazioni_oggi": 549,
+"gettito_oggi_eur": 520400,
+"donazioni_oggi_eur": 0,
+"donazioni_oggi_pelle": 0,
+"donazioni_oggi_oro": 0,
+"donazioni_oggi_petrolio": 0,
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 473300,
+"tassazioni_it": 498
+},
+{
+"ts": "2026-10-22T15:28+02:00",
+"provincia": "Roma",
+"data_it": "2026-10-22",
+"giorno_gioco": "2026-10-22",
+"tesoro_eur": 6256279.0,
+"tesoro_pelle": 310193.0,
+"tesoro_oro": 36082.0,
+"tesoro_petrolio": 49373.0,
+"tesoro_nte": 41049.0,
+"tassazioni_oggi": 1060,
+"gettito_oggi_eur": 1700000,
+"donazioni_oggi_eur": 0,
+"donazioni_oggi_pelle": 0,
+"donazioni_oggi_oro": 0,
+"donazioni_oggi_petrolio": 0,
+"donazioni_oggi_nte": 0,
+"gettito_it_eur": 1543800,
+"tassazioni_it": 961
+},
+{
+"ts": "2026-10-22T15:28+02:00",
+"provincia": "Stato",
+"data_it": "2026-10-22",
+"giorno_gioco": "2026-10-22",
+"tesoro_eur": 819553989,
+"tesoro_pelle": 2324589,
+"tesoro_oro": 805380,
+"tesoro_petrolio": 1190874,
+"tesoro_nte": 1240494,
+"donazioni_oggi_eur": 2802000,
+"donazioni_oggi_pelle": 9000,
+"donazioni_oggi_oro": 5759,
+"donazioni_oggi_petrolio": 40000,
+"donazioni_oggi_nte": 50000
+},
+{
+"ts": "2026-10-22T15:28+02:00",
+"provincia": "Venezia",
+"data_it": "2026-10-22",
+"giorno_gioco": "2026-10-22",
+"tesoro_eur": 8170447.0,
+"tesoro_pelle": 55341.0,
+"tesoro_oro": 57833.0,
+"tesoro_petrolio": 15865.0,
+"tesoro_nte": 47376.0,
+"tassazioni_oggi": 3026,
+"gettito_oggi_eur": 6200000,
+"donazioni_oggi_eur": 8050000,
+"donazioni_oggi_pelle": 51000,
+"donazioni_oggi_oro": 0,
+"donazioni_oggi_petrolio": 11000,
+"donazioni_oggi_nte": 42543,
+"gettito_it_eur": 5622300,
+"tassazioni_it": 2755
 }
 ]

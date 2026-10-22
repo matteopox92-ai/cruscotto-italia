@@ -4,6 +4,10 @@ Uso: python costruisci_cruscotto.py <DEF.xlsx> <cartella Statistiche Italia> <ca
 Legge lo storico del Documento di Economia e Finanza (fogli «Governo ...»), l'ultima fotografia
 delle province, le classifiche e il gettito letti dal gioco, e scrive in <cartella Cruscotto>:
 oggi.json, storico.json, prezzi.json, classifiche.json, costi.json, diario.json, donazioni.json, donazioni_totali.json.
+
+Giornata italiana (00:00–24:00, regola dell'utente del 22/10/2026): dal 21/10 i giorni dello storico vengono da
+DEF/giornate.json, scritto da aggiorna_def.py, così cruscotto, DEF e recap danno le stesse cifre. Le letture orarie
+hanno anche i totali dalla mezzanotte italiana (gettito_it_*, tassazioni_it), usati dalla scheda Storico.
 """
 import json
 import sys
@@ -11,6 +15,9 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import openpyxl
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from giornata_it import di_mezzanotte, gettito_tra, giorno_gioco, istante  # noqa: E402
 
 PROV = ["Venezia", "Lombardia", "Marsiglia", "Napoli", "Roma", "Firenze", "Palermo"]
 NOMI_GIOCO = {"VENEZIA": "Venezia", "LOMBARDIA": "Lombardia", "MARSIGLIA": "Marsiglia", "NAPOLI": "Napoli",
@@ -183,6 +190,79 @@ def aggiungi_tesoro_stato(storico, stato):
     storico.sort(key=lambda r: (r["data"], r["provincia"]))
 
 
+def carica_giornate(out_dir):
+    """Giornate italiane calcolate da aggiorna_def.py (DEF/giornate.json accanto alla cartella del cruscotto)."""
+    f = Path(out_dir).parent / "DEF" / "giornate.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
+
+
+def applica_giornate(storico, giornate, governi):
+    """Mette nello storico i numeri delle giornate italiane (dove il DEF del governo non ha già un valore)."""
+    for g in giornate:
+        giorno = g["giorno"]
+        conf = (g["voci"].get("TOTALE") or {}).get("confini")
+        for chi, voci in g["voci"].items():
+            if chi not in PROV and chi != "Stato":
+                continue
+            riga = next((r for r in storico if r["data"] == giorno and r["provincia"] == chi), None)
+            if riga is None:
+                riga = {"data": giorno, "provincia": chi, "governo": governo_del(giorno, governi)}
+                storico.append(riga)
+            nuovi = {}
+            for voce in ("manutenzione", "gettito", "donazioni", "tesoro"):
+                if voci.get(voce) is not None:
+                    nuovi.update({f"{voce}_{k}": v for k, v in zip(SUFF, voci[voce])})
+            if voci.get("tassazioni") is not None:
+                nuovi["tassazioni"] = voci["tassazioni"]
+            if chi != "Stato" and conf is not None:
+                nuovi["confini_eur"] = conf / 7  # nel DEF ogni provincia ha 1/7 dei confini
+            for k, v in nuovi.items():
+                if riga.get(k) is None:
+                    riga[k] = v
+            riga["provvisorio"] = not g["chiusa"]
+            riga["fonte"] = "DEF aggiornato · giornata italiana 00–24" + ("" if g["chiusa"] else " (in corso)")
+    storico.sort(key=lambda r: (r["data"], r["provincia"]))
+
+
+def aggiungi_dalla_mezzanotte(orario, gioco):
+    """Per ogni lettura oraria: gettito e tassazioni dalla mezzanotte italiana (la stessa regola del DEF).
+    Serve la lettura di mezzanotte di quel giorno; senza, il valore resta vuoto."""
+    per_p = {}
+    for r in orario:
+        if r["provincia"] != "Stato":
+            per_p.setdefault(r["provincia"], []).append(r)
+    for p, righe in per_p.items():
+        righe.sort(key=lambda r: istante(r["ts"]))
+        chiusi = {date.fromisoformat(g): v for g, v in (gioco.get(p) or {}).items()}
+        ult_t = {}
+        for r in righe:  # tassazioni: l'ultimo valore letto in ogni giornata del gioco vale come totale
+            if r.get("tassazioni_oggi") is not None:
+                ult_t[giorno_gioco(istante(r["ts"]))] = r["tassazioni_oggi"]
+        for r in righe:
+            t = istante(r["ts"])
+            d = date.fromisoformat(r["data_it"])
+            m = next((x for x in righe if di_mezzanotte(istante(x["ts"]), d) and x.get("gettito_oggi_eur") is not None), None)
+            for k in SUFF:
+                r.pop("gettito_it_" + k, None)
+            r.pop("tassazioni_it", None)
+            if m is None or istante(m["ts"]) > t:
+                continue
+            tm = istante(m["ts"])
+            for i, k in enumerate(SUFF):
+                a, b = m.get("gettito_oggi_" + k), r.get("gettito_oggi_" + k)
+                if a is None or b is None:
+                    continue
+                v, manca = gettito_tra((tm, [a]), (t, [b]), {g: [x[i]] for g, x in chiusi.items()})
+                if not manca and v[0] >= 0:
+                    r["gettito_it_" + k] = v[0]
+            a, b = m.get("tassazioni_oggi"), r.get("tassazioni_oggi")
+            if a is not None and b is not None:
+                v, manca = gettito_tra((tm, [a]), (t, [b]), {g: [n] for g, n in ult_t.items() if g < giorno_gioco(t)})
+                if not manca and v[0] >= 0:
+                    r["tassazioni_it"] = v[0]
+    return orario
+
+
 def main(xlsx, stat_dir, out_dir):
     stat_dir, out_dir = Path(stat_dir), Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -193,15 +273,19 @@ def main(xlsx, stat_dir, out_dir):
     d_oggi = date.fromisoformat(oggi_data)
 
     storico, prezzi, governi = storico_def(xlsx)
+    giornate = carica_giornate(out_dir)
+    coperti = {g["giorno"] for g in giornate}  # giorni che vengono dal DEF aggiornato (giornata italiana)
     gia = {(r["data"], r["provincia"]) for r in storico if r.get("gettito_eur") is not None}
     # giorni completi dal gioco (i 6 prima della lettura) che il DEF non ha, da tutti i file di gettito salvati
     for gf in sorted(out_dir.glob("gettito-*.json")):
       gg = json.loads(gf.read_text(encoding="utf-8"))
-      d_lett = date.fromisoformat(gg["data"][:10])
+      # le barre finiscono con la giornata del gioco della lettura (dopo le 23 italiane è già il giorno dopo)
+      d_lett = (giorno_gioco(istante(gg["data"][:10] + "T" + gg["data"].split(" ora ")[1][:5])) if " ora " in gg["data"]
+                else date.fromisoformat(gg["data"][:10]))
       for nome, g in gg["province"].items():
         for k, v in enumerate(g["giorni"][:-1]):
             giorno = (d_lett - timedelta(days=6 - k)).isoformat()
-            if (giorno, nome) in gia:
+            if (giorno, nome) in gia or giorno in coperti:
                 continue
             storico = [r for r in storico if not (r["data"] == giorno and r["provincia"] == nome)]
             conf = gg.get("confini_addebiti", {}).get(giorno)
@@ -217,6 +301,8 @@ def main(xlsx, stat_dir, out_dir):
     for f in sorted(stat_dir.glob("20*.json")):
         ft = json.loads(f.read_text(encoding="utf-8"))
         giorno = ft["data"][:10]
+        if giorno in coperti:
+            continue
         for pr in ft["province"]:
             nome = NOMI_GIOCO[pr["p"]]
             riga = next((r for r in storico if r["data"] == giorno and r["provincia"] == nome), None)
@@ -298,18 +384,27 @@ def main(xlsx, stat_dir, out_dir):
             })
 
     don, don_tot, tes_stato = donazioni(out_dir)
-    aggiungi_tesoro_stato(storico, tes_stato)
+    aggiungi_tesoro_stato(storico, [s for s in tes_stato if s["data"] not in coperti])
     # giorni senza donazioni nel DEF: si usano quelle lette dagli storici del gioco (solo quelle dei giocatori)
     for d in don:
+        if d["data"] in coperti:
+            continue
         riga = next((r for r in storico if r["data"] == d["data"] and r["provincia"] == d["destinatario"]), None)
         if riga is None:
             riga = {"data": d["data"], "provincia": d["destinatario"], "fonte": "gioco · donazioni"}
             storico.append(riga)
         if riga.get("donazioni_eur") is None:
             riga.update({"donazioni_" + ("eur" if k == "denaro" else k): d[k] for k in RIS5})
+    applica_giornate(storico, giornate, governi)
     for r in storico:
         r.setdefault("governo", governo_del(r["data"], governi))
     storico.sort(key=lambda r: (r["data"], r["provincia"]))
+    # gettito medio per l'oggi: ultime 6 giornate chiuse dello storico (giornata italiana dove c'è)
+    for o in oggi:
+        chiuse = [r["gettito_eur"] for r in storico if r["provincia"] == o["provincia"] and r["data"] < oggi_data
+                  and r.get("gettito_eur") is not None and not r.get("provvisorio")][-6:]
+        if len(chiuse) == 6:
+            o["gettito_medio_eur"] = round(sum(chiuse) / 6)
 
     # fotografie orarie (scheda Storico, dettaglio «Ore»): si aggiunge la lettura di adesso a quelle già salvate
     f_orario = out_dir / "orario.json"
@@ -319,6 +414,8 @@ def main(xlsx, stat_dir, out_dir):
     don_lett = json.loads(f_don.read_text(encoding="utf-8"))["letture"] if f_don.exists() else []
     orario = aggiungi_orario(orario, righe_orarie(foto, get if get["data"][:10] == oggi_data else None, don_lett,
                                                    ora_lettura(foto, file_foto)))
+    f_gioco = out_dir.parent / "DEF" / "gettito_gioco.json"
+    orario = aggiungi_dalla_mezzanotte(orario, json.loads(f_gioco.read_text(encoding="utf-8")) if f_gioco.exists() else {})
 
     for nome, dati in (("governi", governi), ("donazioni", don), ("donazioni_totali", don_tot), ("diario", diario), ("oggi", oggi), ("storico", storico), ("prezzi", sorted(prezzi.values(), key=lambda r: r["data"])),
                        ("classifiche", righe_clas), ("costi", costi), ("orario", orario)):
