@@ -1,10 +1,10 @@
 {
- "data": "2026-10-22 ora 19:23",
+ "data": "2026-10-22 ora 20:20",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 241,
+   "gioc": 243,
    "fab": 79,
    "gov": "Laisius Mathias",
    "ind": [
@@ -58,8 +58,8 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 251,
-   "fab": 121,
+   "gioc": 256,
+   "fab": 122,
    "gov": "A",
    "ind": [
     9,
@@ -166,7 +166,7 @@
   },
   {
    "p": "NAPOLI",
-   "gioc": 238,
+   "gioc": 242,
    "fab": 84,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -220,8 +220,8 @@
   },
   {
    "p": "ROMA",
-   "gioc": 245,
-   "fab": 115,
+   "gioc": 247,
+   "fab": 117,
    "gov": "ORK IL ROSSO",
    "ind": [
     8,
@@ -274,7 +274,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 199,
+   "gioc": 204,
    "fab": 74,
    "gov": "Edda",
    "ind": [
@@ -300,7 +300,7 @@
    "sc": {
     "n": 20,
     "indice": 3,
-    "prossimo": "+13 edifici → Indice 4 (+8%)"
+    "prossimo": "+14 edifici → Indice 4 (+8%)"
    },
    "ba": {
     "n": 10,
@@ -310,7 +310,7 @@
    "st": {
     "n": 464,
     "indice": 6,
-    "prossimo": "+193 edifici → Indice 7 (diamante +21% · risorsa +14%)"
+    "prossimo": "+194 edifici → Indice 7 (diamante +21% · risorsa +14%)"
    },
    "os": {
     "n": 271,
@@ -328,7 +328,7 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 168,
+   "gioc": 170,
    "fab": 95,
    "gov": "generale romano",
    "ind": [
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-22T17:24:17Z"
+ "letto_il": "2026-10-22T18:26:48Z"
 }

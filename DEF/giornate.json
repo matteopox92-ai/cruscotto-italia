@@ -2,7 +2,7 @@
  {
   "giorno": "2026-10-21",
   "chiusa": true,
-  "ultima_lettura": "2026-10-22T19:24+02:00",
+  "ultima_lettura": "2026-10-22T20:26+02:00",
   "letture_mezzanotte": {
    "Lombardia": [
     null,
@@ -301,7 +301,7 @@
  {
   "giorno": "2026-10-22",
   "chiusa": false,
-  "ultima_lettura": "2026-10-22T19:24+02:00",
+  "ultima_lettura": "2026-10-22T20:26+02:00",
   "letture_mezzanotte": {
    "Lombardia": [
     "2026-10-22T00:24+02:00",
@@ -335,13 +335,13 @@
   "voci": {
    "Lombardia": {
     "gettito": [
-     3430918,
+     3585317,
      1199,
-     1944,
+     2046,
      0,
      0
     ],
-    "tassazioni": 2281,
+    "tassazioni": 2390,
     "donazioni": [
      0,
      15000,
@@ -366,13 +366,13 @@
    },
    "Marsiglia": {
     "gettito": [
-     1740325,
+     1841960,
      0,
      0,
-     3190,
+     3562,
      0
     ],
-    "tassazioni": 1107,
+    "tassazioni": 1175,
     "donazioni": [
      150000,
      15000,
@@ -397,13 +397,13 @@
    },
    "Roma": {
     "gettito": [
-     1873956,
+     1973909,
      0,
      68,
      60,
-     0
+     54
     ],
-    "tassazioni": 1180,
+    "tassazioni": 1252,
     "donazioni": [
      0,
      0,
@@ -428,13 +428,13 @@
    },
    "Napoli": {
     "gettito": [
-     486416,
+     509210,
      0,
-     28,
-     3540,
+     70,
+     3720,
      0
     ],
-    "tassazioni": 705,
+    "tassazioni": 746,
     "donazioni": [
      0,
      0,
@@ -459,13 +459,13 @@
    },
    "Venezia": {
     "gettito": [
-     7021777,
+     7324272,
      36,
-     2575,
+     2707,
      190,
      0
     ],
-    "tassazioni": 3435,
+    "tassazioni": 3585,
     "donazioni": [
      8050000,
      51000,
@@ -490,13 +490,13 @@
    },
    "Firenze": {
     "gettito": [
-     611304,
+     633988,
      0,
-     28398,
+     30414,
      0,
      0
     ],
-    "tassazioni": 1442,
+    "tassazioni": 1553,
     "donazioni": [
      100000,
      0,
@@ -521,13 +521,13 @@
    },
    "Palermo": {
     "gettito": [
-     597240,
+     622850,
      0,
      0,
      0,
-     11160
+     11718
     ],
-    "tassazioni": 631,
+    "tassazioni": 659,
     "donazioni": [
      0,
      0,
@@ -554,16 +554,16 @@
     "donazioni": [
      7802000,
      34000,
-     8900,
-     40000,
-     132500
+     12800,
+     45000,
+     134500
     ],
     "tesoro": [
-     827548422,
+     828278237,
      2576472,
-     816465,
-     1191165,
-     1321288
+     822521,
+     1196717,
+     1323900
     ]
    },
    "TOTALE": {
@@ -579,43 +579,43 @@
    }
   },
   "note": {
-   "Lombardia · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 19:24. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 19:24, perché manca la lettura di mezzanotte con le risorse.",
-   "Marsiglia · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 19:24. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 19:24, perché manca la lettura di mezzanotte con le risorse.",
-   "Roma · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 19:24. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 19:24, perché manca la lettura di mezzanotte con le risorse.",
-   "Napoli · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 19:24. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 19:24, perché manca la lettura di mezzanotte con le risorse.",
-   "Venezia · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 19:24. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 19:24, perché manca la lettura di mezzanotte con le risorse.",
-   "Firenze · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 19:24. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 19:24, perché manca la lettura di mezzanotte con le risorse.",
-   "Palermo · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 19:24. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 19:24, perché manca la lettura di mezzanotte con le risorse.",
-   "Lombardia · tassazioni": "Tassazioni provvisorie, fino alle 22/10 19:24.",
-   "Marsiglia · tassazioni": "Tassazioni provvisorie, fino alle 22/10 19:24.",
-   "Roma · tassazioni": "Tassazioni provvisorie, fino alle 22/10 19:24.",
-   "Napoli · tassazioni": "Tassazioni provvisorie, fino alle 22/10 19:24.",
-   "Venezia · tassazioni": "Tassazioni provvisorie, fino alle 22/10 19:24.",
-   "Firenze · tassazioni": "Tassazioni provvisorie, fino alle 22/10 19:24.",
-   "Palermo · tassazioni": "Tassazioni provvisorie, fino alle 22/10 19:24.",
-   "Stato · donazioni": "Donazioni fino al 22/10 19:24: la giornata non era finita.",
-   "Lombardia · donazioni": "Donazioni fino al 22/10 19:24: la giornata non era finita.",
-   "Marsiglia · donazioni": "Donazioni fino al 22/10 19:24: la giornata non era finita.",
-   "Roma · donazioni": "Donazioni fino al 22/10 19:24: la giornata non era finita.",
-   "Napoli · donazioni": "Donazioni fino al 22/10 19:24: la giornata non era finita.",
-   "Venezia · donazioni": "Donazioni fino al 22/10 19:24: la giornata non era finita.",
-   "Firenze · donazioni": "Donazioni fino al 22/10 19:24: la giornata non era finita.",
-   "Palermo · donazioni": "Donazioni fino al 22/10 19:24: la giornata non era finita.",
-   "Stato · tesoro": "Tesoro letto il 22/10 19:24: la giornata non è finita.",
-   "Lombardia · tesoro": "Tesoro letto il 22/10 19:24: la giornata non è finita.",
-   "Marsiglia · tesoro": "Tesoro letto il 22/10 19:24: la giornata non è finita.",
-   "Roma · tesoro": "Tesoro letto il 22/10 19:24: la giornata non è finita.",
-   "Napoli · tesoro": "Tesoro letto il 22/10 19:24: la giornata non è finita.",
-   "Venezia · tesoro": "Tesoro letto il 22/10 19:24: la giornata non è finita.",
-   "Firenze · tesoro": "Tesoro letto il 22/10 19:24: la giornata non è finita.",
-   "Palermo · tesoro": "Tesoro letto il 22/10 19:24: la giornata non è finita.",
-   "Lombardia · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 19:24.",
-   "Marsiglia · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 19:24.",
-   "Roma · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 19:24.",
-   "Napoli · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 19:24.",
-   "Venezia · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 19:24.",
-   "Firenze · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 19:24.",
-   "Palermo · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 19:24.",
+   "Lombardia · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 20:25. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 20:25, perché manca la lettura di mezzanotte con le risorse.",
+   "Marsiglia · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 20:25. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 20:25, perché manca la lettura di mezzanotte con le risorse.",
+   "Roma · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 20:26. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 20:26, perché manca la lettura di mezzanotte con le risorse.",
+   "Napoli · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 20:26. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 20:26, perché manca la lettura di mezzanotte con le risorse.",
+   "Venezia · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 20:21. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 20:21, perché manca la lettura di mezzanotte con le risorse.",
+   "Firenze · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 20:26. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 20:26, perché manca la lettura di mezzanotte con le risorse.",
+   "Palermo · gettito": "Provvisorio: dalla lettura di mezzanotte (22/10 00:24) a quella delle 22/10 20:26. Risorse (pelle, oro, petrolio, nte): riquadro «Oggi» del gioco letto il 22/10 20:26, perché manca la lettura di mezzanotte con le risorse.",
+   "Lombardia · tassazioni": "Tassazioni provvisorie, fino alle 22/10 20:25.",
+   "Marsiglia · tassazioni": "Tassazioni provvisorie, fino alle 22/10 20:25.",
+   "Roma · tassazioni": "Tassazioni provvisorie, fino alle 22/10 20:26.",
+   "Napoli · tassazioni": "Tassazioni provvisorie, fino alle 22/10 20:26.",
+   "Venezia · tassazioni": "Tassazioni provvisorie, fino alle 22/10 20:21.",
+   "Firenze · tassazioni": "Tassazioni provvisorie, fino alle 22/10 20:26.",
+   "Palermo · tassazioni": "Tassazioni provvisorie, fino alle 22/10 20:26.",
+   "Stato · donazioni": "Donazioni fino al 22/10 20:26: la giornata non era finita.",
+   "Lombardia · donazioni": "Donazioni fino al 22/10 20:25: la giornata non era finita.",
+   "Marsiglia · donazioni": "Donazioni fino al 22/10 20:25: la giornata non era finita.",
+   "Roma · donazioni": "Donazioni fino al 22/10 20:26: la giornata non era finita.",
+   "Napoli · donazioni": "Donazioni fino al 22/10 20:26: la giornata non era finita.",
+   "Venezia · donazioni": "Donazioni fino al 22/10 20:21: la giornata non era finita.",
+   "Firenze · donazioni": "Donazioni fino al 22/10 20:26: la giornata non era finita.",
+   "Palermo · donazioni": "Donazioni fino al 22/10 20:26: la giornata non era finita.",
+   "Stato · tesoro": "Tesoro letto il 22/10 20:26: la giornata non è finita.",
+   "Lombardia · tesoro": "Tesoro letto il 22/10 20:25: la giornata non è finita.",
+   "Marsiglia · tesoro": "Tesoro letto il 22/10 20:25: la giornata non è finita.",
+   "Roma · tesoro": "Tesoro letto il 22/10 20:26: la giornata non è finita.",
+   "Napoli · tesoro": "Tesoro letto il 22/10 20:26: la giornata non è finita.",
+   "Venezia · tesoro": "Tesoro letto il 22/10 20:21: la giornata non è finita.",
+   "Firenze · tesoro": "Tesoro letto il 22/10 20:26: la giornata non è finita.",
+   "Palermo · tesoro": "Tesoro letto il 22/10 20:26: la giornata non è finita.",
+   "Lombardia · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 20:25.",
+   "Marsiglia · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 20:25.",
+   "Roma · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 20:26.",
+   "Napoli · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 20:26.",
+   "Venezia · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 20:21.",
+   "Firenze · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 20:26.",
+   "Palermo · manutenzione": "Provvisorio: l'addebito delle 23:00 non è ancora avvenuto; manutenzione letta il 22/10 20:26.",
    "TOTALE · confini": "Provvisorio: l'addebito non è ancora avvenuto, 7 × 1.210.000 €."
   }
  }
