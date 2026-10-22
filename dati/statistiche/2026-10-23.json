@@ -1,10 +1,10 @@
 {
- "data": "2026-10-23 ora 00:19",
+ "data": "2026-10-23 ora 01:23",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 248,
+   "gioc": 250,
    "fab": 78,
    "gov": "Laisius Mathias",
    "ind": [
@@ -58,7 +58,7 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 261,
+   "gioc": 260,
    "fab": 120,
    "gov": "A",
    "ind": [
@@ -112,7 +112,7 @@
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 22,
+   "gioc": 24,
    "fab": 17,
    "gov": "BULL 1515",
    "ind": [
@@ -166,7 +166,7 @@
   },
   {
    "p": "NAPOLI",
-   "gioc": 234,
+   "gioc": 237,
    "fab": 83,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -176,7 +176,7 @@
     8
    ],
    "tes": [
-    "0",
+    "25.000",
     "0",
     "0",
     "0",
@@ -220,7 +220,7 @@
   },
   {
    "p": "ROMA",
-   "gioc": 245,
+   "gioc": 246,
    "fab": 117,
    "gov": "ORK IL ROSSO",
    "ind": [
@@ -274,7 +274,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 204,
+   "gioc": 205,
    "fab": 74,
    "gov": "Edda",
    "ind": [
@@ -328,7 +328,7 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 175,
+   "gioc": 176,
    "fab": 94,
    "gov": "generale romano",
    "ind": [
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-22T22:22:55Z"
+ "letto_il": "2026-10-22T23:25:16Z"
 }
