@@ -1,5 +1,5 @@
 {
- "data": "2026-10-22 ora 11:24",
+ "data": "2026-10-22 ora 12:24",
  "nota": "Gettito fiscale delle 7 province (Vedi Gettito Fiscale) e costo di frontiera dalla pagina Paese; giorni dal più vecchio a oggi; valori letti con leggi_gettito.js",
  "confini_per_provincia": 1210000,
  "confini_addebiti": {
@@ -14,9 +14,9 @@
  "province": {
   "Venezia": {
    "tot7": {
-    "denaro": 48909416,
+    "denaro": 49289260,
     "pelle": 237,
-    "oro": 29877,
+    "oro": 30009,
     "petrolio": 1269,
     "nte": 26972
    },
@@ -27,15 +27,15 @@
     8000000,
     8100000,
     8300000,
-    4800000
+    5100000
    ],
-   "tassazioniOggi": 2282
+   "tassazioniOggi": 2468
   },
   "Lombardia": {
    "tot7": {
-    "denaro": 25034638,
-    "pelle": 52285,
-    "oro": 1128,
+    "denaro": 25195183,
+    "pelle": 52349,
+    "oro": 1230,
     "petrolio": 0,
     "nte": 20067
    },
@@ -46,16 +46,16 @@
     3400000,
     3100000,
     2700000,
-    2400000
+    2600000
    ],
-   "tassazioniOggi": 1592
+   "tassazioniOggi": 1698
   },
   "Marsiglia": {
    "tot7": {
-    "denaro": 24830857,
+    "denaro": 24906305,
     "pelle": 0,
     "oro": 0,
-    "petrolio": 96877,
+    "petrolio": 97151,
     "nte": 0
    },
    "giorni": [
@@ -65,16 +65,16 @@
     4200000,
     7400000,
     3700000,
-    1300000
+    1400000
    ],
-   "tassazioniOggi": 759
+   "tassazioniOggi": 813
   },
   "Napoli": {
    "tot7": {
-    "denaro": 3795301,
+    "denaro": 3824477,
     "pelle": 7723,
     "oro": 77,
-    "petrolio": 2168,
+    "petrolio": 2348,
     "nte": 0
    },
    "giorni": [
@@ -84,16 +84,16 @@
     437700,
     514400,
     401400,
-    325300
+    354500
    ],
-   "tassazioniOggi": 472
+   "tassazioniOggi": 516
   },
   "Roma": {
    "tot7": {
-    "denaro": 16922913,
+    "denaro": 17017003,
     "pelle": 405,
     "oro": 2599,
-    "petrolio": 5498,
+    "petrolio": 5504,
     "nte": 16
    },
    "giorni": [
@@ -103,15 +103,15 @@
     3000000,
     2700000,
     2700000,
-    1300000
+    1400000
    ],
-   "tassazioniOggi": 807
+   "tassazioniOggi": 866
   },
   "Firenze": {
    "tot7": {
-    "denaro": 6210428,
+    "denaro": 6241417,
     "pelle": 0,
-    "oro": 137302,
+    "oro": 138466,
     "petrolio": 0,
     "nte": 0
    },
@@ -122,17 +122,17 @@
     979900,
     1000000,
     601600,
-    384400
+    415400
    ],
-   "tassazioniOggi": 851
+   "tassazioniOggi": 918
   },
   "Palermo": {
    "tot7": {
-    "denaro": 3993037,
+    "denaro": 4027093,
     "pelle": 209,
     "oro": 60,
     "petrolio": 0,
-    "nte": 25193
+    "nte": 25658
    },
    "giorni": [
     806400,
@@ -141,10 +141,10 @@
     366100,
     861800,
     662300,
-    373000
+    407000
    ],
-   "tassazioniOggi": 400
+   "tassazioniOggi": 433
   }
  },
- "letto_il": "2026-10-22T09:25:03Z"
+ "letto_il": "2026-10-22T10:24:44Z"
 }
