@@ -7,7 +7,7 @@ oggi.json, storico.json, prezzi.json, classifiche.json, costi.json, diario.json,
 """
 import json
 import sys
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import openpyxl
@@ -118,6 +118,60 @@ def donazioni(out_dir):
     righe = sorted(per_giorno.values(), key=lambda r: (r["data"], r["destinatario"]))
     ordine = list(NOMI_SLUG.values())
     return righe, sorted(totali.values(), key=lambda r: ordine.index(r["destinatario"])), stato
+
+
+def righe_orarie(foto, gettito, don_lett, quando):
+    """Una «fotografia» per lettura: tesoro, gettito e tassazioni di oggi, donazioni di oggi, per provincia e Stato.
+    quando = ora della lettura (datetime con fuso). Il gettito di oggi è della giornata del gioco (00:00 GMT+3),
+    le donazioni della data italiana (come nel DEF)."""
+    ts = quando.isoformat(timespec="minutes")
+    data_it = quando.date().isoformat()
+    giorno_gioco = quando.astimezone(timezone(timedelta(hours=3))).date().isoformat()
+    don = {NOMI_SLUG.get(l["d"], l["d"]): l for l in (don_lett or [])}
+    righe = []
+    for pr in foto["province"]:
+        nome = NOMI_GIOCO[pr["p"]]
+        g = (gettito or {}).get("province", {}).get(nome, {})
+        oggi = g.get("oggi") or {}
+        riga = {"ts": ts, "provincia": nome, "data_it": data_it, "giorno_gioco": giorno_gioco,
+                **{"tesoro_" + ("eur" if k == "denaro" else k): gioco_num(x) for k, x in zip(RIS5, pr["tes"])},
+                "tassazioni_oggi": g.get("tassazioniOggi")}
+        if oggi:
+            riga.update({"gettito_oggi_" + ("eur" if k == "denaro" else k): oggi.get(k) for k in RIS5})
+        elif g.get("denaroOggi") is not None or g.get("giorni"):
+            riga["gettito_oggi_eur"] = g.get("denaroOggi") if g.get("denaroOggi") is not None else g["giorni"][-1]
+        d = don.get(nome)
+        if d is not None:
+            v = d.get("g", {}).get(data_it, [0] * 6)
+            riga.update({"donazioni_oggi_" + ("eur" if k == "denaro" else k): x for k, x in zip(RIS5, v[:5])})
+        righe.append(riga)
+    st = don.get("Stato")
+    if st is not None and st.get("s"):
+        v = st.get("g", {}).get(data_it, [0] * 6)
+        righe.append({"ts": ts, "provincia": "Stato", "data_it": data_it, "giorno_gioco": giorno_gioco,
+                      **{"tesoro_" + ("eur" if k == "denaro" else k): x for k, x in zip(RIS5, st["s"])},
+                      **{"donazioni_oggi_" + ("eur" if k == "denaro" else k): x for k, x in zip(RIS5, v[:5])}})
+    return righe
+
+
+def ora_lettura(foto, file_foto):
+    """Ora della fotografia: «AAAA-MM-GG ora HH:MM» se c'è, altrimenti l'ora del file (letture «sera»)."""
+    testo = foto.get("data", "")
+    if " ora " in testo:
+        return datetime.strptime(testo[:10] + " " + testo.split(" ora ")[1][:5], "%Y-%m-%d %H:%M").astimezone()
+    return datetime.fromtimestamp(Path(file_foto).stat().st_mtime).astimezone().replace(second=0, microsecond=0)
+
+
+def aggiungi_orario(vecchie, nuove):
+    """Aggiunge le righe di una lettura se non ci sono già (stessa ora, o stessi numeri nello stesso giorno)."""
+    firma = lambda r: (r["provincia"], r.get("data_it"), r.get("tesoro_eur"), r.get("gettito_oggi_eur"),
+                       r.get("tassazioni_oggi"), r.get("donazioni_oggi_eur"))
+    gia = {(r["provincia"], r["ts"]) for r in vecchie} | {firma(r) for r in vecchie}
+    for r in nuove:
+        if (r["provincia"], r["ts"]) not in gia and firma(r) not in gia:
+            vecchie.append(r)
+    vecchie.sort(key=lambda r: (r["ts"], r["provincia"]))
+    return vecchie
 
 
 def aggiungi_tesoro_stato(storico, stato):
@@ -257,8 +311,17 @@ def main(xlsx, stat_dir, out_dir):
         r.setdefault("governo", governo_del(r["data"], governi))
     storico.sort(key=lambda r: (r["data"], r["provincia"]))
 
+    # fotografie orarie (scheda Storico, dettaglio «Ore»): si aggiunge la lettura di adesso a quelle già salvate
+    f_orario = out_dir / "orario.json"
+    orario = json.loads(f_orario.read_text(encoding="utf-8")) if f_orario.exists() else []
+    file_foto = sorted(stat_dir.glob("20*.json"))[-1]
+    f_don = out_dir / f"donazioni-{oggi_data}.json"
+    don_lett = json.loads(f_don.read_text(encoding="utf-8"))["letture"] if f_don.exists() else []
+    orario = aggiungi_orario(orario, righe_orarie(foto, get if get["data"][:10] == oggi_data else None, don_lett,
+                                                   ora_lettura(foto, file_foto)))
+
     for nome, dati in (("governi", governi), ("donazioni", don), ("donazioni_totali", don_tot), ("diario", diario), ("oggi", oggi), ("storico", storico), ("prezzi", sorted(prezzi.values(), key=lambda r: r["data"])),
-                       ("classifiche", righe_clas), ("costi", costi)):
+                       ("classifiche", righe_clas), ("costi", costi), ("orario", orario)):
         (out_dir / f"{nome}.json").write_text(json.dumps(dati, ensure_ascii=False, indent=0), encoding="utf-8")
         print(nome, len(dati))
 

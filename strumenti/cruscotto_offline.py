@@ -8,7 +8,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-DATASET = ["oggi", "storico", "prezzi", "classifiche", "costi", "piano", "obiettivi", "diario", "donazioni", "donazioni_totali", "governi"]
+DATASET = ["oggi", "storico", "orario", "prezzi", "classifiche", "costi", "piano", "obiettivi", "diario", "donazioni", "donazioni_totali", "governi"]
 
 STILE = """
 :root { color-scheme: dark; /* sempre scuro: preferenza dell'utente (22/10/2026) */
