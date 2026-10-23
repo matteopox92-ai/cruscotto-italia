@@ -1,10 +1,10 @@
 {
- "data": "2026-10-23 ora 01:23",
+ "data": "2026-10-23 ora 02:15",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 250,
+   "gioc": 251,
    "fab": 78,
    "gov": "Laisius Mathias",
    "ind": [
@@ -40,7 +40,7 @@
    "st": {
     "n": 852,
     "indice": 8,
-    "prossimo": "+78 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+84 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 349,
@@ -94,7 +94,7 @@
    "st": {
     "n": 769,
     "indice": 8,
-    "prossimo": "+161 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+167 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 348,
@@ -112,7 +112,7 @@
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 24,
+   "gioc": 27,
    "fab": 17,
    "gov": "BULL 1515",
    "ind": [
@@ -148,7 +148,7 @@
    "st": {
     "n": 793,
     "indice": 8,
-    "prossimo": "+137 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+143 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 269,
@@ -274,7 +274,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 205,
+   "gioc": 206,
    "fab": 74,
    "gov": "Edda",
    "ind": [
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-22T23:25:16Z"
+ "letto_il": "2026-10-23T00:31:03Z"
 }

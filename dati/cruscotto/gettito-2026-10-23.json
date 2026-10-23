@@ -1,6 +1,6 @@
 {
- "data": "2026-10-23 ora 01:23",
- "nota": "Gettito fiscale delle 7 province (pagina «Vedi Gettito»)",
+ "data": "2026-10-23 ora 02:15",
+ "nota": "Lettura di chiusura giornata (notte)",
  "confini_per_provincia": 1060000,
  "confini_addebiti": {
   "2026-10-22": 8470000,
@@ -14,10 +14,10 @@
  "province": {
   "Venezia": {
    "tot7": {
-    "denaro": 46796858,
+    "denaro": 47123491,
     "pelle": 227,
-    "oro": 23247,
-    "petrolio": 1488,
+    "oro": 23379,
+    "petrolio": 1501,
     "nte": 26972
    },
    "giorni": [
@@ -27,24 +27,24 @@
     8100000,
     8300000,
     8100000,
-    764000
+    1100000
    ],
-   "tassazioniOggi": 404,
-   "denaroOggi": 764049,
+   "tassazioniOggi": 580,
+   "denaroOggi": 1090682,
    "oggi": {
-    "denaro": 764049,
+    "denaro": 1090682,
     "pelle": 0,
-    "oro": 302,
-    "petrolio": 24,
+    "oro": 434,
+    "petrolio": 37,
     "nte": 0
    },
    "giornata": "venerdì 23 ottobre 2026"
   },
   "Lombardia": {
    "tot7": {
-    "denaro": 22127537,
+    "denaro": 22288475,
     "pelle": 52259,
-    "oro": 2556,
+    "oro": 2641,
     "petrolio": 0,
     "nte": 11923
    },
@@ -55,14 +55,14 @@
     3100000,
     2700000,
     4400000,
-    438800
+    599800
    ],
-   "tassazioniOggi": 301,
-   "denaroOggi": 438824,
+   "tassazioniOggi": 414,
+   "denaroOggi": 599762,
    "oggi": {
-    "denaro": 438824,
+    "denaro": 599762,
     "pelle": 0,
-    "oro": 238,
+    "oro": 323,
     "petrolio": 0,
     "nte": 0
    },
@@ -70,10 +70,10 @@
   },
   "Marsiglia": {
    "tot7": {
-    "denaro": 23407367,
+    "denaro": 23540764,
     "pelle": 0,
     "oro": 0,
-    "petrolio": 86074,
+    "petrolio": 86244,
     "nte": 0
    },
    "giorni": [
@@ -83,25 +83,25 @@
     7400000,
     3700000,
     2300000,
-    251200
+    384600
    ],
-   "tassazioniOggi": 154,
-   "denaroOggi": 251201,
+   "tassazioniOggi": 229,
+   "denaroOggi": 384598,
    "oggi": {
-    "denaro": 251201,
+    "denaro": 384598,
     "pelle": 0,
     "oro": 0,
-    "petrolio": 562,
+    "petrolio": 732,
     "nte": 0
    },
    "giornata": "venerdì 23 ottobre 2026"
   },
   "Napoli": {
    "tot7": {
-    "denaro": 3214664,
+    "denaro": 3228594,
     "pelle": 7771,
     "oro": 231,
-    "petrolio": 4688,
+    "petrolio": 4868,
     "nte": 0
    },
    "giorni": [
@@ -111,22 +111,22 @@
     514400,
     401400,
     598000,
-    48700
+    62700
    ],
-   "tassazioniOggi": 73,
-   "denaroOggi": 48739,
+   "tassazioniOggi": 96,
+   "denaroOggi": 62669,
    "oggi": {
-    "denaro": 48739,
+    "denaro": 62669,
     "pelle": 0,
     "oro": 7,
-    "petrolio": 420,
+    "petrolio": 600,
     "nte": 0
    },
    "giornata": "venerdì 23 ottobre 2026"
   },
   "Roma": {
    "tot7": {
-    "denaro": 15449927,
+    "denaro": 15541377,
     "pelle": 0,
     "oro": 2630,
     "petrolio": 132,
@@ -139,12 +139,12 @@
     2700000,
     2700000,
     2400000,
-    247100
+    338600
    ],
-   "tassazioniOggi": 158,
-   "denaroOggi": 247149,
+   "tassazioniOggi": 213,
+   "denaroOggi": 338599,
    "oggi": {
-    "denaro": 247149,
+    "denaro": 338599,
     "pelle": 0,
     "oro": 15,
     "petrolio": 0,
@@ -154,9 +154,9 @@
   },
   "Firenze": {
    "tot7": {
-    "denaro": 5461346,
+    "denaro": 5497714,
     "pelle": 0,
-    "oro": 142739,
+    "oro": 144143,
     "petrolio": 0,
     "nte": 0
    },
@@ -167,14 +167,14 @@
     1000000,
     601600,
     769800,
-    89500
+    125900
    ],
-   "tassazioniOggi": 195,
-   "denaroOggi": 89536,
+   "tassazioniOggi": 279,
+   "denaroOggi": 125904,
    "oggi": {
-    "denaro": 89536,
+    "denaro": 125904,
     "pelle": 0,
-    "oro": 3316,
+    "oro": 4720,
     "petrolio": 0,
     "nte": 0
    },
@@ -182,7 +182,7 @@
   },
   "Palermo": {
    "tot7": {
-    "denaro": 3623957,
+    "denaro": 3650902,
     "pelle": 0,
     "oro": 60,
     "petrolio": 0,
@@ -195,12 +195,12 @@
     861800,
     662300,
     738900,
-    71400
+    98400
    ],
-   "tassazioniOggi": 67,
-   "denaroOggi": 71421,
+   "tassazioniOggi": 89,
+   "denaroOggi": 98366,
    "oggi": {
-    "denaro": 71421,
+    "denaro": 98366,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
@@ -209,5 +209,5 @@
    "giornata": "venerdì 23 ottobre 2026"
   }
  },
- "letto_il": "2026-10-22T23:25:16Z"
+ "letto_il": "2026-10-23T00:31:03Z"
 }
