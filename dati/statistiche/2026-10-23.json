@@ -1,10 +1,10 @@
 {
- "data": "2026-10-23 ora 14:21",
+ "data": "2026-10-23 ora 15:20",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 255,
+   "gioc": 254,
    "fab": 78,
    "gov": "Laisius Mathias",
    "ind": [
@@ -30,7 +30,7 @@
    "sc": {
     "n": 15,
     "indice": 3,
-    "prossimo": "+14 edifici → Indice 4 (+8%)"
+    "prossimo": "+15 edifici → Indice 4 (+8%)"
    },
    "ba": {
     "n": 136,
@@ -58,7 +58,7 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 261,
+   "gioc": 265,
    "fab": 120,
    "gov": "A",
    "ind": [
@@ -71,7 +71,7 @@
     "2.609.968",
     "1196",
     "516",
-    "1375",
+    "41375",
     "24299"
    ],
    "bon": [
@@ -112,7 +112,7 @@
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 37,
+   "gioc": 38,
    "fab": 18,
    "gov": "BULL 1515",
    "ind": [
@@ -123,10 +123,10 @@
    ],
    "tes": [
     "7.624.807",
-    "7878",
-    "11905",
-    "8086",
-    "11399"
+    "12878",
+    "16905",
+    "13086",
+    "16399"
    ],
    "bon": [
     "12",
@@ -166,7 +166,7 @@
   },
   {
    "p": "NAPOLI",
-   "gioc": 245,
+   "gioc": 247,
    "fab": 84,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -197,7 +197,7 @@
    "ba": {
     "n": 88,
     "indice": 5,
-    "prossimo": "+2 edifici → Indice 6 (+12%)"
+    "prossimo": "+3 edifici → Indice 6 (+12%)"
    },
    "st": {
     "n": 678,
@@ -220,7 +220,7 @@
   },
   {
    "p": "ROMA",
-   "gioc": 257,
+   "gioc": 260,
    "fab": 113,
    "gov": "ORK IL ROSSO",
    "ind": [
@@ -274,7 +274,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 215,
+   "gioc": 217,
    "fab": 76,
    "gov": "Edda",
    "ind": [
@@ -300,7 +300,7 @@
    "sc": {
     "n": 20,
     "indice": 3,
-    "prossimo": "+9 edifici → Indice 4 (+8%)"
+    "prossimo": "+10 edifici → Indice 4 (+8%)"
    },
    "ba": {
     "n": 10,
@@ -328,8 +328,8 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 182,
-   "fab": 92,
+   "gioc": 184,
+   "fab": 94,
    "gov": "generale romano",
    "ind": [
     5,
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-23T12:23:41Z"
+ "letto_il": "2026-10-23T13:23:18Z"
 }
