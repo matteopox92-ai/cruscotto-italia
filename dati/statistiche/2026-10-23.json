@@ -1,11 +1,11 @@
 {
- "data": "2026-10-23 ora 17:24",
+ "data": "2026-10-23 ora 18:22",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
    "gioc": 256,
-   "fab": 78,
+   "fab": 79,
    "gov": "Laisius Mathias",
    "ind": [
     3,
@@ -15,10 +15,10 @@
    ],
    "tes": [
     "27.598.147",
-    "41157",
-    "53208",
+    "72110",
+    "65458",
     "15968",
-    "30150"
+    "55150"
    ],
    "bon": [
     "14",
@@ -58,7 +58,7 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 272,
+   "gioc": 275,
    "fab": 122,
    "gov": "A",
    "ind": [
@@ -68,9 +68,9 @@
     10
    ],
    "tes": [
-    "2.609.968",
-    "1196",
-    "516",
+    "4.109.968",
+    "14196",
+    "7516",
     "41375",
     "24299"
    ],
@@ -123,7 +123,7 @@
    ],
    "tes": [
     "7.624.807",
-    "12878",
+    "13878",
     "16905",
     "13086",
     "16399"
@@ -166,8 +166,8 @@
   },
   {
    "p": "NAPOLI",
-   "gioc": 255,
-   "fab": 85,
+   "gioc": 258,
+   "fab": 86,
    "gov": "Pilerio de Longobardi",
    "ind": [
     8,
@@ -220,7 +220,7 @@
   },
   {
    "p": "ROMA",
-   "gioc": 264,
+   "gioc": 265,
    "fab": 114,
    "gov": "ORK IL ROSSO",
    "ind": [
@@ -274,21 +274,21 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 223,
+   "gioc": 226,
    "fab": 77,
    "gov": "Edda",
    "ind": [
     3,
     1,
-    5,
+    6,
     8
    ],
    "tes": [
-    "1.668.701",
-    "704881",
-    "1789",
-    "123",
-    "122448"
+    "2.518.701",
+    "703881",
+    "4789",
+    "8323",
+    "121648"
    ],
    "bon": [
     "13",
@@ -308,9 +308,9 @@
     "prossimo": "+14 edifici → Indice 2 (+4%)"
    },
    "st": {
-    "n": 464,
-    "indice": 5,
-    "prossimo": "+9 edifici → Indice 6 (diamante +18% · risorsa +12%)"
+    "n": 475,
+    "indice": 6,
+    "prossimo": "+186 edifici → Indice 7 (diamante +21% · risorsa +14%)"
    },
    "os": {
     "n": 271,
@@ -318,31 +318,31 @@
     "prossimo": "+76 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
-    "2.382.300",
-    "7290",
+    "2.415.300",
+    "7455",
     "3841.2",
-    "8127",
-    "9933"
+    "8259",
+    "10065"
    ],
    "slug": "Floransa"
   },
   {
    "p": "PALERMO",
-   "gioc": 191,
-   "fab": 96,
+   "gioc": 193,
+   "fab": 97,
    "gov": "generale romano",
    "ind": [
-    5,
+    4,
     2,
     8,
     8
    ],
    "tes": [
     "9.876.103",
-    "2846",
+    "12846",
     "12542",
-    "2886",
-    "2896"
+    "12886",
+    "14896"
    ],
    "bon": [
     "17",
@@ -353,8 +353,8 @@
    ],
    "sc": {
     "n": 44,
-    "indice": 5,
-    "prossimo": "+17 edifici → Indice 6 (+12%)"
+    "indice": 4,
+    "prossimo": "+1 edificio → Indice 5 (+10%)"
    },
    "ba": {
     "n": 33,
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-23T15:23:41Z"
+ "letto_il": "2026-10-23T16:23:18Z"
 }
