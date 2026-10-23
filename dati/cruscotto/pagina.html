@@ -25,6 +25,13 @@
 .ok { color: var(--color-ok); } .warn { color: var(--color-warn); } .bad { color: var(--color-bad); }
 #tabella-comprare tr.sub td, #tabella-comprare tfoot td { font-weight: var(--cds-font-weight-medium); }
 #tabella-comprare tfoot tr:last-child td { border-top: 2px solid var(--color-border-line); }
+#tabella-comprare tr.manda td { font-weight: var(--cds-font-weight-medium); color: var(--color-warn); }
+#tabella-comprare td:nth-child(3) { text-align: left; }
+#autonomia tr.sub td { color: var(--color-fg-muted); }
+.ei-testa-riga { display: flex; justify-content: space-between; align-items: start; gap: var(--cds-gap-sm); flex-wrap: wrap; }
+.ei-aggiorna { display: grid; gap: 2px; justify-items: end; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.ei-aggiorna button { font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 4px 12px; cursor: pointer; }
+.ei-aggiorna button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
 .ei-list { margin: 0; padding-left: 1.2em; display: grid; gap: var(--cds-gap-xs); }
 .ei-crit { display: grid; gap: var(--cds-gap-md); max-width: 75ch; }
 .ei-crit h3 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
@@ -64,7 +71,13 @@
 
 <div class="ei">
   <header class="ei-head" id="testa">
-    <h1>Cruscotto Economia Italia</h1>
+    <div class="ei-testa-riga">
+      <h1>Cruscotto Economia Italia</h1>
+      <div class="ei-aggiorna">
+        <button type="button" id="ei-aggiorna-ora">Aggiorna ora</button>
+        <span id="ei-ultima-lettura">—</span>
+      </div>
+    </div>
     <p class="ei-take" data-source="totali">—</p>
   </header>
 
@@ -88,6 +101,18 @@
       <div class="ei-tile"><span class="lab">Copertura dei costi</span><span class="big dash-skeleton" data-source="totali" data-field="copertura">—</span><span class="sub">gettito ÷ costi</span></div>
       <div class="ei-tile"><span class="lab">Tesoro dello Stato</span><span class="big dash-skeleton" data-source="stato_ultimo" data-field="tesoro_eur">—</span><span class="sub" data-source="stato_ultimo" data-field="data">—</span></div>
       <div class="ei-tile"><span class="lab">Tesori delle province</span><span class="big dash-skeleton" data-source="totali" data-field="tesori_province">—</span><span class="sub">somma delle 7 province, oggi</span></div>
+    </div>
+
+    <div class="ei-card" id="autonomia">
+      <h2>Autonomia dello Stato</h2>
+      <p class="note">Manutenzione di una notte di tutte le province tranne Napoli (nel piano non paga), sommata, contro il tesoro dello Stato: per quante notti lo Stato potrebbe pagarla da solo, senza tasse né donazioni in entrata. Sotto 3 notti giallo, sotto 1 rosso.</p>
+      <div class="ei-scroll">
+        <table>
+          <thead><tr><th>Risorsa</th><th>Tesoro dello Stato</th><th>Manutenzione a notte</th><th>Giorni di autonomia</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note" id="autonomia-nota">—</p>
     </div>
 
     <div class="ei-grid">
@@ -228,7 +253,7 @@
   <section id="indici" class="ei-pane" hidden>
     <div class="ei-card" id="tabella-soglie">
       <h2>Margini e soglie, edificio per edificio</h2>
-      <p class="note">Margine = edifici che si possono perdere restando sicuri nell'indice. Notti = mancati pagamenti (−3% a notte) prima di scendere. Per salire: edifici mancanti e costo in denaro equivalente.</p>
+      <p class="note">Margine = edifici che si possono perdere restando sicuri nell'indice. Notti = mancati pagamenti (−3% a notte) prima di scendere. Per salire: edifici mancanti e costo in denaro equivalente. Sviluppo (strade) e salute (ospedali) hanno un indice fissato (quello di inizio legislatura, 21/10; Palermo e Napoli quello del 23/10): margine e notti si contano verso quell'indice, e «sceso» vuol dire che la provincia è già sotto.</p>
       <div class="ei-scroll">
         <table data-source="indici" data-row-key="provincia,edificio">
           <thead><tr>
@@ -236,6 +261,7 @@
             <th data-field="edificio">Edificio</th>
             <th data-field="edifici">Edifici</th>
             <th data-field="indice">Indice</th>
+            <th data-field="indice_fisso">Fissato</th>
             <th data-field="margine">Margine</th>
             <th data-field="notti_al_calo">Notti al calo</th>
             <th data-field="mancanti">Per salire</th>
@@ -247,11 +273,11 @@
     </div>
     <div class="ei-card" id="tabella-comprare">
       <h2>Da comprare per restare al riparo dal calo</h2>
-      <p class="note">Province ed edifici con meno di 2 notti al calo: quanti edifici comprare per arrivare ad almeno 2 notti senza pagare prima di scendere di indice, e quanto costano in denaro e risorse (valore = denaro più risorse ai prezzi medi di mercato). Sotto ogni provincia il suo totale; in fondo i totali per edificio e il totale generale. Le soglie vengono dalla classifica mondiale e si spostano quando costruiscono gli altri Paesi. Napoli nel piano non paga la manutenzione.</p>
+      <p class="note">Province ed edifici con meno di 2 notti al calo, o con l'indice già sceso sotto quello fissato (sviluppo e salute): quanti edifici comprare e quanto costano in denaro e risorse (valore = denaro più risorse ai prezzi medi di mercato). Se l'indice è sceso ci sono due righe: «riportarlo a X» (edifici per tornare all'indice fissato) e «+ margine di 2 notti» (quelli in più per poter saltare 2 notti senza riscendere). Sotto ogni provincia il totale e la riga «Da mandare»: quello che manca nel tesoro della provincia per comprarli tenendo da parte la manutenzione di stanotte (Napoli: senza manutenzione, nel piano non paga). In fondo i totali per edificio e il totale generale. Le soglie vengono dalla classifica mondiale e si spostano quando costruiscono gli altri Paesi.</p>
       <div class="ei-scroll">
         <table>
           <thead><tr>
-            <th>Provincia</th><th>Edificio</th><th>Edifici</th><th>Indice</th><th>Notti al calo</th><th>Da comprare</th>
+            <th>Provincia</th><th>Edificio</th><th>Cosa</th><th>Edifici</th><th>Indice</th><th>Notti al calo</th><th>Da comprare</th>
             <th>Denaro</th><th>Pelle</th><th>Oro</th><th>Petrolio</th><th>NTE</th><th>Valore</th>
           </tr></thead>
           <tbody></tbody>
@@ -439,6 +465,13 @@
 <script>
 const PROV_ORD = ['Venezia', 'Lombardia', 'Marsiglia', 'Napoli', 'Roma', 'Firenze', 'Palermo'];
 const RIS = ['pelle', 'oro', 'petrolio', 'nte'];
+// indici fissati (decisione dell'utente del 23/10/2026): solo sviluppo (strade) e salute (ospedali);
+// valori di inizio legislatura (Governo Ade Golden Fox I, lettura del 21/10 sera), tranne Palermo (investito) e Napoli (piano) presi il 23/10.
+// Margine e notti al calo si contano verso questi indici: se la provincia è sotto, l'indice è «sceso».
+const INDICI_FISSI = {
+  strade: { Venezia: 8, Lombardia: 8, Marsiglia: 8, Napoli: 7, Roma: 7, Firenze: 6, Palermo: 8 },
+  ospedali: { Venezia: 10, Lombardia: 10, Marsiglia: 8, Napoli: 8, Roma: 8, Firenze: 8, Palermo: 8 },
+};
 
 dash.calc('prezzo_attuale', {
   title: 'Prezzi di mercato usati',
@@ -513,16 +546,23 @@ dash.calc('indici', {
       const prezzo = c.denaro + ['pelle', 'oro', 'petrolio', 'nte'].reduce((s, k) => s + c[k] * (p[k] || 0), 0);
       for (const r of oggi) {
         const n = r[ed], k = r[campo[ed]];
-        const sotto = n > 0 && k >= 1 && k <= 10 ? v[ultimo(k)] : null; // prima provincia della fascia sotto
+        const fisso = INDICI_FISSI[ed] ? INDICI_FISSI[ed][r.provincia] ?? null : null;
+        const kr = fisso ?? k; // indice da difendere: quello fissato, altrimenti quello di adesso
+        const gioco = r['per_salire_' + ed] ?? null; // edifici all'indice successivo secondo il gioco («+9 edifici → Indice 6»)
+        const sceso = fisso != null && k < fisso; // già sotto l'indice fissato (indice letto dal gioco)
+        let sotto = n > 0 && kr >= 1 && kr <= 10 ? v[ultimo(kr)] : null; // prima provincia della fascia sotto
+        // sceso di un solo indice: la soglia è quella del gioco, il modello a fasce può sbagliare di qualche edificio
+        if (sceso && fisso === k + 1 && gioco != null) sotto = n + gioco - 1;
+        else if (sceso && sotto != null) sotto = Math.max(sotto, n);
         const margine = sotto == null ? null : Math.max(0, n - sotto - 1); // a pari edifici con la fascia sotto si rischia
         let notti = null;
         if (sotto != null) { let x = n; notti = 0; while (Math.floor(x) > sotto && notti < 60) { x *= 0.97; notti++; } }
         const sopra = k < 10 ? v[ultimo(k + 1) - 1] + 1 : null;
-        const mancanti = sopra == null ? null : Math.max(0, sopra - n);
-        const sp = sotto == null || !gp ? null : vp[ultimo(k)];
+        const mancanti = gioco != null ? gioco : sopra == null ? null : Math.max(0, sopra - n); // prima il numero del gioco
+        const sp = sotto == null || !gp ? null : vp[ultimo(kr)];
         const crescita = sp == null ? null : (sotto - sp) / gp; // edifici in più al giorno per restare nella fascia
-        const giorni_inflazione = margine == null || crescita == null || crescita <= 0 ? null : Math.floor(margine / crescita);
-        righe.push({ provincia: r.provincia, edificio: ed, edifici: n, indice: k, margine, notti_al_calo: notti, mancanti,
+        const giorni_inflazione = sceso || margine == null || crescita == null || crescita <= 0 ? null : Math.floor(margine / crescita);
+        righe.push({ provincia: r.provincia, edificio: ed, edifici: n, indice: k, indice_fisso: fisso, sceso, margine, notti_al_calo: notti, mancanti,
           costo_salire: mancanti == null ? null : Math.round(mancanti * prezzo), crescita_soglia: crescita, giorni_inflazione,
           soglia_sotto: sotto });
       }
@@ -533,7 +573,7 @@ dash.calc('indici', {
 
 dash.calc('da_comprare', {
   title: 'Edifici da comprare per restare a 2 notti dal calo',
-  description: 'Province ed edifici con meno di 2 notti al calo: edifici da comprare per arrivare a 2 notti e il loro costo in denaro e risorse.',
+  description: 'Province ed edifici con meno di 2 notti al calo o con l\'indice già sceso sotto quello fissato: edifici da comprare (per tornare all\'indice e per il margine di 2 notti) e il loro costo in denaro e risorse.',
   inputs: ['indici', 'costi', 'prezzo_attuale'],
   fn: (indici, costi, prezzo_attuale) => {
     const p = prezzo_attuale[0] || {};
@@ -546,14 +586,61 @@ dash.calc('da_comprare', {
       if (r.notti_al_calo == null || r.notti_al_calo >= RIPARO || r.soglia_sotto == null) continue;
       let m = r.edifici;
       while (notti(m, r.soglia_sotto) < RIPARO && m < r.edifici + 100000) m++;
-      const q = m - r.edifici, c = costi.find((x) => x.edificio === r.edificio);
-      const riga = { provincia: r.provincia, edificio: r.edificio, edifici: r.edifici, indice: r.indice, notti_al_calo: r.notti_al_calo,
-        da_comprare: q, denaro: q * c.denaro };
-      for (const k of ris) riga[k] = q * c[k];
-      riga.valore = Math.round(riga.denaro + ris.reduce((s, k) => s + riga[k] * (p[k] || 0), 0));
+      const c = costi.find((x) => x.edificio === r.edificio);
+      // indice già sceso (sviluppo e salute): prima gli edifici per tornare sopra la soglia, poi quelli del margine
+      const torna = r.sceso ? r.soglia_sotto + 1 - r.edifici : 0;
+      const parti = r.sceso
+        ? [['torna', 'riportarlo a ' + r.indice_fisso, torna], ['margine', '+ margine di ' + RIPARO + ' notti', m - r.edifici - torna]]
+        : [['riparo', 'arrivare a ' + RIPARO + ' notti', m - r.edifici]];
+      for (const [cosa, testo, q] of parti) {
+        const riga = { provincia: r.provincia, edificio: r.edificio, cosa, testo, edifici: r.edifici, indice: r.indice,
+          indice_fisso: r.indice_fisso, sceso: r.sceso, notti_al_calo: r.notti_al_calo, da_comprare: q, denaro: q * c.denaro };
+        for (const k of ris) riga[k] = q * c[k];
+        riga.valore = Math.round(riga.denaro + ris.reduce((s, k) => s + riga[k] * (p[k] || 0), 0));
+        out.push(riga);
+      }
+    }
+    return out;
+  },
+});
+
+dash.calc('da_mandare_indici', {
+  title: 'Da mandare alle province per gli edifici',
+  description: 'Per ogni provincia dello specchietto: costo degli edifici da comprare più la manutenzione di stanotte, meno il tesoro (Napoli senza manutenzione, nel piano non paga).',
+  inputs: ['da_comprare', 'oggi'],
+  fn: (da_comprare, oggi) => {
+    const out = [];
+    for (const p of [...new Set(da_comprare.map((r) => r.provincia))]) {
+      const o = oggi.find((r) => r.provincia === p);
+      if (!o) continue;
+      const rr = da_comprare.filter((r) => r.provincia === p), riga = { provincia: p };
+      for (const k of ['denaro', ...RIS]) {
+        const tes = k === 'denaro' ? o.tesoro_eur : o['tesoro_' + k], man = p === 'Napoli' ? 0 : (k === 'denaro' ? o.manutenzione_eur : o['manutenzione_' + k]);
+        riga[k] = Math.max(0, Math.ceil(rr.reduce((s, r) => s + r[k], 0) + (man || 0) - (tes || 0)));
+      }
       out.push(riga);
     }
     return out;
+  },
+});
+
+dash.calc('autonomia', {
+  title: 'Autonomia dello Stato',
+  description: 'Manutenzione di una notte delle province tranne Napoli, sommata, contro il tesoro dello Stato: notti di autonomia per denaro e risorse.',
+  inputs: ['oggi', 'stato_ultimo'],
+  fn: (oggi, stato_ultimo) => {
+    const st = stato_ultimo[0];
+    if (!st) return [];
+    const prov = oggi.filter((r) => r.provincia !== 'Napoli');
+    return ['denaro', ...RIS].map((k) => {
+      const tes = k === 'denaro' ? st.tesoro_eur : st['tesoro_' + k];
+      const man = prov.reduce((s, r) => s + ((k === 'denaro' ? r.manutenzione_eur : r['manutenzione_' + k]) || 0), 0);
+      // i confini li paga comunque lo Stato (quota di tutte le 7 province): solo per la nota sotto la tabella
+      const confini = k === 'denaro' ? oggi.reduce((s, r) => s + (r.confini_eur || 0), 0) : null;
+      return { risorsa: k, tesoro: tes ?? null, manutenzione: man, giorni: tes == null || !man ? null : Math.floor((tes / man) * 10) / 10,
+        confini, giorni_con_confini: confini && tes != null ? Math.floor((tes / (man + confini)) * 10) / 10 : null,
+        province: prov.length, data: st.data };
+    });
   },
 });
 
@@ -572,7 +659,11 @@ dash.calc('allarmi', {
         dettaglio: corte.map((k) => k + ' ' + r['notti_' + k]),
         ...Object.fromEntries(['denaro', 'pelle', 'oro', 'petrolio', 'nte'].map((k) => ['manca_' + k, r['manca_' + k]])) });
     }
-    for (const r of indici) if (r.notti_al_calo != null && r.notti_al_calo <= 1)
+    // indice già sotto quello fissato (sviluppo e salute, dal 23/10/2026)
+    for (const r of indici) if (r.sceso)
+      out.push({ chiave: r.provincia + '-' + r.edificio + '-sceso', provincia: r.provincia, cosa: r.edificio, valore: r.soglia_sotto + 1 - r.edifici,
+        indice: r.indice, fisso: r.indice_fisso, tipo: 'sceso', gravita: 2 });
+    for (const r of indici) if (!r.sceso && r.notti_al_calo != null && r.notti_al_calo <= 1)
       out.push({ chiave: r.provincia + '-' + r.edificio, provincia: r.provincia, cosa: r.edificio, valore: r.margine, tipo: 'indice', gravita: 1 });
     // inflazione degli indici (richiesta dell'utente del 22/10/2026): la soglia sale perché nel mondo si costruisce;
     // con due classifiche si stima fra quanti giorni l'indice scende anche senza perdere edifici, con una sola si segnala il margine quasi nullo
@@ -650,6 +741,16 @@ const mostra = (id) => {
   window.eiDisegna && window.eiDisegna();
 };
 for (const b of tabs) b.addEventListener('click', () => mostra(b.dataset.tab));
+
+// «Aggiorna ora» (richiesta dell'utente del 23/10/2026): ricarica gli ultimi dati pubblicati
+// (su claude.ai ricarica i dataset, sul sito e nella copia autonoma ricarica la pagina); la lettura dal gioco la fanno le attività sul PC
+const bAgg = document.getElementById('ei-aggiorna-ora');
+bAgg.title = 'Ricarica gli ultimi dati pubblicati. Una lettura nuova dal gioco la fanno le attività sul PC (ogni ora, o «Aggiorna cruscotto adesso»).';
+bAgg.addEventListener('click', () => {
+  bAgg.disabled = true; bAgg.textContent = 'Aggiorno…';
+  try { dash.refresh(); } catch (e) { location.reload(); }
+  setTimeout(() => { bAgg.disabled = false; bAgg.textContent = 'Aggiorna ora'; window.eiDisegna && window.eiDisegna(); }, 2500);
+});
 const iniziale = location.hash.slice(1);
 if (tabs.some((b) => b.dataset.tab === iniziale)) mostra(iniziale);
 
@@ -698,9 +799,11 @@ const disegnaQuadro = () => {
       const li = document.createElement('li');
       const pill = document.createElement('span');
       pill.className = 'pill ' + (r.gravita === 2 ? 'bad' : 'warn');
-      pill.textContent = r.gravita === 2 ? 'stanotte' : 'presto';
+      pill.textContent = r.tipo === 'sceso' ? 'già sceso' : r.gravita === 2 ? 'stanotte' : 'presto';
       const txt = document.createElement('span');
-      txt.textContent = r.tipo === 'notti'
+      txt.textContent = r.tipo === 'sceso'
+        ? ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} è a ${r.indice}, sotto il ${r.fisso} fissato: servono +${fmtN(r.valore)} ${nomeEd[r.cosa]} per tornarci (in «Indici e soglie» anche il margine di 2 notti)`
+        : r.tipo === 'notti'
         ? ` ${r.provincia}, notti coperte: ` + r.dettaglio.map((x) => { const [k, v] = x.split(' '); return `${nomeRis[k]} ${fmtNotti(+v)}`; }).join(' · ') +
           (r.gravita === 2 ? (r.provincia === 'Napoli' ? ' (non deve pagare: piano)' : ` — da mandare per stanotte: ${testoManca(r)}`) : '')
         : r.tipo === 'inflazione'
@@ -711,6 +814,32 @@ const disegnaQuadro = () => {
       li.append(pill, txt); ul.append(li);
     }
   }
+  // autonomia dello Stato
+  const tba = document.querySelector('#autonomia tbody'), au = dash.data('autonomia'), nota = document.getElementById('autonomia-nota');
+  tba.replaceChildren();
+  if (au.status === 'ok' && au.data.length) {
+    for (const r of au.data) {
+      const tr = document.createElement('tr');
+      const cl = r.giorni == null ? '' : r.giorni < 1 ? 'bad' : r.giorni < 3 ? 'warn' : 'ok';
+      [[nomeRis[r.risorsa] || r.risorsa], [r.risorsa === 'denaro' ? fmtE(r.tesoro) : fmtN(r.tesoro)],
+        [r.risorsa === 'denaro' ? fmtE(r.manutenzione) : fmtN(r.manutenzione)],
+        [r.giorni == null ? '—' : r.giorni.toLocaleString('it-IT', { maximumFractionDigits: 1 }), cl]].forEach(([t, c]) => {
+        const td = document.createElement('td'); td.textContent = t; if (c) td.className = c; tr.append(td);
+      });
+      tba.append(tr);
+    }
+    const d = au.data.find((r) => r.risorsa === 'denaro');
+    nota.textContent = `Tesoro dello Stato del ${new Date(d.data).toLocaleDateString('it-IT', { timeZone: 'UTC' })}, manutenzione di ${d.province} province (Napoli esclusa) dall'ultima lettura.` +
+      (d.giorni_con_confini != null ? ` Contando anche i confini (${fmtE(d.confini)} a notte, li paga lo Stato) il denaro basta per ${d.giorni_con_confini.toLocaleString('it-IT', { maximumFractionDigits: 1 })} notti.` : '');
+  } else nota.textContent = '—';
+
+  // ora dell'ultima lettura (dataset orario) per il pulsante «Aggiorna ora»
+  const orr = dash.data('orario'), ul2 = document.getElementById('ei-ultima-lettura');
+  if (orr.status === 'ok' && orr.data.length) {
+    const ts = orr.data.map((r) => r.ts).filter(Boolean).sort().slice(-1)[0];
+    ul2.textContent = ts ? 'ultima lettura ' + ts.slice(8, 10) + '/' + ts.slice(5, 7) + ' ' + ts.slice(11, 16) : '—';
+  }
+
   const uo = document.querySelector('ul[data-source="occasioni"]');
   const o = dash.data('occasioni');
   uo.replaceChildren();
@@ -772,11 +901,12 @@ const disegnaIndici = () => {
     const tr = document.createElement('tr');
     tr.dataset.key = encodeURIComponent(r.provincia) + ',' + encodeURIComponent(r.edificio);
     const celle = [r.provincia, F.nomeEd[r.edificio], F.fmtN(r.edifici), r.indice > 10 ? '10+' : String(r.indice),
-      r.margine == null ? '—' : F.fmtN(r.margine), r.notti_al_calo == null ? '—' : String(r.notti_al_calo),
+      r.indice_fisso == null ? '—' : String(r.indice_fisso),
+      r.margine == null ? '—' : F.fmtN(r.margine), r.sceso ? 'sceso' : r.notti_al_calo == null ? '—' : String(r.notti_al_calo),
       r.mancanti == null ? 'massimo' : '+' + F.fmtN(r.mancanti), r.costo_salire == null ? '—' : F.fmtE(r.costo_salire)];
     celle.forEach((t, i) => {
       const td = document.createElement('td'); td.textContent = t;
-      if (i === 5 && r.notti_al_calo != null) td.className = r.notti_al_calo <= 1 ? 'bad' : r.notti_al_calo <= 3 ? 'warn' : '';
+      if (i === 6 && r.notti_al_calo != null) td.className = r.sceso || r.notti_al_calo <= 1 ? 'bad' : r.notti_al_calo <= 3 ? 'warn' : '';
       tr.append(td);
     });
     tb.append(tr);
@@ -799,20 +929,28 @@ const disegnaComprare = (ord, eds) => {
   };
   const numeri = (s) => [['+' + F.fmtN(s.da_comprare)], [F.fmtE(s.denaro)], [F.fmtN(s.pelle)], [F.fmtN(s.oro)], [F.fmtN(s.petrolio)],
     [F.fmtN(s.nte)], [F.fmtE(s.valore)]];
-  if (!d.data.length) { riga(tb, [['Nessuna provincia sotto 2 notti al calo.'], ...Array(11).fill([''])]); return; }
+  const vuote = (n) => Array(n).fill(['']);
+  if (!d.data.length) { riga(tb, [['Nessuna provincia sotto 2 notti al calo o con un indice sceso.'], ...vuote(12)]); return; }
+  const manda = dash.data('da_mandare_indici');
   for (const p of ord) {
     const rr = d.data.filter((r) => r.provincia === p).sort((a, b) => eds.indexOf(a.edificio) - eds.indexOf(b.edificio));
     if (!rr.length) continue;
-    for (const r of rr)
-      riga(tb, [[r.provincia], [F.nomeEd[r.edificio]], [F.fmtN(r.edifici)], [r.indice > 10 ? '10+' : String(r.indice)],
-        [String(r.notti_al_calo), r.notti_al_calo <= 1 ? 'bad' : 'warn'], ...numeri(r)]);
-    if (rr.length > 1) riga(tb, [['Totale ' + p], [''], [''], [''], [''], ...numeri(somma(rr))], 'sub');
+    for (const r of rr) {
+      const primo = r.cosa !== 'margine'; // nella seconda riga di un indice sceso non ripeto edifici, indice e notti
+      riga(tb, [[primo ? r.provincia : ''], [primo ? F.nomeEd[r.edificio] : ''], [r.testo],
+        [primo ? F.fmtN(r.edifici) : ''], [primo ? (r.indice > 10 ? '10+' : String(r.indice)) + (r.indice_fisso != null ? ' (fissato ' + r.indice_fisso + ')' : '') : ''],
+        [primo ? (r.sceso ? 'sceso' : String(r.notti_al_calo)) : '', r.sceso || r.notti_al_calo <= 1 ? 'bad' : 'warn'], ...numeri(r)]);
+    }
+    if (rr.length > 1) riga(tb, [['Totale ' + p], ...vuote(5), ...numeri(somma(rr))], 'sub');
+    const m = manda.status === 'ok' ? manda.data.find((x) => x.provincia === p) : null;
+    if (m) riga(tb, [['Da mandare a ' + p], [''], [p === 'Napoli' ? 'tolto il tesoro' : 'tolto il tesoro, tenuta la manutenzione di stanotte'], ...vuote(4),
+      [F.fmtE(m.denaro)], [F.fmtN(m.pelle)], [F.fmtN(m.oro)], [F.fmtN(m.petrolio)], [F.fmtN(m.nte)], ['']], 'manda');
   }
   for (const e of eds) {
     const rr = d.data.filter((r) => r.edificio === e);
-    if (rr.length) riga(tf, [['Totale ' + F.nomeEd[e]], [''], [''], [''], [''], ...numeri(somma(rr))]);
+    if (rr.length) riga(tf, [['Totale ' + F.nomeEd[e]], ...vuote(5), ...numeri(somma(rr))]);
   }
-  riga(tf, [['Totale generale'], [''], [''], [''], [''], ...numeri(somma(d.data))]);
+  riga(tf, [['Totale generale'], ...vuote(5), ...numeri(somma(d.data))]);
 };
 window.eiProvince = disegnaProvince;
 window.eiIndici = disegnaIndici;

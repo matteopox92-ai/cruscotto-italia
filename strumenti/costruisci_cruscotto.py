@@ -10,6 +10,7 @@ DEF/giornate.json, scritto da aggiorna_def.py, così cruscotto, DEF e recap dann
 hanno anche i totali dalla mezzanotte italiana (gettito_it_*, tassazioni_it), usati dalla scheda Storico.
 """
 import json
+import re
 import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -339,6 +340,10 @@ def main(xlsx, stat_dir, out_dir):
             "bonus_petrolio": int(pr["bon"][3]), "bonus_nte": int(pr["bon"][4]),
             "data": oggi_data,
         })
+        # edifici che mancano all'indice successivo secondo il gioco («+9 edifici → Indice 6»): più preciso del modello a fasce
+        for ed, k in (("scuole", "sc"), ("basi", "ba"), ("strade", "st"), ("ospedali", "os")):
+            m = re.match(r"\s*\+\s*([\d.]+)\s*edific", (pr.get(k) or {}).get("prossimo") or "")
+            oggi[-1]["per_salire_" + ed] = int(m.group(1).replace(".", "")) if m else None
 
     # classifica precedente (giorno diverso): serve a misurare quanto salgono le soglie («inflazione» degli indici)
     file_clas = sorted(stat_dir.glob("classifiche-*.json"))

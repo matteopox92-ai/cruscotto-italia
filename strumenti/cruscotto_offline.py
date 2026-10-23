@@ -56,7 +56,8 @@ SHIM = """
     params() { return { ...parametri }; },
     setParams(o) { Object.assign(parametri, o); tutti(); },
     resetParams() { for (const k in parametri) delete parametri[k]; tutti(); },
-    refresh() {},
+    // pulsante «Aggiorna ora»: qui i dati sono dentro la pagina, quindi si ricarica la pagina (sul sito prende l'ultima versione pubblicata)
+    refresh() { location.reload(); },
   };
   const parametri = {};
   const tutti = () => ascoltatori.forEach((f) => { try { f(); } catch (e) { console.error(e); } });
