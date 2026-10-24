@@ -1,18 +1,46 @@
 <style>
-#dash-root { --dash-gutter: clamp(12px, 3vw, 32px); }
+#dash-root { --dash-gutter: clamp(8px, 2vw, 24px); }
+/* Tavolozza «Notte blu» (richiesta dell'utente del 25/10/2026: sempre scura, più accattivante).
+   Vale sempre, anche con il tema chiaro del sistema. Le 8 tinte delle serie (province, Stato in oro, voci)
+   sono state controllate con il validatore dataviz sul fondo #141b33: fascia di luminosità, saturazione,
+   separazione per i daltonici (peggiore 8,2), distanza a vista normale (peggiore 21,7) e contrasto ≥ 3:1. */
+.ei {
+  color-scheme: dark;
+  --color-bg: #0b1020; --color-panel: #141b33; --color-border-line: #26304f; --color-border-strong: #3a4670;
+  --color-fg: #eef2ff; --color-fg-secondary: #c7cfe8; --color-fg-muted: #9aa6c8;
+  --color-ok: #3ddc97; --color-warn: #ffc857; --color-bad: #ff6b81;
+  --cds-chart-categorical-1: #5190f9; --cds-chart-categorical-2: #d97516; --cds-chart-categorical-3: #00ac90; --cds-chart-categorical-4: #d55456;
+  --cds-chart-categorical-5: #8b76e3; --cds-chart-categorical-6: #27993c; --cds-chart-categorical-7: #d55e97; --cds-chart-categorical-8: #ba8c00;
+  --cds-chart-grid: #1f2844; --cds-chart-axis: #3a4670; --cds-chart-baseline: #3a4670; --cds-chart-reference: #6f7ba3; --cds-chart-muted: #4a5578;
+  --cds-chart-status-good: #2fbf71; --cds-chart-status-warning: #f5b83d; --cds-chart-status-serious: #f08a5d; --cds-chart-status-critical: #ff5c74;
+  --cds-surface-popover: #1b2445; --cds-border: #34416c; --cds-shadow-popover: 0 10px 30px rgba(0, 0, 0, .5);
+  --cds-text-secondary: #c7cfe8;
+  --ei-accento: #7c9cff; --ei-accento-2: #a77bff; --ei-oro: #f2c75c;
+  --ei-scheda: linear-gradient(180deg, #172042 0%, #131a32 100%);
+  background:
+    radial-gradient(1100px 520px at 0% -8%, rgba(91, 124, 250, .20), transparent 62%),
+    radial-gradient(900px 480px at 100% 0%, rgba(167, 123, 255, .14), transparent 60%),
+    var(--color-bg);
+  border-radius: 18px; padding: clamp(12px, 2.4vw, 28px);
+}
+.ei ::selection { background: rgba(124, 156, 255, .35); }
 .ei { font-family: var(--font-anthropic-sans); color: var(--color-fg); display: grid; gap: var(--cds-gap-lg); }
-.ei-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+.ei-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance;
+  background: linear-gradient(90deg, #ffffff 0%, #dfe6ff 45%, var(--ei-oro) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* filo tricolore sotto il titolo */
+.ei-head h1::after { content: ""; display: block; width: 72px; height: 3px; margin-top: 8px; border-radius: 3px; background: linear-gradient(90deg, #1fa860 0 33%, #f4f5f8 33% 66%, #e0485a 66%); }
 .ei-head p { margin: var(--cds-gap-xs) 0 0; color: var(--color-fg-muted); max-width: 70ch; }
 /* schede in alto, grandi (richiesta dell'utente del 24/10/2026): pulsanti a griglia, quello aperto pieno */
-.ei-tabs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr)); gap: var(--cds-gap-sm); position: sticky; top: 0; z-index: 2; background: var(--color-bg, var(--color-panel)); padding: var(--cds-pad-xs) 0; }
-.ei-tabs button { font: inherit; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 10px 12px; min-height: 44px; color: var(--color-fg-muted); cursor: pointer; text-align: center; }
-.ei-tabs button[aria-selected="true"] { color: var(--color-panel); background: var(--color-fg); border-color: var(--color-fg); }
+.ei-tabs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr)); gap: var(--cds-gap-sm); position: sticky; top: 0; z-index: 2; background: rgba(11, 16, 32, .82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding: var(--cds-pad-xs) 0; }
+.ei-tabs button { font: inherit; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); background: var(--ei-scheda); border: 1px solid var(--color-border-line); border-radius: 12px; padding: 10px 12px; min-height: 44px; color: var(--color-fg-muted); cursor: pointer; text-align: center; transition: color .15s, border-color .15s, box-shadow .15s, transform .15s; }
+.ei-tabs button:hover { color: var(--color-fg); border-color: var(--ei-accento); }
+.ei-tabs button[aria-selected="true"] { color: #fff; background: linear-gradient(135deg, #4f6ef7 0%, #8a63f2 100%); border-color: transparent; box-shadow: 0 6px 22px rgba(108, 99, 255, .40), inset 0 1px 0 rgba(255, 255, 255, .18); }
 .ei-tabs button .conta { display: inline-block; min-width: 1.4em; margin-left: 6px; padding: 0 5px; border-radius: 999px; font-size: var(--cds-font-size-caption); background: var(--color-bad); color: #fff; }
 @media (max-width: 640px) { .ei-tabs { grid-template-columns: repeat(2, 1fr); position: static; } .ei-tabs button { font-size: var(--cds-font-size-body); padding: 8px; } }
 .ei-pane { display: grid; gap: var(--cds-gap-lg); }
 .ei-pane[hidden] { display: none !important; }
 /* barre dei limiti giornalieri */
-.lim-barra { display: inline-block; vertical-align: middle; width: 4.5rem; height: 8px; border-radius: 4px; background: var(--cds-chart-grid, var(--color-border-line)); margin-right: 6px; overflow: hidden; }
+.lim-barra { display: inline-block; vertical-align: middle; width: 4.5rem; height: 8px; border-radius: 4px; background: var(--color-border-line); margin-right: 6px; overflow: hidden; }
 .lim-barra i { display: block; height: 100%; background: var(--color-ok); }
 .lim-barra.warn i { background: var(--color-warn); } .lim-barra.bad i { background: var(--color-bad); }
 #lim-tab td { white-space: normal; text-align: left; vertical-align: top; min-width: 8.5rem; font-size: var(--cds-font-size-caption); }
@@ -23,13 +51,17 @@
 #gt-tab tr.tot td { font-weight: var(--cds-font-weight-medium); border-top: 2px solid var(--color-border-line); }
 .ei-tabs button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
 .ei-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-md); }
-.ei-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: grid; gap: var(--cds-gap-xs); align-content: start; }
+.ei-tile { background: var(--ei-scheda); border: 1px solid var(--color-border-line); border-radius: 14px; padding: var(--cds-pad-md); display: grid; gap: var(--cds-gap-xs); align-content: start; position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04); }
+.ei-tile::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: linear-gradient(90deg, var(--ei-accento), var(--ei-accento-2), transparent); opacity: .85; }
 .ei-tile .lab { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .ei-tile .big { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
 .ei-tile .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .ei-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); }
-.ei-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; display: grid; gap: var(--cds-gap-sm); align-content: start; }
-.ei-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.ei-card { background: var(--ei-scheda); border: 1px solid var(--color-border-line); border-radius: 16px; padding: var(--cds-pad-lg); min-width: 0; display: grid; gap: var(--cds-gap-sm); align-content: start; box-shadow: 0 10px 30px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .04); }
+.ei-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; letter-spacing: .01em; }
+.ei-card h2::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 2px; vertical-align: .1em; background: linear-gradient(135deg, var(--ei-accento), var(--ei-accento-2)); }
+.ei th { background: rgba(124, 156, 255, .05); }
+.ei tbody tr:hover td { background: rgba(124, 156, 255, .06); }
 .ei-card .note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; }
 .ei-scroll { overflow-x: auto; }
 .ei table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-body); }
@@ -58,7 +90,12 @@
 .ei-filtri label { display: grid; gap: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .ei-filtri select, .ei-filtri input, .ei-filtri button { font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 4px 8px; }
 .ei-filtri button { cursor: pointer; }
-.ei-filtri button[aria-pressed="true"] { border-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.ei-filtri select, .ei-filtri input, .ei-filtri button { background: #10172d; border-radius: 10px; }
+.ei-filtri button:hover:not(:disabled) { border-color: var(--ei-accento); }
+.ei-filtri button:disabled { opacity: .35; cursor: default; }
+.ei-filtri button[aria-pressed="true"] { border-color: var(--ei-accento); background: rgba(124, 156, 255, .16); color: #fff; font-weight: var(--cds-font-weight-medium); }
+.st-giorno-scelta { align-items: center; }
+.st-giorno-scelta button { min-width: 2.2rem; justify-content: center; font-size: var(--cds-font-size-heading); line-height: 1; }
 .ei-chips { display: flex; flex-wrap: wrap; gap: 4px; }
 .ei-chips button { display: inline-flex; align-items: center; gap: 6px; }
 .ei-chips i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
@@ -467,7 +504,12 @@
     <div class="ei-card" id="storico-filtri">
       <h2>Cosa vuoi vedere</h2>
       <p class="note">Ogni giornata va dalle 00:00 alle 24:00, ora italiana: gli stessi numeri del DEF e del bollettino. Scegli qui sotto; riquadri, grafico e tabella cambiano insieme.</p>
-      <div class="ei-filtri">
+      <!-- ora per ora: si sceglie un giorno e si vedono le sue ore (richiesta dell'utente del 25/10/2026) -->
+      <div class="ei-filtri" id="st-giorno-riga" hidden>
+        <div class="st-campo" role="group" aria-label="Giorno"><span>Giorno</span><span class="ei-chips st-giorno-scelta"><button type="button" id="st-g-prima" aria-label="Giorno prima">‹</button><input type="date" id="st-giorno" min="2026-01-01" max="2099-12-31" aria-label="Giorno"><button type="button" id="st-g-dopo" aria-label="Giorno dopo">›</button></span></div>
+        <div class="st-campo" role="group" aria-label="Ultimi giorni"><span>Ultimi giorni</span><span class="ei-chips" id="st-giorni"></span></div>
+      </div>
+      <div class="ei-filtri" id="st-periodo-riga">
         <div class="st-campo" role="group" aria-label="Periodo"><span>Periodo</span><span class="ei-chips" id="st-preset"><button type="button" data-p="oggi">Oggi</button><button type="button" data-p="ieri">Ieri</button><button type="button" data-p="7">7 giorni</button><button type="button" data-p="14">14 giorni</button><button type="button" data-p="30">30 giorni</button><button type="button" data-p="0">Tutto</button></span></div>
         <label>Dal<input type="date" id="st-dal" min="2026-01-01" max="2099-12-31" aria-label="Dal"></label>
         <label>Al<input type="date" id="st-al" min="2026-01-01" max="2099-12-31" aria-label="Al"></label>
@@ -615,7 +657,8 @@
 
       <div><h3>Scheda «Storico»: un grafico che costruisci tu</h3>
         <p>In alto scegli <b>cosa vuoi vedere</b>; riquadri, grafico, tabella e classifica cambiano insieme. <b>Periodo</b>: oggi, ieri, 7, 14 o 30 giorni, tutto, le date che vuoi o un governo. <b>Confronta</b>: «le voci del bilancio» disegna più voci insieme (gettito, manutenzione, confini, costi, saldo, donazioni, tesori, tassazioni, copertura) sommate sulle province scelte; «le province tra loro» disegna una misura, una linea per provincia, e volendo la linea della somma. <b>Risorsa</b>: denaro, una risorsa, oppure il valore totale (risorse ai prezzi medi). <b>Province</b>: clicca per accenderle o spegnerle; il Bahrein, in grigio, è stato italiano fino al 9/10.</p>
-        <p>In «Come mostrarlo»: <b>raggruppa</b> per ora (dalle letture di ogni ora), giorno, settimana o governo; <b>valori</b> del giorno, sommati dall'inizio del periodo, o media di 7 giorni (per ora: dalla mezzanotte o tra una lettura e l'altra); <b>grafico</b> a linee, barre o barre impilate; <b>asse</b> da zero o adattato; <b>taglia i picchi</b> quando un giorno eccezionale schiaccia tutto; <b>confronto con il periodo prima</b> (linee tratteggiate). «In breve» racconta il periodo in una frase; «I numeri del grafico» ha tutti i valori e si scarica in CSV per Excel. Il <b>bilancio per governo</b> coincide con il «Riepilogo di fine mandato» del DEF.</p>
+        <p><b>Ora per ora</b> (di base): scegli <b>un giorno</b> con il calendario, le frecce ‹ › o i pulsanti degli ultimi giorni, e il grafico mostra le sue ore dalle 00:00 alle 24:00 (subito dopo mezzanotte parte da ieri, finché di oggi c'è una lettura sola); «Con il giorno prima» aggiunge in tratteggio il giorno precedente alla stessa ora.</p>
+        <p>In «Come mostrarlo»: <b>raggruppa</b> per ora (un giorno alla volta, dalle letture di ogni mezz'ora), giorno, settimana o governo (questi tre usano il periodo); <b>valori</b> del giorno, sommati dall'inizio del periodo, o media di 7 giorni (per ora: dalla mezzanotte o tra una lettura e l'altra); <b>grafico</b> a linee, barre o barre impilate; <b>asse</b> da zero o adattato; <b>taglia i picchi</b> quando un giorno eccezionale schiaccia tutto; <b>confronto con il periodo prima</b> (linee tratteggiate). «In breve» racconta il periodo in una frase; «I numeri del grafico» ha tutti i valori e si scarica in CSV per Excel. Il <b>bilancio per governo</b> coincide con il «Riepilogo di fine mandato» del DEF.</p>
       </div>
 
       <div><h3>La giornata va dalle 00:00 alle 24:00</h3>
@@ -1699,7 +1742,7 @@ dash.calc('orario_lungo', {
 // ——— Storico: cosa guardare (parametri della dashboard: nessuna query li usa, cambiano solo il disegno) ———
 // di base un punto per lettura (richiesta dell'utente del 25/10/2026: «un punto ogni ora o mezz'ora, per vedere l'andamento»);
 // costi e saldo si pagano una volta a notte: compaiono raggruppando per giorno
-const ST_BASE = { st_dal: null, st_al: null, st_gov: null, st_prov: PROVS, st_modo: 'voci', st_voci: ['gettito', 'don_stato', 'donazioni', 'costi', 'saldo'],
+const ST_BASE = { st_dal: null, st_al: null, st_giorno: null, st_gov: null, st_prov: PROVS, st_modo: 'voci', st_voci: ['gettito', 'don_stato', 'donazioni', 'costi', 'saldo'],
   st_misura: 'gettito', st_ris: 'eur', st_gruppo: 'ora', st_vista: 'valore', st_tipo: 'linee', st_asse: 'auto', st_picchi: 'no',
   st_prima: 'no', st_somma: 'no', st_nasc: [] };
 const stP = () => { const q = dash.params ? dash.params() : {}; const o = { ...ST_BASE }; for (const k in q) if (q[k] != null && k in ST_BASE) o[k] = q[k]; return o; };
@@ -1710,6 +1753,11 @@ const isoMeno = (d, n) => isoPiu(d, -n);
 const dataIt = (d) => new Date(giornoMs(d)).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' });
 const chiaveMs = (k) => (k.length === 10 ? giornoMs(k) : Date.parse(k));
 const oraIt = (k) => new Date(Date.parse(k)).toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' });
+const soloOraIt = (k) => new Date(Date.parse(k)).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' });
+// mezzanotte italiana di un giorno in millisecondi (il 25/10 e l'ultima domenica di marzo durano 25 e 23 ore)
+const mezzanotteRoma = (d) => { const t = giornoMs(d); return t - +new Date(t).toLocaleString('en-GB', { hour: '2-digit', hourCycle: 'h23', timeZone: 'Europe/Rome' }) * 3600000; };
+const oggiRoma = () => new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Rome' });
+const giorniOrari = () => { const d = dash.data('orario'); return d.status === 'ok' ? [...new Set(d.data.map((r) => r.data_it))].filter(Boolean).sort() : []; };
 const lunedi = (d) => isoMeno(d, (new Date(giornoMs(d)).getUTCDay() + 6) % 7);
 
 const VOCI_ST = [
@@ -1730,7 +1778,7 @@ const VOCE = Object.fromEntries(VOCI_ST.map((v) => [v.id, v]));
 const MISURE_PROV = ['gettito', 'manutenzione', 'confini', 'costi', 'saldo', 'donazioni', 'saldo_don', 'tesoro', 'tassazioni', 'copertura'];
 const nomeProvMisura = { donazioni: 'Donazioni ricevute', tesoro: 'Tesoro', saldo_don: 'Saldo con le donazioni ricevute' };
 const nomeRisSt = { eur: 'denaro', valore: 'valore totale', pelle: 'pelle', oro: 'oro', petrolio: 'petrolio', nte: 'NTE' };
-const COL_VOCE = { gettito: 0, manutenzione: 1, confini: 2, costi: 1, saldo: 5, donazioni: 3, don_stato: 4, saldo_don: 6, tesoro: 2, tesoro_stato: 7, tassazioni: 5, copertura: 0 };
+const COL_VOCE = { gettito: 0, manutenzione: 1, confini: 2, costi: 1, saldo: 5, donazioni: 6, don_stato: 4, saldo_don: 3, tesoro: 2, tesoro_stato: 7, tassazioni: 5, copertura: 0 }; // donazioni in rosa e viola, non in rosso
 const unitaDi = (voce, ris) => VOCE[voce].unita || (ris === 'eur' || ris === 'valore' ? '€' : ris);
 const fmtU = (u) => (u === '€' ? G.fmtE : u === '%' ? (v) => (v == null ? '—' : v.toLocaleString('it-IT', { maximumFractionDigits: 0 }) + '%') : (v) => G.fmtN(v));
 const fmtAsseU = (u) => (v) => (u === '€' ? mil(v) : u === '%' ? v + '%' : Math.abs(v) >= 1e6 ? (v / 1e6).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' M' : Math.abs(v) >= 1e3 ? (v / 1e3).toLocaleString('it-IT', { maximumFractionDigits: 0 }) + ' k' : String(v));
@@ -1814,8 +1862,8 @@ const unisci = (giorni) => {
   document.querySelectorAll('#st-preset button').forEach((b) => b.addEventListener('click', () => {
     const date = dateStorico(); if (!date.length) return;
     const ultimo = date[date.length - 1], chiusa = ultimaChiusa(date), q = b.dataset.p;
-    if (q === 'oggi') return stSet({ st_dal: ultimo, st_al: ultimo, st_gov: null, st_gruppo: 'ora' });
-    if (q === 'ieri') return stSet({ st_dal: chiusa, st_al: chiusa, st_gov: null, st_gruppo: 'ora' });
+    if (q === 'oggi') return stSet({ st_dal: ultimo, st_al: ultimo, st_giorno: ultimo, st_gov: null, st_gruppo: 'ora' });
+    if (q === 'ieri') return stSet({ st_dal: chiusa, st_al: chiusa, st_giorno: chiusa, st_gov: null, st_gruppo: 'ora' });
     const n = +q;
     stSet({ st_dal: n ? isoMeno(ultimo, n - 1) : date[0], st_al: ultimo, st_gov: null }); // il raggruppamento resta quello scelto (ora per ora di base)
   }));
@@ -1830,6 +1878,17 @@ const unisci = (giorni) => {
     });
     el.addEventListener('blur', () => { el.value = stP()[chiave] || ''; });
   }
+  // giorno singolo dell'ora per ora: calendario, frecce e pulsanti degli ultimi giorni
+  const elG = document.getElementById('st-giorno');
+  elG.addEventListener('change', () => { if (elG.value && elG.validity.valid && elG.value >= '2026-01-01') stSet({ st_giorno: elG.value }); });
+  elG.addEventListener('blur', () => { elG.value = elG.dataset.giorno || ''; });
+  const sposta = (n) => {
+    const g = giorniOrari(), i = g.indexOf(elG.dataset.giorno);
+    if (i >= 0 && g[i + n]) stSet({ st_giorno: g[i + n] });
+  };
+  document.getElementById('st-g-prima').addEventListener('click', () => sposta(-1));
+  document.getElementById('st-g-dopo').addEventListener('click', () => sposta(1));
+  document.getElementById('st-giorni').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) stSet({ st_giorno: b.dataset.g }); });
   document.getElementById('st-gov').addEventListener('change', (e) => {
     const g = (dash.data('governi').data || []).find((x) => x.governo === e.target.value);
     if (g) stSet({ st_gov: g.governo, st_dal: g.inizio, st_al: g.fine }); else stSet({ st_gov: null, st_dal: null, st_al: null });
@@ -1873,7 +1932,7 @@ const graficoSt = (box, chiavi, serieTutte, o) => {
   const tempo = o.tipo === 'linee' && o.asseX !== 'cat';
   let x, bw = 0;
   if (tempo) {
-    const ext = d3.extent(keys, chiaveMs);
+    const ext = o.dominio ? [...o.dominio] : d3.extent(keys, chiaveMs); // un giorno solo: dalle 00 alle 24 italiane
     if (ext[0] === ext[1]) { ext[0] -= o.asseX === 'ora' ? 1800000 : 43200000; ext[1] += o.asseX === 'ora' ? 1800000 : 43200000; }
     const xs = d3.scaleUtc(ext, [M.l, W - M.r]); x = (k) => xs(chiaveMs(k)); x.scala = xs;
   } else {
@@ -1906,7 +1965,9 @@ const graficoSt = (box, chiavi, serieTutte, o) => {
     svg.append('rect').attr('x', x.scala(a)).attr('width', x.scala(b) - x.scala(a)).attr('y', M.t).attr('height', H - M.b - M.t).attr('fill', 'var(--color-border-line)').attr('opacity', i % 2 ? 0.35 : 0.15);
     if (x.scala(b) - x.scala(a) > 60) svg.append('text').attr('x', x.scala(a) + 4).attr('y', M.t - 6).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(g.governo.replace('Governo ', ''));
   });
-  const asseX = tempo
+  const asseX = tempo && o.dominio
+    ? d3.axisBottom(x.scala).tickValues(d3.range(o.dominio[0], o.dominio[1] + 1, (W < 420 ? 6 : W < 700 ? 3 : 2) * 3600000).map((t) => new Date(t))).tickFormat((v) => (+v >= o.dominio[1] ? '24:00' : soloOraIt(v.toISOString())))
+    : tempo
     ? d3.axisBottom(x.scala).ticks(Math.max(2, Math.floor(W / (o.asseX === 'ora' ? 120 : 90)))).tickFormat((v) => (o.asseX === 'ora'
       ? v.toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', timeZone: 'Europe/Rome' })
       : v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'UTC' })))
@@ -2012,11 +2073,35 @@ const disegnaStorico = () => {
 
   // periodo
   const tutteDate = [...new Set(sto.data.map((r) => r.data))].sort();
-  // ora per ora: «Tutto» parte dal primo giorno con letture orarie (21/10/2026), non dal 28/09 del DEF
-  const orIni = (() => { const d = dash.data('orario'); return ore && d.status === 'ok' && d.data.length ? d.data.reduce((m, r) => (r.data_it < m ? r.data_it : m), '9999-12-31') : null; })();
-  const dalBase = orIni && orIni > tutteDate[0] ? orIni : tutteDate[0];
-  const dal = p.st_dal || dalBase, al = p.st_al || tutteDate[tutteDate.length - 1];
+  // ora per ora: un giorno solo, scelto con il calendario o i pulsanti (richiesta dell'utente del 25/10/2026);
+  // di base l'ultimo giorno con letture, o quello prima se di oggi c'è ancora una lettura sola (subito dopo mezzanotte)
+  const gOre = giorniOrari();
+  const giorno = !ore ? null : gOre.includes(p.st_giorno) ? p.st_giorno : (() => {
+    const ult = gOre[gOre.length - 1];
+    if (!ult) return tutteDate[tutteDate.length - 1];
+    const n = new Set((dash.data('orario').data || []).filter((r) => r.data_it === ult).map((r) => r.ts)).size;
+    return n < 2 && gOre.length > 1 ? gOre[gOre.length - 2] : ult;
+  })();
+  const dalBase = tutteDate[0];
+  const dal = ore ? giorno : p.st_dal || dalBase, al = ore ? giorno : p.st_al || tutteDate[tutteDate.length - 1];
   for (const [id, v] of [['st-dal', dal], ['st-al', al]]) { const el = document.getElementById(id); if (el !== document.activeElement) el.value = v; }
+  document.getElementById('st-periodo-riga').hidden = ore;
+  document.getElementById('st-giorno-riga').hidden = !ore;
+  document.querySelector('#st-prima button[data-v="si"]').textContent = ore ? 'Con il giorno prima' : 'Con il periodo prima';
+  if (ore) {
+    const elG = document.getElementById('st-giorno');
+    elG.dataset.giorno = giorno; if (elG !== document.activeElement) elG.value = giorno;
+    if (gOre.length) { elG.min = gOre[0]; elG.max = gOre[gOre.length - 1]; }
+    const i = gOre.indexOf(giorno);
+    document.getElementById('st-g-prima').disabled = i <= 0;
+    document.getElementById('st-g-dopo').disabled = i < 0 || i >= gOre.length - 1;
+    const oggi = oggiRoma(), ieri = isoMeno(oggi, 1);
+    document.getElementById('st-giorni').replaceChildren(...gOre.slice(-7).map((d) => {
+      const b = document.createElement('button'); b.type = 'button'; b.dataset.g = d; b.setAttribute('aria-pressed', String(d === giorno));
+      b.textContent = d === oggi ? 'Oggi' : d === ieri ? 'Ieri' : new Date(giornoMs(d)).toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+      return b;
+    }));
+  }
   const ultimo = tutteDate[tutteDate.length - 1], chiusa = ultimaChiusa(tutteDate);
   document.querySelectorAll('#st-preset button').forEach((b) => {
     const q = b.dataset.p, n = +q;
@@ -2044,7 +2129,7 @@ const disegnaStorico = () => {
   const giorniTra = (a, b) => tutteDate.filter((d) => d >= a && d <= b);
   const govDi = (d) => (governi.filter((g) => g.inizio <= d).slice(-1)[0] || {}).governo || '—';
   const chiaveGruppo = (d) => (p.st_gruppo === 'settimana' ? lunedi(d) : p.st_gruppo === 'governo' ? govDi(d) : d);
-  const etichetta = ore ? oraIt : p.st_gruppo === 'settimana' ? (k) => 'sett. dal ' + dataIt(k) : p.st_gruppo === 'governo' ? (k) => k.replace('Governo ', '') : dataIt;
+  const etichetta = ore ? soloOraIt : p.st_gruppo === 'settimana' ? (k) => 'sett. dal ' + dataIt(k) : p.st_gruppo === 'governo' ? (k) => k.replace('Governo ', '') : dataIt;
 
   // serie per giorni (raggruppati) di un periodo; chi = funzione che dà le basi di un giorno
   const serieGiorni = (a, b, basi, voce) => {
@@ -2118,12 +2203,14 @@ const disegnaStorico = () => {
   const prima = p.st_prima === 'si' && p.st_gruppo !== 'governo';
   if (prima) {
     const a2 = isoMeno(dal, nGiorni), b2 = isoMeno(al, nGiorni);
+    const spost = ore ? mezzanotteRoma(dal) - mezzanotteRoma(a2) : nGiorni * 86400000; // ora per ora: stessa ora italiana anche al cambio d'ora
+    const dopo = ore ? ' · giorno prima' : ' · periodo prima';
     for (const s of [...serie]) {
       const m = costruisci(a2, b2, s.chi, s.voce), sp = new Map();
-      for (const [k, v] of m) sp.set(k.length === 10 ? isoPiu(k, nGiorni) : new Date(Date.parse(k) + nGiorni * 86400000).toISOString(), v);
-      serie.push({ ...s, nome: s.nome + ' · periodo prima', valori: sp, tratteggio: true, nascosta: s.nascosta || (modoVoci && nasc.has(s.nome + ' · periodo prima')) });
+      for (const [k, v] of m) sp.set(k.length === 10 ? isoPiu(k, nGiorni) : new Date(Date.parse(k) + spost).toISOString(), v);
+      serie.push({ ...s, nome: s.nome + dopo, valori: sp, tratteggio: true, nascosta: s.nascosta || (modoVoci && nasc.has(s.nome + dopo)) });
     }
-    note.push(`Tratteggio: lo stesso numero di giorni subito prima (dal ${dataIt(a2)} al ${dataIt(b2)}), spostato in avanti per confrontarlo.`);
+    note.push(ore ? `Tratteggio: il giorno prima (${dataIt(a2)}), alla stessa ora.` : `Tratteggio: lo stesso numero di giorni subito prima (dal ${dataIt(a2)} al ${dataIt(b2)}), spostato in avanti per confrontarlo.`);
   }
   if (p.st_tipo === 'impilate' && modoVoci && serie.some((s) => !s.nascosta && ['costi', 'saldo', 'saldo_don', 'copertura'].includes(s.voce))) note.push('Barre impilate: attenzione, costi e saldi contengono già altre voci, sommarli conta due volte.');
   if (vista === 'cumulato' && serie.some((s) => s.stock || s.voce === 'copertura')) note.push('Tesori e copertura non si sommano: restano il valore di ogni punto.');
@@ -2134,7 +2221,9 @@ const disegnaStorico = () => {
 
   // nota sotto i filtri
   const nomiProv = scelte.length === PROVS.length && PROVS.every((x) => scelte.includes(x)) ? 'le 7 province' : scelte.length === PROVS_ST.length ? 'tutte le province (Bahrein compreso, italiano fino al 9/10)' : scelte.join(', ');
-  document.getElementById('st-nota').textContent = `Dal ${dataIt(dal)} al ${dataIt(al)} (${giorniTra(dal, al).length} giornate${giorniTra(dal, al).some((d) => aperti.has(d)) ? ', l\'ultima in corso' : ''}) · ${nomiProv} · ${nomeRisSt[ris]}` + (ris === 'valore' ? ' (risorse ai prezzi medi di oggi; c\'è solo nei giorni con tutte le risorse)' : '') + '.';
+  const quando = dal === al ? `Il ${dataIt(dal)}` : `Dal ${dataIt(dal)} al ${dataIt(al)}`;
+  document.getElementById('st-nota').textContent = ore ? `Giornata del ${dataIt(dal)}${aperti.has(dal) || dal === oggiRoma() ? ' (in corso)' : ''}, ora per ora · ${nomiProv} · ${nomeRisSt[ris]}` + (ris === 'valore' ? ' (risorse ai prezzi medi di oggi)' : '') + '.'
+    : `Dal ${dataIt(dal)} al ${dataIt(al)} (${giorniTra(dal, al).length} giornate${giorniTra(dal, al).some((d) => aperti.has(d)) ? ', l\'ultima in corso' : ''}) · ${nomiProv} · ${nomeRisSt[ris]}` + (ris === 'valore' ? ' (risorse ai prezzi medi di oggi; c\'è solo nei giorni con tutte le risorse)' : '') + '.';
 
   // In breve e riquadri: tutto il periodo, sulle province scelte
   const tot = unisci(giorniTra(dal, al).map((d) => basiDi(d, scelte)));
@@ -2152,7 +2241,7 @@ const disegnaStorico = () => {
   set('st-t-stato-s', tesS.length > 1 ? `${tesS[tesS.length - 1][1] >= tesS[0][1] ? '+' : '−'}${fE(Math.abs(tesS[tesS.length - 1][1] - tesS[0][1]))} dal ${dataIt(tesS[0][0])}` : tesS.length ? 'a fine ' + dataIt(tesS[0][0]) : 'nessun dato nel periodo');
   const saldoDon = voceDa(tot, 'saldo_don');
   set('st-breve', tot.gettito == null && tot.donazioni == null ? 'Nessun dato nel periodo scelto.'
-    : `Dal ${dataIt(dal)} al ${dataIt(al)}, per ${nomiProv}: le tasse hanno portato ${fE(tot.gettito)} e i costi sono stati ${costi == null ? '—' : fE(costi)} (manutenzione ${fE(tot.manutenzione)}, confini ${fE(tot.confini)}), quindi il saldo è ${saldo == null ? '—' : fE(saldo)}`
+    : `${quando}, per ${nomiProv}: le tasse hanno portato ${fE(tot.gettito)} e i costi sono stati ${costi == null ? '—' : fE(costi)} (manutenzione ${fE(tot.manutenzione)}, confini ${fE(tot.confini)}), quindi il saldo è ${saldo == null ? '—' : fE(saldo)}`
       + (cop == null ? '. ' : `: le tasse pagano il ${fmtU('%')(cop)} dei costi. `)
       + `I giocatori hanno donato ${fE(tot.donazioni || 0)} alle province e ${fE(tot.don_stato || 0)} allo Stato; con le donazioni il saldo è ${saldoDon == null ? '—' : fE(saldoDon)}. `
       + (tesS.length > 1 ? `Il tesoro dello Stato è passato da ${fE(tesS[0][1])} (fine ${dataIt(tesS[0][0])}) a ${fE(tesS[tesS.length - 1][1])} (fine ${dataIt(tesS[tesS.length - 1][0])}).` : '')
@@ -2161,16 +2250,17 @@ const disegnaStorico = () => {
   // grafico
   const nomeVista = Object.fromEntries(viste)[vista];
   document.getElementById('st-titolo').textContent = (modoVoci ? 'Le voci del bilancio' : `${nomeProvMisura[p.st_misura] || VOCE[p.st_misura]?.nome || 'Gettito'} per provincia`)
-    + ` · ${({ ora: 'ora per ora', giorno: 'giorno per giorno', settimana: 'settimana per settimana', governo: 'per governo' })[p.st_gruppo]}` + (vista !== 'valore' ? ` · ${nomeVista.toLowerCase()}` : '');
+    + ` · ${({ ora: 'ora per ora', giorno: 'giorno per giorno', settimana: 'settimana per settimana', governo: 'per governo' })[p.st_gruppo]}` + (ore ? ` · ${dataIt(dal)}` : '') + (vista !== 'valore' ? ` · ${nomeVista.toLowerCase()}` : '');
   const stock = serie.filter((s) => !s.nascosta).every((s) => s.stock);
   const t = graficoSt(document.querySelector('#storico-grafico .ei-chart'), chiavi, serie, {
     tipo: p.st_tipo, asse: p.st_asse, taglia: p.st_picchi === 'si', unita, etichetta, stock, provvisorio,
-    asseX: ore ? 'ora' : p.st_gruppo === 'giorno' ? 'giorno' : 'cat', governi: ore || p.st_gruppo === 'giorno' ? governi : null });
+    asseX: ore ? 'ora' : p.st_gruppo === 'giorno' ? 'giorno' : 'cat', governi: p.st_gruppo === 'giorno' ? governi : null,
+    dominio: ore ? [mezzanotteRoma(dal), mezzanotteRoma(isoPiu(dal, 1))] : null });
   legenda(document.getElementById('st-leg'), serie, modoVoci
     ? (nome) => { const n = new Set(stP().st_nasc || []); if (n.has(nome)) n.delete(nome); else n.add(nome); stSet({ st_nasc: [...n] }); }
     : (nome) => { if (!PROVS_ST.includes(nome)) return; const sc = new Set(stP().st_prov); if (sc.has(nome)) { if (sc.size > 1) sc.delete(nome); } else sc.add(nome); stSet({ st_prov: PROVS_ST.filter((x) => sc.has(x)) }); });
   const spiega = ore
-    ? (vista === 'valore' ? 'A ogni lettura del gioco (circa ogni ora): quanto è entrato dalla mezzanotte italiana fino a quell\'ora; a mezzanotte la linea riparte. I tesori sono quelli del momento.' : 'Quanto è entrato tra una lettura e la precedente (per i tesori: quanto sono cambiati).') + ' Le letture orarie partono dal 21/10; prima del 22/10 il gettito orario c\'è solo dove c\'è la lettura di mezzanotte.'
+    ? 'Il giorno scelto qui sopra, dalle 00:00 alle 24:00. ' + (vista === 'valore' ? 'A ogni lettura del gioco (ogni mezz\'ora dalle 8 all\'1): quanto è entrato dalla mezzanotte italiana fino a quell\'ora. I tesori sono quelli del momento.' : 'Quanto è entrato tra una lettura e la precedente (per i tesori: quanto sono cambiati).') + ' Le letture orarie partono dal 21/10; prima del 22/10 il gettito orario c\'è solo dove c\'è la lettura di mezzanotte.'
     : p.st_gruppo === 'giorno' ? 'Un punto per giornata (00:00–24:00). Le fasce di sfondo sono i governi.' : p.st_gruppo === 'settimana' ? 'Settimane da lunedì a domenica: i flussi sono sommati, i tesori sono quelli dell\'ultimo giorno.' : 'Un valore per governo: i flussi sono sommati sui suoi giorni, i tesori sono quelli dell\'ultimo giorno.';
   document.getElementById('st-nota-graf').textContent = [spiega, ...note, t.tagliati ? `Picchi tagliati: ${t.tagliati === 1 ? '1 punto è' : t.tagliati + ' punti sono'} oltre la scala, segnati sul bordo con ▲ e il valore vero.` : '', 'Clicca una voce della legenda per nasconderla o mostrarla.'].filter(Boolean).join(' ');
 

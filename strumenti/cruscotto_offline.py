@@ -11,8 +11,10 @@ from pathlib import Path
 DATASET = ["oggi", "storico", "orario", "prezzi", "classifiche", "costi", "piano", "obiettivi", "diario", "donazioni", "donazioni_totali", "governi"]
 
 STILE = """
-:root { color-scheme: dark; /* sempre scuro: preferenza dell'utente (22/10/2026) */
-  --color-bg: #12161c; --color-panel: #1a2029; --color-fg: #e6eaf0; --color-fg-muted: #9aa5b3; --color-border-line: #2c3440;
+:root { color-scheme: dark; /* sempre scuro: preferenza dell'utente (22/10/2026); tavolozza «Notte blu» dal 25/10/2026 nella pagina */
+  --cds-chart-categorical-1: #5190f9; --cds-chart-categorical-2: #d97516; --cds-chart-categorical-3: #00ac90; --cds-chart-categorical-4: #d55456;
+  --cds-chart-categorical-5: #8b76e3; --cds-chart-categorical-6: #27993c; --cds-chart-categorical-7: #d55e97; --cds-chart-categorical-8: #ba8c00;
+  --color-bg: #070b16; --color-panel: #1a2029; --color-fg: #e6eaf0; --color-fg-muted: #9aa5b3; --color-border-line: #2c3440;
   --color-ok: #5cc98e; --color-warn: #e0a83a; --color-bad: #f07167;
   --cds-chart-grid: #262e39; --cds-chart-axis: #4a5462; --cds-chart-reference: #7c8796; --cds-chart-status-critical: #f07167;
   --cds-surface-popover: #222a35; --cds-border: #3a4350; --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.4);
@@ -50,7 +52,8 @@ SHIM = """
     calc(id, def) { calcs[id] = def; ordine.push(id); },
     loader() {},
     onData(fn) { ascoltatori.push(fn); if (document.readyState !== 'loading') try { fn(); } catch (e) { console.error(e); } },
-    colors: ['#3b6fd6', '#d9822b', '#2e9e6a', '#9b59b6', '#c0392b', '#16a2b8', '#7f8c8d', '#b8860b'],
+    // come su claude.ai: i colori sono variabili, la pagina le definisce (tavolozza «Notte blu», 25/10/2026)
+    colors: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `var(--cds-chart-categorical-${n})`),
     setLink(id) { try { history.replaceState(null, '', '#' + id); } catch (e) {} },
     // filtri della pagina: nessuna query qui, quindi cambiano solo il disegno
     params() { return { ...parametri }; },
