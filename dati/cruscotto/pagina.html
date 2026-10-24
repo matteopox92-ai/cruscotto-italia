@@ -115,12 +115,15 @@
       </div>
       <p class="note" id="autonomia-nota">—</p>
       <h3 class="au-tit">Storico dell'autonomia</h3>
-      <p class="note">Notti di autonomia a ogni lettura del gioco (tesoro dello Stato contro la manutenzione di quel giorno, Napoli esclusa). Linea verde dove cresce, rossa dove cala.</p>
+      <p class="note">Notti di autonomia a ogni lettura del gioco (tesoro dello Stato contro la manutenzione di quel giorno, Napoli esclusa). Con una sola risorsa la linea è verde dove cresce e rossa dove cala; con più risorse ogni linea ha il suo colore e i punti sono verdi (sale) o rossi (cala).</p>
       <div class="ei-filtri">
-        <label>Giornata<select id="au-giorno" aria-label="Giornata"></select></label>
-        <label>Risorsa<select id="au-ris" aria-label="Risorsa">
-          <option value="denaro">Denaro</option><option value="pelle">Pelle</option><option value="oro">Oro</option><option value="petrolio">Petrolio</option><option value="nte">NTE</option>
-        </select></label>
+        <div class="st-campo" role="group" aria-label="Periodo"><span>Periodo</span><span class="ei-chips" id="au-preset"><button type="button" data-p="oggi">Oggi</button><button type="button" data-p="ieri">Ieri</button><button type="button" data-p="3">3 giorni</button><button type="button" data-p="7">7 giorni</button><button type="button" data-p="0">Tutto</button></span></div>
+        <label>Dal<input type="date" id="au-dal" aria-label="Dal"></label>
+        <label>Al<input type="date" id="au-al" aria-label="Al"></label>
+        <div class="st-campo" role="group" aria-label="Dettaglio"><span>Dettaglio</span><span class="ei-chips" id="au-passo"><button type="button" data-v="ore" aria-pressed="true">Ore</button><button type="button" data-v="giorni" aria-pressed="false">Giorni</button></span></div>
+      </div>
+      <div class="ei-filtri">
+        <div class="st-campo" role="group" aria-label="Risorse"><span>Risorse da disegnare</span><span class="ei-chips" id="au-ris"></span></div>
       </div>
       <p class="note" id="au-sintesi">—</p>
       <div class="ei-chart" id="au-grafico"></div>
@@ -128,7 +131,7 @@
         <summary>Letture una per una</summary>
         <div class="ei-scroll">
           <table>
-            <thead><tr><th>Lettura</th><th>Tesoro dello Stato</th><th>Manutenzione a notte</th><th>Notti di autonomia</th><th>Variazione</th></tr></thead>
+            <thead></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1983,69 +1986,124 @@ const disegnaDonazioni = () => {
 const notti1 = (x) => x == null ? '—' : x.toLocaleString('it-IT', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
 const quando = (ts) => ts.slice(8, 10) + '/' + ts.slice(5, 7) + ' ' + ts.slice(11, 16);
 const freccia = (dv) => dv == null ? ['—', ''] : Math.abs(dv) < 0.05 ? ['= stabile', ''] : [(dv > 0 ? '▲ +' : '▼ −') + notti1(Math.abs(dv)), dv > 0 ? 'ok' : 'bad'];
+const AU_RIS = ['denaro', 'pelle', 'oro', 'petrolio', 'nte'];
+// niente verde e rosso tra i colori delle risorse: servono a dire «sale» e «cala»
+const auColore = (k) => dash.colors[{ denaro: 0, pelle: 1, oro: 7, petrolio: 3, nte: 5 }[k]];
+const auStato = { dal: null, al: null, preset: '0', passo: 'ore', ris: new Set(['denaro']) };
 const disegnaAutonomiaStorico = () => {
   const d = dash.data('autonomia_storico');
-  const selG = document.getElementById('au-giorno'), selR = document.getElementById('au-ris');
   const box = document.getElementById('au-grafico'), sint = document.getElementById('au-sintesi');
-  const tb = document.querySelector('#au-dettaglio tbody');
-  box.querySelector('svg')?.remove(); tb.replaceChildren();
+  const tab = document.querySelector('#au-dettaglio table'), dal = document.getElementById('au-dal'), al = document.getElementById('au-al');
+  const chipsR = document.getElementById('au-ris'), chipsP = document.getElementById('au-preset'), chipsPasso = document.getElementById('au-passo');
+  box.querySelector('svg')?.remove(); box.querySelector('.ei-legenda')?.remove(); tab.tHead.replaceChildren(); tab.tBodies[0].replaceChildren();
   if (d.status !== 'ok' || !d.data.length) { sint.textContent = 'Nessuna lettura ancora.'; return; }
-  // giornate disponibili, dalla più recente; la scelta resta tra un aggiornamento e l'altro
-  const giorni = [...new Set(d.data.map((r) => r.giorno))].sort().reverse();
-  const scelto = selG.value || 'tutti';
-  selG.replaceChildren(...[['tutti', 'Tutte le giornate'], ...giorni.map((g) => [g, new Date(g + 'T12:00Z').toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' })])]
-    .map(([v, t]) => Object.assign(document.createElement('option'), { value: v, textContent: t })));
-  selG.value = giorni.includes(scelto) ? scelto : 'tutti';
-  if (!selG.dataset.pronto) { selG.dataset.pronto = '1'; selG.addEventListener('change', disegnaAutonomiaStorico); selR.addEventListener('change', disegnaAutonomiaStorico); }
-  const k = selR.value, tutte = d.data.filter((r) => r['notti_' + k] != null);
-  const rows = (selG.value === 'tutti' ? tutte : tutte.filter((r) => r.giorno === selG.value)).map((r) => ({ ...r, d: new Date(r.ts), v: r['notti_' + k] }));
-  if (!rows.length) { sint.textContent = 'Nessuna lettura per questa scelta.'; return; }
-  // sintesi: dalla prima all'ultima lettura della scelta (per una giornata: confronto anche con l'ultima lettura del giorno prima)
-  const a = rows[0], z = rows[rows.length - 1];
-  const prima = selG.value === 'tutti' ? null : tutte.filter((r) => r.giorno < selG.value).slice(-1)[0];
-  const [fz] = freccia(z.v - a.v);
-  sint.textContent = `${nomeRis[k]}: da ${notti1(a.v)} notti (${quando(a.ts)}) a ${notti1(z.v)} notti (${quando(z.ts)}), ${rows.length > 1 ? fz : 'una sola lettura'}` +
-    (prima ? `; rispetto all'ultima lettura del giorno prima (${notti1(prima['notti_' + k])}) ${freccia(z.v - prima['notti_' + k])[0]}.` : '.');
-  // tabella delle letture, dalla più recente
+  const giorni = [...new Set(d.data.map((r) => r.giorno))].sort(), primo = giorni[0], ultimo = giorni[giorni.length - 1];
+  // filtri: si collegano una volta sola, la scelta resta tra un aggiornamento e l'altro
+  if (!chipsR.dataset.pronto) {
+    chipsR.dataset.pronto = '1';
+    chipsR.replaceChildren(...AU_RIS.map((k) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.v = k;
+      const i = document.createElement('i'); i.style.background = auColore(k); b.append(i, k === 'nte' ? 'NTE' : k[0].toUpperCase() + k.slice(1)); return b; }),
+      Object.assign(document.createElement('button'), { type: 'button', textContent: 'Tutte', id: 'au-tutte' }));
+    chipsR.addEventListener('click', (ev) => {
+      const b = ev.target.closest('button'); if (!b) return;
+      if (b.id === 'au-tutte') AU_RIS.forEach((k) => auStato.ris.add(k));
+      else if (auStato.ris.has(b.dataset.v) && auStato.ris.size > 1) auStato.ris.delete(b.dataset.v);
+      else auStato.ris.add(b.dataset.v);
+      disegnaAutonomiaStorico();
+    });
+    chipsP.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (!b) return; auStato.preset = b.dataset.p; auStato.dal = auStato.al = null; disegnaAutonomiaStorico(); });
+    chipsPasso.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (!b) return; auStato.passo = b.dataset.v; disegnaAutonomiaStorico(); });
+    const daDate = () => { auStato.preset = null; auStato.dal = dal.value || null; auStato.al = al.value || null; disegnaAutonomiaStorico(); };
+    dal.addEventListener('change', daDate); al.addEventListener('change', daDate);
+  }
+  // periodo: scelta rapida (rispetto all'ultima giornata con letture) oppure date Dal/Al
+  const meno = (g, n) => { const x = new Date(g + 'T12:00Z'); x.setUTCDate(x.getUTCDate() - n); return x.toISOString().slice(0, 10); };
+  let da = auStato.dal || primo, a = auStato.al || ultimo;
+  if (auStato.preset != null) {
+    const p = auStato.preset;
+    [da, a] = p === 'oggi' ? [ultimo, ultimo] : p === 'ieri' ? [meno(ultimo, 1), meno(ultimo, 1)] : p === '0' ? [primo, ultimo] : [meno(ultimo, +p - 1), ultimo];
+  }
+  if (da > a) [da, a] = [a, da];
+  dal.min = al.min = primo; dal.max = al.max = ultimo; dal.value = da; al.value = a;
+  chipsP.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.p === auStato.preset)));
+  chipsPasso.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === auStato.passo)));
+  chipsR.querySelectorAll('button[data-v]').forEach((b) => b.setAttribute('aria-pressed', String(auStato.ris.has(b.dataset.v))));
+  const ris = AU_RIS.filter((k) => auStato.ris.has(k));
+  // righe: ogni lettura, oppure l'ultima lettura di ogni giornata (com'era a fine giorno)
+  let tutte = d.data;
+  if (auStato.passo === 'giorni') { const m = new Map(); for (const r of tutte) m.set(r.giorno, r); tutte = [...m.values()]; }
+  const rows = tutte.filter((r) => r.giorno >= da && r.giorno <= a).map((r) => ({ ...r, d: new Date(r.ts) }));
+  const prima = tutte.filter((r) => r.giorno < da).slice(-1)[0] || null; // per la variazione della prima riga del periodo
+  if (!rows.length) { sint.textContent = 'Nessuna lettura in questo periodo.'; return; }
+  const etichetta = (r) => auStato.passo === 'giorni' ? new Date(r.giorno + 'T12:00Z').toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }) + ' (' + r.ts.slice(11, 16) + ')' : quando(r.ts);
+  // sintesi: una frase per risorsa, dalla prima all'ultima riga del periodo
+  const z = rows[rows.length - 1], a0 = rows[0];
+  sint.textContent = (rows.length > 1 ? `Dal ${etichetta(a0)} al ${etichetta(z)}: ` : `${etichetta(z)}: `) + ris.map((k) => {
+    const v0 = a0['notti_' + k], v1 = z['notti_' + k];
+    return `${nomeRis[k]} ${notti1(v1)} notti` + (rows.length > 1 && v0 != null && v1 != null ? ` (${freccia(v1 - v0)[0]})` : '');
+  }).join(' · ') + '.';
+  // tabella: una colonna di notti e una di variazione per ogni risorsa scelta, dalla riga più recente
+  const trh = document.createElement('tr');
+  [auStato.passo === 'giorni' ? 'Giornata (ultima lettura)' : 'Lettura', ...ris.flatMap((k) => [nomeRis[k] + ' (notti)', 'Variazione'])]
+    .forEach((t) => trh.append(Object.assign(document.createElement('th'), { textContent: t })));
+  tab.tHead.append(trh);
   rows.forEach((r, i) => {
-    const prec = i ? rows[i - 1] : prima ? { v: prima['notti_' + k] } : null;
-    const [t, c] = freccia(prec ? r.v - prec.v : null);
-    const tr = document.createElement('tr');
-    [[quando(r.ts)], [k === 'denaro' ? fmtE(r['tesoro_' + k]) : fmtN(r['tesoro_' + k])], [k === 'denaro' ? fmtE(r['man_' + k]) : fmtN(r['man_' + k])],
-      [notti1(r.v), r.v < 1 ? 'bad' : r.v < 3 ? 'warn' : ''], [t, c]].forEach(([s, cl]) => { const td = document.createElement('td'); td.textContent = s; if (cl) td.className = cl; tr.append(td); });
-    tb.prepend(tr);
+    const p = i ? rows[i - 1] : prima, tr = document.createElement('tr');
+    const celle = [[etichetta(r)]];
+    for (const k of ris) {
+      const v = r['notti_' + k], pv = p ? p['notti_' + k] : null;
+      celle.push([notti1(v), v != null && v < 1 ? 'bad' : v != null && v < 3 ? 'warn' : ''], freccia(v != null && pv != null ? v - pv : null));
+    }
+    celle.forEach(([s, cl]) => { const td = document.createElement('td'); td.textContent = s; if (cl) td.className = cl; tr.append(td); });
+    tab.tBodies[0].prepend(tr);
   });
   if (!box.clientWidth) return;
-  const W = box.clientWidth, H = 220, M = { t: 12, r: 56, b: 24, l: 44 };
-  const x = rows.length > 1 ? d3.scaleUtc(d3.extent(rows, (r) => r.d), [M.l, W - M.r]) : d3.scaleUtc([new Date(+a.d - 36e5), new Date(+a.d + 36e5)], [M.l, W - M.r]);
-  const [lo, hi] = d3.extent(rows, (r) => r.v), pad = Math.max((hi - lo) * 0.15, 0.5);
+  // grafico: una linea per risorsa
+  const W = box.clientWidth, H = 240, M = { t: 12, r: 60, b: 24, l: 44 };
+  const x = rows.length > 1 ? d3.scaleUtc(d3.extent(rows, (r) => r.d), [M.l, W - M.r]) : d3.scaleUtc([new Date(+a0.d - 36e5), new Date(+a0.d + 36e5)], [M.l, W - M.r]);
+  const vals = rows.flatMap((r) => ris.map((k) => r['notti_' + k])).filter((v) => v != null);
+  const [lo, hi] = d3.extent(vals), pad = Math.max((hi - lo) * 0.1, 0.5);
   const y = d3.scaleLinear([Math.max(0, lo - pad), hi + pad], [H - M.b, M.t]).nice();
-  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Notti di autonomia a ogni lettura');
-  const unGiorno = selG.value !== 'tutti';
-  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.floor(W / 110)))
-    .tickFormat((v) => unGiorno ? v.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' }) : v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'Europe/Rome' }))).call(etichetteAsse);
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Notti di autonomia dello Stato nel tempo');
+  const breve = (+rows[rows.length - 1].d - +rows[0].d) < 2 * 864e5 && auStato.passo === 'ore';
+  // tacche: in «Giorni» una per giornata, in «Ore» su più giorni una a mezzanotte (niente date ripetute)
+  const asse = d3.axisBottom(x);
+  if (auStato.passo === 'giorni') asse.tickValues(rows.length > W / 70 ? rows.filter((r, i) => i % Math.ceil(rows.length / (W / 70)) === 0).map((r) => r.d) : rows.map((r) => r.d));
+  else if (breve) asse.ticks(Math.max(2, Math.floor(W / 110)));
+  else asse.ticks(d3.timeDay.every(Math.max(1, Math.ceil(giorni.length / Math.max(1, Math.floor(W / 80))))));
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(asse
+    .tickFormat((v) => breve ? v.toLocaleString('it-IT', { day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' }) : v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'Europe/Rome' }))).call(etichetteAsse);
   svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat((v) => v.toLocaleString('it-IT')).tickSize(-(W - M.l - M.r))).call(etichetteAsse)
     .call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
-  // un tratto per ogni coppia di letture: verde se sale, rosso se scende, grigio se resta uguale
-  for (let i = 1; i < rows.length; i++) {
-    const dv = rows[i].v - rows[i - 1].v;
-    svg.append('line').attr('x1', x(rows[i - 1].d)).attr('y1', y(rows[i - 1].v)).attr('x2', x(rows[i].d)).attr('y2', y(rows[i].v))
-      .attr('stroke', Math.abs(dv) < 0.05 ? 'var(--color-fg-muted)' : dv > 0 ? 'var(--color-ok)' : 'var(--color-bad)').attr('stroke-width', 2).attr('stroke-linecap', 'round');
+  const dir = (dv) => Math.abs(dv) < 0.05 ? 'var(--color-fg-muted)' : dv > 0 ? 'var(--color-ok)' : 'var(--color-bad)';
+  const una = ris.length === 1, rpt = rows.length > 60 ? 1.6 : 3;
+  for (const k of ris) {
+    const pts = rows.filter((r) => r['notti_' + k] != null);
+    if (una) { // una sola risorsa: ogni tratto verde se sale, rosso se scende
+      for (let i = 1; i < pts.length; i++) svg.append('line').attr('x1', x(pts[i - 1].d)).attr('y1', y(pts[i - 1]['notti_' + k])).attr('x2', x(pts[i].d)).attr('y2', y(pts[i]['notti_' + k]))
+        .attr('stroke', dir(pts[i]['notti_' + k] - pts[i - 1]['notti_' + k])).attr('stroke-width', 2).attr('stroke-linecap', 'round');
+    } else svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', auColore(k)).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('d', d3.line((r) => x(r.d), (r) => y(r['notti_' + k])));
+    svg.append('g').selectAll('circle').data(pts).join('circle').attr('cx', (r) => x(r.d)).attr('cy', (r) => y(r['notti_' + k])).attr('r', rpt)
+      .attr('fill', (r, i) => dir(i ? r['notti_' + k] - pts[i - 1]['notti_' + k] : 0));
+    const fine = pts[pts.length - 1];
+    if (fine) svg.append('text').attr('x', x(fine.d) + 6).attr('y', y(fine['notti_' + k])).attr('dy', '0.35em').attr('fill', una ? 'var(--color-fg)' : auColore(k))
+      .style('font-size', 'var(--cds-font-size-caption)').text(notti1(fine['notti_' + k]));
   }
-  svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', (r) => x(r.d)).attr('cy', (r) => y(r.v)).attr('r', rows.length > 60 ? 1.5 : 3)
-    .attr('fill', (r, i) => { const dv = i ? r.v - rows[i - 1].v : 0; return Math.abs(dv) < 0.05 ? 'var(--color-fg-muted)' : dv > 0 ? 'var(--color-ok)' : 'var(--color-bad)'; });
-  svg.append('text').attr('x', x(z.d) + 6).attr('y', y(z.v)).attr('dy', '0.35em').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(notti1(z.v));
-  // suggerimento al passaggio del mouse: lettura più vicina
-  const t = tip(box), dot = svg.append('circle').attr('r', 5).attr('fill', 'none').attr('stroke', 'var(--color-fg)').attr('visibility', 'hidden');
+  if (!una) {
+    const leg = document.createElement('ul'); leg.className = 'ei-legenda';
+    for (const k of ris) { const li = document.createElement('li'), i = document.createElement('i'); i.style.background = auColore(k); li.append(i, nomeRis[k]); leg.append(li); }
+    box.append(leg);
+  }
+  // suggerimento: la riga più vicina al mouse, con tutte le risorse scelte
+  const t = tip(box), guida = svg.append('line').attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--cds-chart-axis)').attr('visibility', 'hidden');
   svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
     .on('mousemove', (ev) => {
-      const [mx] = d3.pointer(ev), i = d3.leastIndex(rows, (r) => Math.abs(x(r.d) - mx)), r = rows[i];
-      const [f] = freccia(i ? r.v - rows[i - 1].v : null);
-      dot.attr('cx', x(r.d)).attr('cy', y(r.v)).attr('visibility', 'visible');
-      t.textContent = `${quando(r.ts)} · ${notti1(r.v)} notti · ${f}`; t.hidden = false;
-      t.style.left = Math.min(x(r.d) + 8, W - t.offsetWidth) + 'px'; t.style.top = Math.max(0, y(r.v) - 32) + 'px';
+      const [mx] = d3.pointer(ev), i = d3.leastIndex(rows, (r) => Math.abs(x(r.d) - mx)), r = rows[i], p = i ? rows[i - 1] : prima;
+      guida.attr('x1', x(r.d)).attr('x2', x(r.d)).attr('visibility', 'visible');
+      t.textContent = etichetta(r) + ' · ' + ris.map((k) => `${nomeRis[k]} ${notti1(r['notti_' + k])} ${p && p['notti_' + k] != null && r['notti_' + k] != null ? freccia(r['notti_' + k] - p['notti_' + k])[0] : ''}`).join(' · ');
+      t.hidden = false; t.style.left = Math.max(0, Math.min(x(r.d) + 8, W - t.offsetWidth)) + 'px'; t.style.top = '0px';
     })
-    .on('mouseleave', () => { t.hidden = true; dot.attr('visibility', 'hidden'); });
+    .on('mouseleave', () => { t.hidden = true; guida.attr('visibility', 'hidden'); });
 };
 
 window.eiDisegna = () => {
