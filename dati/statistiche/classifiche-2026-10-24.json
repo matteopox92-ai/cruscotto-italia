@@ -1,6 +1,6 @@
 {
  "data": "2026-10-24 ora 10:12",
- "nota": "Numero di edifici delle province del mondo, in ordine di classifica (dal 1°). Letto dalle classifiche del gioco (Palermo, Claude in Chrome): solo valori maggiori di zero. Lettura delle 10:12 italiane del 24/10, scorrendo la lista fino in fondo.",
+ "nota": "Numero di edifici delle province del mondo, in ordine di classifica (dal 1°). Letto dalle classifiche del gioco (Palermo, Claude in Chrome): solo valori maggiori di zero. Lettura delle 10:12 italiane del 24/10, scorrendo la lista fino in fondo. | Strade rilette il 24/10 alle 10:37 in chat: la lettura delle 10:12 era incompleta (193 province su 230).",
  "scuole": [
   2141,
   1751,
@@ -560,7 +560,44 @@
   76,
   76,
   75,
-  73
+  73,
+  71,
+  70,
+  67,
+  66,
+  66,
+  65,
+  65,
+  62,
+  61,
+  61,
+  59,
+  54,
+  42,
+  42,
+  40,
+  35,
+  33,
+  30,
+  27,
+  27,
+  22,
+  20,
+  19,
+  16,
+  13,
+  10,
+  10,
+  9,
+  6,
+  5,
+  3,
+  2,
+  1,
+  1,
+  1,
+  1,
+  1
  ],
  "ospedali": [
   579,
@@ -787,5 +824,5 @@
   1,
   1
  ],
- "letto_il": "2026-10-24T08:19:09Z"
+ "letto_il": "2026-10-24T08:38:58Z"
 }

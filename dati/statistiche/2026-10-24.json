@@ -1,10 +1,10 @@
 {
- "data": "2026-10-24 ora 10:12",
+ "data": "2026-10-24 ora 11:09",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 270,
+   "gioc": 269,
    "fab": 78,
    "gov": "Laisius Mathias",
    "ind": [
@@ -35,7 +35,7 @@
    "ba": {
     "n": 136,
     "indice": 8,
-    "prossimo": "+36 edifici → Indice 9 (+18%)"
+    "prossimo": "+39 edifici → Indice 9 (+18%)"
    },
    "st": {
     "n": 852,
@@ -68,11 +68,11 @@
     10
    ],
    "tes": [
-    "20.368",
-    "366",
-    "691",
-    "28559",
-    "7886"
+    "4.470.368",
+    "14366",
+    "7491",
+    "27059",
+    "17386"
    ],
    "bon": [
     "16",
@@ -97,22 +97,22 @@
     "prossimo": "+176 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
-    "n": 352,
+    "n": 357,
     "indice": 10,
-    "prossimo": "+228 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
+    "prossimo": "+223 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
    },
    "man": [
-    "4.089.600",
+    "4.106.100",
     "13830",
-    "6824.4",
-    "12816",
-    "16413"
+    "6890.4",
+    "12861",
+    "16488"
    ],
    "slug": "Lombardiya"
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 29,
+   "gioc": 30,
    "fab": 18,
    "gov": "BULL 1515",
    "ind": [
@@ -124,8 +124,8 @@
    "tes": [
     "24.986.739",
     "1340",
-    "12757",
-    "1983",
+    "25757",
+    "12983",
     "22399"
    ],
    "bon": [
@@ -166,7 +166,7 @@
   },
   {
    "p": "NAPOLI",
-   "gioc": 285,
+   "gioc": 287,
    "fab": 91,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -274,7 +274,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 218,
+   "gioc": 219,
    "fab": 78,
    "gov": "Edda",
    "ind": [
@@ -284,7 +284,7 @@
     8
    ],
    "tes": [
-    "1.403.401",
+    "3.403.401",
     "688926",
     "13948",
     "18138",
@@ -339,10 +339,10 @@
    ],
    "tes": [
     "5.954.003",
-    "136",
+    "13136",
     "10384",
-    "943",
-    "931"
+    "12943",
+    "14931"
    ],
    "bon": [
     "17",
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-24T08:19:09Z"
+ "letto_il": "2026-10-24T09:11:21Z"
 }

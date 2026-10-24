@@ -354,6 +354,15 @@ def main(xlsx, stat_dir, out_dir):
         if d_f < d_clas:
             prec, giorni_prec = json.loads(f.read_text(encoding="utf-8")), (d_clas - d_f).days
             break
+    # lettura incompleta (lo scorrimento non ha caricato tutta la classifica, come le strade del 24/10/2026:
+    # 193 province su 230): le soglie verrebbero troppo alte, quindi si tiene la classifica precedente
+    if prec:
+        for edificio in ("scuole", "basi", "strade", "ospedali"):
+            n, n_prec = len(clas[edificio]), len(prec[edificio])
+            if n < 0.9 * n_prec:
+                print(f"AVVISO: classifica {edificio} incompleta ({n} province contro {n_prec} della precedente): "
+                      f"uso quella di {giorni_prec} giorni fa")
+                clas[edificio] = prec[edificio]
     righe_clas = []
     for edificio in ("scuole", "basi", "strade", "ospedali"):
         for pos, n in enumerate(clas[edificio], start=1):
