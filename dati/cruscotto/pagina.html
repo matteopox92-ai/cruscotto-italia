@@ -28,6 +28,7 @@
 #tabella-comprare tr.manda td { font-weight: var(--cds-font-weight-medium); color: var(--color-warn); }
 #tabella-comprare td:nth-child(3) { text-align: left; }
 #autonomia tr.sub td { color: var(--color-fg-muted); }
+#autonomia .au-tit { margin: var(--cds-gap-sm) 0 0; font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); }
 .ei-testa-riga { display: flex; justify-content: space-between; align-items: start; gap: var(--cds-gap-sm); flex-wrap: wrap; }
 .ei-aggiorna { display: grid; gap: 2px; justify-items: end; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .ei-aggiorna button { font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 4px 12px; cursor: pointer; }
@@ -108,11 +109,30 @@
       <p class="note">Manutenzione di una notte di tutte le province tranne Napoli (nel piano non paga), sommata, contro il tesoro dello Stato: per quante notti lo Stato potrebbe pagarla da solo, senza tasse né donazioni in entrata. Sotto 3 notti giallo, sotto 1 rosso.</p>
       <div class="ei-scroll">
         <table>
-          <thead><tr><th>Risorsa</th><th>Tesoro dello Stato</th><th>Manutenzione a notte</th><th>Giorni di autonomia</th></tr></thead>
+          <thead><tr><th>Risorsa</th><th>Tesoro dello Stato</th><th>Manutenzione a notte</th><th>Giorni di autonomia</th><th>Dalla lettura prima</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
       <p class="note" id="autonomia-nota">—</p>
+      <h3 class="au-tit">Storico dell'autonomia</h3>
+      <p class="note">Notti di autonomia a ogni lettura del gioco (tesoro dello Stato contro la manutenzione di quel giorno, Napoli esclusa). Linea verde dove cresce, rossa dove cala.</p>
+      <div class="ei-filtri">
+        <label>Giornata<select id="au-giorno" aria-label="Giornata"></select></label>
+        <label>Risorsa<select id="au-ris" aria-label="Risorsa">
+          <option value="denaro">Denaro</option><option value="pelle">Pelle</option><option value="oro">Oro</option><option value="petrolio">Petrolio</option><option value="nte">NTE</option>
+        </select></label>
+      </div>
+      <p class="note" id="au-sintesi">—</p>
+      <div class="ei-chart" id="au-grafico"></div>
+      <details id="au-dettaglio">
+        <summary>Letture una per una</summary>
+        <div class="ei-scroll">
+          <table>
+            <thead><tr><th>Lettura</th><th>Tesoro dello Stato</th><th>Manutenzione a notte</th><th>Notti di autonomia</th><th>Variazione</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
     </div>
 
     <div class="ei-grid">
@@ -644,6 +664,39 @@ dash.calc('autonomia', {
   },
 });
 
+dash.calc('autonomia_storico', {
+  title: 'Storico dell\'autonomia dello Stato',
+  description: 'A ogni lettura oraria: tesoro dello Stato contro la manutenzione di una notte delle province tranne Napoli (quella del giorno della lettura), notti di autonomia per denaro e risorse.',
+  inputs: ['orario', 'storico'],
+  fn: (orario, storico) => {
+    // manutenzione per giorno, Napoli esclusa (nel piano non paga)
+    const man = new Map();
+    for (const r of storico) {
+      if (['Stato', 'Napoli', 'Bahrein'].includes(r.provincia) || r.manutenzione_eur == null) continue;
+      const m = man.get(r.data) || { denaro: 0, pelle: 0, oro: 0, petrolio: 0, nte: 0 };
+      m.denaro += r.manutenzione_eur || 0;
+      for (const k of RIS) m[k] += r['manutenzione_' + k] || 0;
+      man.set(r.data, m);
+    }
+    const giorni = [...man.keys()].sort();
+    const manDi = (g) => { let d = null; for (const x of giorni) if (x <= g) d = x; return d ? man.get(d) : null; };
+    const out = [];
+    for (const r of orario.filter((x) => x.provincia === 'Stato' && x.tesoro_eur != null).sort((a, b) => (a.ts < b.ts ? -1 : 1))) {
+      const m = manDi(r.data_it);
+      if (!m) continue;
+      const riga = { ts: r.ts, giorno: r.data_it };
+      for (const k of ['denaro', ...RIS]) {
+        const tes = k === 'denaro' ? r.tesoro_eur : r['tesoro_' + k];
+        riga['tesoro_' + k] = tes ?? null;
+        riga['man_' + k] = m[k];
+        riga['notti_' + k] = tes == null || !m[k] ? null : tes / m[k];
+      }
+      out.push(riga);
+    }
+    return out;
+  },
+});
+
 dash.calc('allarmi', {
   title: 'Allarmi',
   description: 'Risorse sotto 3 notti coperte e indici che scendono con una notte non pagata.',
@@ -818,12 +871,18 @@ const disegnaQuadro = () => {
   const tba = document.querySelector('#autonomia tbody'), au = dash.data('autonomia'), nota = document.getElementById('autonomia-nota');
   tba.replaceChildren();
   if (au.status === 'ok' && au.data.length) {
+    const ash = dash.data('autonomia_storico'), ultime = ash.status === 'ok' ? ash.data.slice(-2) : [];
     for (const r of au.data) {
       const tr = document.createElement('tr');
       const cl = r.giorni == null ? '' : r.giorni < 1 ? 'bad' : r.giorni < 3 ? 'warn' : 'ok';
+      // variazione delle notti tra le ultime due letture orarie
+      const dv = ultime.length === 2 && ultime[0]['notti_' + r.risorsa] != null && ultime[1]['notti_' + r.risorsa] != null
+        ? ultime[1]['notti_' + r.risorsa] - ultime[0]['notti_' + r.risorsa] : null;
+      const var_ = dv == null ? ['—'] : Math.abs(dv) < 0.05 ? ['= stabile']
+        : [(dv > 0 ? '▲ +' : '▼ −') + Math.abs(dv).toLocaleString('it-IT', { maximumFractionDigits: 1, minimumFractionDigits: 1 }) + ' notti', dv > 0 ? 'ok' : 'bad'];
       [[nomeRis[r.risorsa] || r.risorsa], [r.risorsa === 'denaro' ? fmtE(r.tesoro) : fmtN(r.tesoro)],
         [r.risorsa === 'denaro' ? fmtE(r.manutenzione) : fmtN(r.manutenzione)],
-        [r.giorni == null ? '—' : r.giorni.toLocaleString('it-IT', { maximumFractionDigits: 1 }), cl]].forEach(([t, c]) => {
+        [r.giorni == null ? '—' : r.giorni.toLocaleString('it-IT', { maximumFractionDigits: 1 }), cl], var_].forEach(([t, c]) => {
         const td = document.createElement('td'); td.textContent = t; if (c) td.className = c; tr.append(td);
       });
       tba.append(tr);
@@ -1920,13 +1979,82 @@ const disegnaDonazioni = () => {
     .on('mouseleave', () => { tp.hidden = true; });
 };
 
+// ——— Quadro: storico dell'autonomia dello Stato (giornata e risorsa a scelta, verde se cresce, rosso se cala) ———
+const notti1 = (x) => x == null ? '—' : x.toLocaleString('it-IT', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
+const quando = (ts) => ts.slice(8, 10) + '/' + ts.slice(5, 7) + ' ' + ts.slice(11, 16);
+const freccia = (dv) => dv == null ? ['—', ''] : Math.abs(dv) < 0.05 ? ['= stabile', ''] : [(dv > 0 ? '▲ +' : '▼ −') + notti1(Math.abs(dv)), dv > 0 ? 'ok' : 'bad'];
+const disegnaAutonomiaStorico = () => {
+  const d = dash.data('autonomia_storico');
+  const selG = document.getElementById('au-giorno'), selR = document.getElementById('au-ris');
+  const box = document.getElementById('au-grafico'), sint = document.getElementById('au-sintesi');
+  const tb = document.querySelector('#au-dettaglio tbody');
+  box.querySelector('svg')?.remove(); tb.replaceChildren();
+  if (d.status !== 'ok' || !d.data.length) { sint.textContent = 'Nessuna lettura ancora.'; return; }
+  // giornate disponibili, dalla più recente; la scelta resta tra un aggiornamento e l'altro
+  const giorni = [...new Set(d.data.map((r) => r.giorno))].sort().reverse();
+  const scelto = selG.value || 'tutti';
+  selG.replaceChildren(...[['tutti', 'Tutte le giornate'], ...giorni.map((g) => [g, new Date(g + 'T12:00Z').toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' })])]
+    .map(([v, t]) => Object.assign(document.createElement('option'), { value: v, textContent: t })));
+  selG.value = giorni.includes(scelto) ? scelto : 'tutti';
+  if (!selG.dataset.pronto) { selG.dataset.pronto = '1'; selG.addEventListener('change', disegnaAutonomiaStorico); selR.addEventListener('change', disegnaAutonomiaStorico); }
+  const k = selR.value, tutte = d.data.filter((r) => r['notti_' + k] != null);
+  const rows = (selG.value === 'tutti' ? tutte : tutte.filter((r) => r.giorno === selG.value)).map((r) => ({ ...r, d: new Date(r.ts), v: r['notti_' + k] }));
+  if (!rows.length) { sint.textContent = 'Nessuna lettura per questa scelta.'; return; }
+  // sintesi: dalla prima all'ultima lettura della scelta (per una giornata: confronto anche con l'ultima lettura del giorno prima)
+  const a = rows[0], z = rows[rows.length - 1];
+  const prima = selG.value === 'tutti' ? null : tutte.filter((r) => r.giorno < selG.value).slice(-1)[0];
+  const [fz] = freccia(z.v - a.v);
+  sint.textContent = `${nomeRis[k]}: da ${notti1(a.v)} notti (${quando(a.ts)}) a ${notti1(z.v)} notti (${quando(z.ts)}), ${rows.length > 1 ? fz : 'una sola lettura'}` +
+    (prima ? `; rispetto all'ultima lettura del giorno prima (${notti1(prima['notti_' + k])}) ${freccia(z.v - prima['notti_' + k])[0]}.` : '.');
+  // tabella delle letture, dalla più recente
+  rows.forEach((r, i) => {
+    const prec = i ? rows[i - 1] : prima ? { v: prima['notti_' + k] } : null;
+    const [t, c] = freccia(prec ? r.v - prec.v : null);
+    const tr = document.createElement('tr');
+    [[quando(r.ts)], [k === 'denaro' ? fmtE(r['tesoro_' + k]) : fmtN(r['tesoro_' + k])], [k === 'denaro' ? fmtE(r['man_' + k]) : fmtN(r['man_' + k])],
+      [notti1(r.v), r.v < 1 ? 'bad' : r.v < 3 ? 'warn' : ''], [t, c]].forEach(([s, cl]) => { const td = document.createElement('td'); td.textContent = s; if (cl) td.className = cl; tr.append(td); });
+    tb.prepend(tr);
+  });
+  if (!box.clientWidth) return;
+  const W = box.clientWidth, H = 220, M = { t: 12, r: 56, b: 24, l: 44 };
+  const x = rows.length > 1 ? d3.scaleUtc(d3.extent(rows, (r) => r.d), [M.l, W - M.r]) : d3.scaleUtc([new Date(+a.d - 36e5), new Date(+a.d + 36e5)], [M.l, W - M.r]);
+  const [lo, hi] = d3.extent(rows, (r) => r.v), pad = Math.max((hi - lo) * 0.15, 0.5);
+  const y = d3.scaleLinear([Math.max(0, lo - pad), hi + pad], [H - M.b, M.t]).nice();
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Notti di autonomia a ogni lettura');
+  const unGiorno = selG.value !== 'tutti';
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.floor(W / 110)))
+    .tickFormat((v) => unGiorno ? v.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' }) : v.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', timeZone: 'Europe/Rome' }))).call(etichetteAsse);
+  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat((v) => v.toLocaleString('it-IT')).tickSize(-(W - M.l - M.r))).call(etichetteAsse)
+    .call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
+  // un tratto per ogni coppia di letture: verde se sale, rosso se scende, grigio se resta uguale
+  for (let i = 1; i < rows.length; i++) {
+    const dv = rows[i].v - rows[i - 1].v;
+    svg.append('line').attr('x1', x(rows[i - 1].d)).attr('y1', y(rows[i - 1].v)).attr('x2', x(rows[i].d)).attr('y2', y(rows[i].v))
+      .attr('stroke', Math.abs(dv) < 0.05 ? 'var(--color-fg-muted)' : dv > 0 ? 'var(--color-ok)' : 'var(--color-bad)').attr('stroke-width', 2).attr('stroke-linecap', 'round');
+  }
+  svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', (r) => x(r.d)).attr('cy', (r) => y(r.v)).attr('r', rows.length > 60 ? 1.5 : 3)
+    .attr('fill', (r, i) => { const dv = i ? r.v - rows[i - 1].v : 0; return Math.abs(dv) < 0.05 ? 'var(--color-fg-muted)' : dv > 0 ? 'var(--color-ok)' : 'var(--color-bad)'; });
+  svg.append('text').attr('x', x(z.d) + 6).attr('y', y(z.v)).attr('dy', '0.35em').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(notti1(z.v));
+  // suggerimento al passaggio del mouse: lettura più vicina
+  const t = tip(box), dot = svg.append('circle').attr('r', 5).attr('fill', 'none').attr('stroke', 'var(--color-fg)').attr('visibility', 'hidden');
+  svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
+    .on('mousemove', (ev) => {
+      const [mx] = d3.pointer(ev), i = d3.leastIndex(rows, (r) => Math.abs(x(r.d) - mx)), r = rows[i];
+      const [f] = freccia(i ? r.v - rows[i - 1].v : null);
+      dot.attr('cx', x(r.d)).attr('cy', y(r.v)).attr('visibility', 'visible');
+      t.textContent = `${quando(r.ts)} · ${notti1(r.v)} notti · ${f}`; t.hidden = false;
+      t.style.left = Math.min(x(r.d) + 8, W - t.offsetWidth) + 'px'; t.style.top = Math.max(0, y(r.v) - 32) + 'px';
+    })
+    .on('mouseleave', () => { t.hidden = true; dot.attr('visibility', 'hidden'); });
+};
+
 window.eiDisegna = () => {
   window.eiQuadro();
   if (!document.getElementById('donazioni').hidden) disegnaDonazioni();
   if (!document.getElementById('storico').hidden) disegnaStorico();
   const vis = (id) => !document.getElementById(id).hidden;
   if (vis('piano')) window.eiPiano();
-  if (vis('quadro')) barreSaldo();
+  if (vis('quadro')) { barreSaldo(); disegnaAutonomiaStorico(); }
   if (vis('province')) window.eiProvince();
   if (vis('indici')) window.eiIndici();
   if (vis('andamento')) { lineeGiornaliero(); lineaStato(); }
