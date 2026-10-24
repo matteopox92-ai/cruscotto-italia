@@ -1,11 +1,11 @@
 {
- "data": "2026-10-24 ora 20:23",
+ "data": "2026-10-24 ora 21:55",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 301,
-   "fab": 79,
+   "gioc": 307,
+   "fab": 80,
    "gov": "Laisius Mathias",
    "ind": [
     2,
@@ -58,8 +58,8 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 280,
-   "fab": 119,
+   "gioc": 289,
+   "fab": 121,
    "gov": "A",
    "ind": [
     9,
@@ -153,7 +153,7 @@
    "os": {
     "n": 272,
     "indice": 8,
-    "prossimo": "+76 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+77 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "3.738.000",
@@ -166,7 +166,7 @@
   },
   {
    "p": "NAPOLI",
-   "gioc": 275,
+   "gioc": 273,
    "fab": 93,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -207,7 +207,7 @@
    "os": {
     "n": 275,
     "indice": 8,
-    "prossimo": "+73 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+74 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "3.598.500",
@@ -220,8 +220,8 @@
   },
   {
    "p": "ROMA",
-   "gioc": 273,
-   "fab": 130,
+   "gioc": 276,
+   "fab": 132,
    "gov": "ORK IL ROSSO",
    "ind": [
     8,
@@ -261,7 +261,7 @@
    "os": {
     "n": 273,
     "indice": 8,
-    "prossimo": "+75 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+76 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "3.491.100",
@@ -274,7 +274,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 213,
+   "gioc": 217,
    "fab": 76,
    "gov": "Edda",
    "ind": [
@@ -315,7 +315,7 @@
    "os": {
     "n": 272,
     "indice": 8,
-    "prossimo": "+76 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+77 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "2.469.600",
@@ -328,8 +328,8 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 212,
-   "fab": 99,
+   "gioc": 208,
+   "fab": 100,
    "gov": "generale romano",
    "ind": [
     4,
@@ -369,7 +369,7 @@
    "os": {
     "n": 271,
     "indice": 8,
-    "prossimo": "+77 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+78 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "3.443.700",
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-24T18:23:52Z"
+ "letto_il": "2026-10-24T19:58:06Z"
 }
