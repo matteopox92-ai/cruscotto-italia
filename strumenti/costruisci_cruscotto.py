@@ -356,6 +356,7 @@ def main(xlsx, stat_dir, out_dir):
             break
     # lettura incompleta (lo scorrimento non ha caricato tutta la classifica, come le strade del 24/10/2026:
     # 193 province su 230): le soglie verrebbero troppo alte, quindi si tiene la classifica precedente
+    letti, sostituite = {e: len(clas[e]) for e in ("scuole", "basi", "strade", "ospedali")}, set()
     if prec:
         for edificio in ("scuole", "basi", "strade", "ospedali"):
             n, n_prec = len(clas[edificio]), len(prec[edificio])
@@ -363,10 +364,13 @@ def main(xlsx, stat_dir, out_dir):
                 print(f"AVVISO: classifica {edificio} incompleta ({n} province contro {n_prec} della precedente): "
                       f"uso quella di {giorni_prec} giorni fa")
                 clas[edificio] = prec[edificio]
+                sostituite.add(edificio)
     righe_clas = []
     for edificio in ("scuole", "basi", "strade", "ospedali"):
         for pos, n in enumerate(clas[edificio], start=1):
             riga = {"edificio": edificio, "posizione": pos, "edifici": n}
+            if pos == 1:  # per la riga «Salute dei dati» del cruscotto: province lette e classifica sostituita
+                riga.update({"letti": letti[edificio], "sostituita": edificio in sostituite})
             if prec and pos <= len(prec[edificio]):
                 riga.update({"edifici_prec": prec[edificio][pos - 1], "giorni_prec": giorni_prec})
             righe_clas.append(riga)

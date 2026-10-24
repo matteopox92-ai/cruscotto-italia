@@ -66,6 +66,34 @@
 #st-come[open] summary { margin-bottom: var(--cds-gap-sm); }
 #st-tab td.bad { color: var(--color-bad); }
 #st-tab thead th { position: sticky; top: 0; background: var(--color-panel); }
+/* riga «Salute dei dati» (24/10/2026) */
+.ei-salute { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: var(--cds-gap-sm) 0 0; padding: 0; list-style: none; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.ei-salute li::before { content: "●"; margin-right: 5px; color: var(--color-ok); }
+.ei-salute li.warn::before { color: var(--color-warn); } .ei-salute li.bad::before { color: var(--color-bad); }
+.ei-salute li.warn, .ei-salute li.bad { color: var(--color-fg); }
+/* «Cosa fare oggi» e allarmi raggruppati */
+#oggi-fare { border-color: var(--color-fg-muted); }
+#oggi-fare :is(td, th) { white-space: normal; text-align: left; vertical-align: top; }
+#oggi-fare td:first-child { font-weight: var(--cds-font-weight-medium); }
+#oggi-fare .vuoto { color: var(--color-fg-muted); }
+#oggi-fare tfoot td { font-weight: var(--cds-font-weight-medium); border-top: 2px solid var(--color-border-line); }
+.ei-gruppo summary { cursor: pointer; font-weight: var(--cds-font-weight-medium); padding: 2px 0; }
+.ei-gruppo summary .n { font-weight: 400; color: var(--color-fg-muted); }
+.ei-gruppo ul { margin: var(--cds-gap-xs) 0 var(--cds-gap-sm); }
+.ei-gruppo li b { font-weight: var(--cds-font-weight-medium); }
+.ei-gruppo li span + span::before { content: " · "; color: var(--color-fg-muted); }
+/* «Da comprare»: vista compatta (niente Cosa, Edifici, Indice, Notti, Valore) */
+#tabella-comprare table.compatta :is(th, td):is(:nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6), :nth-child(13)) { display: none; }
+/* tabelle larghe come schede sul telefono */
+@media (max-width: 640px) {
+  .ei table.schede thead { display: none; }
+  .ei table.schede, .ei table.schede tbody, .ei table.schede tfoot, .ei table.schede tr, .ei table.schede td { display: block; width: 100%; box-sizing: border-box; }
+  .ei table.schede tr { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); margin-bottom: var(--cds-gap-sm); padding: var(--cds-pad-xs) 0; }
+  .ei table.schede td { display: flex; justify-content: space-between; gap: var(--cds-gap-md); border: 0; white-space: normal; text-align: right !important; min-width: 0 !important; }
+  .ei table.schede td::before { content: attr(data-label); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); font-weight: 400; text-align: left; flex: 0 0 auto; max-width: 45%; }
+  .ei table.schede td:first-child { font-weight: var(--cds-font-weight-medium); }
+  .ei table.schede td:first-child::before { content: none; }
+}
 [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
 [data-dash-source-state=empty] { color: transparent; }
 </style>
@@ -80,6 +108,7 @@
       </div>
     </div>
     <p class="ei-take" data-source="totali">—</p>
+    <ul class="ei-salute" id="salute-dati" aria-label="Salute dei dati"></ul>
   </header>
 
   <nav class="ei-tabs" role="tablist" aria-label="Sezioni">
@@ -89,11 +118,23 @@
     <button role="tab" id="t-indici" data-tab="indici" aria-selected="false">Indici e soglie</button>
     <button role="tab" id="t-donazioni" data-tab="donazioni" aria-selected="false">Donazioni</button>
     <button role="tab" id="t-storico" data-tab="storico" aria-selected="false">Storico</button>
-    <button role="tab" id="t-andamento" data-tab="andamento" aria-selected="false">Andamento</button>
     <button role="tab" id="t-criteri" data-tab="criteri" aria-selected="false">Guida</button>
   </nav>
 
   <section id="quadro" class="ei-pane" style="display:grid; gap: var(--cds-gap-lg);">
+    <div class="ei-card" id="oggi-fare">
+      <h2>Cosa fare oggi</h2>
+      <p class="note" id="of-sintesi">—</p>
+      <div class="ei-scroll">
+        <table class="schede">
+          <thead><tr><th>Provincia</th><th>Da mandare</th><th>Da comprare</th><th>Da trasferire allo Stato</th></tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+      <p class="note">Da mandare = strade e ospedali da comprare + manutenzione di stanotte − tesoro della provincia. Da comprare = strade e ospedali per tornare all'indice fissato e restare almeno 2 notti lontani dal calo (dettaglio in «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia del mondo, che sale ogni giorno, non raggiunga l'indice entro 2 giorni (stima, non contata in «Da mandare»). Da trasferire allo Stato = quello che resta nel tesoro oltre 7 notti di manutenzione, tolti gli edifici da comprare. Napoli non c'è: segue il piano («Da inviare a Napoli oggi» nella scheda Piano).</p>
+    </div>
+
     <div class="ei-tiles">
       <div class="ei-tile"><span class="lab">Saldo al giorno (province)</span><span class="big dash-skeleton" data-source="totali" data-field="saldo_giorno">—</span><span class="sub">gettito medio − manutenzione − confini</span></div>
       <div class="ei-tile"><span class="lab">Saldo al giorno con le donazioni</span><span class="big dash-skeleton" data-source="totali" data-field="saldo_con_donazioni">—</span><span class="sub ei-don-sub">—</span></div>
@@ -141,8 +182,8 @@
     <div class="ei-grid">
       <div class="ei-card" id="allarmi">
         <h2>Da sistemare subito</h2>
-        <p class="note">Province con denaro o risorse sotto 3 notti di mantenimento (senza donazioni dello Stato), indici che scendono con una sola notte non pagata, e indici che scendono per l'inflazione delle soglie (nel mondo si costruisce e la soglia sale). «Stanotte» = sotto 1 notte: senza una donazione la provincia non paga e perde il 3% degli edifici.</p>
-        <ul class="ei-list" data-source="allarmi"></ul>
+        <p class="note">Divisi per urgenza e, dentro, per provincia (Napoli esclusa: segue il piano). <b>Stanotte</b> = sotto 1 notte di manutenzione (senza una donazione la provincia non paga e perde il 3% degli edifici), indice già sotto quello fissato, o soglia che lo supera entro oggi. <b>Presto</b> = sotto 3 notti, indice che scende con una notte non pagata, o soglia che sale e lo raggiunge in pochi giorni. <b>Da tenere d'occhio</b> = indice al limite della soglia.</p>
+        <div id="allarmi-gruppi" data-source="allarmi"></div>
       </div>
       <div class="ei-card" id="occasioni">
         <h2>Occasioni a buon mercato</h2>
@@ -226,7 +267,7 @@
       <h2>Le 7 province, oggi</h2>
       <p class="note">Notti coperte = tesoro della provincia ÷ manutenzione di una notte, senza contare le donazioni dello Stato (il gettito non entra nel tesoro della provincia). «∞» = nessuna manutenzione di quel tipo. «Da mandare per stanotte» = soldi e risorse che mancano nel tesoro per arrivare a 1 notte (mantenimento della notte − tesoro), da mandare prima delle 23:00; Napoli esclusa, perché nel piano non deve pagare. Saldo/giorno = quanto la provincia rende all'Italia.</p>
       <div class="ei-scroll">
-        <table data-source="analisi" data-row-key="provincia">
+        <table class="schede" data-source="analisi" data-row-key="provincia">
           <thead><tr>
             <th data-field="provincia">Provincia</th>
             <th data-field="stato">Stato</th>
@@ -253,7 +294,7 @@
       <h2>Indici e bonus</h2>
       <p class="note">Indici da 1 a 10 (10+ = primo al mondo) e bonus sulle risorse prodotte nella provincia.</p>
       <div class="ei-scroll">
-        <table data-source="oggi" data-row-key="provincia">
+        <table class="schede" data-source="oggi" data-row-key="provincia">
           <thead><tr>
             <th data-field="provincia">Provincia</th>
             <th data-field="indice_istruzione">Istruzione</th>
@@ -297,6 +338,11 @@
     <div class="ei-card" id="tabella-comprare">
       <h2>Da comprare per restare al riparo dal calo</h2>
       <p class="note">Province ed edifici con meno di 2 notti al calo, o con l'indice già sceso sotto quello fissato (sviluppo e salute): quanti edifici comprare e quanto costano in denaro e risorse (valore = denaro più risorse ai prezzi medi di mercato). Se l'indice è sceso ci sono due righe: «riportarlo a X» (edifici per tornare all'indice fissato) e «+ margine di 2 notti» (quelli in più per poter saltare 2 notti senza riscendere). Sotto ogni provincia il totale e la riga «Da mandare»: quello che manca nel tesoro della provincia per comprarli tenendo da parte la manutenzione di stanotte (Napoli: senza manutenzione, nel piano non paga). In fondo i totali per edificio e il totale generale. Le soglie vengono dalla classifica mondiale e si spostano quando costruiscono gli altri Paesi.</p>
+      <div class="ei-filtri">
+        <div class="st-campo" role="group" aria-label="Edifici"><span>Edifici</span><span class="ei-chips" id="dc-ed"><button type="button" data-v="tutti">Tutti</button><button type="button" data-v="strade,ospedali">Strade e ospedali</button><button type="button" data-v="strade">Strade</button><button type="button" data-v="ospedali">Ospedali</button><button type="button" data-v="scuole">Scuole</button><button type="button" data-v="basi">Basi</button></span></div>
+        <div class="st-campo" role="group" aria-label="Vista"><span>Vista</span><span class="ei-chips" id="dc-vista"><button type="button" data-v="completa">Completa</button><button type="button" data-v="compatta">Compatta</button></span></div>
+      </div>
+      <p class="note" id="dc-nota">—</p>
       <div class="ei-scroll">
         <table>
           <thead><tr>
@@ -407,18 +453,18 @@
         </table>
       </div>
     </div>
-  </section>
-
-  <section id="andamento" class="ei-pane" hidden>
-    <div class="ei-card" id="andamento-italia">
-      <h2>Gettito e costi dell'Italia, giorno per giorno</h2>
-      <p class="note">Somma delle 7 province, giornate dalle 00:00 alle 24:00. Dati del Documento di Economia e Finanza (dal 21/10 la nostra copia aggiornata ogni notte).</p>
-      <div class="ei-chart" data-source="giornaliero"></div>
-    </div>
-    <div class="ei-card" id="andamento-stato">
-      <h2>Tesoro dello Stato</h2>
-      <p class="note">Dal DEF, a fine giornata.</p>
-      <div class="ei-chart" data-source="storico"></div>
+    <!-- ex scheda «Andamento» (unita allo Storico il 24/10/2026): i due grafici fissi, senza filtri -->
+    <div class="ei-grid" id="andamento">
+      <div class="ei-card" id="andamento-italia">
+        <h2>Gettito e costi dell'Italia, giorno per giorno</h2>
+        <p class="note">Sempre tutto il periodo, non dipende dai filtri. Somma delle 7 province, giornate dalle 00:00 alle 24:00, dal DEF.</p>
+        <div class="ei-chart" data-source="giornaliero"></div>
+      </div>
+      <div class="ei-card" id="andamento-stato">
+        <h2>Tesoro dello Stato</h2>
+        <p class="note">Sempre tutto il periodo, a fine giornata, dal DEF.</p>
+        <div class="ei-chart" data-source="storico"></div>
+      </div>
     </div>
   </section>
 
@@ -430,7 +476,9 @@
       <div><h3>In 2 minuti, ogni sera</h3>
         <ol class="ei-list">
           <li><b>Piano Napoli e Palermo → «Controlli di oggi»</b>: tutto verde = il piano va. Giallo = oggi c'è da fare qualcosa (costruire o ricostruire). Rosso = da sistemare subito.</li>
-          <li><b>Quadro → «Da sistemare subito»</b>: le righe <span class="bad">stanotte</span> sono province che nel tesoro non hanno la manutenzione della notte. Se nessuno dona prima delle 23:00 (dal 25/10 le 22:00), quella provincia non paga e perde il 3% di tutti gli edifici. Napoli va ignorata: non paga per scelta.</li>
+          <li><b>Riga dei pallini sotto il titolo («salute dei dati»)</b>: tutti verdi = i numeri sono freschi e completi. Giallo o rosso = lettura vecchia, province mancanti o classifica letta a metà: prima di decidere, aspetta la lettura dopo.</li>
+          <li><b>Quadro → «Cosa fare oggi»</b>: per ogni provincia (Napoli a parte) cosa mandare, quali strade e ospedali comprare e cosa trasferire allo Stato. Se dice «niente da fare», hai finito.</li>
+          <li><b>Quadro → «Da sistemare subito»</b>: aperto c'è solo il gruppo più urgente. Le righe <span class="bad">Stanotte</span> sono province che nel tesoro non hanno la manutenzione della notte (se nessuno dona prima delle 23:00, dal 25/10 le 22:00, la provincia non paga e perde il 3% di tutti gli edifici), indici già sotto quello fissato o soglie che li raggiungono entro oggi. Napoli non compare: non paga per scelta.</li>
           <li><b>Quadro → «Saldo al giorno con le donazioni»</b>: se è rosso, l'Italia nel complesso perde soldi ogni giorno e il tesoro dello Stato scende.</li>
           <li>Nei giorni di decisione (27/10 e 3/11): <b>Piano → «Prossima decisione»</b> dice se Palermo ha raggiunto la soglia per le strade.</li>
         </ol>
@@ -440,7 +488,13 @@
         <p>Ci sono due casse diverse. <b>Lo Stato</b> incassa le tasse delle fabbriche (il <b>gettito</b>) e le donazioni dei giocatori, e paga ogni notte i <b>confini</b> chiusi (oggi 1,17 milioni a provincia). <b>Ogni provincia</b> ha il suo tesoro, che ogni notte paga la <b>manutenzione</b> dei suoi edifici (il 3% di quanto sono costati) e si riempie solo con le donazioni, dei giocatori o dello Stato. Le tasse non entrano mai nel tesoro della provincia: per questo le province vivono di donazioni. Verificato su 134 giorni del DEF.</p>
       </div>
 
+      <div><h3>Salute dei dati (sotto il titolo, in ogni scheda)</h3>
+        <p>Cinque pallini. <b>Ultima lettura</b>: verde fino a 2 ore (4 ore di sera, tra la lettura delle 21 e quella di mezzanotte), giallo fino a 6, poi rosso. <b>Province lette</b>: devono essere 7. <b>Classifiche</b>: quante province ci sono in ogni classifica mondiale; se una è stata letta incompleta (meno del 90% della precedente) diventa gialla e il cruscotto usa quella precedente. <b>Prezzi medi</b>: la data dei prezzi del DEF (giallo se più vecchi di 8 giorni). <b>Ultima giornata chiusa</b>: deve essere ieri (giallo se manca una chiusura). Passa il mouse su un pallino per la spiegazione. Il controllo completo dei conti (<code>verifica_cruscotto.py</code>) gira la sera sul PC.</p>
+      </div>
+
       <div><h3>Scheda «Quadro»: la situazione di oggi</h3>
+        <p><b>Cosa fare oggi</b>, una riga per provincia (Napoli esclusa: ha «Da inviare a Napoli oggi» nella scheda Piano), solo quelle con qualcosa da fare. <b>Da mandare</b> = costo delle strade e degli ospedali da comprare + manutenzione di stanotte − tesoro, risorsa per risorsa (cifre esatte, pronte per l'invio). <b>Da comprare</b> = strade e ospedali per tornare all'indice fissato e restare 2 notti lontani dal calo (gli stessi di «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia mondiale, che sale ogni giorno, non raggiunga l'indice entro 2 giorni: è una stima dalla crescita tra le ultime due classifiche e non entra in «Da mandare». <b>Da trasferire allo Stato</b> = tesoro − 7 notti di manutenzione − edifici da comprare: le province tengono al massimo 7 notti. Sopra la tabella una frase riassume tutto e dice se il tesoro dello Stato basta per gli invii.</p>
+        <p><b>Da sistemare subito</b>: tre gruppi, <span class="bad">Stanotte</span>, <span class="warn">Presto</span> e «Da tenere d'occhio», e dentro una riga per provincia con tutti i suoi avvisi. Si apre da solo solo il gruppo più urgente; se ne apri o chiudi uno, resta così.</p>
         <p><b>Saldo al giorno</b> = tasse incassate (media degli ultimi 6 giorni completi) − manutenzione di tutte le province − confini. È quanto l'Italia perde o guadagna in un giorno «normale», senza regali. <b>Saldo con le donazioni</b> = lo stesso, più quello che i giocatori hanno donato in media negli ultimi 7 giorni: è il risultato vero di una giornata. <b>Copertura</b> = quanta parte dei costi coprono le tasse (100% = in pari). <b>Tesoro dello Stato</b>: letto dal gioco. <b>Tesori delle province</b>: la somma delle 7 casse.</p>
         <p><b>Occasioni a buon mercato</b>: gli aumenti di indice che costano meno. <b>Quanto rende ogni provincia</b>: barre a destra = la provincia porta all'Italia più di quanto costa; a sinistra (rosse) = costa più di quanto porta.</p>
       </div>
@@ -450,11 +504,11 @@
       </div>
 
       <div><h3>Scheda «Province»</h3>
-        <p>Una riga per provincia. <b>Notti coperte</b> (soldi e ogni risorsa) = tesoro ÷ manutenzione di una notte: quante notti la provincia paga da sola se nessuno le dona niente. Sotto 1 = <span class="bad">stanotte non paga</span>; tra 1 e 3 = <span class="warn">da rifornire presto</span>; 3 o più = <span class="ok">tranquilla</span>. «∞» = non ha manutenzione di quel tipo. <b>Stato</b> della provincia = il peggiore dei suoi numeri. Sotto ci sono gli indici (da 1 a 10) e i bonus sulle risorse.</p>
+        <p>Una riga per provincia. <b>Notti coperte</b> (soldi e ogni risorsa) = tesoro ÷ manutenzione di una notte: quante notti la provincia paga da sola se nessuno le dona niente. Sotto 1 = <span class="bad">stanotte non paga</span>; tra 1 e 3 = <span class="warn">da rifornire presto</span>; 3 o più = <span class="ok">tranquilla</span>. «∞» = non ha manutenzione di quel tipo. <b>Stato</b> della provincia = il peggiore dei suoi numeri. Sotto ci sono gli indici (da 1 a 10) e i bonus sulle risorse. Sul telefono le due tabelle diventano schede, una per provincia, senza scorrere di lato.</p>
       </div>
 
       <div><h3>Scheda «Indici e soglie»</h3>
-        <p>Gli indici non hanno soglie fisse: dipendono dalla classifica mondiale. Le province del mondo con almeno un edificio di quel tipo sono divise in 10 fasce uguali; il primo al mondo è «10+». Per ogni provincia ed edificio trovi: <b>Margine</b> = quanti edifici si possono perdere restando sicuri nell'indice di oggi; <b>Notti al calo</b> = quante notti senza pagare prima di scendere di indice (rosso = 1 o meno); <b>Per salire</b> = quanti edifici mancano per l'indice sopra e quanto costano, soldi più risorse ai prezzi di mercato. Le soglie si spostano quando costruiscono gli altri Paesi. Sotto, <b>Da comprare per restare al riparo dal calo</b>: per ogni provincia ed edificio con meno di 2 notti al calo, quanti edifici comprare per arrivare ad almeno 2 notti e quanto costano (denaro, pelle, oro, petrolio, NTE e valore totale), con i totali per provincia, per edificio e generale.</p>
+        <p>Gli indici non hanno soglie fisse: dipendono dalla classifica mondiale. Le province del mondo con almeno un edificio di quel tipo sono divise in 10 fasce uguali; il primo al mondo è «10+». Per ogni provincia ed edificio trovi: <b>Margine</b> = quanti edifici si possono perdere restando sicuri nell'indice di oggi; <b>Notti al calo</b> = quante notti senza pagare prima di scendere di indice (rosso = 1 o meno); <b>Per salire</b> = quanti edifici mancano per l'indice sopra e quanto costano, soldi più risorse ai prezzi di mercato. Le soglie si spostano quando costruiscono gli altri Paesi. Sotto, <b>Da comprare per restare al riparo dal calo</b>: per ogni provincia ed edificio con meno di 2 notti al calo, quanti edifici comprare per arrivare ad almeno 2 notti e quanto costano (denaro, pelle, oro, petrolio, NTE e valore totale), con i totali per provincia, per edificio e generale. Sopra la tabella: <b>Edifici</b> per vedere solo strade e ospedali o un solo tipo (la riga «Da mandare» si ricalcola sugli edifici scelti) e <b>Vista compatta</b> per togliere le colonne di dettaglio (sul telefono parte compatta).</p>
       </div>
 
       <div><h3>Scheda «Donazioni»</h3>
@@ -470,8 +524,8 @@
         <p>Dal 22/10 (scelta del governo) tutte le analisi contano la giornata italiana, da mezzanotte a mezzanotte: cruscotto, DEF, bollettino e donazioni danno gli stessi numeri. Il gioco invece ragiona dalle 23 alle 23 (dal 26/10 dalle 22 alle 22): per questo ogni notte, subito dopo mezzanotte, una lettura divide il gettito tra un giorno e l'altro. <b>Gettito e tassazioni</b> = quanto è entrato tra la lettura di mezzanotte e quella della notte dopo. <b>Manutenzione e confini</b> = l'addebito che il gioco fa durante la giornata (alle 23, dal 25/10 sera alle 22); se una provincia non lo paga conta 0. <b>Tesori</b> = alle 24:00. <b>Donazioni</b> = per data e ora italiana. I giorni fino al 20/10 sono quelli scritti dal governo nel DEF; il 21/10 ha il gettito dalle 23 alle 23 perché quella notte non c'era ancora la lettura di mezzanotte.</p>
       </div>
 
-      <div><h3>Scheda «Andamento»</h3>
-        <p>Tasse e costi dell'Italia giorno per giorno, e il tesoro dello Stato. È la versione semplice dello Storico, senza filtri.</p>
+      <div><h3>In fondo allo Storico: i due grafici fissi</h3>
+        <p>Tasse e costi dell'Italia giorno per giorno, e il tesoro dello Stato, sempre su tutto il periodo e senza filtri. Fino al 24/10 erano la scheda «Andamento»; i vecchi link a quella scheda aprono lo Storico.</p>
       </div>
 
       <div><h3>Colori e segni</h3>
@@ -627,11 +681,8 @@ dash.calc('da_comprare', {
   },
 });
 
-dash.calc('da_mandare_indici', {
-  title: 'Da mandare alle province per gli edifici',
-  description: 'Per ogni provincia dello specchietto: costo degli edifici da comprare più la manutenzione di stanotte, meno il tesoro (Napoli senza manutenzione, nel piano non paga).',
-  inputs: ['da_comprare', 'oggi'],
-  fn: (da_comprare, oggi) => {
+// anche per la tabella «Da comprare» filtrata per edificio (window.eiDaMandare)
+const daMandare = (da_comprare, oggi) => {
     const out = [];
     for (const p of [...new Set(da_comprare.map((r) => r.provincia))]) {
       const o = oggi.find((r) => r.provincia === p);
@@ -644,7 +695,13 @@ dash.calc('da_mandare_indici', {
       out.push(riga);
     }
     return out;
-  },
+};
+window.eiDaMandare = daMandare;
+dash.calc('da_mandare_indici', {
+  title: 'Da mandare alle province per gli edifici',
+  description: 'Per ogni provincia dello specchietto: costo degli edifici da comprare più la manutenzione di stanotte, meno il tesoro (Napoli senza manutenzione, nel piano non paga).',
+  inputs: ['da_comprare', 'oggi'],
+  fn: daMandare,
 });
 
 dash.calc('autonomia', {
@@ -736,6 +793,36 @@ dash.calc('allarmi', {
   },
 });
 
+// «Cosa fare oggi» (richiesta dell'utente del 24/10/2026): per ogni provincia tranne Napoli (ha il suo piano)
+// quanto mandare = strade e ospedali da comprare + manutenzione di stanotte − tesoro (come «Da mandare» in «Indici e soglie»)
+// quanto trasferire allo Stato = tesoro − 7 notti di manutenzione − edifici da comprare (le province tengono al massimo 7 notti)
+const NOTTI_MAX = 7, ED_OGGI = ['strade', 'ospedali'];
+dash.calc('cosa_fare', {
+  title: 'Cosa fare oggi',
+  description: 'Per provincia (Napoli esclusa): soldi e risorse da mandare, strade e ospedali da comprare, eccedenza oltre 7 notti di manutenzione da trasferire allo Stato.',
+  inputs: ['oggi', 'da_comprare', 'indici'],
+  fn: (oggi, da_comprare, indici) => PROV_ORD.map((p) => oggi.find((r) => r.provincia === p)).filter((o) => o && o.provincia !== 'Napoli').map((o) => {
+    const rr = da_comprare.filter((r) => r.provincia === o.provincia && ED_OGGI.includes(r.edificio));
+    const riga = { provincia: o.provincia };
+    for (const e of ED_OGGI) {
+      riga['compra_' + e] = rr.filter((r) => r.edificio === e).reduce((s, r) => s + r.da_comprare, 0);
+      // inflazione delle soglie: se la soglia sale tanto da raggiungere l'indice entro 2 giorni, edifici in più per restarne 2 giorni sopra
+      // (stima dalla crescita tra le ultime due classifiche: non entra in «Da mandare»)
+      const ix = indici.find((r) => r.provincia === o.provincia && r.edificio === e);
+      riga['inflazione_' + e] = ix && !ix.sceso && ix.crescita_soglia > 0 && ix.margine != null
+        ? Math.max(0, Math.ceil(2 * ix.crescita_soglia - ix.margine - riga['compra_' + e])) : 0;
+    }
+    for (const k of ['denaro', ...RIS]) {
+      const tes = (k === 'denaro' ? o.tesoro_eur : o['tesoro_' + k]) || 0, man = (k === 'denaro' ? o.manutenzione_eur : o['manutenzione_' + k]) || 0;
+      const costo = rr.reduce((s, r) => s + r[k], 0);
+      riga['costo_' + k] = costo;
+      riga['manda_' + k] = Math.max(0, Math.ceil(costo + man - tes));
+      riga['avanza_' + k] = Math.max(0, Math.floor(tes - NOTTI_MAX * man - costo));
+    }
+    return riga;
+  }),
+});
+
 dash.calc('occasioni', {
   title: 'Occasioni',
   description: 'I 6 aumenti di indice meno cari in denaro equivalente.',
@@ -807,7 +894,7 @@ bAgg.addEventListener('click', () => {
   try { dash.refresh(); } catch (e) { location.reload(); }
   setTimeout(() => { bAgg.disabled = false; bAgg.textContent = 'Aggiorna ora'; window.eiDisegna && window.eiDisegna(); }, 2500);
 });
-const iniziale = location.hash.slice(1);
+const iniziale = location.hash.slice(1) === 'andamento' ? 'storico' : location.hash.slice(1); // vecchi link alla scheda «Andamento»
 if (tabs.some((b) => b.dataset.tab === iniziale)) mostra(iniziale);
 
 const clean = (el) => el.classList.remove('dash-skeleton');
@@ -817,6 +904,90 @@ const fill = (sel, src, field, fmt) => {
   const d = dash.data(src);
   if (d.status !== 'ok' || !d.data.length) { el.textContent = '—'; if (d.status !== 'loading') clean(el); return; }
   el.textContent = fmt(d.data[0][field]); clean(el);
+};
+
+// elenco di soldi e risorse con cifre esatte («1.234.567 € · 500 pelle»), vuoto se tutto zero
+const listaRis = (r, pref) => ['denaro', 'pelle', 'oro', 'petrolio', 'nte'].filter((k) => r[pref + k] > 0)
+  .map((k) => fmtEsatto(r[pref + k]) + (k === 'denaro' ? ' €' : ' ' + nomeRis[k])).join(' · ');
+
+const disegnaCosaFare = () => {
+  const tb = document.querySelector('#oggi-fare tbody'), tf = document.querySelector('#oggi-fare tfoot'), sint = document.getElementById('of-sintesi');
+  const d = dash.data('cosa_fare'), st = dash.data('stato_ultimo');
+  tb.replaceChildren(); tf.replaceChildren();
+  if (d.status !== 'ok' || !d.data.length) { sint.textContent = d.status === 'loading' ? '…' : '—'; return; }
+  const etichette = ['Provincia', 'Da mandare', 'Da comprare', 'Da trasferire allo Stato'];
+  const riga = (dove, celle) => {
+    const tr = document.createElement('tr');
+    celle.forEach(([t, c], i) => { const td = document.createElement('td'); td.textContent = t; td.dataset.label = etichette[i]; if (c) td.className = c; tr.append(td); });
+    dove.append(tr);
+  };
+  const ed = (n, e) => fmtEsatto(n) + ' ' + (n === 1 ? { strade: 'strada', ospedali: 'ospedale' }[e] : nomeEd[e]);
+  const compra = (r) => [...ED_OGGI.filter((e) => r['compra_' + e] > 0).map((e) => '+' + ed(r['compra_' + e], e)),
+    ...ED_OGGI.filter((e) => r['inflazione_' + e] > 0).map((e) => `+${ed(r['inflazione_' + e], e)} (inflazione, stima)`)].join(' · ');
+  const tot = { provincia: 'Totale' };
+  for (const k of ['denaro', ...RIS]) for (const pref of ['manda_', 'avanza_']) tot[pref + k] = d.data.reduce((s, r) => s + r[pref + k], 0);
+  for (const e of ED_OGGI) for (const pref of ['compra_', 'inflazione_']) tot[pref + e] = d.data.reduce((s, r) => s + r[pref + e], 0);
+  const daFare = d.data.filter((r) => listaRis(r, 'manda_') || compra(r) || listaRis(r, 'avanza_'));
+  for (const r of daFare) {
+    const m = listaRis(r, 'manda_'), c = compra(r), v = listaRis(r, 'avanza_');
+    riga(tb, [[r.provincia], [m || 'niente', m ? 'bad' : 'vuoto'], [c || 'niente', c ? 'warn' : 'vuoto'], [v || 'niente', v ? 'ok' : 'vuoto']]);
+  }
+  const aPosto = d.data.filter((r) => !daFare.includes(r)).map((r) => r.provincia);
+  if (daFare.length > 1) riga(tf, [['Totale'], [listaRis(tot, 'manda_') || 'niente'], [compra(tot) || 'niente'], [listaRis(tot, 'avanza_') || 'niente']]);
+  // può pagare lo Stato? il totale da mandare contro il tesoro dello Stato, risorsa per risorsa
+  const s = st.status === 'ok' && st.data.length ? st.data[0] : null;
+  const manca = s ? ['denaro', ...RIS].filter((k) => tot['manda_' + k] > ((k === 'denaro' ? s.tesoro_eur : s['tesoro_' + k]) ?? Infinity)) : [];
+  const nM = d.data.filter((r) => listaRis(r, 'manda_')).length, nV = d.data.filter((r) => listaRis(r, 'avanza_')).length;
+  const cS = tot.compra_strade + tot.inflazione_strade, cO = tot.compra_ospedali + tot.inflazione_ospedali, nC = cS + cO;
+  sint.textContent = (!daFare.length ? 'Oggi non c\'è niente da fare: tutte le province (Napoli a parte) hanno la manutenzione di stanotte, nessuna strada o ospedale da comprare e niente oltre 7 notti. '
+    : [nM ? `Mandare soldi o risorse a ${nM} ${nM === 1 ? 'provincia' : 'province'}` : 'Nessun invio necessario',
+      nC ? `comprare ${[cS ? ed(cS, 'strade') : '', cO ? ed(cO, 'ospedali') : ''].filter(Boolean).join(' e ')}` : 'nessun edificio da comprare',
+      nV ? `trasferire allo Stato l'eccedenza di ${nV} ${nV === 1 ? 'provincia' : 'province'}` : 'nessuna eccedenza da trasferire'].join(', ') + '. ') +
+    (tot.inflazione_strade + tot.inflazione_ospedali ? 'Gli edifici «inflazione, stima» sono una stima (la soglia del mondo sale ogni giorno) e non sono contati in «Da mandare». ' : '') +
+    (nM && s ? (manca.length ? `Attenzione: nel tesoro dello Stato non basta ${manca.map((k) => nomeRis[k]).join(', ')} per tutti gli invii. ` : 'Il tesoro dello Stato basta per tutti gli invii. ') : '') +
+    (aPosto.length && daFare.length ? `A posto: ${aPosto.join(', ')}.` : '');
+};
+
+// «Salute dei dati» (24/10/2026): quanto è fresca l'ultima lettura e se le letture sono complete
+const disegnaSalute = () => {
+  const ul = document.getElementById('salute-dati');
+  const orr = dash.data('orario'), og = dash.data('oggi'), cl = dash.data('classifiche'), pr = dash.data('prezzo_attuale'), sto = dash.data('storico');
+  if ([orr, og, cl, pr, sto].some((x) => x.status === 'loading')) return;
+  const voci = [];
+  const ts = orr.status === 'ok' ? orr.data.map((r) => r.ts).filter(Boolean).sort().slice(-1)[0] : null;
+  if (ts) {
+    const min = Math.max(0, Math.round((Date.now() - Date.parse(ts)) / 6e4));
+    const ora = +new Date().toLocaleString('it-IT', { hour: 'numeric', hour12: false, timeZone: 'Europe/Rome' });
+    const notte = ora >= 21 || ora < 2; // tra la lettura delle 21 e quella di mezzanotte passano 3 ore
+    const eta = min < 60 ? min + ' min fa' : min < 2880 ? Math.floor(min / 60) + ' h ' + (min % 60) + ' min fa' : Math.floor(min / 1440) + ' giorni fa';
+    voci.push([`Ultima lettura ${ts.slice(8, 10)}/${ts.slice(5, 7)} ${ts.slice(11, 16)} (${eta})`, min <= (notte ? 240 : 120) ? '' : min <= 360 ? 'warn' : 'bad',
+      'Le attività sul PC leggono il gioco ogni ora dalle 1 alle 21 e subito dopo mezzanotte, con l\'app e Chrome aperti.']);
+  } else voci.push(['Nessuna lettura oraria', 'bad']);
+  if (og.status === 'ok') {
+    const n = og.data.length, giorno = og.data[0]?.data;
+    voci.push([`Province lette: ${n} su 7` + (giorno ? ' (' + giorno.slice(8, 10) + '/' + giorno.slice(5, 7) + ')' : ''), n === 7 ? '' : 'bad']);
+  }
+  if (cl.status === 'ok') {
+    // la prima riga di ogni classifica dice quante province sono state lette e se si è usata la precedente (lettura incompleta)
+    const parti = ['scuole', 'basi', 'strade', 'ospedali'].map((e) => {
+      const rr = cl.data.filter((r) => r.edificio === e), t = rr.find((r) => r.posizione === 1) || {};
+      return { e, n: rr.length, letti: t.letti ?? rr.length, sost: !!t.sostituita };
+    });
+    const sost = parti.filter((p) => p.sost);
+    voci.push([sost.length ? 'Classifiche: ' + sost.map((p) => `${nomeEd[p.e]} letta incompleta (${p.letti} su ${p.n}), uso la precedente`).join('; ')
+      : 'Classifiche complete: ' + parti.map((p) => `${nomeEd[p.e]} ${p.n}`).join(', '), sost.length ? 'warn' : '',
+      'Se una classifica si legge con meno del 90% delle province della precedente, il cruscotto tiene la precedente e la chiusura serale la rilegge.']);
+  }
+  if (pr.status === 'ok' && pr.data.length) {
+    const g = pr.data[0].data, gg = g ? Math.floor((Date.now() - Date.parse(g)) / 864e5) : null;
+    voci.push([`Prezzi medi del ${g ? g.slice(8, 10) + '/' + g.slice(5, 7) : '—'}`, gg != null && gg > 8 ? 'warn' : '', 'Prezzi medi settimanali del DEF, usati per il «valore» di risorse ed edifici.']);
+  }
+  if (sto.status === 'ok') {
+    const chiusi = sto.data.filter((r) => r.provincia !== 'Stato' && r.gettito_eur != null && !r.provvisorio).map((r) => r.data).sort();
+    const u = chiusi.slice(-1)[0], ieri = og.status === 'ok' && og.data[0] ? new Date(Date.parse(og.data[0].data) - 864e5).toISOString().slice(0, 10) : null;
+    if (u) voci.push([`Ultima giornata chiusa: ${u.slice(8, 10)}/${u.slice(5, 7)}`, ieri && u < ieri ? 'warn' : '', 'La giornata (00:00–24:00) si chiude subito dopo mezzanotte, con il DEF e il bollettino.']);
+  }
+  ul.replaceChildren(...voci.map(([t, c, tit]) => { const li = document.createElement('li'); li.textContent = t; if (c) li.className = c; if (tit) li.title = tit; return li; }));
 };
 
 const disegnaQuadro = () => {
@@ -846,30 +1017,48 @@ const disegnaQuadro = () => {
       `${r.critiche ? '; ' + (r.critiche === 1 ? '1 non ha' : r.critiche + ' non hanno') + ' nel tesoro tutta la manutenzione di stanotte (serve una donazione)' : ''}.`;
   } else take.textContent = '—';
 
-  const ul = document.querySelector('ul[data-source="allarmi"]');
+  // «Da sistemare subito»: tre gruppi per urgenza, dentro una riga per provincia (24/10/2026); Napoli fuori, segue il piano
+  const box = document.getElementById('allarmi-gruppi');
   const a = dash.data('allarmi');
-  ul.replaceChildren();
+  box.replaceChildren();
   if (a.status === 'ok') {
-    if (!a.data.length) { const li = document.createElement('li'); li.textContent = 'Nessun allarme.'; ul.append(li); }
-    for (const r of a.data) {
-      const li = document.createElement('li');
-      const pill = document.createElement('span');
-      pill.className = 'pill ' + (r.gravita === 2 ? 'bad' : 'warn');
-      pill.textContent = r.tipo === 'sceso' ? 'già sceso' : r.gravita === 2 ? 'stanotte' : 'presto';
-      const txt = document.createElement('span');
-      txt.textContent = r.tipo === 'sceso'
-        ? ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} è a ${r.indice}, sotto il ${r.fisso} fissato: servono +${fmtN(r.valore)} ${nomeEd[r.cosa]} per tornarci (in «Indici e soglie» anche il margine di 2 notti)`
-        : r.tipo === 'notti'
-        ? ` ${r.provincia}, notti coperte: ` + r.dettaglio.map((x) => { const [k, v] = x.split(' '); return `${nomeRis[k]} ${fmtNotti(+v)}`; }).join(' · ') +
-          (r.gravita === 2 ? (r.provincia === 'Napoli' ? ' (non deve pagare: piano)' : ` — da mandare per stanotte: ${testoManca(r)}`) : '')
-        : r.tipo === 'inflazione'
-        ? (r.giorni != null
-          ? ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} scende per l'inflazione ${r.giorni < 1 ? 'entro oggi' : 'fra circa ' + r.giorni + (r.giorni === 1 ? ' giorno' : ' giorni')} (la soglia sale di ${r.crescita.toLocaleString('it-IT', { maximumFractionDigits: 1 })} ${nomeEd[r.cosa]} al giorno, margine ${fmtN(r.valore)})`
-          : ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} è al limite della soglia (margine ${fmtN(r.valore)} ${nomeEd[r.cosa]}): scende appena altre province costruiscono, anche senza perdite`)
-        : ` ${r.provincia}: l'indice ${indiceDi[r.cosa]} scende con una notte non pagata (margine ${fmtN(r.valore)} ${nomeEd[r.cosa]})`;
-      li.append(pill, txt); ul.append(li);
-    }
+    const testo = (r) => r.tipo === 'sceso'
+      ? `${indiceDi[r.cosa]} a ${r.indice}, sotto il ${r.fisso} fissato: +${fmtN(r.valore)} ${nomeEd[r.cosa]} per tornarci`
+      : r.tipo === 'notti'
+      ? 'notti coperte ' + r.dettaglio.map((x) => { const [k, v] = x.split(' '); return `${nomeRis[k]} ${fmtNotti(+v)}`; }).join(', ') +
+        (r.gravita === 2 ? ` (da mandare per stanotte: ${testoManca(r)})` : '')
+      : r.tipo === 'inflazione'
+      ? (r.giorni != null
+        ? `${indiceDi[r.cosa]} scende per l'inflazione ${r.giorni < 1 ? 'entro oggi' : 'fra circa ' + r.giorni + (r.giorni === 1 ? ' giorno' : ' giorni')} (soglia +${r.crescita.toLocaleString('it-IT', { maximumFractionDigits: 1 })} ${nomeEd[r.cosa]} al giorno, margine ${fmtN(r.valore)})`
+        : `${indiceDi[r.cosa]} al limite della soglia (margine ${fmtN(r.valore)} ${nomeEd[r.cosa]})`)
+      : `${indiceDi[r.cosa]} scende con una notte non pagata (margine ${fmtN(r.valore)} ${nomeEd[r.cosa]})`;
+    const gruppo = (r) => r.gravita === 2 ? 0 : r.tipo === 'inflazione' && r.giorni == null ? 2 : 1;
+    const GRUPPI = [['Stanotte', 'bad'], ['Presto', 'warn'], ['Da tenere d\'occhio', '']];
+    const righe = a.data.filter((r) => r.provincia !== 'Napoli');
+    if (!righe.length) { const p = document.createElement('p'); p.className = 'ok'; p.style.margin = '0'; p.textContent = 'Nessun allarme.'; box.append(p); }
+    GRUPPI.forEach(([nome, cl], g) => {
+      const rr = righe.filter((r) => gruppo(r) === g);
+      if (!rr.length) return;
+      const det = document.createElement('details'), sum = document.createElement('summary'), ul = document.createElement('ul');
+      // aperto solo il gruppo più urgente, finché l'utente non apre o chiude a mano (la scelta resta tra un disegno e l'altro)
+      const scelte = window.eiAllarmiAperti || (window.eiAllarmiAperti = {});
+      det.className = 'ei-gruppo'; det.open = nome in scelte ? scelte[nome] : !righe.some((r) => gruppo(r) < g);
+      sum.addEventListener('click', () => { scelte[nome] = !det.open; });
+      const prov = PROV_ORD.filter((p) => rr.some((r) => r.provincia === p));
+      const pill = Object.assign(document.createElement('span'), { className: 'pill ' + cl, textContent: nome });
+      sum.append(pill, Object.assign(document.createElement('span'), { className: 'n', textContent: ` ${prov.length} ${prov.length === 1 ? 'provincia' : 'province'}, ${rr.length} ${rr.length === 1 ? 'avviso' : 'avvisi'}` }));
+      ul.className = 'ei-list';
+      for (const p of prov) {
+        const li = document.createElement('li');
+        li.append(Object.assign(document.createElement('b'), { textContent: p + ': ' }));
+        for (const r of rr.filter((x) => x.provincia === p)) li.append(Object.assign(document.createElement('span'), { textContent: testo(r) }));
+        ul.append(li);
+      }
+      det.append(sum, ul); box.append(det);
+    });
   }
+  disegnaCosaFare();
+  disegnaSalute();
   // autonomia dello Stato
   const tba = document.querySelector('#autonomia tbody'), au = dash.data('autonomia'), nota = document.getElementById('autonomia-nota');
   tba.replaceChildren();
@@ -922,10 +1111,12 @@ const tabella = (sel, src, cols) => {
   tb.replaceChildren();
   if (d.status !== 'ok') return;
   const ordine = (r) => { const i = ['Venezia', 'Lombardia', 'Marsiglia', 'Napoli', 'Roma', 'Firenze', 'Palermo'].indexOf(r.provincia); return i < 0 ? 99 : i; };
+  const nomi = [...document.querySelectorAll(sel + ' thead th')].map((th) => th.textContent); // etichette delle schede sul telefono
   for (const r of [...d.data].sort((a, b) => ordine(a) - ordine(b))) {
     const tr = document.createElement('tr');
-    for (const [k, f, cls] of cols) {
+    for (const [i, [k, f, cls]] of cols.entries()) {
       const td = document.createElement('td');
+      td.dataset.label = nomi[i] || '';
       td.textContent = f ? f(r[k], r) : r[k];
       const c = cls && cls(r[k], r);
       if (c) td.className = c;
@@ -976,11 +1167,28 @@ const disegnaIndici = () => {
   disegnaComprare(ord, eds);
 };
 
+// filtro per edificio e vista compatta (24/10/2026): sul telefono parte compatta; la scelta resta tra un disegno e l'altro
+const dcStato = { ed: 'tutti', vista: matchMedia('(max-width: 700px)').matches ? 'compatta' : 'completa' };
 const disegnaComprare = (ord, eds) => {
   const tb = document.querySelector('#tabella-comprare tbody'), tf = document.querySelector('#tabella-comprare tfoot');
-  const d = dash.data('da_comprare');
+  const chipsEd = document.getElementById('dc-ed'), chipsV = document.getElementById('dc-vista'), nota = document.getElementById('dc-nota');
+  if (!chipsEd.dataset.pronto) {
+    chipsEd.dataset.pronto = '1';
+    chipsEd.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (b) { dcStato.ed = b.dataset.v; disegnaIndici(); } });
+    chipsV.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (b) { dcStato.vista = b.dataset.v; disegnaIndici(); } });
+  }
+  chipsEd.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === dcStato.ed)));
+  chipsV.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === dcStato.vista)));
+  tb.closest('table').classList.toggle('compatta', dcStato.vista === 'compatta');
+  const tutti = dash.data('da_comprare');
   tb.replaceChildren(); tf.replaceChildren();
-  if (d.status !== 'ok') return;
+  if (tutti.status !== 'ok') return;
+  const scelti = dcStato.ed === 'tutti' ? eds : dcStato.ed.split(',');
+  const d = { data: tutti.data.filter((r) => scelti.includes(r.edificio)) };
+  const nascosti = tutti.data.filter((r) => !scelti.includes(r.edificio));
+  nota.textContent = (nascosti.length ? `Nascosti dal filtro: ${[...new Set(nascosti.map((r) => F.nomeEd[r.edificio]))].join(', ')}. ` : '') +
+    (dcStato.vista === 'compatta' ? 'Vista compatta: senza Cosa, Edifici, Indice, Notti e Valore.' : '') || 'Tutti gli edifici, tutte le colonne.';
+  eds = eds.filter((e) => scelti.includes(e));
   const voci = ['da_comprare', 'denaro', 'pelle', 'oro', 'petrolio', 'nte', 'valore'];
   const somma = (rr) => Object.fromEntries(voci.map((k) => [k, rr.reduce((s, r) => s + r[k], 0)]));
   const riga = (dove, celle, classe) => {
@@ -992,8 +1200,9 @@ const disegnaComprare = (ord, eds) => {
   const numeri = (s) => [['+' + F.fmtN(s.da_comprare)], [F.fmtE(s.denaro)], [F.fmtN(s.pelle)], [F.fmtN(s.oro)], [F.fmtN(s.petrolio)],
     [F.fmtN(s.nte)], [F.fmtE(s.valore)]];
   const vuote = (n) => Array(n).fill(['']);
-  if (!d.data.length) { riga(tb, [['Nessuna provincia sotto 2 notti al calo o con un indice sceso.'], ...vuote(12)]); return; }
-  const manda = dash.data('da_mandare_indici');
+  if (!d.data.length) { riga(tb, [[(nascosti.length ? 'Per questi edifici nessuna' : 'Nessuna') + ' provincia sotto 2 notti al calo o con un indice sceso.'], ...vuote(12)]); return; }
+  // «Da mandare»: stesso conto del calcolo da_mandare_indici, ma solo sugli edifici scelti nel filtro
+  const manda = { status: 'ok', data: window.eiDaMandare(d.data, dash.data('oggi').data || []) };
   for (const p of ord) {
     const rr = d.data.filter((r) => r.provincia === p).sort((a, b) => eds.indexOf(a.edificio) - eds.indexOf(b.edificio));
     if (!rr.length) continue;
@@ -1005,8 +1214,9 @@ const disegnaComprare = (ord, eds) => {
     }
     if (rr.length > 1) riga(tb, [['Totale ' + p], ...vuote(5), ...numeri(somma(rr))], 'sub');
     const m = manda.status === 'ok' ? manda.data.find((x) => x.provincia === p) : null;
+    const zero = (x) => (x ? F.fmtN(x) : '—');
     if (m) riga(tb, [['Da mandare a ' + p], [''], [p === 'Napoli' ? 'tolto il tesoro' : 'tolto il tesoro, tenuta la manutenzione di stanotte'], ...vuote(4),
-      [F.fmtE(m.denaro)], [F.fmtN(m.pelle)], [F.fmtN(m.oro)], [F.fmtN(m.petrolio)], [F.fmtN(m.nte)], ['']], 'manda');
+      [m.denaro ? F.fmtE(m.denaro) : (m.pelle || m.oro || m.petrolio || m.nte ? '—' : 'niente, basta il tesoro')], [zero(m.pelle)], [zero(m.oro)], [zero(m.petrolio)], [zero(m.nte)], ['']], 'manda');
   }
   for (const e of eds) {
     const rr = d.data.filter((r) => r.edificio === e);
@@ -2115,7 +2325,7 @@ window.eiDisegna = () => {
   if (vis('quadro')) { barreSaldo(); disegnaAutonomiaStorico(); }
   if (vis('province')) window.eiProvince();
   if (vis('indici')) window.eiIndici();
-  if (vis('andamento')) { lineeGiornaliero(); lineaStato(); }
+  if (vis('storico')) { lineeGiornaliero(); lineaStato(); } // ex scheda «Andamento»
 };
 dash.onData(() => window.eiDisegna());
 </script>
