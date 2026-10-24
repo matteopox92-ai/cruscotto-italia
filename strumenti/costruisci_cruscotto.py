@@ -344,10 +344,14 @@ def main(xlsx, stat_dir, out_dir):
             "data": oggi_data,
             **({"limite_" + k: v for k, v in zip(LIM5, pr["lim"])} if pr.get("lim") else {}),
         })
-        # edifici che mancano all'indice successivo secondo il gioco («+9 edifici → Indice 6»): più preciso del modello a fasce
+        # edifici che mancano all'indice successivo secondo il gioco («+9 edifici → Indice 6»): più preciso del modello a fasce.
+        # Vale solo se porta all'indice subito sopra: per gli ospedali il gioco indica il prossimo bonus («+82 edifici → Indice 10»
+        # da salute 7), che salta indici; allora si usa il modello a fasce (errore scoperto il 25/10/2026 su Palermo: +82 invece di +2)
         for ed, k in (("scuole", "sc"), ("basi", "ba"), ("strade", "st"), ("ospedali", "os")):
-            m = re.match(r"\s*\+\s*([\d.]+)\s*edific", (pr.get(k) or {}).get("prossimo") or "")
-            oggi[-1]["per_salire_" + ed] = int(m.group(1).replace(".", "")) if m else None
+            dato = pr.get(k) or {}
+            m = re.match(r"\s*\+\s*([\d.]+)\s*edific[^→]*→\s*Indice\s*(\d+)", dato.get("prossimo") or "")
+            ok = m and dato.get("indice") is not None and int(m.group(2)) == int(dato["indice"]) + 1
+            oggi[-1]["per_salire_" + ed] = int(m.group(1).replace(".", "")) if ok else None
 
     # classifica precedente (giorno diverso): serve a misurare quanto salgono le soglie («inflazione» degli indici)
     file_clas = sorted(stat_dir.glob("classifiche-*.json"))
