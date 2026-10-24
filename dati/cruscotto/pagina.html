@@ -553,7 +553,7 @@
   <section id="criteri" class="ei-pane" hidden>
     <div class="ei-card ei-crit" id="guida">
       <h2>Guida al cruscotto</h2>
-      <p class="note">Come leggere ogni scheda, cosa vogliono dire i numeri e i colori, da dove arrivano. I dati si aggiornano da soli ogni mezz'ora dalle 10 all'1 di notte (alle :05 e alle :35, tranne le 21:35, quando c'è la lettura del DEF prima dell'addebito), con l'app Claude e Chrome con il gioco aperti. Alle 0:05 si chiude la giornata appena finita (DEF e bollettino), alle 0:45 arrivano le donazioni della giornata, alle 10:40 il fabbisogno del mattino. Dall'1 alle 10 il PC è spento: se l'app era chiusa, le attività saltate partono all'accensione.</p>
+      <p class="note">Come leggere ogni scheda, cosa vogliono dire i numeri e i colori, da dove arrivano. I dati si aggiornano da soli ogni mezz'ora dalle 8 all'1 di notte (alle :05 e alle :35, tranne le 21:35, quando c'è la lettura del DEF prima dell'addebito), con l'app Claude e Chrome con il gioco aperti. Alle 0:05 si chiude la giornata appena finita (DEF e bollettino), alle 0:45 arrivano le donazioni della giornata, alle 9:30 il fabbisogno del mattino. Dall'1 alle 8 il PC è spento: se l'app era chiusa, le attività saltate partono all'accensione.</p>
 
       <div><h3>In 2 minuti, ogni sera</h3>
         <ol class="ei-list">
@@ -572,7 +572,7 @@
       </div>
 
       <div><h3>Salute dei dati (sotto il titolo, in ogni scheda)</h3>
-        <p>Cinque pallini. <b>Ultima lettura</b>: verde fino a 75 minuti (le letture sono ogni mezz'ora dalle 10 all'1), giallo fino a 3 ore, poi rosso; di notte, a PC spento, resta verde e dice quando arriva la prossima. <b>Province lette</b>: devono essere 7. <b>Classifiche</b>: quante province ci sono in ogni classifica mondiale; se una è stata letta incompleta (meno del 90% della precedente) diventa gialla e il cruscotto usa quella precedente. <b>Prezzi medi</b>: la data dei prezzi del DEF (giallo se più vecchi di 8 giorni). <b>Ultima giornata chiusa</b>: deve essere ieri (giallo se manca una chiusura). Passa il mouse su un pallino per la spiegazione. Il controllo completo dei conti (<code>verifica_cruscotto.py</code>) gira la sera sul PC.</p>
+        <p>Cinque pallini. <b>Ultima lettura</b>: verde fino a 75 minuti (le letture sono ogni mezz'ora dalle 8 all'1), giallo fino a 3 ore, poi rosso; di notte, a PC spento, resta verde e dice quando arriva la prossima. <b>Province lette</b>: devono essere 7. <b>Classifiche</b>: quante province ci sono in ogni classifica mondiale; se una è stata letta incompleta (meno del 90% della precedente) diventa gialla e il cruscotto usa quella precedente. <b>Prezzi medi</b>: la data dei prezzi del DEF (giallo se più vecchi di 8 giorni). <b>Ultima giornata chiusa</b>: deve essere ieri (giallo se manca una chiusura). Passa il mouse su un pallino per la spiegazione. Il controllo completo dei conti (<code>verifica_cruscotto.py</code>) gira la sera sul PC.</p>
       </div>
 
       <div><h3>Le schede</h3>
@@ -1062,12 +1062,12 @@ const disegnaSalute = () => {
   if (ts) {
     const min = Math.max(0, Math.round((Date.now() - Date.parse(ts)) / 6e4));
     const ora = +new Date().toLocaleString('it-IT', { hour: 'numeric', hour12: false, timeZone: 'Europe/Rome' });
-    // dal 25/10/2026 letture ogni mezz'ora dalle 10 all'1 (PC acceso); dall'1 alle 10 il PC è spento e non è un problema
-    const spento = ora >= 2 && ora < 11;
+    // dal 25/10/2026 letture ogni mezz'ora dalle 8 all'1 (PC acceso); dall'1 alle 8 il PC è spento e non è un problema
+    const spento = ora >= 2 && ora < 9;
     const eta = min < 60 ? min + ' min fa' : min < 2880 ? Math.floor(min / 60) + ' h ' + (min % 60) + ' min fa' : Math.floor(min / 1440) + ' giorni fa';
-    voci.push([`Ultima lettura ${ts.slice(8, 10)}/${ts.slice(5, 7)} ${ts.slice(11, 16)} (${eta})` + (spento && min > 75 ? ' · PC spento di notte, prossima lettura verso le 10:15' : ''),
+    voci.push([`Ultima lettura ${ts.slice(8, 10)}/${ts.slice(5, 7)} ${ts.slice(11, 16)} (${eta})` + (spento && min > 75 ? ' · PC spento di notte, prossima lettura verso le 8:15' : ''),
       spento || min <= 75 ? '' : min <= 180 ? 'warn' : 'bad',
-      'Le attività sul PC leggono il gioco ogni mezz\'ora dalle 10 all\'1 di notte (alle :05 e alle :35, tranne le 21:35), con l\'app e Chrome aperti; alle 0:05 c\'è la chiusura della giornata.']);
+      'Le attività sul PC leggono il gioco ogni mezz\'ora dalle 8 all\'1 di notte (alle :05 e alle :35, tranne le 21:35), con l\'app e Chrome aperti; alle 0:05 c\'è la chiusura della giornata.']);
   } else voci.push(['Nessuna lettura oraria', 'bad']);
   if (og.status === 'ok') {
     const n = og.data.length, giorno = og.data[0]?.data;
