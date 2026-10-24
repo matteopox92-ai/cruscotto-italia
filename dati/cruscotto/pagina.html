@@ -3,9 +3,24 @@
 .ei { font-family: var(--font-anthropic-sans); color: var(--color-fg); display: grid; gap: var(--cds-gap-lg); }
 .ei-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
 .ei-head p { margin: var(--cds-gap-xs) 0 0; color: var(--color-fg-muted); max-width: 70ch; }
-.ei-tabs { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); }
-.ei-tabs button { font: inherit; background: none; border: 0; border-bottom: 2px solid transparent; padding: var(--cds-pad-xs) var(--cds-pad-sm); color: var(--color-fg-muted); cursor: pointer; }
-.ei-tabs button[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); }
+/* schede in alto, grandi (richiesta dell'utente del 24/10/2026): pulsanti a griglia, quello aperto pieno */
+.ei-tabs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr)); gap: var(--cds-gap-sm); position: sticky; top: 0; z-index: 2; background: var(--color-bg, var(--color-panel)); padding: var(--cds-pad-xs) 0; }
+.ei-tabs button { font: inherit; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 10px 12px; min-height: 44px; color: var(--color-fg-muted); cursor: pointer; text-align: center; }
+.ei-tabs button[aria-selected="true"] { color: var(--color-panel); background: var(--color-fg); border-color: var(--color-fg); }
+.ei-tabs button .conta { display: inline-block; min-width: 1.4em; margin-left: 6px; padding: 0 5px; border-radius: 999px; font-size: var(--cds-font-size-caption); background: var(--color-bad); color: #fff; }
+@media (max-width: 640px) { .ei-tabs { grid-template-columns: repeat(2, 1fr); position: static; } .ei-tabs button { font-size: var(--cds-font-size-body); padding: 8px; } }
+.ei-pane { display: grid; gap: var(--cds-gap-lg); }
+.ei-pane[hidden] { display: none !important; }
+/* barre dei limiti giornalieri */
+.lim-barra { display: inline-block; vertical-align: middle; width: 4.5rem; height: 8px; border-radius: 4px; background: var(--cds-chart-grid, var(--color-border-line)); margin-right: 6px; overflow: hidden; }
+.lim-barra i { display: block; height: 100%; background: var(--color-ok); }
+.lim-barra.warn i { background: var(--color-warn); } .lim-barra.bad i { background: var(--color-bad); }
+#lim-tab td { white-space: normal; text-align: left; vertical-align: top; min-width: 8.5rem; font-size: var(--cds-font-size-caption); }
+#lim-tab td:first-child { font-size: var(--cds-font-size-body); min-width: 0; }
+#lim-tab td .lim-num { display: block; font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); }
+#lim-tab th { text-align: left; }
+@media (max-width: 640px) { #lim-tab td > div { text-align: right; max-width: 60%; } #lim-tab .lim-barra { margin: 2px 0 2px auto; display: block; } }
+#gt-tab tr.tot td { font-weight: var(--cds-font-weight-medium); border-top: 2px solid var(--color-border-line); }
 .ei-tabs button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
 .ei-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-md); }
 .ei-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: grid; gap: var(--cds-gap-xs); align-content: start; }
@@ -112,18 +127,21 @@
   </header>
 
   <nav class="ei-tabs" role="tablist" aria-label="Sezioni">
-    <button role="tab" id="t-quadro" data-tab="quadro" aria-selected="true">Quadro</button>
-    <button role="tab" id="t-piano" data-tab="piano" aria-selected="false">Piano Napoli e Palermo</button>
+    <button role="tab" id="t-dafare" data-tab="dafare" aria-selected="true">Da fare</button>
+    <button role="tab" id="t-quadro" data-tab="quadro" aria-selected="false">Quadro</button>
+    <button role="tab" id="t-gettito" data-tab="gettito" aria-selected="false">Gettito e proiezione</button>
+    <button role="tab" id="t-limiti" data-tab="limiti" aria-selected="false">Limiti risorse</button>
     <button role="tab" id="t-province" data-tab="province" aria-selected="false">Province</button>
     <button role="tab" id="t-indici" data-tab="indici" aria-selected="false">Indici e soglie</button>
+    <button role="tab" id="t-piano" data-tab="piano" aria-selected="false">Piano Napoli e Palermo</button>
     <button role="tab" id="t-donazioni" data-tab="donazioni" aria-selected="false">Donazioni</button>
     <button role="tab" id="t-storico" data-tab="storico" aria-selected="false">Storico</button>
     <button role="tab" id="t-criteri" data-tab="criteri" aria-selected="false">Guida</button>
   </nav>
 
-  <section id="quadro" class="ei-pane" style="display:grid; gap: var(--cds-gap-lg);">
+  <section id="dafare" class="ei-pane">
     <div class="ei-card" id="oggi-fare">
-      <h2>Cosa fare oggi</h2>
+      <h2>Invii e acquisti di oggi</h2>
       <p class="note" id="of-sintesi">—</p>
       <div class="ei-scroll">
         <table class="schede">
@@ -132,9 +150,79 @@
           <tfoot></tfoot>
         </table>
       </div>
-      <p class="note">Da mandare = strade e ospedali da comprare + manutenzione di stanotte − tesoro della provincia. Da comprare = strade e ospedali per tornare all'indice fissato e restare almeno 2 notti lontani dal calo (dettaglio in «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia del mondo, che sale ogni giorno, non raggiunga l'indice entro 2 giorni (stima, non contata in «Da mandare»). Da trasferire allo Stato = quello che resta nel tesoro oltre 7 notti di manutenzione, tolti gli edifici da comprare. Napoli non c'è: segue il piano («Da inviare a Napoli oggi» nella scheda Piano).</p>
+      <p class="note">Da mandare = strade e ospedali da comprare + manutenzione di stanotte − tesoro della provincia. Da comprare = strade e ospedali per tornare all'indice fissato e restare almeno 2 notti lontani dal calo (dettaglio in «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia del mondo, che sale ogni giorno, non raggiunga l'indice entro 2 giorni (stima, non contata in «Da mandare»). Da trasferire allo Stato = quello che resta nel tesoro oltre 7 notti di manutenzione, tolti gli edifici da comprare. Napoli segue il piano: non paga la manutenzione, riceve solo il costo delle strade e degli ospedali per tornare agli obiettivi (dettaglio nella scheda Piano).</p>
     </div>
 
+    <div class="ei-card" id="lim-avvisi">
+      <h2>Limiti delle risorse che stanno per finire</h2>
+      <p class="note" id="lim-avvisi-nota">—</p>
+      <ul class="ei-list" id="lim-avvisi-lista"></ul>
+    </div>
+
+    <div class="ei-card" id="allarmi">
+      <h2>Da sistemare subito</h2>
+      <p class="note">Divisi per urgenza e, dentro, per provincia (Napoli esclusa: segue il piano). <b>Stanotte</b> = sotto 1 notte di manutenzione (senza una donazione la provincia non paga e perde il 3% degli edifici), indice già sotto quello fissato, o soglia che lo supera entro oggi. <b>Presto</b> = sotto 3 notti, indice che scende con una notte non pagata, o soglia che sale e lo raggiunge in pochi giorni. <b>Da tenere d'occhio</b> = indice al limite della soglia.</p>
+      <div id="allarmi-gruppi" data-source="allarmi"></div>
+    </div>
+  </section>
+
+  <section id="gettito" class="ei-pane" hidden>
+    <div class="ei-card" id="gt-confronto">
+      <h2>Oggi contro ieri alla stessa ora</h2>
+      <p class="note" id="gt-nota">—</p>
+      <div class="ei-filtri">
+        <div class="st-campo" role="group" aria-label="Province"><span>Province</span><span class="ei-chips" id="gt-prov-chips"></span></div>
+      </div>
+      <div class="ei-scroll">
+        <table id="gt-tab" class="schede">
+          <thead><tr><th>Voce</th><th>Oggi finora</th><th>Ieri alla stessa ora</th><th>Differenza</th><th>Ieri a fine giornata</th><th>Proiezione di oggi</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">Giornata italiana 00:00–24:00, come DEF e bollettino. <b>Gettito</b> = tasse dalla lettura di mezzanotte; <b>donazioni</b> = dei giocatori, per data italiana. <b>Proiezione</b> = oggi finora + quello che ieri è entrato dopo la stessa ora (ieri a fine giornata − ieri alla stessa ora): vale se il resto della giornata va come ieri. <b>Saldo</b> = gettito + donazioni in denaro − manutenzione − confini di un giorno. Si aggiorna a ogni lettura oraria.</p>
+    </div>
+    <div class="ei-card" id="gt-ore">
+      <h2 id="gt-ore-tit">Ora per ora: oggi e ieri</h2>
+      <div class="ei-filtri">
+        <label>Voce<select id="gt-voce" aria-label="Voce"><option value="gettito">Gettito (tasse)</option><option value="don_stato">Donazioni allo Stato</option><option value="don_prov">Donazioni alle province</option></select></label>
+        <label>Risorsa<select id="gt-ris" aria-label="Risorsa"><option value="eur">Denaro</option><option value="pelle">Pelle</option><option value="oro">Oro</option><option value="petrolio">Petrolio</option><option value="nte">NTE</option><option value="valore">Valore totale</option></select></label>
+      </div>
+      <p class="note">Somma dalla mezzanotte, lettura per lettura: linea piena oggi, tratteggiata ieri, punteggiata la proiezione fino a mezzanotte.</p>
+      <div class="ei-chart" id="gt-grafico"></div>
+    </div>
+    <div class="ei-card">
+      <h2>Gettito di risorse per provincia, oggi</h2>
+      <p class="note">Dalla mezzanotte all'ultima lettura, tra parentesi la differenza con ieri alla stessa ora.</p>
+      <div class="ei-scroll"><table id="gt-prov" class="schede"><thead><tr><th>Provincia</th><th>Denaro</th><th>Pelle</th><th>Oro</th><th>Petrolio</th><th>NTE</th><th>Valore</th></tr></thead><tbody></tbody></table></div>
+    </div>
+    <div class="ei-card">
+      <h2>Gettito di risorse, ultimi giorni</h2>
+      <p class="note">Somma delle province, giornate chiuse (dal DEF). Valore = risorse ai prezzi medi di mercato. In fondo la media.</p>
+      <div class="ei-scroll"><table id="gt-giorni"><thead><tr><th>Giorno</th><th>Denaro</th><th>Pelle</th><th>Oro</th><th>Petrolio</th><th>NTE</th><th>Valore risorse</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="limiti" class="ei-pane" hidden>
+    <div class="ei-card">
+      <h2>Limiti delle risorse provinciali, adesso</h2>
+      <p class="note" id="lim-nota">—</p>
+      <div class="ei-scroll">
+        <table id="lim-tab" class="schede">
+          <thead><tr><th>Provincia</th><th>Diamanti</th><th>Pelle</th><th>Oro</th><th>Petrolio</th><th>NTE</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">Ogni provincia ha ogni giorno 2.000 diamanti e 800 di ogni risorsa da produrre in tutto: ogni lavoro ne consuma 0,5, finiti quelli non si produce più fino all'azzeramento delle 00:00 ora turca (23:00 italiane, dal 25/10 le 22:00). In ogni casella: quanto resta, la barra e quando finisce al ritmo di oggi (consumato dall'azzeramento ÷ ore passate). Verde = basta fino all'azzeramento, giallo = finisce entro 3 ore, rosso = finito o entro 1 ora.</p>
+    </div>
+    <div class="ei-card">
+      <h2>Giornata per giornata</h2>
+      <p class="note">Per ogni giornata del gioco (dalle 23:00 alle 23:00 italiane, dal 25/10 dalle 22 alle 22): quanto è rimasto all'ultima lettura e, se è finito, a che ora.</p>
+      <div class="ei-filtri"><label>Risorsa<select id="lim-ris" aria-label="Risorsa"><option value="diamante">Diamanti</option><option value="pelle">Pelle</option><option value="oro">Oro</option><option value="petrolio">Petrolio</option><option value="nte">NTE</option></select></label></div>
+      <div class="ei-scroll"><table id="lim-giorni"><thead></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="quadro" class="ei-pane" hidden>
     <div class="ei-tiles">
       <div class="ei-tile"><span class="lab">Saldo al giorno (province)</span><span class="big dash-skeleton" data-source="totali" data-field="saldo_giorno">—</span><span class="sub">gettito medio − manutenzione − confini</span></div>
       <div class="ei-tile"><span class="lab">Saldo al giorno con le donazioni</span><span class="big dash-skeleton" data-source="totali" data-field="saldo_con_donazioni">—</span><span class="sub ei-don-sub">—</span></div>
@@ -180,11 +268,6 @@
     </div>
 
     <div class="ei-grid">
-      <div class="ei-card" id="allarmi">
-        <h2>Da sistemare subito</h2>
-        <p class="note">Divisi per urgenza e, dentro, per provincia (Napoli esclusa: segue il piano). <b>Stanotte</b> = sotto 1 notte di manutenzione (senza una donazione la provincia non paga e perde il 3% degli edifici), indice già sotto quello fissato, o soglia che lo supera entro oggi. <b>Presto</b> = sotto 3 notti, indice che scende con una notte non pagata, o soglia che sale e lo raggiunge in pochi giorni. <b>Da tenere d'occhio</b> = indice al limite della soglia.</p>
-        <div id="allarmi-gruppi" data-source="allarmi"></div>
-      </div>
       <div class="ei-card" id="occasioni">
         <h2>Occasioni a buon mercato</h2>
         <p class="note">Gli indici che salgono con la spesa più bassa, in denaro equivalente ai prezzi medi di mercato.</p>
@@ -477,8 +560,9 @@
         <ol class="ei-list">
           <li><b>Piano Napoli e Palermo → «Controlli di oggi»</b>: tutto verde = il piano va. Giallo = oggi c'è da fare qualcosa (costruire o ricostruire). Rosso = da sistemare subito.</li>
           <li><b>Riga dei pallini sotto il titolo («salute dei dati»)</b>: tutti verdi = i numeri sono freschi e completi. Giallo o rosso = lettura vecchia, province mancanti o classifica letta a metà: prima di decidere, aspetta la lettura dopo.</li>
-          <li><b>Quadro → «Cosa fare oggi»</b>: per ogni provincia (Napoli a parte) cosa mandare, quali strade e ospedali comprare e cosa trasferire allo Stato. Se dice «niente da fare», hai finito.</li>
-          <li><b>Quadro → «Da sistemare subito»</b>: aperto c'è solo il gruppo più urgente. Le righe <span class="bad">Stanotte</span> sono province che nel tesoro non hanno la manutenzione della notte (se nessuno dona prima delle 23:00, dal 25/10 le 22:00, la provincia non paga e perde il 3% di tutti gli edifici), indici già sotto quello fissato o soglie che li raggiungono entro oggi. Napoli non compare: non paga per scelta.</li>
+          <li><b>Da fare → «Invii e acquisti di oggi»</b>: per ogni provincia, Napoli compresa (con il suo piano), cosa mandare, quali strade e ospedali comprare e cosa trasferire allo Stato. Il numero rosso sul pulsante «Da fare» conta le urgenze. Se dice «niente da fare», hai finito.</li>
+          <li><b>Da fare → «Limiti delle risorse che stanno per finire»</b>: province dove diamanti o risorse da produrre finiscono prima dell'azzeramento.</li>
+          <li><b>Da fare → «Da sistemare subito»</b>: aperto c'è solo il gruppo più urgente. Le righe <span class="bad">Stanotte</span> sono province che nel tesoro non hanno la manutenzione della notte (se nessuno dona prima delle 23:00, dal 25/10 le 22:00, la provincia non paga e perde il 3% di tutti gli edifici), indici già sotto quello fissato o soglie che li raggiungono entro oggi. Napoli non compare: non paga per scelta.</li>
           <li><b>Quadro → «Saldo al giorno con le donazioni»</b>: se è rosso, l'Italia nel complesso perde soldi ogni giorno e il tesoro dello Stato scende.</li>
           <li>Nei giorni di decisione (27/10 e 3/11): <b>Piano → «Prossima decisione»</b> dice se Palermo ha raggiunto la soglia per le strade.</li>
         </ol>
@@ -492,9 +576,24 @@
         <p>Cinque pallini. <b>Ultima lettura</b>: verde fino a 2 ore (4 ore di sera, tra la lettura delle 21 e quella di mezzanotte), giallo fino a 6, poi rosso. <b>Province lette</b>: devono essere 7. <b>Classifiche</b>: quante province ci sono in ogni classifica mondiale; se una è stata letta incompleta (meno del 90% della precedente) diventa gialla e il cruscotto usa quella precedente. <b>Prezzi medi</b>: la data dei prezzi del DEF (giallo se più vecchi di 8 giorni). <b>Ultima giornata chiusa</b>: deve essere ieri (giallo se manca una chiusura). Passa il mouse su un pallino per la spiegazione. Il controllo completo dei conti (<code>verifica_cruscotto.py</code>) gira la sera sul PC.</p>
       </div>
 
-      <div><h3>Scheda «Quadro»: la situazione di oggi</h3>
-        <p><b>Cosa fare oggi</b>, una riga per provincia (Napoli esclusa: ha «Da inviare a Napoli oggi» nella scheda Piano), solo quelle con qualcosa da fare. <b>Da mandare</b> = costo delle strade e degli ospedali da comprare + manutenzione di stanotte − tesoro, risorsa per risorsa (cifre esatte, pronte per l'invio). <b>Da comprare</b> = strade e ospedali per tornare all'indice fissato e restare 2 notti lontani dal calo (gli stessi di «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia mondiale, che sale ogni giorno, non raggiunga l'indice entro 2 giorni: è una stima dalla crescita tra le ultime due classifiche e non entra in «Da mandare». <b>Da trasferire allo Stato</b> = tesoro − 7 notti di manutenzione − edifici da comprare: le province tengono al massimo 7 notti. Sopra la tabella una frase riassume tutto e dice se il tesoro dello Stato basta per gli invii.</p>
+      <div><h3>Le schede</h3>
+        <p>In alto, pulsanti grandi: <b>Da fare</b> (si apre per primo), <b>Quadro</b> (i numeri di oggi), <b>Gettito e proiezione</b>, <b>Limiti risorse</b>, <b>Province</b>, <b>Indici e soglie</b>, <b>Piano Napoli e Palermo</b>, <b>Donazioni</b>, <b>Storico</b>, <b>Guida</b>. Tutte si aggiornano a ogni lettura oraria; il pulsante «Aggiorna ora» ricarica l'ultima pubblicata.</p>
+      </div>
+
+      <div><h3>Scheda «Gettito e proiezione»</h3>
+        <p><b>Oggi contro ieri alla stessa ora</b>: per gettito (denaro, pelle, oro, petrolio, NTE e valore totale), donazioni allo Stato e alle province, e saldo, quanto è entrato da mezzanotte fino all'ultima lettura, quanto era entrato ieri alla stessa ora, la differenza, il totale di ieri e la <b>proiezione</b> di oggi = oggi finora + quello che ieri è entrato dopo quell'ora. Puoi scegliere le province (le donazioni allo Stato non cambiano). <b>Ora per ora</b>: la somma dalla mezzanotte di oggi (linea piena), di ieri (tratteggiata) e la proiezione (punteggiata), per la voce e la risorsa che scegli. Sotto, il gettito di risorse di ogni provincia oggi (con la differenza da ieri alla stessa ora) e quello degli ultimi 7 giorni chiusi con la media. Senza la lettura di mezzanotte il gettito dalla mezzanotte non si può calcolare e la casella resta «—».</p>
+      </div>
+
+      <div><h3>Scheda «Limiti risorse»</h3>
+        <p>Ogni provincia può produrre al giorno 2.000 diamanti e 800 di ogni risorsa in tutto, tra tutti i giocatori; ogni lavoro ne consuma 0,5 e i limiti si azzerano alle 00:00 ora turca (23:00 italiane, dal 25/10 le 22:00). Per ogni provincia e risorsa: quanto resta, la barra e quando finisce al ritmo di oggi (consumato dall'azzeramento ÷ ore passate), con il valore di ieri alla stessa ora. <span class="ok">Verde</span> = basta fino all'azzeramento, <span class="warn">giallo</span> = finisce entro 3 ore, <span class="bad">rosso</span> = finito o entro un'ora. «Giornata per giornata»: quanto restava all'ultima lettura di ogni giornata del gioco e, se è finito, a che ora (al più tardi, perché si legge una volta l'ora). Letti dal 24/10/2026 sera.</p>
+      </div>
+
+      <div><h3>Scheda «Da fare»</h3>
+        <p><b>Invii e acquisti di oggi</b>, una riga per provincia con qualcosa da fare. Napoli segue il piano: non paga la manutenzione e riceve solo il costo delle strade e degli ospedali per tornare agli obiettivi meno il suo tesoro (lo stesso di «Da inviare a Napoli oggi» nella scheda Piano). <b>Da mandare</b> = costo delle strade e degli ospedali da comprare + manutenzione di stanotte − tesoro, risorsa per risorsa (cifre esatte, pronte per l'invio). <b>Da comprare</b> = strade e ospedali per tornare all'indice fissato e restare 2 notti lontani dal calo (gli stessi di «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia mondiale, che sale ogni giorno, non raggiunga l'indice entro 2 giorni: è una stima dalla crescita tra le ultime due classifiche e non entra in «Da mandare». <b>Da trasferire allo Stato</b> = tesoro − 7 notti di manutenzione − edifici da comprare: le province tengono al massimo 7 notti. Sopra la tabella una frase riassume tutto e dice se il tesoro dello Stato basta per gli invii.</p>
         <p><b>Da sistemare subito</b>: tre gruppi, <span class="bad">Stanotte</span>, <span class="warn">Presto</span> e «Da tenere d'occhio», e dentro una riga per provincia con tutti i suoi avvisi. Si apre da solo solo il gruppo più urgente; se ne apri o chiudi uno, resta così.</p>
+      </div>
+
+      <div><h3>Scheda «Quadro»: i numeri di oggi</h3>
         <p><b>Saldo al giorno</b> = tasse incassate (media degli ultimi 6 giorni completi) − manutenzione di tutte le province − confini. È quanto l'Italia perde o guadagna in un giorno «normale», senza regali. <b>Saldo con le donazioni</b> = lo stesso, più quello che i giocatori hanno donato in media negli ultimi 7 giorni: è il risultato vero di una giornata. <b>Copertura</b> = quanta parte dei costi coprono le tasse (100% = in pari). <b>Tesoro dello Stato</b>: letto dal gioco. <b>Tesori delle province</b>: la somma delle 7 casse.</p>
         <p><b>Occasioni a buon mercato</b>: gli aumenti di indice che costano meno. <b>Quanto rende ogni provincia</b>: barre a destra = la provincia porta all'Italia più di quanto costa; a sinistra (rosse) = costa più di quanto porta.</p>
       </div>
@@ -800,8 +899,14 @@ const NOTTI_MAX = 7, ED_OGGI = ['strade', 'ospedali'];
 dash.calc('cosa_fare', {
   title: 'Cosa fare oggi',
   description: 'Per provincia (Napoli esclusa): soldi e risorse da mandare, strade e ospedali da comprare, eccedenza oltre 7 notti di manutenzione da trasferire allo Stato.',
-  inputs: ['oggi', 'da_comprare', 'indici'],
-  fn: (oggi, da_comprare, indici) => PROV_ORD.map((p) => oggi.find((r) => r.provincia === p)).filter((o) => o && o.provincia !== 'Napoli').map((o) => {
+  inputs: ['oggi', 'da_comprare', 'indici', 'napoli_invio'],
+  fn: (oggi, da_comprare, indici, napoli_invio) => PROV_ORD.map((p) => oggi.find((r) => r.provincia === p)).filter(Boolean).map((o) => {
+    if (o.provincia === 'Napoli') { // Napoli: solo il costo di strade e ospedali per tornare agli obiettivi del piano, meno il tesoro
+      const inv = napoli_invio.find((r) => r.riga === 'invio') || {}, riga = { provincia: 'Napoli', piano: true };
+      riga.compra_strade = inv.strade || 0; riga.compra_ospedali = inv.ospedali || 0; riga.inflazione_strade = riga.inflazione_ospedali = 0;
+      for (const k of ['denaro', ...RIS]) { riga['manda_' + k] = Math.ceil(inv[k] || 0); riga['avanza_' + k] = 0; riga['costo_' + k] = 0; }
+      return riga;
+    }
     const rr = da_comprare.filter((r) => r.provincia === o.provincia && ED_OGGI.includes(r.edificio));
     const riga = { provincia: o.provincia };
     for (const e of ED_OGGI) {
@@ -930,7 +1035,7 @@ const disegnaCosaFare = () => {
   const daFare = d.data.filter((r) => listaRis(r, 'manda_') || compra(r) || listaRis(r, 'avanza_'));
   for (const r of daFare) {
     const m = listaRis(r, 'manda_'), c = compra(r), v = listaRis(r, 'avanza_');
-    riga(tb, [[r.provincia], [m || 'niente', m ? 'bad' : 'vuoto'], [c || 'niente', c ? 'warn' : 'vuoto'], [v || 'niente', v ? 'ok' : 'vuoto']]);
+    riga(tb, [[r.provincia + (r.piano ? ' (piano)' : '')], [m || 'niente', m ? 'bad' : 'vuoto'], [c || 'niente', c ? 'warn' : 'vuoto'], [v || 'niente', v ? 'ok' : 'vuoto']]);
   }
   const aPosto = d.data.filter((r) => !daFare.includes(r)).map((r) => r.provincia);
   if (daFare.length > 1) riga(tf, [['Totale'], [listaRis(tot, 'manda_') || 'niente'], [compra(tot) || 'niente'], [listaRis(tot, 'avanza_') || 'niente']]);
@@ -939,7 +1044,7 @@ const disegnaCosaFare = () => {
   const manca = s ? ['denaro', ...RIS].filter((k) => tot['manda_' + k] > ((k === 'denaro' ? s.tesoro_eur : s['tesoro_' + k]) ?? Infinity)) : [];
   const nM = d.data.filter((r) => listaRis(r, 'manda_')).length, nV = d.data.filter((r) => listaRis(r, 'avanza_')).length;
   const cS = tot.compra_strade + tot.inflazione_strade, cO = tot.compra_ospedali + tot.inflazione_ospedali, nC = cS + cO;
-  sint.textContent = (!daFare.length ? 'Oggi non c\'è niente da fare: tutte le province (Napoli a parte) hanno la manutenzione di stanotte, nessuna strada o ospedale da comprare e niente oltre 7 notti. '
+  sint.textContent = (!daFare.length ? 'Oggi non c\'è niente da fare: tutte le province hanno la manutenzione di stanotte (Napoli non la paga, per il piano), nessuna strada o ospedale da comprare e niente oltre 7 notti. '
     : [nM ? `Mandare soldi o risorse a ${nM} ${nM === 1 ? 'provincia' : 'province'}` : 'Nessun invio necessario',
       nC ? `comprare ${[cS ? ed(cS, 'strade') : '', cO ? ed(cO, 'ospedali') : ''].filter(Boolean).join(' e ')}` : 'nessun edificio da comprare',
       nV ? `trasferire allo Stato l'eccedenza di ${nV} ${nV === 1 ? 'provincia' : 'province'}` : 'nessuna eccedenza da trasferire'].join(', ') + '. ') +
@@ -2316,6 +2421,263 @@ const disegnaAutonomiaStorico = () => {
     .on('mouseleave', () => { t.hidden = true; guida.attr('visibility', 'hidden'); });
 };
 
+// ——— Gettito e proiezione (richiesta dell'utente del 24/10/2026): oggi contro ieri alla stessa ora ———
+// le ore delle letture sono già ora italiana («2026-10-24T22:20+02:00»): giorno = primi 10 caratteri, minuti dall'ora
+const GT_RIS = ['eur', 'pelle', 'oro', 'petrolio', 'nte'];
+const gtNomi = { eur: 'denaro', pelle: 'pelle', oro: 'oro', petrolio: 'petrolio', nte: 'NTE', valore: 'valore totale' };
+const minDi = (ts) => +ts.slice(11, 13) * 60 + +ts.slice(14, 16);
+const oraDi = (min) => String(Math.floor(min / 60)).padStart(2, '0') + ':' + String(min % 60).padStart(2, '0');
+const ieriDi = (g) => new Date(Date.parse(g + 'T12:00:00Z') - 864e5).toISOString().slice(0, 10);
+const gtStato = { prov: new Set(PROV_ORD), voce: 'gettito', ris: 'eur' };
+// letture orarie sommate: per ogni ora di lettura gettito dalla mezzanotte (province scelte) e donazioni di oggi (Stato e province scelte)
+const gtLetture = (prov) => {
+  const or = dash.data('orario'); if (or.status !== 'ok') return [];
+  const m = new Map();
+  for (const r of or.data) {
+    const l = m.get(r.ts) || { ts: r.ts, giorno: r.ts.slice(0, 10), min: minDi(r.ts), gettito: {}, don_stato: {}, don_prov: {}, n: 0, manca: new Set() };
+    if (r.provincia === 'Stato') for (const k of GT_RIS) l.don_stato[k] = r['donazioni_oggi_' + k] ?? null;
+    else if (prov.has(r.provincia)) {
+      l.n++;
+      for (const k of GT_RIS) {
+        const g = r['gettito_it_' + k];
+        if (g == null) l.manca.add(k); else l.gettito[k] = (l.gettito[k] || 0) + g;
+        l.don_prov[k] = (l.don_prov[k] || 0) + (r['donazioni_oggi_' + k] || 0);
+      }
+    }
+    m.set(r.ts, l);
+  }
+  // una lettura vale per il gettito solo se ha tutte le province scelte con il dato dalla mezzanotte
+  return [...m.values()].sort((a, b) => (a.ts < b.ts ? -1 : 1)).map((l) => { if (l.n < prov.size) for (const k of GT_RIS) l.manca.add(k); return l; });
+};
+const gtValore = (o, P) => o == null ? null : GT_RIS.every((k) => o[k] != null) ? GT_RIS.reduce((s, k) => s + o[k] * (k === 'eur' ? 1 : P[k] || 0), 0) : null;
+const gtPrend = (l, voce, k) => { if (!l) return null; if (voce === 'gettito' && l.manca.has(k)) return null; const v = l[voce][k]; return v == null ? null : v; };
+const disegnaGettito = () => {
+  const tb = document.querySelector('#gt-tab tbody'), nota = document.getElementById('gt-nota'), chips = document.getElementById('gt-prov-chips');
+  if (!chips.dataset.pronto) {
+    chips.dataset.pronto = '1';
+    chips.replaceChildren(...PROV_ORD.map((p) => Object.assign(document.createElement('button'), { type: 'button', textContent: p, value: p })),
+      Object.assign(document.createElement('button'), { type: 'button', textContent: 'Tutte', value: '*' }));
+    chips.addEventListener('click', (ev) => {
+      const b = ev.target.closest('button'); if (!b) return;
+      if (b.value === '*') PROV_ORD.forEach((p) => gtStato.prov.add(p));
+      else if (gtStato.prov.has(b.value) && gtStato.prov.size > 1) gtStato.prov.delete(b.value); else gtStato.prov.add(b.value);
+      disegnaGettito();
+    });
+    document.getElementById('gt-voce').addEventListener('change', (e) => { gtStato.voce = e.target.value; disegnaGettito(); });
+    document.getElementById('gt-ris').addEventListener('change', (e) => { gtStato.ris = e.target.value; disegnaGettito(); });
+  }
+  chips.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.value === '*' ? gtStato.prov.size === PROV_ORD.length : gtStato.prov.has(b.value))));
+  tb.replaceChildren();
+  const P = prezziSt(), lett = gtLetture(gtStato.prov);
+  if (!lett.length) { nota.textContent = 'Nessuna lettura oraria.'; return; }
+  const L = lett[lett.length - 1], oggi = L.giorno, ieri = ieriDi(oggi);
+  const delGiorno = (g) => lett.filter((l) => l.giorno === g);
+  // ieri alla stessa ora: l'ultima lettura di ieri non oltre l'ora dell'ultima di oggi
+  const ieriL = delGiorno(ieri), Y = ieriL.filter((l) => l.min <= L.min).slice(-1)[0] || null;
+  // ieri a fine giornata: totale della giornata chiusa nello storico; se manca, l'ultima lettura di ieri
+  const sto = dash.data('storico').data || [];
+  const fine = { gettito: {}, don_stato: {}, don_prov: {} };
+  for (const k of GT_RIS) {
+    const rp = sto.filter((r) => r.data === ieri && gtStato.prov.has(r.provincia));
+    fine.gettito[k] = rp.length === gtStato.prov.size && rp.every((r) => r['gettito_' + k] != null) ? rp.reduce((s, r) => s + r['gettito_' + k], 0) : gtPrend(ieriL.slice(-1)[0], 'gettito', k);
+    const rs = sto.find((r) => r.data === ieri && r.provincia === 'Stato');
+    fine.don_stato[k] = rs && rs['donazioni_' + k] != null ? rs['donazioni_' + k] : gtPrend(ieriL.slice(-1)[0], 'don_stato', k);
+    fine.don_prov[k] = rp.length && rp.some((r) => r['donazioni_' + k] != null) ? rp.reduce((s, r) => s + (r['donazioni_' + k] || 0), 0) : gtPrend(ieriL.slice(-1)[0], 'don_prov', k);
+  }
+  const costi = (dash.data('oggi').data || []).filter((r) => gtStato.prov.has(r.provincia)).reduce((s, r) => s + (r.manutenzione_eur || 0) + (r.confini_eur || 0), 0);
+  const costiIeri = (() => { const rp = sto.filter((r) => r.data === ieri && gtStato.prov.has(r.provincia)); return rp.length ? rp.reduce((s, r) => s + (r.manutenzione_eur || 0) + (r.confini_eur || 0), 0) : costi; })();
+  const fmtV = (k) => (k === 'eur' || k === 'valore' ? fmtE : fmtEsatto);
+  const riga = (nome, oggiV, ieriV, fineV, k, cl) => {
+    const proj = oggiV == null || ieriV == null || fineV == null ? null : oggiV + Math.max(0, fineV - ieriV);
+    const diff = oggiV == null || ieriV == null ? null : oggiV - ieriV;
+    const pct = diff == null || !ieriV ? '' : ' (' + (diff >= 0 ? '+' : '−') + Math.abs(Math.round(diff / ieriV * 100)) + '%)';
+    const f = fmtV(k), tr = document.createElement('tr'); if (cl) tr.className = cl;
+    [[nome], [f(oggiV)], [f(ieriV)], [diff == null ? '—' : (diff >= 0 ? '+' : '−') + f(Math.abs(diff)) + pct, diff == null ? '' : diff >= 0 ? 'ok' : 'bad'], [f(fineV)], [f(proj)]].forEach(([t, c], i) => {
+      const td = document.createElement('td'); td.textContent = t; td.dataset.label = ['Voce', 'Oggi finora', 'Ieri alla stessa ora', 'Differenza', 'Ieri a fine giornata', 'Proiezione di oggi'][i]; if (c) td.className = c; tr.append(td);
+    });
+    tb.append(tr);
+    return proj;
+  };
+  const voce = (v, k) => [gtPrend(L, v, k), gtPrend(Y, v, k), fine[v][k]];
+  const proj = {};
+  for (const k of GT_RIS) proj['g' + k] = riga('Gettito ' + gtNomi[k], ...voce('gettito', k), k);
+  const val = (v, l) => gtValore(l === 'fine' ? fine[v] : GT_RIS.reduce((o, k) => ({ ...o, [k]: gtPrend(l, v, k) }), {}), P);
+  riga('Gettito, valore totale', val('gettito', L), val('gettito', Y), val('gettito', 'fine'), 'valore', 'tot');
+  proj.ds = riga('Donazioni allo Stato, denaro', ...voce('don_stato', 'eur'), 'eur');
+  riga('Donazioni allo Stato, valore totale', val('don_stato', L), val('don_stato', Y), val('don_stato', 'fine'), 'valore');
+  proj.dp = riga('Donazioni alle province, denaro', ...voce('don_prov', 'eur'), 'eur');
+  riga('Donazioni alle province, valore totale', val('don_prov', L), val('don_prov', Y), val('don_prov', 'fine'), 'valore');
+  // saldo in denaro: entrate (gettito + donazioni) − costi di un giorno (manutenzione + confini)
+  const ent = (l) => [gtPrend(l, 'gettito', 'eur'), gtPrend(l, 'don_stato', 'eur'), gtPrend(l, 'don_prov', 'eur')];
+  const somma = (xs) => xs.some((x) => x == null) ? null : xs.reduce((a, b) => a + b, 0);
+  const sO = somma(ent(L)), sY = somma(ent(Y)), sF = somma([fine.gettito.eur, fine.don_stato.eur, fine.don_prov.eur]);
+  riga('Saldo in denaro (entrate − costi)', sO == null ? null : sO - costi, sY == null ? null : sY - costiIeri, sF == null ? null : sF - costiIeri, 'eur', 'tot');
+  nota.textContent = `Ultima lettura ${oggi.slice(8, 10)}/${oggi.slice(5, 7)} alle ${oraDi(L.min)}` +
+    (Y ? `, confrontata con quella di ieri delle ${oraDi(Y.min)}.` : ': ieri non c\'è una lettura a quell\'ora, il confronto manca.') +
+    (L.manca.size ? ' Il gettito dalla mezzanotte non c\'è per tutte le province scelte (serve la lettura di mezzanotte).' : '') +
+    ` Province: ${gtStato.prov.size === PROV_ORD.length ? 'tutte e 7' : [...gtStato.prov].join(', ')} (le donazioni allo Stato non dipendono dalla scelta).`;
+  // tabella per provincia
+  const tp = document.querySelector('#gt-prov tbody'); tp.replaceChildren();
+  for (const p of PROV_ORD) {
+    const uno = gtLetture(new Set([p])), Lp = uno.filter((l) => l.ts === L.ts)[0], Yp = Y ? uno.filter((l) => l.ts === Y.ts)[0] : null, tr = document.createElement('tr');
+    const celle = [[p]];
+    for (const k of [...GT_RIS, 'valore']) {
+      const a = k === 'valore' ? val('gettito', Lp) : gtPrend(Lp, 'gettito', k), b = k === 'valore' ? (Yp ? val('gettito', Yp) : null) : gtPrend(Yp, 'gettito', k);
+      const d = a == null || b == null ? null : a - b;
+      celle.push([fmtV(k)(a) + (d == null ? '' : ` (${d >= 0 ? '+' : '−'}${fmtV(k)(Math.abs(d))})`), d == null ? '' : d >= 0 ? 'ok' : 'bad']);
+    }
+    celle.forEach(([t, c], i) => { const td = document.createElement('td'); td.textContent = t; td.dataset.label = ['Provincia', 'Denaro', 'Pelle', 'Oro', 'Petrolio', 'NTE', 'Valore'][i]; if (c) td.className = c; tr.append(td); });
+    tp.append(tr);
+  }
+  // ultimi giorni chiusi (somma delle 7 province di oggi)
+  const tg = document.querySelector('#gt-giorni tbody'); tg.replaceChildren();
+  const giorni = [...new Set(sto.filter((r) => PROV_ORD.includes(r.provincia) && r.gettito_eur != null && !r.provvisorio).map((r) => r.data))].sort().slice(-7);
+  const righeG = giorni.map((g) => { const rp = sto.filter((r) => r.data === g && PROV_ORD.includes(r.provincia)); const o = { g }; for (const k of GT_RIS) o[k] = rp.every((r) => r['gettito_' + k] != null) ? rp.reduce((s, r) => s + r['gettito_' + k], 0) : null; o.v = RIS.every((k) => o[k] != null) ? RIS.reduce((s, k) => s + o[k] * (P[k] || 0), 0) : null; return o; });
+  const media = { g: 'Media' }; for (const k of [...GT_RIS, 'v']) { const xs = righeG.map((o) => o[k]).filter((x) => x != null); media[k] = xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null; }
+  for (const o of [...righeG.reverse(), media]) {
+    const tr = document.createElement('tr'); if (o === media) tr.className = 'tot';
+    [o === media ? 'Media' : new Date(o.g + 'T12:00Z').toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }), fmtE(o.eur), fmtEsatto(o.pelle), fmtEsatto(o.oro), fmtEsatto(o.petrolio), fmtEsatto(o.nte), fmtE(o.v)]
+      .forEach((t) => tr.append(Object.assign(document.createElement('td'), { textContent: t })));
+    tg.append(tr);
+  }
+  // grafico: somma dalla mezzanotte, oggi e ieri, più la proiezione
+  const box = document.getElementById('gt-grafico'); box.querySelector('svg')?.remove(); box.querySelector('.ei-legenda')?.remove();
+  if (!box.clientWidth) return;
+  const v = gtStato.voce, k = gtStato.ris;
+  document.getElementById('gt-ore-tit').textContent = `Ora per ora: ${{ gettito: 'gettito', don_stato: 'donazioni allo Stato', don_prov: 'donazioni alle province' }[v]} in ${gtNomi[k]}, oggi e ieri`;
+  const prendi = (l) => (k === 'valore' ? val(v, l) : gtPrend(l, v, k));
+  const serie = (g) => [{ min: 0, y: 0 }, ...delGiorno(g).map((l) => ({ min: l.min, y: prendi(l) })).filter((p) => p.y != null)];
+  const sOggi = serie(oggi), sIeri = serie(ieri), fineY = k === 'valore' ? val(v, 'fine') : fine[v][k];
+  if (fineY != null) sIeri.push({ min: 1440, y: fineY });
+  const ultimo = sOggi[sOggi.length - 1], yS = Y ? prendi(Y) : null;
+  const sProj = ultimo && yS != null ? [ultimo, ...sIeri.filter((p) => p.min > ultimo.min).map((p) => ({ min: p.min, y: ultimo.y + Math.max(0, p.y - yS) }))] : [];
+  const W = box.clientWidth, H = 240, M = { t: 12, r: 70, b: 24, l: 56 };
+  const x = d3.scaleLinear([0, 1440], [M.l, W - M.r]);
+  const y = d3.scaleLinear([0, d3.max([...sOggi, ...sIeri, ...sProj], (p) => p.y) || 1], [H - M.b, M.t]).nice();
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Somma dalla mezzanotte, oggi e ieri');
+  svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).tickValues(d3.range(0, 1441, W < 500 ? 360 : 180)).tickFormat((m) => oraDi(m))).call(etichetteAsse);
+  const fy = (u) => (k === 'eur' || k === 'valore' ? mil(u) : Math.abs(u) >= 1e3 ? (u / 1e3).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' k' : String(u));
+  svg.append('g').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(fy).tickSize(-(W - M.l - M.r))).call(etichetteAsse)
+    .call((g) => g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)')).call((g) => g.select('.domain').remove());
+  const linea = d3.line((p) => x(p.min), (p) => y(p.y));
+  const disegna = (s, col, tratto, nome) => {
+    if (s.length < 2) return;
+    svg.append('path').datum(s).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2).attr('stroke-dasharray', tratto).attr('d', linea);
+    const z = s[s.length - 1];
+    svg.append('text').attr('x', x(z.min) + 6).attr('y', y(z.y)).attr('dy', '0.35em').attr('fill', col).style('font-size', 'var(--cds-font-size-caption)').text(nome);
+  };
+  disegna(sIeri, 'var(--color-fg-muted)', '5 4', 'ieri');
+  disegna(sProj, dash.colors[0], '2 4', 'proiezione');
+  disegna(sOggi, dash.colors[0], null, 'oggi');
+  const t = tip(box);
+  svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
+    .on('mousemove', (ev) => {
+      const [mx] = d3.pointer(ev), m = x.invert(mx), vicino = (s) => s.length ? s[d3.leastIndex(s, (p) => Math.abs(p.min - m))] : null;
+      const a = vicino(sOggi), b = vicino(sIeri), f = k === 'eur' || k === 'valore' ? fmtE : fmtN;
+      t.textContent = `${oraDi(Math.round(m))} · oggi ${a ? f(a.y) + ' (' + oraDi(a.min) + ')' : '—'} · ieri ${b ? f(b.y) + ' (' + oraDi(b.min) + ')' : '—'}`;
+      t.hidden = false; t.style.left = Math.max(0, Math.min(mx + 8, W - t.offsetWidth)) + 'px'; t.style.top = '0px';
+    })
+    .on('mouseleave', () => { t.hidden = true; });
+};
+
+// ——— Limiti delle risorse provinciali (richiesta dell'utente del 24/10/2026) ———
+// quanto resta oggi (lettura oraria, campi limite_*), ritmo dall'azzeramento delle 00:00 GMT+3, ora in cui finisce
+const LIM = ['diamante', 'pelle', 'oro', 'petrolio', 'nte'], LIM_MAX = { diamante: 2000, pelle: 800, oro: 800, petrolio: 800, nte: 800 };
+const nomeLim = { diamante: 'diamanti', pelle: 'pelle', oro: 'oro', petrolio: 'petrolio', nte: 'NTE' };
+const oraRoma = (ms) => new Date(ms).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' });
+const limStato = { ris: 'diamante' };
+const calcolaLimiti = () => {
+  const or = dash.data('orario'); if (or.status !== 'ok') return null;
+  const righe = or.data.filter((r) => r.provincia !== 'Stato' && r.limite_diamante != null);
+  if (!righe.length) return { righe: [], celle: [] };
+  const ultimoTs = righe.map((r) => r.ts).sort().slice(-1)[0], giorno = righe.find((r) => r.ts === ultimoTs).giorno_gioco;
+  const azzera = Date.parse(giorno + 'T00:00:00+03:00'), prossimo = azzera + 864e5;
+  const celle = [];
+  for (const p of PROV_ORD) {
+    const rr = righe.filter((r) => r.provincia === p && r.giorno_gioco === giorno).sort((a, b) => (a.ts < b.ts ? -1 : 1)), r = rr[rr.length - 1];
+    if (!r) continue;
+    const t = Date.parse(r.ts), ore = Math.max((t - azzera) / 36e5, 0.25);
+    // ieri alla stessa distanza dall'azzeramento, per il confronto
+    const ieri = righe.filter((x) => x.provincia === p && x.giorno_gioco < giorno).filter((x) => Date.parse(x.ts) - (azzera - 864e5) <= t - azzera).sort((a, b) => (a.ts < b.ts ? -1 : 1)).slice(-1)[0];
+    for (const k of LIM) {
+      const resta = r['limite_' + k], max = Math.max(LIM_MAX[k], ...rr.map((x) => x['limite_' + k] || 0));
+      if (resta == null) continue;
+      const usato = max - resta, ritmo = usato / ore; // al giorno del gioco, per ora
+      let fine = null, stato = 'ok', testo;
+      if (resta <= 0) {
+        const prima = rr.find((x) => x['limite_' + k] <= 0); fine = Date.parse(prima.ts); stato = 'bad'; testo = 'finito (letto alle ' + oraRoma(fine) + ')';
+      } else if (ritmo > 0) {
+        fine = t + (resta / ritmo) * 36e5;
+        if (fine >= prossimo) testo = 'basta fino all\'azzeramento';
+        else {
+          const mancano = (fine - Date.now()) / 36e5; stato = mancano < 1 ? 'bad' : mancano < 3 ? 'warn' : 'ok';
+          testo = (mancano < 0 ? 'probabilmente già finito (previsto verso le ' : 'finisce verso le ') + oraRoma(fine) + (mancano < 0 ? ')' : '');
+        }
+      } else testo = 'non usato oggi';
+      celle.push({ provincia: p, k, resta, max, ritmo, fine, stato, testo, ieri: ieri ? ieri['limite_' + k] : null, ts: r.ts });
+    }
+  }
+  return { righe, celle, giorno, azzera, prossimo, ultimoTs };
+};
+const disegnaLimiti = () => {
+  const L = calcolaLimiti(), tb = document.querySelector('#lim-tab tbody'), nota = document.getElementById('lim-nota');
+  const ul = document.getElementById('lim-avvisi-lista'), nAv = document.getElementById('lim-avvisi-nota');
+  tb.replaceChildren(); ul.replaceChildren();
+  if (!L) return;
+  if (!L.righe.length) {
+    nota.textContent = nAv.textContent = 'I limiti si leggono dalla pagina di ogni provincia a ogni lettura oraria, dal 24/10/2026 sera: qui compaiono dalla prossima lettura.';
+    return;
+  }
+  nota.textContent = `Ultima lettura ${L.ultimoTs.slice(8, 10)}/${L.ultimoTs.slice(5, 7)} alle ${L.ultimoTs.slice(11, 16)}. Giornata del gioco iniziata alle ${oraRoma(L.azzera)}, prossimo azzeramento alle ${oraRoma(L.prossimo)}.`;
+  for (const p of PROV_ORD) {
+    const cc = L.celle.filter((c) => c.provincia === p); if (!cc.length) continue;
+    const tr = document.createElement('tr');
+    tr.append(Object.assign(document.createElement('td'), { textContent: p }));
+    for (const k of LIM) {
+      const c = cc.find((x) => x.k === k), td = document.createElement('td'); td.dataset.label = nomeLim[k][0].toUpperCase() + nomeLim[k].slice(1);
+      if (c) {
+        const barra = document.createElement('span'); barra.className = 'lim-barra ' + (c.stato === 'ok' ? '' : c.stato);
+        barra.append(Object.assign(document.createElement('i'), { style: `width:${Math.max(0, Math.min(100, c.resta / c.max * 100))}%` }));
+        const cella = document.createElement('div'); // un solo blocco: sul telefono la casella è etichetta + blocco
+        cella.append(Object.assign(document.createElement('span'), { className: 'lim-num', textContent: `${fmtEsatto(c.resta)} su ${fmtEsatto(c.max)}` }), barra,
+          c.testo + (c.ieri != null ? ` · ieri a quest'ora ${fmtEsatto(c.ieri)}` : ''));
+        td.append(cella);
+        if (c.stato !== 'ok') td.className = c.stato;
+      } else td.textContent = '—';
+      tr.append(td);
+    }
+    tb.append(tr);
+  }
+  const av = L.celle.filter((c) => c.stato !== 'ok').sort((a, b) => (a.fine || 0) - (b.fine || 0));
+  nAv.textContent = av.length ? `Ritmo di oggi dall'azzeramento delle ${oraRoma(L.azzera)} (lettura delle ${L.ultimoTs.slice(11, 16)}); dettaglio nella scheda «Limiti risorse».`
+    : `Nessun limite finisce prima dell'azzeramento delle ${oraRoma(L.prossimo)} al ritmo di oggi (lettura delle ${L.ultimoTs.slice(11, 16)}).`;
+  for (const c of av) {
+    const li = document.createElement('li'); li.className = c.stato;
+    li.textContent = `${c.provincia}, ${nomeLim[c.k]}: restano ${fmtEsatto(c.resta)} su ${fmtEsatto(c.max)}, ${c.testo}`;
+    ul.append(li);
+  }
+  // giornata per giornata: quanto restava all'ultima lettura di ogni giornata del gioco, e quando è finito
+  const sel = document.getElementById('lim-ris');
+  if (!sel.dataset.pronto) { sel.dataset.pronto = '1'; sel.addEventListener('change', () => { limStato.ris = sel.value; disegnaLimiti(); }); }
+  const tab = document.getElementById('lim-giorni'), k = limStato.ris;
+  tab.tHead.replaceChildren(); tab.tBodies[0].replaceChildren();
+  const trh = document.createElement('tr');
+  ['Giornata del gioco', ...PROV_ORD].forEach((t) => trh.append(Object.assign(document.createElement('th'), { textContent: t })));
+  tab.tHead.append(trh);
+  for (const g of [...new Set(L.righe.map((r) => r.giorno_gioco))].sort().reverse()) {
+    const tr = document.createElement('tr');
+    tr.append(Object.assign(document.createElement('td'), { textContent: new Date(g + 'T12:00Z').toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }) + (g === L.giorno ? ' (in corso)' : '') }));
+    for (const p of PROV_ORD) {
+      const rr = L.righe.filter((r) => r.provincia === p && r.giorno_gioco === g).sort((a, b) => (a.ts < b.ts ? -1 : 1));
+      const z = rr[rr.length - 1], fin = rr.find((r) => r['limite_' + k] <= 0), td = document.createElement('td');
+      td.textContent = !z ? '—' : fin ? 'finito alle ' + fin.ts.slice(11, 16) : fmtN(z['limite_' + k]) + ' alle ' + z.ts.slice(11, 16);
+      if (fin) td.className = 'bad';
+      tr.append(td);
+    }
+    tab.tBodies[0].append(tr);
+  }
+};
+
 window.eiDisegna = () => {
   window.eiQuadro();
   if (!document.getElementById('donazioni').hidden) disegnaDonazioni();
@@ -2326,6 +2688,14 @@ window.eiDisegna = () => {
   if (vis('province')) window.eiProvince();
   if (vis('indici')) window.eiIndici();
   if (vis('storico')) { lineeGiornaliero(); lineaStato(); } // ex scheda «Andamento»
+  disegnaLimiti(); // sempre: gli avvisi stanno anche in «Da fare»
+  if (vis('gettito')) disegnaGettito();
+  // sul pulsante «Da fare»: quante province hanno avvisi «Stanotte» e quanti limiti sono finiti o finiscono entro un'ora
+  const bDa = document.getElementById('t-dafare');
+  const urg = new Set([...document.querySelectorAll('#allarmi-gruppi details:first-of-type .pill.bad')].length
+    ? [...document.querySelectorAll('#allarmi-gruppi details:first-of-type li b')].map((b) => b.textContent) : []).size
+    + document.querySelectorAll('#lim-avvisi-lista li.bad').length;
+  bDa.replaceChildren('Da fare', ...(urg ? [Object.assign(document.createElement('span'), { className: 'conta', textContent: String(urg), title: 'Avvisi urgenti' })] : []));
 };
 dash.onData(() => window.eiDisegna());
 </script>

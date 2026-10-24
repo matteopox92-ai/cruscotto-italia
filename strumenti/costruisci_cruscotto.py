@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from giornata_it import di_mezzanotte, gettito_tra, giorno_gioco, istante  # noqa: E402
 
 PROV = ["Venezia", "Lombardia", "Marsiglia", "Napoli", "Roma", "Firenze", "Palermo"]
+LIM5 = ("diamante", "pelle", "oro", "petrolio", "nte")  # ordine del riquadro «Limiti delle risorse provinciali»
 NOMI_GIOCO = {"VENEZIA": "Venezia", "LOMBARDIA": "Lombardia", "MARSIGLIA": "Marsiglia", "NAPOLI": "Napoli",
               "ROMA": "Roma", "FIRENZE": "Firenze", "PALERMO": "Palermo"}
 
@@ -144,6 +145,8 @@ def righe_orarie(foto, gettito, don_lett, quando):
         riga = {"ts": ts, "provincia": nome, "data_it": data_it, "giorno_gioco": giorno_gioco,
                 **{"tesoro_" + ("eur" if k == "denaro" else k): gioco_num(x) for k, x in zip(RIS5, pr["tes"])},
                 "tassazioni_oggi": g.get("tassazioniOggi")}
+        if pr.get("lim"):  # quanto resta dei limiti giornalieri della provincia (giornata del gioco, dal 24/10/2026)
+            riga.update({"limite_" + k: v for k, v in zip(LIM5, pr["lim"])})
         if oggi:
             riga.update({"gettito_oggi_" + ("eur" if k == "denaro" else k): oggi.get(k) for k in RIS5})
         elif g.get("denaroOggi") is not None or g.get("giorni"):
@@ -173,7 +176,7 @@ def ora_lettura(foto, file_foto):
 def aggiungi_orario(vecchie, nuove):
     """Aggiunge le righe di una lettura se non ci sono già (stessa ora, o stessi numeri nello stesso giorno)."""
     firma = lambda r: (r["provincia"], r.get("data_it"), r.get("tesoro_eur"), r.get("gettito_oggi_eur"),
-                       r.get("tassazioni_oggi"), r.get("donazioni_oggi_eur"))
+                       r.get("tassazioni_oggi"), r.get("donazioni_oggi_eur"), r.get("limite_diamante"), r.get("limite_oro"))
     gia = {(r["provincia"], r["ts"]) for r in vecchie} | {firma(r) for r in vecchie}
     for r in nuove:
         if (r["provincia"], r["ts"]) not in gia and firma(r) not in gia:
@@ -339,6 +342,7 @@ def main(xlsx, stat_dir, out_dir):
             "bonus_diamante": int(pr["bon"][0]), "bonus_pelle": int(pr["bon"][1]), "bonus_oro": int(pr["bon"][2]),
             "bonus_petrolio": int(pr["bon"][3]), "bonus_nte": int(pr["bon"][4]),
             "data": oggi_data,
+            **({"limite_" + k: v for k, v in zip(LIM5, pr["lim"])} if pr.get("lim") else {}),
         })
         # edifici che mancano all'indice successivo secondo il gioco («+9 edifici → Indice 6»): più preciso del modello a fasce
         for ed, k in (("scuole", "sc"), ("basi", "ba"), ("strade", "st"), ("ospedali", "os")):
