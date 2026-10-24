@@ -1,10 +1,10 @@
 {
- "data": "2026-10-24 ora 18:17",
+ "data": "2026-10-24 ora 19:22",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 295,
+   "gioc": 297,
    "fab": 79,
    "gov": "Laisius Mathias",
    "ind": [
@@ -14,11 +14,11 @@
     10
    ],
    "tes": [
-    "22.795.947",
+    "22.135.947",
     "57926",
-    "58413",
-    "39444",
-    "66479"
+    "33933",
+    "37644",
+    "63479"
    ],
    "bon": [
     "14",
@@ -43,23 +43,23 @@
     "prossimo": "+94 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
-    "n": 357,
+    "n": 363,
     "indice": 10,
-    "prossimo": "+233 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
+    "prossimo": "+227 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
    },
    "man": [
-    "4.268.700",
+    "4.288.500",
     "14184",
-    "4910.4",
-    "15069",
-    "17346"
+    "4989.6",
+    "15123",
+    "17436"
    ],
    "slug": "Venedik"
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 274,
-   "fab": 115,
+   "gioc": 276,
+   "fab": 116,
    "gov": "A",
    "ind": [
     9,
@@ -84,7 +84,7 @@
    "sc": {
     "n": 165,
     "indice": 9,
-    "prossimo": "+178 edifici → Indice 10 (+20%)"
+    "prossimo": "+179 edifici → Indice 10 (+20%)"
    },
    "ba": {
     "n": 35,
@@ -112,7 +112,7 @@
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 51,
+   "gioc": 52,
    "fab": 18,
    "gov": "BULL 1515",
    "ind": [
@@ -126,7 +126,7 @@
     "15340",
     "27317",
     "42683",
-    "26899"
+    "36899"
    ],
    "bon": [
     "12",
@@ -166,7 +166,7 @@
   },
   {
    "p": "NAPOLI",
-   "gioc": 272,
+   "gioc": 274,
    "fab": 93,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -220,7 +220,7 @@
   },
   {
    "p": "ROMA",
-   "gioc": 271,
+   "gioc": 272,
    "fab": 130,
    "gov": "ORK IL ROSSO",
    "ind": [
@@ -274,7 +274,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 212,
+   "gioc": 211,
    "fab": 76,
    "gov": "Edda",
    "ind": [
@@ -285,10 +285,10 @@
    ],
    "tes": [
     "3.293.401",
-    "688291",
+    "53291",
     "13508",
     "17838",
-    "105250"
+    "73250"
    ],
    "bon": [
     "13",
@@ -328,8 +328,8 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 207,
-   "fab": 96,
+   "gioc": 211,
+   "fab": 99,
    "gov": "generale romano",
    "ind": [
     4,
@@ -381,5 +381,5 @@
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-24T16:18:18Z"
+ "letto_il": "2026-10-24T17:22:59Z"
 }
