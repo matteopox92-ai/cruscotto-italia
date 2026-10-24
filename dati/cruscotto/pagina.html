@@ -41,7 +41,6 @@
 #tabella-comprare tr.sub td, #tabella-comprare tfoot td { font-weight: var(--cds-font-weight-medium); }
 #tabella-comprare tfoot tr:last-child td { border-top: 2px solid var(--color-border-line); }
 #tabella-comprare tr.manda td { font-weight: var(--cds-font-weight-medium); color: var(--color-warn); }
-#tabella-comprare td:nth-child(3) { text-align: left; }
 #autonomia tr.sub td { color: var(--color-fg-muted); }
 #autonomia .au-tit { margin: var(--cds-gap-sm) 0 0; font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); }
 .ei-testa-riga { display: flex; justify-content: space-between; align-items: start; gap: var(--cds-gap-sm); flex-wrap: wrap; }
@@ -97,8 +96,8 @@
 .ei-gruppo ul { margin: var(--cds-gap-xs) 0 var(--cds-gap-sm); }
 .ei-gruppo li b { font-weight: var(--cds-font-weight-medium); }
 .ei-gruppo li span + span::before { content: " · "; color: var(--color-fg-muted); }
-/* «Da comprare»: vista compatta (niente Cosa, Edifici, Indice, Notti, Valore) */
-#tabella-comprare table.compatta :is(th, td):is(:nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6), :nth-child(13)) { display: none; }
+/* «Da comprare»: vista compatta (niente Edifici, Indice, Notti, Valore) */
+#tabella-comprare table.compatta :is(th, td):is(:nth-child(3), :nth-child(4), :nth-child(5), :nth-child(12)) { display: none; }
 /* tabelle larghe come schede sul telefono */
 @media (max-width: 640px) {
   .ei table.schede thead { display: none; }
@@ -175,11 +174,11 @@
       </div>
       <div class="ei-scroll">
         <table id="gt-tab" class="schede">
-          <thead><tr><th>Voce</th><th>Oggi finora</th><th>Ieri alla stessa ora</th><th>Differenza</th><th>Ieri a fine giornata</th><th>Proiezione di oggi</th></tr></thead>
+          <thead><tr><th>Voce</th><th>Oggi finora</th><th>Ieri alla stessa ora</th><th>Differenza</th><th>Ieri a fine giornata</th><th>Proiezione di oggi</th><th>Manutenzione: a quest'ora / del giorno</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
-      <p class="note">Giornata italiana 00:00–24:00, come DEF e bollettino. <b>Gettito</b> = tasse dalla lettura di mezzanotte; <b>donazioni</b> = dei giocatori, per data italiana. <b>Proiezione</b> = oggi finora + quello che ieri è entrato dopo la stessa ora (ieri a fine giornata − ieri alla stessa ora): vale se il resto della giornata va come ieri. <b>Saldo</b> = gettito + donazioni in denaro − manutenzione − confini di un giorno. Si aggiorna a ogni lettura oraria.</p>
+      <p class="note">Giornata italiana 00:00–24:00, come DEF e bollettino. <b>Gettito</b> = tasse dalla lettura di mezzanotte; <b>donazioni</b> = dei giocatori, per data italiana. <b>Proiezione</b> = oggi finora + quello che ieri è entrato dopo la stessa ora (ieri a fine giornata − ieri alla stessa ora): vale se il resto della giornata va come ieri. <b>Saldo</b> = gettito + donazioni in denaro − manutenzione − confini di un giorno. <b>Manutenzione</b> (righe del gettito) = quella di un giorno delle province scelte, Napoli esclusa perché nel piano non paga, divisa in parti uguali sulle 24 ore: «a quest'ora» è la parte fino all'ultima lettura; la proiezione è <span class="ok">verde</span> se supera la manutenzione del giorno, <span class="bad">rossa</span> se resta sotto. Si aggiorna a ogni lettura.</p>
     </div>
     <div class="ei-card" id="gt-ore">
       <h2 id="gt-ore-tit">Ora per ora: oggi e ieri</h2>
@@ -187,7 +186,7 @@
         <label>Voce<select id="gt-voce" aria-label="Voce"><option value="gettito">Gettito (tasse)</option><option value="don_stato">Donazioni allo Stato</option><option value="don_prov">Donazioni alle province</option></select></label>
         <label>Risorsa<select id="gt-ris" aria-label="Risorsa"><option value="eur">Denaro</option><option value="pelle">Pelle</option><option value="oro">Oro</option><option value="petrolio">Petrolio</option><option value="nte">NTE</option><option value="valore">Valore totale</option></select></label>
       </div>
-      <p class="note">Somma dalla mezzanotte, lettura per lettura: linea piena oggi, tratteggiata ieri, punteggiata la proiezione fino a mezzanotte.</p>
+      <p class="note">Somma dalla mezzanotte, lettura per lettura: linea piena oggi, tratteggiata ieri, punteggiata la proiezione fino a mezzanotte. Per il gettito c'è anche la retta della <b>manutenzione</b> (quella di un giorno, Napoli esclusa, divisa in parti uguali sulle ore; in denaro anche «+ confini»): se oggi o la proiezione stanno sopra, il gettito copre la manutenzione.</p>
       <div class="ei-chart" id="gt-grafico"></div>
     </div>
     <div class="ei-card">
@@ -285,7 +284,7 @@
   <section id="piano" class="ei-pane" hidden>
     <div class="ei-tiles">
       <div class="ei-tile"><span class="lab">Giorno del piano</span><span class="big" data-source="piano_stato" data-field="giorno">—</span><span class="sub" data-source="piano_stato" data-field="data">—</span></div>
-      <div class="ei-tile"><span class="lab">Saldo accumulato previsto</span><span class="big" data-source="piano_stato" data-field="accumulato">—</span><span class="sub">risparmio di Napoli − spese, fino a oggi</span></div>
+      <div class="ei-tile"><span class="lab">Saldo accumulato previsto</span><span class="big" data-source="piano_stato" data-field="accumulato">—</span><span class="sub">risparmio di Napoli − ricostruzione, fino a oggi</span></div>
       <div class="ei-tile"><span class="lab">Saldo a notte (regime)</span><span class="big" data-source="obiettivi" data-field="saldo_notte">—</span><span class="sub ei-pareggio" data-source="obiettivi">—</span></div>
       <div class="ei-tile"><span class="lab">Saldo risorse a notte</span><span class="big ei-ris" data-source="obiettivi">—</span><span class="sub ei-ris-sub" data-source="obiettivi">—</span></div>
       <div class="ei-tile"><span class="lab">Prossima decisione</span><span class="big" data-source="piano_stato" data-field="prossima_decisione">—</span><span class="sub ei-esito" data-source="piano_stato">—</span></div>
@@ -325,10 +324,10 @@
     </div>
     <div class="ei-card" id="piano-calendario">
       <h2>Calendario delle prime due settimane</h2>
-      <p class="note">Saldo = mantenimento che Napoli non paga − (costruzioni + ricostruzione di Napoli + mantenimento in più di Palermo), in soldi. Le strade delle decisioni non sono incluse.</p>
+      <p class="note">Solo il piano di Napoli (dal 25/10/2026: i nuovi ospedali di Palermo non sono stati fatti e sono tolti dalla proiezione). Saldo = mantenimento che Napoli non paga − ricostruzione di Napoli (strade e ospedali persi ogni notte), in soldi e in risorse.</p>
       <div class="ei-scroll">
         <table data-source="piano" data-row-key="giorno">
-          <thead><tr><th data-field="giorno">Giorno</th><th data-field="data">Data</th><th data-field="napoli">Napoli</th><th data-field="palermo">Palermo</th><th data-field="speso">Spesi</th><th data-field="risparmio">Risparmiati</th><th data-field="saldo">Saldo soldi</th><th data-field="accumulato">Soldi accumulati</th><th data-field="saldo_pelle">Pelle</th><th data-field="accumulato_pelle">Pelle acc.</th><th data-field="saldo_oro">Oro</th><th data-field="accumulato_oro">Oro acc.</th><th data-field="saldo_petrolio">Petrolio</th><th data-field="accumulato_petrolio">Petrolio acc.</th><th data-field="saldo_nte">NTE</th><th data-field="accumulato_nte">NTE acc.</th></tr></thead>
+          <thead><tr><th data-field="giorno">Giorno</th><th data-field="data">Data</th><th data-field="napoli">Napoli</th><th data-field="speso">Spesi</th><th data-field="risparmio">Risparmiati</th><th data-field="saldo">Saldo soldi</th><th data-field="accumulato">Soldi accumulati</th><th data-field="saldo_pelle">Pelle</th><th data-field="accumulato_pelle">Pelle acc.</th><th data-field="saldo_oro">Oro</th><th data-field="accumulato_oro">Oro acc.</th><th data-field="saldo_petrolio">Petrolio</th><th data-field="accumulato_petrolio">Petrolio acc.</th><th data-field="saldo_nte">NTE</th><th data-field="accumulato_nte">NTE acc.</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -420,7 +419,7 @@
     </div>
     <div class="ei-card" id="tabella-comprare">
       <h2>Da comprare per restare al riparo dal calo</h2>
-      <p class="note">Province ed edifici con meno di 2 notti al calo, o con l'indice già sceso sotto quello fissato (sviluppo e salute): quanti edifici comprare e quanto costano in denaro e risorse (valore = denaro più risorse ai prezzi medi di mercato). Se l'indice è sceso ci sono due righe: «riportarlo a X» (edifici per tornare all'indice fissato) e «+ margine di 2 notti» (quelli in più per poter saltare 2 notti senza riscendere). Sotto ogni provincia il totale e la riga «Da mandare»: quello che manca nel tesoro della provincia per comprarli tenendo da parte la manutenzione di stanotte (Napoli: senza manutenzione, nel piano non paga). In fondo i totali per edificio e il totale generale. Le soglie vengono dalla classifica mondiale e si spostano quando costruiscono gli altri Paesi.</p>
+      <p class="note">Province ed edifici con meno di 2 notti al calo, o con l'indice già sceso sotto quello fissato (sviluppo e salute): quanti edifici comprare e quanto costano in denaro e risorse (valore = denaro più risorse ai prezzi medi di mercato). Se l'indice è sceso, «Da comprare» somma gli edifici per tornare all'indice fissato e quelli in più per poter saltare 2 notti senza riscendere. Sotto ogni provincia il totale e la riga «Da mandare»: quello che manca nel tesoro della provincia per comprarli tenendo da parte la manutenzione di stanotte (Napoli: senza manutenzione, nel piano non paga). In fondo i totali per edificio e il totale generale. Le soglie vengono dalla classifica mondiale e si spostano quando costruiscono gli altri Paesi.</p>
       <div class="ei-filtri">
         <div class="st-campo" role="group" aria-label="Edifici"><span>Edifici</span><span class="ei-chips" id="dc-ed"><button type="button" data-v="tutti">Tutti</button><button type="button" data-v="strade,ospedali">Strade e ospedali</button><button type="button" data-v="strade">Strade</button><button type="button" data-v="ospedali">Ospedali</button><button type="button" data-v="scuole">Scuole</button><button type="button" data-v="basi">Basi</button></span></div>
         <div class="st-campo" role="group" aria-label="Vista"><span>Vista</span><span class="ei-chips" id="dc-vista"><button type="button" data-v="completa">Completa</button><button type="button" data-v="compatta">Compatta</button></span></div>
@@ -429,7 +428,7 @@
       <div class="ei-scroll">
         <table>
           <thead><tr>
-            <th>Provincia</th><th>Edificio</th><th>Cosa</th><th>Edifici</th><th>Indice</th><th>Notti al calo</th><th>Da comprare</th>
+            <th>Provincia</th><th>Edificio</th><th>Edifici</th><th>Indice</th><th>Notti al calo</th><th>Da comprare</th>
             <th>Denaro</th><th>Pelle</th><th>Oro</th><th>Petrolio</th><th>NTE</th><th>Valore</th>
           </tr></thead>
           <tbody></tbody>
@@ -487,7 +486,7 @@
       <details id="st-come">
         <summary>Come mostrarlo</summary>
         <div class="ei-filtri">
-          <div class="st-campo" role="group" aria-label="Raggruppa"><span>Raggruppa</span><span class="ei-chips" id="st-gruppo"><button type="button" data-v="ora">Ora</button><button type="button" data-v="giorno">Giorno</button><button type="button" data-v="settimana">Settimana</button><button type="button" data-v="governo">Governo</button></span></div>
+          <div class="st-campo" role="group" aria-label="Raggruppa"><span>Raggruppa</span><span class="ei-chips" id="st-gruppo"><button type="button" data-v="ora">Ogni lettura (ora)</button><button type="button" data-v="giorno">Giorno</button><button type="button" data-v="settimana">Settimana</button><button type="button" data-v="governo">Governo</button></span></div>
           <div class="st-campo" role="group" aria-label="Valori"><span>Valori</span><span class="ei-chips" id="st-vista"></span></div>
           <div class="st-campo" role="group" aria-label="Grafico"><span>Grafico</span><span class="ei-chips" id="st-tipo"><button type="button" data-v="linee">Linee</button><button type="button" data-v="barre">Barre</button><button type="button" data-v="impilate">Barre impilate</button></span></div>
           <div class="st-campo" role="group" aria-label="Asse"><span>Asse verticale</span><span class="ei-chips" id="st-asse"><button type="button" data-v="auto">Automatico</button><button type="button" data-v="zero">Da zero</button><button type="button" data-v="adatta">Adatta ai dati</button></span></div>
@@ -599,7 +598,7 @@
       </div>
 
       <div><h3>Scheda «Piano Napoli e Palermo»</h3>
-        <p>Segue il piano deciso il 21/10: Napoli non paga la manutenzione e ricostruisce ogni giorno 8 ospedali e 20 strade; Palermo sale a salute 10 subito, e alle strade ci pensa con due decisioni. <b>Giorno del piano</b> (1 di 14). <b>Saldo accumulato previsto</b>: quanto si è guadagnato finora secondo il piano, in negativo i primi giorni per la spesa iniziale e in pari dal giorno 12. <b>Saldo a notte</b>: +517.200 € quando il piano va a regime, più le risorse risparmiate. <b>Controlli di oggi</b>: i numeri del gioco confrontati con gli obiettivi. <b>Palermo cresce?</b>: fabbriche e lavori del giorno contro le soglie delle decisioni. <b>Calendario</b>: cosa fare giorno per giorno. <b>Diario</b>: una riga a ogni lettura del gioco.</p>
+        <p>Segue il piano deciso il 21/10: Napoli non paga la manutenzione e ricostruisce ogni giorno gli ospedali e le strade persi nella notte (di solito 9 e 21); per Palermo restano le due decisioni sulle strade. Dal 25/10 la proiezione conta <b>solo il piano di Napoli</b>: i nuovi ospedali di Palermo non sono stati fatti e sono tolti da calendario, saldo e pareggio. <b>Giorno del piano</b> (1 di 14). <b>Saldo accumulato previsto</b>: quanto ha reso finora il piano di Napoli (mantenimento risparmiato − ricostruzione). <b>Saldo a notte</b>: quanto rende ogni notte a regime, in soldi e in risorse. <b>Controlli di oggi</b>: i numeri del gioco confrontati con gli obiettivi. <b>Palermo cresce?</b>: fabbriche e lavori del giorno contro le soglie delle decisioni. <b>Calendario</b>: cosa fare giorno per giorno. <b>Diario</b>: una riga a ogni lettura del gioco.</p>
       </div>
 
       <div><h3>Scheda «Province»</h3>
@@ -1292,7 +1291,7 @@ const disegnaComprare = (ord, eds) => {
   const d = { data: tutti.data.filter((r) => scelti.includes(r.edificio)) };
   const nascosti = tutti.data.filter((r) => !scelti.includes(r.edificio));
   nota.textContent = (nascosti.length ? `Nascosti dal filtro: ${[...new Set(nascosti.map((r) => F.nomeEd[r.edificio]))].join(', ')}. ` : '') +
-    (dcStato.vista === 'compatta' ? 'Vista compatta: senza Cosa, Edifici, Indice, Notti e Valore.' : '') || 'Tutti gli edifici, tutte le colonne.';
+    (dcStato.vista === 'compatta' ? 'Vista compatta: senza Edifici, Indice, Notti e Valore.' : '') || 'Tutti gli edifici, tutte le colonne.';
   eds = eds.filter((e) => scelti.includes(e));
   const voci = ['da_comprare', 'denaro', 'pelle', 'oro', 'petrolio', 'nte', 'valore'];
   const somma = (rr) => Object.fromEntries(voci.map((k) => [k, rr.reduce((s, r) => s + r[k], 0)]));
@@ -1305,41 +1304,89 @@ const disegnaComprare = (ord, eds) => {
   const numeri = (s) => [['+' + F.fmtN(s.da_comprare)], [F.fmtE(s.denaro)], [F.fmtN(s.pelle)], [F.fmtN(s.oro)], [F.fmtN(s.petrolio)],
     [F.fmtN(s.nte)], [F.fmtE(s.valore)]];
   const vuote = (n) => Array(n).fill(['']);
-  if (!d.data.length) { riga(tb, [[(nascosti.length ? 'Per questi edifici nessuna' : 'Nessuna') + ' provincia sotto 2 notti al calo o con un indice sceso.'], ...vuote(12)]); return; }
+  if (!d.data.length) { riga(tb, [[(nascosti.length ? 'Per questi edifici nessuna' : 'Nessuna') + ' provincia sotto 2 notti al calo o con un indice sceso.'], ...vuote(11)]); return; }
   // «Da mandare»: stesso conto del calcolo da_mandare_indici, ma solo sugli edifici scelti nel filtro
   const manda = { status: 'ok', data: window.eiDaMandare(d.data, dash.data('oggi').data || []) };
   for (const p of ord) {
-    const rr = d.data.filter((r) => r.provincia === p).sort((a, b) => eds.indexOf(a.edificio) - eds.indexOf(b.edificio));
-    if (!rr.length) continue;
+    const rp = d.data.filter((r) => r.provincia === p);
+    if (!rp.length) continue;
+    // una riga per edificio (senza la colonna «Cosa», tolta su richiesta dell'utente del 25/10/2026):
+    // se l'indice è sceso, «riportarlo all'indice fissato» e «+ margine di 2 notti» sono sommati
+    const rr = eds.filter((e) => rp.some((r) => r.edificio === e)).map((e) => { const xs = rp.filter((r) => r.edificio === e); return { ...xs[0], ...somma(xs) }; });
     for (const r of rr) {
-      const primo = r.cosa !== 'margine'; // nella seconda riga di un indice sceso non ripeto edifici, indice e notti
-      riga(tb, [[primo ? r.provincia : ''], [primo ? F.nomeEd[r.edificio] : ''], [r.testo],
-        [primo ? F.fmtN(r.edifici) : ''], [primo ? (r.indice > 10 ? '10+' : String(r.indice)) + (r.indice_fisso != null ? ' (fissato ' + r.indice_fisso + ')' : '') : ''],
-        [primo ? (r.sceso ? 'sceso' : String(r.notti_al_calo)) : '', r.sceso || r.notti_al_calo <= 1 ? 'bad' : 'warn'], ...numeri(r)]);
+      riga(tb, [[r.provincia], [F.nomeEd[r.edificio]], [F.fmtN(r.edifici)], [(r.indice > 10 ? '10+' : String(r.indice)) + (r.indice_fisso != null ? ' (fissato ' + r.indice_fisso + ')' : '')],
+        [r.sceso ? 'sceso' : String(r.notti_al_calo), r.sceso || r.notti_al_calo <= 1 ? 'bad' : 'warn'], ...numeri(r)]);
     }
-    if (rr.length > 1) riga(tb, [['Totale ' + p], ...vuote(5), ...numeri(somma(rr))], 'sub');
+    if (rr.length > 1) riga(tb, [['Totale ' + p], ...vuote(4), ...numeri(somma(rr))], 'sub');
     const m = manda.status === 'ok' ? manda.data.find((x) => x.provincia === p) : null;
     const zero = (x) => (x ? F.fmtN(x) : '—');
-    if (m) riga(tb, [['Da mandare a ' + p], [''], [p === 'Napoli' ? 'tolto il tesoro' : 'tolto il tesoro, tenuta la manutenzione di stanotte'], ...vuote(4),
+    if (m) riga(tb, [['Da mandare a ' + p], ...vuote(5),
       [m.denaro ? F.fmtE(m.denaro) : (m.pelle || m.oro || m.petrolio || m.nte ? '—' : 'niente, basta il tesoro')], [zero(m.pelle)], [zero(m.oro)], [zero(m.petrolio)], [zero(m.nte)], ['']], 'manda');
   }
   for (const e of eds) {
     const rr = d.data.filter((r) => r.edificio === e);
-    if (rr.length) riga(tf, [['Totale ' + F.nomeEd[e]], ...vuote(5), ...numeri(somma(rr))]);
+    if (rr.length) riga(tf, [['Totale ' + F.nomeEd[e]], ...vuote(4), ...numeri(somma(rr))]);
   }
-  riga(tf, [['Totale generale'], ...vuote(5), ...numeri(somma(d.data))]);
+  riga(tf, [['Totale generale'], ...vuote(4), ...numeri(somma(d.data))]);
 };
 window.eiProvince = disegnaProvince;
 window.eiIndici = disegnaIndici;
 </script>
 
 <script>
+// proiezione del solo piano Napoli (richiesta dell'utente del 25/10/2026: gli ospedali di Palermo non sono stati fatti).
+// Dal calendario si tolgono i nuovi ospedali di Palermo del giorno 1 e la loro manutenzione di ogni notte (3% del costo);
+// verificato sui dati: giorno 3 oro 5.293,2 − 9 ospedali di Napoli × 440 − 76 × 440 × 3% = +330, come nel calendario.
+const pianoPalermo = (obiettivi, costi) => {
+  const o = obiettivi[0] || {}, c = costi.find((r) => r.edificio === 'ospedali') || {}, n = o.palermo_ospedali_nuovi || 0;
+  return Object.fromEntries(['denaro', ...RIS].map((k) => [k, { una: n * (c[k] || 0), notte: n * (c[k] || 0) * 0.03 }]));
+};
+dash.calc('piano_napoli', {
+  title: 'Calendario del piano, solo Napoli',
+  description: 'Il calendario del piano senza i nuovi ospedali di Palermo e la loro manutenzione: spesa, risparmio, saldo e accumulato in soldi e risorse.',
+  inputs: ['piano', 'obiettivi', 'costi'],
+  fn: (piano, obiettivi, costi) => {
+    const pal = pianoPalermo(obiettivi, costi), acc = { denaro: 0, pelle: 0, oro: 0, petrolio: 0, nte: 0 };
+    return [...piano].sort((a, b) => a.giorno - b.giorno).map((r) => {
+      const via = (k) => (r.giorno === 1 ? pal[k].una : 0) + pal[k].notte;
+      const speso = r.speso - via('denaro'), saldo = r.risparmio - speso;
+      acc.denaro += saldo;
+      const out = { ...r, speso, saldo, accumulato: acc.denaro };
+      for (const k of RIS) { out['saldo_' + k] = r['saldo_' + k] + via(k); acc[k] += out['saldo_' + k]; out['accumulato_' + k] = acc[k]; }
+      return out;
+    });
+  },
+});
+dash.calc('obiettivi_napoli', {
+  title: 'Saldo a notte del piano, solo Napoli',
+  description: 'Saldo a regime senza la manutenzione dei nuovi ospedali di Palermo, valore delle risorse ai prezzi del piano e giorno in cui ogni voce va in pari.',
+  inputs: ['obiettivi', 'costi', 'piano_napoli'],
+  fn: (obiettivi, costi, piano_napoli) => {
+    const o = obiettivi[0]; if (!o) return [];
+    const pal = pianoPalermo(obiettivi, costi), pr = o.prezzi_piano || {};
+    const out = { ...o, saldo_notte: o.saldo_notte + pal.denaro.notte };
+    for (const k of RIS) out['saldo_notte_' + k] = o['saldo_notte_' + k] + pal[k].notte;
+    out.valore_risorse_notte = RIS.reduce((s, k) => s + out['saldo_notte_' + k] * (pr[k] || 0), 0);
+    out.saldo_totale_notte = out.saldo_notte + out.valore_risorse_notte;
+    // in pari: primo giorno con l'accumulato ≥ 0 (dopo il calendario si prosegue con il saldo a notte)
+    const pari = (k) => {
+      const camp = k === 'denaro' ? 'accumulato' : 'accumulato_' + k, s = k === 'denaro' ? out.saldo_notte : out['saldo_notte_' + k];
+      const r = piano_napoli.find((x) => x[camp] >= 0); if (r) return r.giorno;
+      const z = piano_napoli[piano_napoli.length - 1]; if (!z || s <= 0) return 'mai';
+      return z.giorno + Math.ceil(-z[camp] / s);
+    };
+    out.giorno_pareggio = pari('denaro');
+    for (const k of RIS) out['pareggio_' + k] = pari(k);
+    return [out];
+  },
+});
+
 dash.calc('piano_stato', {
   title: 'Stato del piano',
-  description: 'Giorno del piano, saldo previsto fino a oggi e prossima decisione, dall\'ultima riga del diario.',
-  inputs: ['obiettivi', 'diario', 'piano'],
-  fn: (obiettivi, diario, piano) => {
-    const o = obiettivi[0];
+  description: 'Giorno del piano, saldo previsto fino a oggi (solo Napoli) e prossima decisione, dall\'ultima riga del diario.',
+  inputs: ['obiettivi', 'diario', 'piano_napoli'],
+  fn: (obiettivi, diario, piano_napoli) => {
+    const o = obiettivi[0], piano = piano_napoli;
     const ultima = diario.map((r) => r.data).sort().slice(-1)[0];
     if (!o || !ultima) return [];
     const giorno = Math.round((new Date(ultima) - new Date(o.inizio)) / 86400000) + 1;
@@ -1432,7 +1479,7 @@ const corpo = (sel, righe, celle, colore) => {
 const segno = (x) => x == null ? '—' : (x >= 0 ? '+' : '−') + Math.abs(Math.round(x)).toLocaleString('it-IT', { useGrouping: 'always' });
 const giornoIt = (d) => new Date(d).toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'numeric', timeZone: 'UTC' });
 window.eiPiano = () => {
-  const st = dash.data('piano_stato'), ob = dash.data('obiettivi');
+  const st = dash.data('piano_stato'), ob = dash.data('obiettivi_napoli');
   const set = (src, field, txt) => { const el = document.querySelector(`#piano [data-source="${src}"][data-field="${field}"]`); if (el) el.textContent = txt; };
   if (st.status === 'ok' && st.data.length) {
     const r = st.data[0];
@@ -1444,7 +1491,7 @@ window.eiPiano = () => {
   }
   if (ob.status === 'ok' && ob.data.length) {
     set('obiettivi', 'saldo_notte', segno(ob.data[0].saldo_notte));
-    document.querySelector('#piano .ei-pareggio').textContent = 'spesa del primo giorno ripagata al giorno ' + ob.data[0].giorno_pareggio;
+    document.querySelector('#piano .ei-pareggio').textContent = ob.data[0].giorno_pareggio === 1 ? 'in attivo dal primo giorno (solo Napoli)' : 'spese ripagate al giorno ' + ob.data[0].giorno_pareggio;
     const o = ob.data[0];
     document.querySelector('#piano .ei-ris').textContent = `${segno(o.saldo_notte_pelle)} pelle · ${segno(o.saldo_notte_oro)} oro · ${segno(o.saldo_notte_petrolio)} petrolio · ${segno(o.saldo_notte_nte)} NTE`;
     document.querySelector('#piano .ei-ris-sub').textContent = `valgono ${segno(o.valore_risorse_notte)}; con i soldi ${segno(o.saldo_totale_notte)} a notte. In pari: pelle giorno ${o.pareggio_pelle}, NTE ${o.pareggio_nte}, petrolio ${o.pareggio_petrolio}, oro ${o.pareggio_oro}`;
@@ -1469,13 +1516,13 @@ window.eiPiano = () => {
   const cr = dash.data('piano_crescita');
   if (cr.status === 'ok') corpo('#piano-crescita', cr.data, (r) => [r.misura, r.partenza, r.oggi, r.soglia_1, r.soglia_2],
     (r, i) => i === 2 && r.soglia_1 != null && r.oggi != null ? (r.oggi >= r.soglia_2 ? 'ok' : r.oggi >= r.soglia_1 ? 'warn' : '') : '');
-  const pi = dash.data('piano'), oggiG = st.status === 'ok' && st.data.length ? st.data[0].giorno : 0;
-  if (pi.status === 'ok') corpo('#piano-calendario', pi.data, (r) => [r.giorno, giornoIt(r.data), r.napoli, r.palermo,
+  const pi = dash.data('piano_napoli'), oggiG = st.status === 'ok' && st.data.length ? st.data[0].giorno : 0;
+  if (pi.status === 'ok') corpo('#piano-calendario', pi.data, (r) => [r.giorno, giornoIt(r.data), r.napoli,
     Math.round(r.speso).toLocaleString('it-IT'), Math.round(r.risparmio).toLocaleString('it-IT'), segno(r.saldo), segno(r.accumulato),
     segno(r.saldo_pelle), segno(r.accumulato_pelle), segno(r.saldo_oro), segno(r.accumulato_oro),
     segno(r.saldo_petrolio), segno(r.accumulato_petrolio), segno(r.saldo_nte), segno(r.accumulato_nte)],
     (r, i) => {
-      const campi = [null, null, null, null, null, null, 'saldo', 'accumulato', 'saldo_pelle', 'accumulato_pelle', 'saldo_oro', 'accumulato_oro',
+      const campi = [null, null, null, null, null, 'saldo', 'accumulato', 'saldo_pelle', 'accumulato_pelle', 'saldo_oro', 'accumulato_oro',
         'saldo_petrolio', 'accumulato_petrolio', 'saldo_nte', 'accumulato_nte'];
       if (campi[i]) return r[campi[i]] >= 0 ? 'ok' : 'bad';
       return i === 0 && r.giorno === oggiG ? 'warn' : '';
@@ -1648,8 +1695,10 @@ dash.calc('orario_lungo', {
 });
 
 // ——— Storico: cosa guardare (parametri della dashboard: nessuna query li usa, cambiano solo il disegno) ———
-const ST_BASE = { st_dal: null, st_al: null, st_gov: null, st_prov: PROVS, st_modo: 'voci', st_voci: ['gettito', 'costi', 'saldo'],
-  st_misura: 'gettito', st_ris: 'eur', st_gruppo: 'giorno', st_vista: 'valore', st_tipo: 'linee', st_asse: 'auto', st_picchi: 'no',
+// di base un punto per lettura (richiesta dell'utente del 25/10/2026: «un punto ogni ora o mezz'ora, per vedere l'andamento»);
+// costi e saldo si pagano una volta a notte: compaiono raggruppando per giorno
+const ST_BASE = { st_dal: null, st_al: null, st_gov: null, st_prov: PROVS, st_modo: 'voci', st_voci: ['gettito', 'don_stato', 'donazioni', 'costi', 'saldo'],
+  st_misura: 'gettito', st_ris: 'eur', st_gruppo: 'ora', st_vista: 'valore', st_tipo: 'linee', st_asse: 'auto', st_picchi: 'no',
   st_prima: 'no', st_somma: 'no', st_nasc: [] };
 const stP = () => { const q = dash.params ? dash.params() : {}; const o = { ...ST_BASE }; for (const k in q) if (q[k] != null && k in ST_BASE) o[k] = q[k]; return o; };
 const stSet = (o) => dash.setParams(o);
@@ -1766,7 +1815,7 @@ const unisci = (giorni) => {
     if (q === 'oggi') return stSet({ st_dal: ultimo, st_al: ultimo, st_gov: null, st_gruppo: 'ora' });
     if (q === 'ieri') return stSet({ st_dal: chiusa, st_al: chiusa, st_gov: null, st_gruppo: 'ora' });
     const n = +q;
-    stSet({ st_dal: n ? isoMeno(ultimo, n - 1) : date[0], st_al: ultimo, st_gov: null, ...(stP().st_gruppo === 'ora' ? { st_gruppo: 'giorno' } : {}) });
+    stSet({ st_dal: n ? isoMeno(ultimo, n - 1) : date[0], st_al: ultimo, st_gov: null }); // il raggruppamento resta quello scelto (ora per ora di base)
   }));
   for (const [id, chiave] of [['st-dal', 'st_dal'], ['st-al', 'st_al']]) {
     const el = document.getElementById(id);
@@ -1961,13 +2010,16 @@ const disegnaStorico = () => {
 
   // periodo
   const tutteDate = [...new Set(sto.data.map((r) => r.data))].sort();
-  const dal = p.st_dal || tutteDate[0], al = p.st_al || tutteDate[tutteDate.length - 1];
+  // ora per ora: «Tutto» parte dal primo giorno con letture orarie (21/10/2026), non dal 28/09 del DEF
+  const orIni = (() => { const d = dash.data('orario'); return ore && d.status === 'ok' && d.data.length ? d.data.reduce((m, r) => (r.data_it < m ? r.data_it : m), '9999-12-31') : null; })();
+  const dalBase = orIni && orIni > tutteDate[0] ? orIni : tutteDate[0];
+  const dal = p.st_dal || dalBase, al = p.st_al || tutteDate[tutteDate.length - 1];
   for (const [id, v] of [['st-dal', dal], ['st-al', al]]) { const el = document.getElementById(id); if (el !== document.activeElement) el.value = v; }
   const ultimo = tutteDate[tutteDate.length - 1], chiusa = ultimaChiusa(tutteDate);
   document.querySelectorAll('#st-preset button').forEach((b) => {
     const q = b.dataset.p, n = +q;
     const ok = !p.st_gov && (q === 'oggi' ? dal === ultimo && al === ultimo : q === 'ieri' ? dal === chiusa && al === chiusa && chiusa !== ultimo
-      : al === ultimo && (n ? dal === isoMeno(ultimo, n - 1) : dal === tutteDate[0]));
+      : al === ultimo && (n ? dal === isoMeno(ultimo, n - 1) : dal === tutteDate[0] || dal === dalBase));
     b.setAttribute('aria-pressed', String(ok));
   });
   const aperti = new Set(sto.data.filter((r) => r.provvisorio).map((r) => r.data));
@@ -2487,22 +2539,29 @@ const disegnaGettito = () => {
   const costi = (dash.data('oggi').data || []).filter((r) => gtStato.prov.has(r.provincia)).reduce((s, r) => s + (r.manutenzione_eur || 0) + (r.confini_eur || 0), 0);
   const costiIeri = (() => { const rp = sto.filter((r) => r.data === ieri && gtStato.prov.has(r.provincia)); return rp.length ? rp.reduce((s, r) => s + (r.manutenzione_eur || 0) + (r.confini_eur || 0), 0) : costi; })();
   const fmtV = (k) => (k === 'eur' || k === 'valore' ? fmtE : fmtEsatto);
-  const riga = (nome, oggiV, ieriV, fineV, k, cl) => {
+  // manutenzione di un giorno delle province scelte, Napoli esclusa (nel piano non paga): riferimento per il gettito
+  const og = (dash.data('oggi').data || []).filter((r) => gtStato.prov.has(r.provincia));
+  const manut = {}; for (const k of GT_RIS) manut[k] = og.filter((r) => r.provincia !== 'Napoli').reduce((s, r) => s + (r['manutenzione_' + k] || 0), 0);
+  manut.valore = gtValore(manut, P);
+  const confini = og.reduce((s, r) => s + (r.confini_eur || 0), 0), quota = L.min / 1440; // parte della giornata passata all'ultima lettura
+  const riga = (nome, oggiV, ieriV, fineV, k, cl, M) => {
     const proj = oggiV == null || ieriV == null || fineV == null ? null : oggiV + Math.max(0, fineV - ieriV);
     const diff = oggiV == null || ieriV == null ? null : oggiV - ieriV;
     const pct = diff == null || !ieriV ? '' : ' (' + (diff >= 0 ? '+' : '−') + Math.abs(Math.round(diff / ieriV * 100)) + '%)';
     const f = fmtV(k), tr = document.createElement('tr'); if (cl) tr.className = cl;
-    [[nome], [f(oggiV)], [f(ieriV)], [diff == null ? '—' : (diff >= 0 ? '+' : '−') + f(Math.abs(diff)) + pct, diff == null ? '' : diff >= 0 ? 'ok' : 'bad'], [f(fineV)], [f(proj)]].forEach(([t, c], i) => {
-      const td = document.createElement('td'); td.textContent = t; td.dataset.label = ['Voce', 'Oggi finora', 'Ieri alla stessa ora', 'Differenza', 'Ieri a fine giornata', 'Proiezione di oggi'][i]; if (c) td.className = c; tr.append(td);
+    const cm = M == null ? '' : proj == null ? '' : proj >= M ? 'ok' : 'bad'; // proiezione sopra o sotto la manutenzione del giorno
+    [[nome], [f(oggiV), M == null || oggiV == null ? '' : oggiV >= M * quota ? 'ok' : 'bad'], [f(ieriV)], [diff == null ? '—' : (diff >= 0 ? '+' : '−') + f(Math.abs(diff)) + pct, diff == null ? '' : diff >= 0 ? 'ok' : 'bad'], [f(fineV)], [f(proj), cm],
+      [M == null ? '' : f(M * quota) + ' / ' + f(M)]].forEach(([t, c], i) => {
+      const td = document.createElement('td'); td.textContent = t; td.dataset.label = ['Voce', 'Oggi finora', 'Ieri alla stessa ora', 'Differenza', 'Ieri a fine giornata', 'Proiezione di oggi', 'Manutenzione: a quest\'ora / del giorno'][i]; if (c) td.className = c; tr.append(td);
     });
     tb.append(tr);
     return proj;
   };
   const voce = (v, k) => [gtPrend(L, v, k), gtPrend(Y, v, k), fine[v][k]];
   const proj = {};
-  for (const k of GT_RIS) proj['g' + k] = riga('Gettito ' + gtNomi[k], ...voce('gettito', k), k);
+  for (const k of GT_RIS) proj['g' + k] = riga('Gettito ' + gtNomi[k], ...voce('gettito', k), k, '', manut[k]);
   const val = (v, l) => gtValore(l === 'fine' ? fine[v] : GT_RIS.reduce((o, k) => ({ ...o, [k]: gtPrend(l, v, k) }), {}), P);
-  riga('Gettito, valore totale', val('gettito', L), val('gettito', Y), val('gettito', 'fine'), 'valore', 'tot');
+  riga('Gettito, valore totale', val('gettito', L), val('gettito', Y), val('gettito', 'fine'), 'valore', 'tot', manut.valore);
   proj.ds = riga('Donazioni allo Stato, denaro', ...voce('don_stato', 'eur'), 'eur');
   riga('Donazioni allo Stato, valore totale', val('don_stato', L), val('don_stato', Y), val('don_stato', 'fine'), 'valore');
   proj.dp = riga('Donazioni alle province, denaro', ...voce('don_prov', 'eur'), 'eur');
@@ -2551,9 +2610,11 @@ const disegnaGettito = () => {
   if (fineY != null) sIeri.push({ min: 1440, y: fineY });
   const ultimo = sOggi[sOggi.length - 1], yS = Y ? prendi(Y) : null;
   const sProj = ultimo && yS != null ? [ultimo, ...sIeri.filter((p) => p.min > ultimo.min).map((p) => ({ min: p.min, y: ultimo.y + Math.max(0, p.y - yS) }))] : [];
-  const W = box.clientWidth, H = 240, M = { t: 12, r: 70, b: 24, l: 56 };
+  // rette di riferimento del gettito: manutenzione del giorno (e in denaro + confini) divisa in parti uguali sulle ore
+  const rif = v !== 'gettito' ? [] : [[k === 'valore' ? manut.valore : manut[k], 'manutenzione'], ...(k === 'eur' ? [[manut.eur + confini, '+ confini']] : [])].filter(([m]) => m > 0);
+  const W = box.clientWidth, H = 240, M = { t: 12, r: 84, b: 24, l: 56 };
   const x = d3.scaleLinear([0, 1440], [M.l, W - M.r]);
-  const y = d3.scaleLinear([0, d3.max([...sOggi, ...sIeri, ...sProj], (p) => p.y) || 1], [H - M.b, M.t]).nice();
+  const y = d3.scaleLinear([0, d3.max([...sOggi, ...sIeri, ...sProj, ...rif.map(([m]) => ({ y: m }))], (p) => p.y) || 1], [H - M.b, M.t]).nice();
   const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Somma dalla mezzanotte, oggi e ieri');
   svg.append('g').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).tickValues(d3.range(0, 1441, W < 500 ? 360 : 180)).tickFormat((m) => oraDi(m))).call(etichetteAsse);
   const fy = (u) => (k === 'eur' || k === 'valore' ? mil(u) : Math.abs(u) >= 1e3 ? (u / 1e3).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' k' : String(u));
@@ -2566,6 +2627,7 @@ const disegnaGettito = () => {
     const z = s[s.length - 1];
     svg.append('text').attr('x', x(z.min) + 6).attr('y', y(z.y)).attr('dy', '0.35em').attr('fill', col).style('font-size', 'var(--cds-font-size-caption)').text(nome);
   };
+  rif.forEach(([m, nome], i) => disegna([{ min: 0, y: 0 }, { min: 1440, y: m }], i ? 'var(--color-warn)' : 'var(--color-bad)', i ? '1 3' : '8 3', nome));
   disegna(sIeri, 'var(--color-fg-muted)', '5 4', 'ieri');
   disegna(sProj, dash.colors[0], '2 4', 'proiezione');
   disegna(sOggi, dash.colors[0], null, 'oggi');
@@ -2574,7 +2636,8 @@ const disegnaGettito = () => {
     .on('mousemove', (ev) => {
       const [mx] = d3.pointer(ev), m = x.invert(mx), vicino = (s) => s.length ? s[d3.leastIndex(s, (p) => Math.abs(p.min - m))] : null;
       const a = vicino(sOggi), b = vicino(sIeri), f = k === 'eur' || k === 'valore' ? fmtE : fmtN;
-      t.textContent = `${oraDi(Math.round(m))} · oggi ${a ? f(a.y) + ' (' + oraDi(a.min) + ')' : '—'} · ieri ${b ? f(b.y) + ' (' + oraDi(b.min) + ')' : '—'}`;
+      t.textContent = `${oraDi(Math.round(m))} · oggi ${a ? f(a.y) + ' (' + oraDi(a.min) + ')' : '—'} · ieri ${b ? f(b.y) + ' (' + oraDi(b.min) + ')' : '—'}` +
+        rif.map(([mm, nome]) => ` · ${nome} ${f(mm * Math.max(0, Math.min(1440, m)) / 1440)}`).join('');
       t.hidden = false; t.style.left = Math.max(0, Math.min(mx + 8, W - t.offsetWidth)) + 'px'; t.style.top = '0px';
     })
     .on('mouseleave', () => { t.hidden = true; });
