@@ -451,13 +451,28 @@ def main(xlsx, stat_dir, out_dir):
             letture_def.append((istante(l["ora"]), l))
         except (ValueError, KeyError, TypeError, OSError):
             continue
+    # Il sito del governo non ha le letture del DEF: lì valgono i numeri salvati qui in «edifici_in_classifica.json»
+    # (lo porta sul sito pubblica_cruscotto_sito.py), se sono della stessa classifica.
+    f_rif = out_dir / "edifici_in_classifica.json"
+    try:
+        rif = json.loads(f_rif.read_text(encoding="utf-8")) if f_rif.exists() else {}
+    except ValueError:
+        rif = {}
+    nuovo_rif = {}
     for e, k in (("scuole", "sc"), ("basi", "ba"), ("strade", "st"), ("ospedali", "os")):
-        t_e = t_prec if e in sostituite else t_clas
+        t_e, nome_e = (t_prec, f_prec.name) if e in sostituite else (t_clas, file_clas[-1].name)
         vicine = [(t, l) for t, l in letture_def if abs(t - t_e) <= timedelta(hours=2)]
-        l = min(vicine, key=lambda x: abs(x[0] - t_e))[1] if vicine else {}
+        l = min(vicine, key=lambda x: abs(x[0] - t_e))[1] if vicine else None
+        salvati = (rif.get(e) or {}) if (rif.get(e) or {}).get("classifica") == nome_e else {}
         for o in oggi:
-            dato = ((((l.get("province") or {}).get(o["provincia"]) or {}).get("provincia") or {}).get(k) or {}).get("n")
+            if l is not None:
+                dato = ((((l.get("province") or {}).get(o["provincia"]) or {}).get("provincia") or {}).get(k) or {}).get("n")
+            else:
+                dato = (salvati.get("edifici") or {}).get(o["provincia"])
             o["in_classifica_" + e] = dato if isinstance(dato, (int, float)) else None
+        nuovo_rif[e] = {"classifica": nome_e, "edifici": {o["provincia"]: o["in_classifica_" + e] for o in oggi}}
+    if letture_def:
+        f_rif.write_text(json.dumps(nuovo_rif, ensure_ascii=False, indent=0), encoding="utf-8")
     righe_clas = []
     for edificio in ("scuole", "basi", "strade", "ospedali"):
         for pos, n in enumerate(clas[edificio], start=1):
