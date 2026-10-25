@@ -186,7 +186,7 @@
           <tfoot></tfoot>
         </table>
       </div>
-      <p class="note">Da mandare = strade e ospedali da comprare + manutenzione di stanotte − tesoro della provincia. Da comprare = strade e ospedali per tornare all'indice fissato e restare almeno 2 notti lontani dal calo (dettaglio in «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia del mondo, che sale ogni giorno, non raggiunga l'indice entro 2 giorni (stima, non contata in «Da mandare»). Da trasferire allo Stato = quello che resta nel tesoro oltre 7 notti di manutenzione, tolti gli edifici da comprare. Napoli segue il piano: non paga la manutenzione, riceve solo il costo delle strade e degli ospedali per tornare agli obiettivi (dettaglio nella scheda Piano).</p>
+      <p class="note">Da mandare = strade e ospedali da comprare + manutenzione di stanotte, compresa quella dei nuovi edifici (il 3% del loro costo, si paga già stanotte) − tesoro della provincia. Da comprare = strade e ospedali per tornare all'indice fissato e restare almeno 2 notti lontani dal calo (dettaglio in «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia del mondo, che sale ogni giorno, non raggiunga l'indice entro 2 giorni (stima, non contata in «Da mandare»). Da trasferire allo Stato = quello che resta nel tesoro oltre 7 notti di manutenzione, tolti gli edifici da comprare. Napoli segue il piano: non paga la manutenzione, riceve solo il costo delle strade e degli ospedali per tornare agli obiettivi (dettaglio nella scheda Piano).</p>
     </div>
 
     <div class="ei-card" id="lim-avvisi">
@@ -248,11 +248,11 @@
           <tbody></tbody>
         </table>
       </div>
-      <p class="note">Ogni provincia ha ogni giorno 2.000 diamanti e 800 di ogni risorsa da produrre in tutto: ogni lavoro ne consuma 0,5, finiti quelli non si produce più fino all'azzeramento delle 00:00 ora turca (23:00 italiane, dal 25/10 le 22:00). In ogni casella: quanto resta, la barra e quando finisce al ritmo di oggi (consumato dall'azzeramento ÷ ore passate). Verde = basta fino all'azzeramento, giallo = finisce entro 3 ore, rosso = finito o entro 1 ora.</p>
+      <p class="note">Ogni provincia ha ogni giorno 2.000 diamanti e 800 di ogni risorsa da produrre in tutto: ogni lavoro ne consuma 0,5, finiti quelli non si produce più fino all'azzeramento delle 00:00 ora turca (22:00 italiane con l'ora solare, 23:00 con l'ora legale). In ogni casella: quanto resta, la barra e quando finisce al ritmo di oggi (consumato dall'azzeramento ÷ ore passate). Verde = basta fino all'azzeramento, giallo = finisce entro 3 ore, rosso = finito o entro 1 ora.</p>
     </div>
     <div class="ei-card">
       <h2>Giornata per giornata</h2>
-      <p class="note">Per ogni giornata del gioco (dalle 23:00 alle 23:00 italiane, dal 25/10 dalle 22 alle 22): quanto è rimasto all'ultima lettura e, se è finito, a che ora.</p>
+      <p class="note">Per ogni giornata del gioco (dalle 22:00 alle 22:00 italiane con l'ora solare, dalle 23:00 alle 23:00 con l'ora legale): quanto è rimasto all'ultima lettura e, se è finito, a che ora.</p>
       <div class="ei-filtri"><label>Risorsa<select id="lim-ris" aria-label="Risorsa"><option value="diamante">Diamanti</option><option value="pelle">Pelle</option><option value="oro">Oro</option><option value="petrolio">Petrolio</option><option value="nte">NTE</option></select></label></div>
       <div class="ei-scroll"><table id="lim-giorni"><thead></thead><tbody></tbody></table></div>
     </div>
@@ -384,7 +384,7 @@
   <section id="province" class="ei-pane" hidden>
     <div class="ei-card" id="tabella-province">
       <h2>Le 7 province, oggi</h2>
-      <p class="note">Notti coperte = tesoro della provincia ÷ manutenzione di una notte, senza contare le donazioni dello Stato (il gettito non entra nel tesoro della provincia). «∞» = nessuna manutenzione di quel tipo. «Da mandare per stanotte» = soldi e risorse che mancano nel tesoro per arrivare a 1 notte (mantenimento della notte − tesoro), da mandare prima delle 23:00; Napoli esclusa, perché nel piano non deve pagare. Saldo/giorno = quanto la provincia rende all'Italia.</p>
+      <p class="note">Notti coperte = tesoro della provincia ÷ manutenzione di una notte, senza contare le donazioni dello Stato (il gettito non entra nel tesoro della provincia). «∞» = nessuna manutenzione di quel tipo. «Da mandare per stanotte» = soldi e risorse che mancano nel tesoro per arrivare a 1 notte (mantenimento della notte − tesoro), da mandare prima dell'addebito delle <span class="ei-ora-addebito">22:00</span>; Napoli esclusa, perché nel piano non deve pagare. Saldo/giorno = quanto la provincia rende all'Italia.</p>
       <div class="ei-scroll">
         <table class="schede" data-source="analisi" data-row-key="provincia">
           <thead><tr>
@@ -436,7 +436,7 @@
   <section id="indici" class="ei-pane" hidden>
     <div class="ei-card" id="tabella-soglie">
       <h2>Margini e soglie, edificio per edificio</h2>
-      <p class="note">Margine = edifici che si possono perdere restando sicuri nell'indice. Notti = mancati pagamenti (−3% a notte) prima di scendere. Per salire: edifici mancanti e costo in denaro equivalente. Sviluppo (strade) e salute (ospedali) hanno un indice fissato (quello di inizio legislatura, 21/10; Palermo e Napoli quello del 23/10): margine e notti si contano verso quell'indice, e «sceso» vuol dire che la provincia è già sotto.</p>
+      <p class="note">Margine = edifici che si possono perdere restando sicuri nell'indice. Notti = mancati pagamenti (−3% a notte, arrotondato per eccesso come fa il gioco) prima di scendere. Per salire: edifici mancanti e costo in denaro equivalente. Sviluppo (strade) e salute (ospedali) hanno un indice fissato (quello di inizio legislatura, 21/10; Palermo e Napoli quello del 23/10): margine e notti si contano verso quell'indice, e «sceso» vuol dire che la provincia è già sotto: per tornarci deve superare l'ultima provincia della fascia (a pari edifici resta sotto).</p>
       <div class="ei-scroll">
         <table data-source="indici" data-row-key="provincia,edificio">
           <thead><tr>
@@ -456,7 +456,7 @@
     </div>
     <div class="ei-card" id="tabella-comprare">
       <h2>Da comprare per restare al riparo dal calo</h2>
-      <p class="note">Province ed edifici con meno di 2 notti al calo, o con l'indice già sceso sotto quello fissato (sviluppo e salute): quanti edifici comprare e quanto costano in denaro e risorse (valore = denaro più risorse ai prezzi medi di mercato). Se l'indice è sceso, «Da comprare» somma gli edifici per tornare all'indice fissato e quelli in più per poter saltare 2 notti senza riscendere. Sotto ogni provincia il totale e la riga «Da mandare»: quello che manca nel tesoro della provincia per comprarli tenendo da parte la manutenzione di stanotte (Napoli: senza manutenzione, nel piano non paga). In fondo i totali per edificio e il totale generale. Le soglie vengono dalla classifica mondiale e si spostano quando costruiscono gli altri Paesi.</p>
+      <p class="note">Province ed edifici con meno di 2 notti al calo, o con l'indice già sceso sotto quello fissato (sviluppo e salute): quanti edifici comprare e quanto costano in denaro e risorse (valore = denaro più risorse ai prezzi medi di mercato). Se l'indice è sceso, «Da comprare» somma gli edifici per tornare all'indice fissato e quelli in più per poter saltare 2 notti senza riscendere. Sotto ogni provincia il totale e la riga «Da mandare»: quello che manca nel tesoro della provincia per comprarli tenendo da parte la manutenzione di stanotte, compresa quella dei nuovi edifici (il 3% del loro costo). Napoli non c'è: segue il piano (scheda Piano) e scuole e basi le perde ogni notte per scelta. In fondo i totali per edificio e il totale generale. Le soglie vengono dalla classifica mondiale e si spostano quando costruiscono gli altri Paesi.</p>
       <div class="ei-filtri">
         <div class="st-campo" role="group" aria-label="Edifici"><span>Edifici</span><span class="ei-chips" id="dc-ed"><button type="button" data-v="tutti">Tutti</button><button type="button" data-v="strade,ospedali">Strade e ospedali</button><button type="button" data-v="strade">Strade</button><button type="button" data-v="ospedali">Ospedali</button><button type="button" data-v="scuole">Scuole</button><button type="button" data-v="basi">Basi</button></span></div>
         <div class="st-campo" role="group" aria-label="Vista"><span>Vista</span><span class="ei-chips" id="dc-vista"><button type="button" data-v="completa">Completa</button><button type="button" data-v="compatta">Compatta</button></span></div>
@@ -603,14 +603,14 @@
           <li><b>Riga dei pallini sotto il titolo («salute dei dati»)</b>: tutti verdi = i numeri sono freschi e completi. Giallo o rosso = lettura vecchia, province mancanti o classifica letta a metà: prima di decidere, aspetta la lettura dopo.</li>
           <li><b>Da fare → «Invii e acquisti di oggi»</b>: per ogni provincia, Napoli compresa (con il suo piano), cosa mandare, quali strade e ospedali comprare e cosa trasferire allo Stato. Il numero rosso sul pulsante «Da fare» conta le urgenze. Se dice «niente da fare», hai finito.</li>
           <li><b>Da fare → «Limiti delle risorse che stanno per finire»</b>: province dove diamanti o risorse da produrre finiscono prima dell'azzeramento.</li>
-          <li><b>Da fare → «Da sistemare subito»</b>: aperto c'è solo il gruppo più urgente. Le righe <span class="bad">Stanotte</span> sono province che nel tesoro non hanno la manutenzione della notte (se nessuno dona prima delle 23:00, dal 25/10 le 22:00, la provincia non paga e perde il 3% di tutti gli edifici), indici già sotto quello fissato o soglie che li raggiungono entro oggi. Napoli non compare: non paga per scelta.</li>
+          <li><b>Da fare → «Da sistemare subito»</b>: aperto c'è solo il gruppo più urgente. Le righe <span class="bad">Stanotte</span> sono province che nel tesoro non hanno la manutenzione della notte (se nessuno dona prima dell'addebito, alle 22:00 con l'ora solare e alle 23:00 con l'ora legale, la provincia non paga e perde il 3% di tutti gli edifici), indici già sotto quello fissato o soglie che li raggiungono entro oggi. Napoli non compare: non paga per scelta.</li>
           <li><b>Quadro → «Saldo al giorno con le donazioni»</b>: se è rosso, l'Italia nel complesso perde soldi ogni giorno e il tesoro dello Stato scende.</li>
           <li>Nei giorni di decisione (27/10 e 3/11): <b>Piano → «Prossima decisione»</b> dice se Palermo ha raggiunto la soglia per le strade.</li>
         </ol>
       </div>
 
       <div><h3>Come girano i soldi nel gioco</h3>
-        <p>Ci sono due casse diverse. <b>Lo Stato</b> incassa le tasse delle fabbriche (il <b>gettito</b>) e le donazioni dei giocatori, e paga ogni notte i <b>confini</b> chiusi (oggi 1,17 milioni a provincia). <b>Ogni provincia</b> ha il suo tesoro, che ogni notte paga la <b>manutenzione</b> dei suoi edifici (il 3% di quanto sono costati) e si riempie solo con le donazioni, dei giocatori o dello Stato. Le tasse non entrano mai nel tesoro della provincia: per questo le province vivono di donazioni. Verificato su 134 giorni del DEF.</p>
+        <p>Ci sono due casse diverse. <b>Lo Stato</b> incassa le tasse delle fabbriche (il <b>gettito</b>) e le donazioni dei giocatori, e paga ogni notte i <b>confini</b> chiusi (oggi <span class="ei-confini-oggi">—</span> a provincia). <b>Ogni provincia</b> ha il suo tesoro, che ogni notte paga la <b>manutenzione</b> dei suoi edifici (il 3% di quanto sono costati) e si riempie solo con le donazioni, dei giocatori o dello Stato. Le tasse non entrano mai nel tesoro della provincia: per questo le province vivono di donazioni. Verificato su 134 giorni del DEF.</p>
       </div>
 
       <div><h3>Salute dei dati (sotto il titolo, in ogni scheda)</h3>
@@ -626,11 +626,11 @@
       </div>
 
       <div><h3>Scheda «Limiti risorse»</h3>
-        <p>Ogni provincia può produrre al giorno 2.000 diamanti e 800 di ogni risorsa in tutto, tra tutti i giocatori; ogni lavoro ne consuma 0,5 e i limiti si azzerano alle 00:00 ora turca (23:00 italiane, dal 25/10 le 22:00). Per ogni provincia e risorsa: quanto resta, la barra e quando finisce al ritmo di oggi (consumato dall'azzeramento ÷ ore passate), con il valore di ieri alla stessa ora. <span class="ok">Verde</span> = basta fino all'azzeramento, <span class="warn">giallo</span> = finisce entro 3 ore, <span class="bad">rosso</span> = finito o entro un'ora. «Giornata per giornata»: quanto restava all'ultima lettura di ogni giornata del gioco e, se è finito, a che ora (al più tardi, perché si legge una volta l'ora). Letti dal 24/10/2026 sera.</p>
+        <p>Ogni provincia può produrre al giorno 2.000 diamanti e 800 di ogni risorsa in tutto, tra tutti i giocatori; ogni lavoro ne consuma 0,5 e i limiti si azzerano alle 00:00 ora turca (22:00 italiane con l'ora solare, 23:00 con l'ora legale). Per ogni provincia e risorsa: quanto resta, la barra e quando finisce al ritmo di oggi (consumato dall'azzeramento ÷ ore passate), con il valore di ieri alla stessa ora. <span class="ok">Verde</span> = basta fino all'azzeramento, <span class="warn">giallo</span> = finisce entro 3 ore, <span class="bad">rosso</span> = finito o entro un'ora. «Giornata per giornata»: quanto restava all'ultima lettura di ogni giornata del gioco e, se è finito, a che ora (al più tardi, perché si legge una volta l'ora). Letti dal 24/10/2026 sera.</p>
       </div>
 
       <div><h3>Scheda «Da fare»</h3>
-        <p><b>Invii e acquisti di oggi</b>, una riga per provincia con qualcosa da fare. Napoli segue il piano: non paga la manutenzione e riceve solo il costo delle strade e degli ospedali per tornare agli obiettivi meno il suo tesoro (lo stesso di «Da inviare a Napoli oggi» nella scheda Piano). <b>Da mandare</b> = costo delle strade e degli ospedali da comprare + manutenzione di stanotte − tesoro, risorsa per risorsa (cifre esatte, pronte per l'invio). <b>Da comprare</b> = strade e ospedali per tornare all'indice fissato e restare 2 notti lontani dal calo (gli stessi di «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia mondiale, che sale ogni giorno, non raggiunga l'indice entro 2 giorni: è una stima dalla crescita tra le ultime due classifiche e non entra in «Da mandare». <b>Da trasferire allo Stato</b> = tesoro − 7 notti di manutenzione − edifici da comprare: le province tengono al massimo 7 notti. Sopra la tabella una frase riassume tutto e dice se il tesoro dello Stato basta per gli invii.</p>
+        <p><b>Invii e acquisti di oggi</b>, una riga per provincia con qualcosa da fare. Napoli segue il piano: non paga la manutenzione e riceve solo il costo delle strade e degli ospedali per tornare agli obiettivi meno il suo tesoro (lo stesso di «Da inviare a Napoli oggi» nella scheda Piano). <b>Da mandare</b> = costo delle strade e degli ospedali da comprare + manutenzione di stanotte, compresa quella dei nuovi edifici (il 3% del loro costo: appena costruiti la manutenzione sale) − tesoro, risorsa per risorsa (cifre esatte, pronte per l'invio). <b>Da comprare</b> = strade e ospedali per tornare all'indice fissato e restare 2 notti lontani dal calo (gli stessi di «Indici e soglie»); «inflazione, stima» = quelli in più perché la soglia mondiale, che sale ogni giorno, non raggiunga l'indice entro 2 giorni: è una stima dalla tendenza delle classifiche degli ultimi 7 giorni e non entra in «Da mandare». <b>Da trasferire allo Stato</b> = tesoro − 7 notti di manutenzione − edifici da comprare: le province tengono al massimo 7 notti. Sopra la tabella una frase riassume tutto e dice se il tesoro dello Stato basta per gli invii.</p>
         <p><b>Da sistemare subito</b>: tre gruppi, <span class="bad">Stanotte</span>, <span class="warn">Presto</span> e «Da tenere d'occhio», e dentro una riga per provincia con tutti i suoi avvisi. Si apre da solo solo il gruppo più urgente; se ne apri o chiudi uno, resta così.</p>
       </div>
 
@@ -662,7 +662,7 @@
       </div>
 
       <div><h3>La giornata va dalle 00:00 alle 24:00</h3>
-        <p>Dal 22/10 (scelta del governo) tutte le analisi contano la giornata italiana, da mezzanotte a mezzanotte: cruscotto, DEF, bollettino e donazioni danno gli stessi numeri. Il gioco invece ragiona dalle 23 alle 23 (dal 26/10 dalle 22 alle 22): per questo ogni notte, subito dopo mezzanotte, una lettura divide il gettito tra un giorno e l'altro. <b>Gettito e tassazioni</b> = quanto è entrato tra la lettura di mezzanotte e quella della notte dopo. <b>Manutenzione e confini</b> = l'addebito che il gioco fa durante la giornata (alle 23, dal 25/10 sera alle 22); se una provincia non lo paga conta 0. <b>Tesori</b> = alle 24:00. <b>Donazioni</b> = per data e ora italiana. I giorni fino al 20/10 sono quelli scritti dal governo nel DEF; il 21/10 ha il gettito dalle 23 alle 23 perché quella notte non c'era ancora la lettura di mezzanotte.</p>
+        <p>Dal 22/10 (scelta del governo) tutte le analisi contano la giornata italiana, da mezzanotte a mezzanotte: cruscotto, DEF, bollettino e donazioni danno gli stessi numeri. Il gioco invece ragiona dalle 22 alle 22 (dalle 23 alle 23 con l'ora legale): per questo ogni notte, subito dopo mezzanotte, una lettura divide il gettito tra un giorno e l'altro. <b>Gettito e tassazioni</b> = quanto è entrato tra la lettura di mezzanotte e quella della notte dopo. <b>Manutenzione e confini</b> = l'addebito che il gioco fa durante la giornata (alle 22, alle 23 con l'ora legale); se una provincia non lo paga conta 0. <b>Tesori</b> = alle 24:00. <b>Donazioni</b> = per data e ora italiana. I giorni fino al 20/10 sono quelli scritti dal governo nel DEF; il 21/10 ha il gettito dalle 23 alle 23 perché quella notte non c'era ancora la lettura di mezzanotte.</p>
       </div>
 
       <div><h3>In fondo allo Storico: i due grafici fissi</h3>
@@ -691,6 +691,15 @@ const INDICI_FISSI = {
   ospedali: { Venezia: 10, Lombardia: 10, Marsiglia: 8, Napoli: 8, Roma: 8, Firenze: 8, Palermo: 8 },
 };
 
+// notti senza pagare prima di scendere: ogni notte non pagata il gioco toglie il 3% degli edifici arrotondato per eccesso
+const nottiAlCalo = (n, sotto) => { let x = n, k = 0; while (x > sotto && k < 60) { x -= Math.ceil(x * 3 / 100); k++; } return k; };
+// la manutenzione di una notte è il 3% del costo degli edifici: chi costruisce oggi la paga già stanotte
+// (verificato su Napoli il 25/10/2026: +92.700 € di manutenzione dopo 3.090.000 € di strade e ospedali)
+const manNuovi = (costo) => costo * 3 / 100;
+// letture in ordine di tempo (non di testo: nell'ora ripetuta del cambio d'ora «02:40+02:00» viene prima di «02:30+01:00»)
+const perOra = (a, b) => Date.parse(a.ts) - Date.parse(b.ts);
+const tsUltimo = (xs) => xs.filter(Boolean).reduce((m, t) => (m == null || Date.parse(t) > Date.parse(m) ? t : m), null);
+
 dash.calc('prezzo_attuale', {
   title: 'Prezzi di mercato usati',
   description: 'Ultima riga dei prezzi medi settimanali del DEF.',
@@ -708,7 +717,8 @@ dash.calc('analisi', {
       const costi = r.manutenzione_eur + r.confini_eur;
       const saldo = r.gettito_medio_eur - costi;
       // il tesoro della provincia paga solo la manutenzione: gettito e confini passano dallo Stato
-      const notti = (tes, uscita) => uscita > 0 ? Math.round((tes / uscita) * 10) / 10 : null;
+      // per difetto (25/10/2026): un tesoro al 95% della manutenzione è 0,9 notti, non 1,0 (con 1,0 la provincia finiva in «Presto» invece che «Stanotte»)
+      const notti = (tes, uscita) => uscita > 0 ? Math.floor((tes / uscita) * 10 + 1e-9) / 10 : null;
       const out = {
         provincia: r.provincia, giocatori: r.giocatori, fabbriche: r.fabbriche,
         gettito_medio: r.gettito_medio_eur, costi_giorno: costi, saldo_giorno: saldo,
@@ -733,15 +743,27 @@ dash.calc('analisi', {
 dash.calc('totali', {
   title: 'Totali Italia',
   description: 'Somme delle 7 province: gettito, costi, saldo, copertura, tesori.',
-  inputs: ['analisi', 'donazioni_quadro'],
-  fn: (analisi, donazioni_quadro) => {
+  inputs: ['analisi', 'donazioni', 'oggi'],
+  fn: (analisi, donazioni, oggi) => {
     const s = (k) => analisi.reduce((a, r) => a + r[k], 0);
     const g = s('gettito_medio'), c = s('costi_giorno');
-    // donazioni dei giocatori a Stato e province, media al giorno degli ultimi 7 giorni (solo denaro)
-    const d = donazioni_quadro[0], don = d ? Math.round((d.stato_denaro + d.province_denaro) / 7) : null;
+    // donazioni dei giocatori a Stato e province, media al giorno degli ultimi 7 giorni chiusi (solo denaro, senza la giornata in corso);
+    // la mediana dice com'è un giorno tipico quando un giorno solo gonfia la media (22/10/2026: 216 M€ su 362 M€ della settimana)
+    const fine = oggi[0] && oggi[0].data;
+    const giorni = fine ? [1, 2, 3, 4, 5, 6, 7].map((i) => new Date(Date.parse(fine + 'T12:00:00Z') - i * 864e5).toISOString().slice(0, 10)) : [];
+    const perGiorno = new Map(giorni.map((d) => [d, 0]));
+    for (const r of donazioni) if (perGiorno.has(r.data)) perGiorno.set(r.data, perGiorno.get(r.data) + (r.denaro || 0));
+    const ci = donazioni.some((r) => perGiorno.has(r.data)), valori = [...perGiorno.values()];
+    const don = ci ? Math.round(valori.reduce((a, b) => a + b, 0) / 7) : null;
+    const mediana = ci ? [...valori].sort((a, b) => a - b)[3] : null;
+    const picco = ci ? [...perGiorno].sort((a, b) => b[1] - a[1])[0] : null;
     return [{ gettito_medio: g, costi_giorno: c, saldo_giorno: g - c, copertura: g / c, tesori_province: s('tesoro_eur'),
       donazioni_giorno: don, saldo_con_donazioni: don == null ? null : g - c + don,
-      critiche: analisi.filter((r) => r.stato === 'critico').length, in_deficit: analisi.filter((r) => r.saldo_giorno < 0).length }];
+      donazioni_mediana: mediana, picco_data: picco && picco[0], picco_denaro: picco && picco[1],
+      // un giorno solo vale più di metà della settimana: la media non è un giorno tipico
+      gonfiata: !!(ci && don > 0 && picco[1] > 0.5 * don * 7),
+      // Napoli non paga per scelta (piano): non conta tra le province senza la manutenzione di stanotte
+      critiche: analisi.filter((r) => r.stato === 'critico' && r.provincia !== 'Napoli').length, in_deficit: analisi.filter((r) => r.saldo_giorno < 0).length }];
   },
 });
 
@@ -758,27 +780,36 @@ dash.calc('indici', {
       const v = cl.map((r) => r.edifici);
       // stessa posizione nella classifica precedente: di quanto sale la soglia al giorno («inflazione» degli indici)
       const vp = cl.map((r) => r.edifici_prec), gp = cl.length && cl[0].giorni_prec ? cl[0].giorni_prec : null;
+      // tendenza della soglia (edifici al giorno) calcolata dal costruttore sulle classifiche degli ultimi 7 giorni: più stabile
+      // del confronto tra le ultime due, che una lettura storta trasformava in inflazione finta (strade 654 → 635 → 654, 25/10/2026)
+      const tend = cl.length && 'crescita_giorno' in cl[0] ? cl.map((r) => r.crescita_giorno) : null;
       const b = Math.floor(v.length / 10);
       const ultimo = (k) => 1 + (11 - k) * b; // ultima posizione della fascia k
       const c = costi.find((r) => r.edificio === ed);
       const prezzo = c.denaro + ['pelle', 'oro', 'petrolio', 'nte'].reduce((s, k) => s + c[k] * (p[k] || 0), 0);
       for (const r of oggi) {
         const n = r[ed], k = r[campo[ed]];
+        // la provincia è in classifica con gli edifici di quando la classifica è stata letta (una volta al giorno): se poi ne ha
+        // costruiti o persi, la si ricolloca con il numero di adesso (25/10/2026: Palermo in classifica con 263 ospedali, ne aveva 274)
+        const vecchio = r['in_classifica_' + ed], iv = vecchio != null && vecchio !== n ? v.indexOf(vecchio) : -1;
+        const vv = iv < 0 ? v : (() => { const x = v.slice(); x.splice(iv, 1); const j = x.findIndex((y) => y < n); x.splice(j < 0 ? x.length : j, 0, n); return x; })();
         const fisso = INDICI_FISSI[ed] ? INDICI_FISSI[ed][r.provincia] ?? null : null;
         const kr = fisso ?? k; // indice da difendere: quello fissato, altrimenti quello di adesso
         const gioco = r['per_salire_' + ed] ?? null; // edifici all'indice successivo secondo il gioco («+9 edifici → Indice 6»)
         const sceso = fisso != null && k < fisso; // già sotto l'indice fissato (indice letto dal gioco)
-        let sotto = n > 0 && kr >= 1 && kr <= 10 ? v[ultimo(kr)] : null; // prima provincia della fascia sotto
-        // sceso di un solo indice: la soglia è quella del gioco, il modello a fasce può sbagliare di qualche edificio
+        let sotto = n > 0 && kr >= 1 && kr <= 10 ? vv[ultimo(kr)] : null; // prima provincia della fascia sotto
+        // indice già sceso: per tornarci bisogna superare l'ultima provincia della fascia fissata (a pari edifici si resta sotto:
+        // Palermo ospedali 25/10/2026, ultima della fascia 8 a 265, servono 266, non 265);
+        // sceso di un solo indice con il numero del gioco: vale quello, il modello a fasce può sbagliare di qualche edificio
         if (sceso && fisso === k + 1 && gioco != null) sotto = n + gioco - 1;
-        else if (sceso && sotto != null) sotto = Math.max(sotto, n);
+        else if (sceso && sotto != null) sotto = Math.max(vv[ultimo(kr) - 1], n);
         const margine = sotto == null ? null : Math.max(0, n - sotto - 1); // a pari edifici con la fascia sotto si rischia
-        let notti = null;
-        if (sotto != null) { let x = n; notti = 0; while (Math.floor(x) > sotto && notti < 60) { x *= 0.97; notti++; } }
-        const sopra = k < 10 ? v[ultimo(k + 1) - 1] + 1 : null;
+        const notti = sotto == null ? null : nottiAlCalo(n, sotto);
+        const sopra = k < 10 ? vv[ultimo(k + 1) - 1] + 1 : null;
         const mancanti = gioco != null ? gioco : sopra == null ? null : Math.max(0, sopra - n); // prima il numero del gioco
         const sp = sotto == null || !gp ? null : vp[ultimo(kr)];
-        const crescita = sp == null ? null : (sotto - sp) / gp; // edifici in più al giorno per restare nella fascia
+        // edifici in più al giorno per restare nella fascia: la tendenza del costruttore, oppure (dati vecchi) le ultime due classifiche
+        const crescita = tend ? (sotto == null ? null : tend[ultimo(kr)] ?? null) : sp == null ? null : (sotto - sp) / gp;
         const giorni_inflazione = sceso || margine == null || crescita == null || crescita <= 0 ? null : Math.floor(margine / crescita);
         righe.push({ provincia: r.provincia, edificio: ed, edifici: n, indice: k, indice_fisso: fisso, sceso, margine, notti_al_calo: notti, mancanti,
           costo_salire: mancanti == null ? null : Math.round(mancanti * prezzo), crescita_soglia: crescita, giorni_inflazione,
@@ -797,13 +828,13 @@ dash.calc('da_comprare', {
     const p = prezzo_attuale[0] || {};
     const ris = ['pelle', 'oro', 'petrolio', 'nte'];
     const RIPARO = 2; // notti al calo da garantire (2 dal 22/10/2026, prima 3)
-    // stesso conto di «Notti al calo» nella tabella sopra
-    const notti = (n, sotto) => { let x = n, k = 0; while (Math.floor(x) > sotto && k < 60) { x *= 0.97; k++; } return k; };
     const out = [];
     for (const r of indici) {
-      if (r.notti_al_calo == null || r.notti_al_calo >= RIPARO || r.soglia_sotto == null) continue;
+      // Napoli no (25/10/2026): segue il piano (scheda Piano), non paga la manutenzione e scuole e basi le perde ogni notte per scelta
+      if (r.provincia === 'Napoli' || r.notti_al_calo == null || r.notti_al_calo >= RIPARO || r.soglia_sotto == null) continue;
       let m = r.edifici;
-      while (notti(m, r.soglia_sotto) < RIPARO && m < r.edifici + 100000) m++;
+      // stesso conto di «Notti al calo» nella tabella sopra
+      while (nottiAlCalo(m, r.soglia_sotto) < RIPARO && m < r.edifici + 100000) m++;
       const c = costi.find((x) => x.edificio === r.edificio);
       // indice già sceso (sviluppo e salute): prima gli edifici per tornare sopra la soglia, poi quelli del margine
       const torna = r.sceso ? r.soglia_sotto + 1 - r.edifici : 0;
@@ -831,7 +862,9 @@ const daMandare = (da_comprare, oggi) => {
       const rr = da_comprare.filter((r) => r.provincia === p), riga = { provincia: p };
       for (const k of ['denaro', ...RIS]) {
         const tes = k === 'denaro' ? o.tesoro_eur : o['tesoro_' + k], man = p === 'Napoli' ? 0 : (k === 'denaro' ? o.manutenzione_eur : o['manutenzione_' + k]);
-        riga[k] = Math.max(0, Math.ceil(rr.reduce((s, r) => s + r[k], 0) + (man || 0) - (tes || 0)));
+        const costo = rr.reduce((s, r) => s + r[k], 0);
+        // anche la manutenzione dei nuovi edifici, che si paga già stanotte (senza, la provincia non pagava e perdeva il 3%)
+        riga[k] = Math.max(0, Math.ceil(costo + (man || 0) + (p === 'Napoli' ? 0 : manNuovi(costo)) - (tes || 0)));
       }
       out.push(riga);
     }
@@ -840,7 +873,7 @@ const daMandare = (da_comprare, oggi) => {
 window.eiDaMandare = daMandare;
 dash.calc('da_mandare_indici', {
   title: 'Da mandare alle province per gli edifici',
-  description: 'Per ogni provincia dello specchietto: costo degli edifici da comprare più la manutenzione di stanotte, meno il tesoro (Napoli senza manutenzione, nel piano non paga).',
+  description: 'Per ogni provincia dello specchietto: costo degli edifici da comprare più la manutenzione di stanotte (compresa quella dei nuovi edifici, 3% del costo), meno il tesoro.',
   inputs: ['da_comprare', 'oggi'],
   fn: daMandare,
 });
@@ -870,19 +903,21 @@ dash.calc('autonomia_storico', {
   description: 'A ogni lettura oraria: tesoro dello Stato contro la manutenzione di una notte delle province tranne Napoli (quella del giorno della lettura), notti di autonomia per denaro e risorse.',
   inputs: ['orario', 'storico'],
   fn: (orario, storico) => {
-    // manutenzione per giorno, Napoli esclusa (nel piano non paga)
-    const man = new Map();
-    for (const r of storico) {
+    // manutenzione per giorno, Napoli esclusa (nel piano non paga); una notte non pagata nello storico vale 0: allora conta
+    // la manutenzione dovuta, presa dall'ultimo giorno pagato (24/10/2026: Palermo non ha pagato e l'autonomia saliva di 9 notti)
+    const man = new Map(), pagata = {};
+    for (const r of [...storico].sort((a, b) => a.data.localeCompare(b.data))) {
       if (['Stato', 'Napoli', 'Bahrein'].includes(r.provincia) || r.manutenzione_eur == null) continue;
+      const v = r.manutenzione_eur > 0 ? (pagata[r.provincia] = r) : pagata[r.provincia] || r;
       const m = man.get(r.data) || { denaro: 0, pelle: 0, oro: 0, petrolio: 0, nte: 0 };
-      m.denaro += r.manutenzione_eur || 0;
-      for (const k of RIS) m[k] += r['manutenzione_' + k] || 0;
+      m.denaro += v.manutenzione_eur || 0;
+      for (const k of RIS) m[k] += v['manutenzione_' + k] || 0;
       man.set(r.data, m);
     }
     const giorni = [...man.keys()].sort();
     const manDi = (g) => { let d = null; for (const x of giorni) if (x <= g) d = x; return d ? man.get(d) : null; };
     const out = [];
-    for (const r of orario.filter((x) => x.provincia === 'Stato' && x.tesoro_eur != null).sort((a, b) => (a.ts < b.ts ? -1 : 1))) {
+    for (const r of orario.filter((x) => x.provincia === 'Stato' && x.tesoro_eur != null).sort(perOra)) {
       const m = manDi(r.data_it);
       if (!m) continue;
       const riga = { ts: r.ts, giorno: r.data_it };
@@ -920,7 +955,7 @@ dash.calc('allarmi', {
     for (const r of indici) if (!r.sceso && r.notti_al_calo != null && r.notti_al_calo <= 1)
       out.push({ chiave: r.provincia + '-' + r.edificio, provincia: r.provincia, cosa: r.edificio, valore: r.margine, tipo: 'indice', gravita: 1 });
     // inflazione degli indici (richiesta dell'utente del 22/10/2026): la soglia sale perché nel mondo si costruisce;
-    // con due classifiche si stima fra quanti giorni l'indice scende anche senza perdere edifici, con una sola si segnala il margine quasi nullo
+    // con la tendenza delle classifiche si stima fra quanti giorni l'indice scende anche senza perdere edifici, senza si segnala il margine quasi nullo
     for (const r of indici) {
       if (r.margine == null || r.indice <= 1) continue;
       if (r.giorni_inflazione != null && r.giorni_inflazione <= 3)
@@ -935,8 +970,8 @@ dash.calc('allarmi', {
 });
 
 // «Cosa fare oggi» (richiesta dell'utente del 24/10/2026): per ogni provincia tranne Napoli (ha il suo piano)
-// quanto mandare = strade e ospedali da comprare + manutenzione di stanotte − tesoro (come «Da mandare» in «Indici e soglie»)
-// quanto trasferire allo Stato = tesoro − 7 notti di manutenzione − edifici da comprare (le province tengono al massimo 7 notti)
+// quanto mandare = strade e ospedali da comprare + manutenzione di stanotte, con quella dei nuovi edifici − tesoro (come «Da mandare» in «Indici e soglie»)
+// quanto trasferire allo Stato = tesoro − 7 notti di manutenzione (con i nuovi edifici) − edifici da comprare (le province tengono al massimo 7 notti)
 const NOTTI_MAX = 7, ED_OGGI = ['strade', 'ospedali'];
 dash.calc('cosa_fare', {
   title: 'Cosa fare oggi',
@@ -954,7 +989,7 @@ dash.calc('cosa_fare', {
     for (const e of ED_OGGI) {
       riga['compra_' + e] = rr.filter((r) => r.edificio === e).reduce((s, r) => s + r.da_comprare, 0);
       // inflazione delle soglie: se la soglia sale tanto da raggiungere l'indice entro 2 giorni, edifici in più per restarne 2 giorni sopra
-      // (stima dalla crescita tra le ultime due classifiche: non entra in «Da mandare»)
+      // (stima dalla tendenza delle classifiche degli ultimi 7 giorni: non entra in «Da mandare»)
       const ix = indici.find((r) => r.provincia === o.provincia && r.edificio === e);
       riga['inflazione_' + e] = ix && !ix.sceso && ix.crescita_soglia > 0 && ix.margine != null
         ? Math.max(0, Math.ceil(2 * ix.crescita_soglia - ix.margine - riga['compra_' + e])) : 0;
@@ -962,9 +997,11 @@ dash.calc('cosa_fare', {
     for (const k of ['denaro', ...RIS]) {
       const tes = (k === 'denaro' ? o.tesoro_eur : o['tesoro_' + k]) || 0, man = (k === 'denaro' ? o.manutenzione_eur : o['manutenzione_' + k]) || 0;
       const costo = rr.reduce((s, r) => s + r[k], 0);
+      // la manutenzione dei nuovi edifici (3% del costo) si aggiunge già a quella di stanotte
+      const manDopo = man + manNuovi(costo);
       riga['costo_' + k] = costo;
-      riga['manda_' + k] = Math.max(0, Math.ceil(costo + man - tes));
-      riga['avanza_' + k] = Math.max(0, Math.floor(tes - NOTTI_MAX * man - costo));
+      riga['manda_' + k] = Math.max(0, Math.ceil(costo + manDopo - tes));
+      riga['avanza_' + k] = Math.max(0, Math.floor(tes - NOTTI_MAX * manDopo - costo));
     }
     return riga;
   }),
@@ -987,12 +1024,13 @@ dash.calc('stato_ultimo', {
 
 dash.calc('giornaliero', {
   title: 'Totali Italia per giorno',
-  description: 'Somma per giorno di gettito, manutenzione e confini delle 7 province.',
+  description: 'Somma per giorno chiuso di gettito, manutenzione e confini delle 7 province (senza la giornata in corso).',
   inputs: ['storico'],
   fn: (storico) => {
     const m = new Map();
     for (const r of storico) {
-      if (r.provincia === 'Stato' || r.gettito_eur == null) continue;
+      // la giornata in corso no: gettito di poche ore contro i costi di un giorno intero (25/10/2026: 1,19 M contro 32,49 M)
+      if (r.provincia === 'Stato' || r.gettito_eur == null || r.provvisorio) continue;
       const g = m.get(r.data) || { data: r.data, gettito: 0, costi: 0, province: 0 };
       g.gettito += r.gettito_eur; g.costi += (r.manutenzione_eur || 0) + (r.confini_eur || 0); g.province++;
       m.set(r.data, g);
@@ -1020,7 +1058,13 @@ const testoManca = (r) => {
     .map((k) => k === 'denaro' ? fmtEsatto(r.manca_denaro) + ' €' : fmtEsatto(r['manca_' + k]) + ' ' + nomeRis[k]);
   return parti.length ? parti.join(' · ') : 'niente';
 };
-window.eiFmt = { fmtE, fmtN, fmtP, fmtNotti, classeNotti, nomeRis, nomeEd, indiceDi, testoManca, fmtEsatto };
+// ora italiana del prossimo addebito: mezzanotte del gioco = 21:00 UTC, cioè le 22:00 con l'ora solare e le 23:00 con l'ora legale
+const oraAddebito = () => {
+  const t = new Date(); let a = Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate(), 21);
+  if (a <= t.getTime()) a += 864e5;
+  return new Date(a).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' });
+};
+window.eiFmt = { fmtE, fmtN, fmtP, fmtNotti, classeNotti, nomeRis, nomeEd, indiceDi, testoManca, fmtEsatto, oraAddebito };
 
 // schede
 const tabs = [...document.querySelectorAll('.ei-tabs button')];
@@ -1101,7 +1145,7 @@ const disegnaSalute = () => {
   const orr = dash.data('orario'), og = dash.data('oggi'), cl = dash.data('classifiche'), pr = dash.data('prezzo_attuale'), sto = dash.data('storico');
   if ([orr, og, cl, pr, sto].some((x) => x.status === 'loading')) return;
   const voci = [];
-  const ts = orr.status === 'ok' ? orr.data.map((r) => r.ts).filter(Boolean).sort().slice(-1)[0] : null;
+  const ts = orr.status === 'ok' ? tsUltimo(orr.data.map((r) => r.ts)) : null;
   if (ts) {
     const min = Math.max(0, Math.round((Date.now() - Date.parse(ts)) / 6e4));
     const ora = +new Date().toLocaleString('it-IT', { hour: 'numeric', hour12: false, timeZone: 'Europe/Rome' });
@@ -1141,13 +1185,18 @@ const disegnaSalute = () => {
 
 const disegnaQuadro = () => {
   const t = dash.data('totali');
+  for (const el of document.querySelectorAll('.ei-ora-addebito')) el.textContent = oraAddebito();
+  const og0 = dash.data('oggi');
+  for (const el of document.querySelectorAll('.ei-confini-oggi')) el.textContent = og0.status === 'ok' && og0.data[0] ? fmtE(og0.data[0].confini_eur) : '—';
   fill('', 'totali', 'saldo_giorno', fmtE);
   fill('', 'totali', 'gettito_medio', fmtE);
   fill('', 'totali', 'saldo_con_donazioni', fmtE);
   const conDon = document.querySelector('[data-field="saldo_con_donazioni"].big'), subDon = document.querySelector('.ei-don-sub');
   if (t.status === 'ok' && t.data.length && t.data[0].donazioni_giorno != null) {
     conDon.className = 'big ' + (t.data[0].saldo_con_donazioni < 0 ? 'bad' : 'ok');
-    subDon.textContent = `saldo ${fmtE(t.data[0].saldo_giorno)} + donazioni dei giocatori ${fmtE(t.data[0].donazioni_giorno)} al giorno (media 7 giorni)`;
+    const r0 = t.data[0], gg = (d) => d.slice(8, 10) + '/' + d.slice(5, 7);
+    subDon.textContent = `saldo ${fmtE(r0.saldo_giorno)} + donazioni dei giocatori ${fmtE(r0.donazioni_giorno)} al giorno (media degli ultimi 7 giorni chiusi)` +
+      (r0.gonfiata ? `; attenzione: il ${gg(r0.picco_data)} da solo vale ${fmtE(r0.picco_denaro)}, un giorno tipico (mediana) ${fmtE(r0.donazioni_mediana)}, cioè un saldo di ${fmtE(r0.saldo_giorno + r0.donazioni_mediana)}` : '');
   } else subDon.textContent = '—';
   fill('', 'totali', 'costi_giorno', fmtE);
   fill('', 'totali', 'copertura', fmtP);
@@ -1161,7 +1210,8 @@ const disegnaQuadro = () => {
     const r = t.data[0];
     take.textContent = `L'Italia incassa ${fmtE(r.gettito_medio)} al giorno di tasse e spende ${fmtE(r.costi_giorno)} tra manutenzione e confini: ` +
       `${r.saldo_giorno < 0 ? 'mancano ' + fmtE(-r.saldo_giorno) : 'avanzano ' + fmtE(r.saldo_giorno)} al giorno` +
-      (r.donazioni_giorno != null ? `; con le donazioni dei giocatori (${fmtE(r.donazioni_giorno)} al giorno) ${r.saldo_con_donazioni < 0 ? 'mancano ' + fmtE(-r.saldo_con_donazioni) : 'avanzano ' + fmtE(r.saldo_con_donazioni)}. ` : '. ') +
+      (r.donazioni_giorno != null ? `; con le donazioni dei giocatori (${fmtE(r.donazioni_giorno)} al giorno) ${r.saldo_con_donazioni < 0 ? 'mancano ' + fmtE(-r.saldo_con_donazioni) : 'avanzano ' + fmtE(r.saldo_con_donazioni)}` +
+        (r.gonfiata ? ` (media gonfiata da un giorno solo; in un giorno tipico ${r.saldo_giorno + r.donazioni_mediana < 0 ? 'mancano ' + fmtE(-(r.saldo_giorno + r.donazioni_mediana)) : 'avanzano ' + fmtE(r.saldo_giorno + r.donazioni_mediana)})` : '') + '. ' : '. ') +
       `${r.in_deficit} province su 7 costano più di quanto rendono` +
       `${r.critiche ? '; ' + (r.critiche === 1 ? '1 non ha' : r.critiche + ' non hanno') + ' nel tesoro tutta la manutenzione di stanotte (serve una donazione)' : ''}.`;
   } else take.textContent = '—';
@@ -1236,7 +1286,7 @@ const disegnaQuadro = () => {
   // ora dell'ultima lettura (dataset orario) per il pulsante «Aggiorna ora»
   const orr = dash.data('orario'), ul2 = document.getElementById('ei-ultima-lettura');
   if (orr.status === 'ok' && orr.data.length) {
-    const ts = orr.data.map((r) => r.ts).filter(Boolean).sort().slice(-1)[0];
+    const ts = tsUltimo(orr.data.map((r) => r.ts));
     ul2.textContent = ts ? 'ultima lettura ' + ts.slice(8, 10) + '/' + ts.slice(5, 7) + ' ' + ts.slice(11, 16) : '—';
   }
 
@@ -1449,15 +1499,40 @@ dash.calc('piano_stato', {
 dash.calc('piano_controlli', {
   title: 'Controlli del piano',
   description: 'Indici, edifici e tesoro di Napoli e Palermo confrontati con gli obiettivi del piano.',
-  inputs: ['obiettivi', 'diario'],
-  fn: (obiettivi, diario) => {
+  inputs: ['obiettivi', 'diario', 'indici'],
+  fn: (obiettivi, diario, indici) => {
     const o = obiettivi[0];
     const date = [...new Set(diario.map((r) => r.data))].sort();
-    const ultima = date[date.length - 1], prima = date[date.length - 2];
+    const ultima = date[date.length - 1];
     const riga = (p, d) => diario.find((r) => r.provincia === p && r.data === d) || {};
-    const na = riga('Napoli', ultima), pa = riga('Palermo', ultima), naPrima = riga('Napoli', prima);
+    const na = riga('Napoli', ultima), pa = riga('Palermo', ultima);
+    // scuole in calo: il confronto va fatto con una lettura di prima dell'ultimo addebito (22:00, 23:00 con l'ora legale).
+    // Dal 25/10/2026 si legge anche dopo l'addebito (fino all'1): l'ultima lettura di ieri e quella di stanotte stanno dalla
+    // stessa parte dell'addebito, hanno le stesse scuole e il controllo risultava rosso per sbaglio fino alle 22
+    const istante = (r) => {
+      const hm = /(\d{2}):(\d{2})/.exec(r.momento || '') || [null, /sera/.test(r.momento || '') ? '20' : '12', '00'];
+      const ore = +new Date(Date.parse(r.data + 'T12:00:00Z')).toLocaleString('en-GB', { hour: '2-digit', hourCycle: 'h23', timeZone: 'Europe/Rome' }) - 12;
+      return Date.parse(`${r.data}T${hm[1]}:${hm[2]}:00Z`) - ore * 36e5;
+    };
+    const tNa = na.data ? istante(na) : null, dNa = tNa == null ? null : new Date(tNa);
+    let addebito = dNa ? Date.UTC(dNa.getUTCFullYear(), dNa.getUTCMonth(), dNa.getUTCDate(), 21) : null;
+    if (addebito != null && addebito > tNa) addebito -= 864e5;
+    const naPrima = diario.filter((r) => r.provincia === 'Napoli' && r !== na && istante(r) < addebito).sort((a, b) => istante(a) - istante(b)).slice(-1)[0] || {};
     const esito = (buono, medio) => (buono ? 'ok' : medio ? 'attenzione' : 'critico');
     const notti = pa.manutenzione_eur ? pa.tesoro_eur / pa.manutenzione_eur : null;
+    const ix = (p, e) => indici.find((r) => r.provincia === p && r.edificio === e) || {};
+    // Napoli perde ogni notte il 3% (per eccesso) e ricostruisce di giorno: dopo la perdita deve restare sopra la prima provincia
+    // della fascia sotto, se no l'indice scende anche con gli obiettivi raggiunti (le soglie salgono: controllo del 25/10/2026)
+    const tenuta = (e, meta) => {
+      const s = ix('Napoli', e).soglia_sotto;
+      if (s == null || meta == null) return null;
+      const d = meta - Math.ceil(meta * 3 / 100);
+      return { d, s, m: d - s - 1 };
+    };
+    const tenutaRiga = (nome, t) => ({ controllo: 'Napoli · ' + nome + ' dopo la perdita di stanotte (obiettivo − 3%)', valore: t ? t.d : null,
+      obiettivo: t ? 'più di ' + t.s + ' (soglia dell\'indice)' : 'serve la classifica', esito: !t ? 'attenzione' : esito(t.m >= 2, t.m >= 0) });
+    // Palermo: salute all'indice fissato (gli ospedali per la salute 10 non sono stati fatti, decisione dell'utente del 25/10/2026)
+    const fissoPal = INDICI_FISSI.ospedali.Palermo, op = ix('Palermo', 'ospedali'), minPal = op.soglia_sotto != null ? op.soglia_sotto + 1 : null;
     return [
       { controllo: 'Napoli · Salute', valore: na.salute, obiettivo: o.napoli_salute, esito: esito(na.salute >= o.napoli_salute, false) },
       { controllo: 'Napoli · Sviluppo', valore: na.sviluppo, obiettivo: o.napoli_sviluppo, esito: esito(na.sviluppo >= o.napoli_sviluppo, false) },
@@ -1465,9 +1540,12 @@ dash.calc('piano_controlli', {
       { controllo: 'Napoli · Ospedali', valore: na.ospedali, obiettivo: o.napoli_ospedali_meta, esito: esito(na.ospedali >= o.napoli_ospedali_meta, na.ospedali >= o.napoli_ospedali_meta - o.napoli_ospedali_giorno) },
       { controllo: 'Napoli · Scuole in calo (mantenimento non pagato)', valore: na.scuole, obiettivo: naPrima.scuole != null ? 'meno di ' + naPrima.scuole : 'serve la lettura di domani',
         esito: naPrima.scuole == null ? 'attenzione' : esito(na.scuole < naPrima.scuole, false) },
-      { controllo: 'Palermo · Salute', valore: pa.salute, obiettivo: o.palermo_salute, esito: esito(pa.salute >= o.palermo_salute, true) },
-      { controllo: 'Palermo · Ospedali', valore: pa.ospedali, obiettivo: o.palermo_ospedali_meta, esito: esito(pa.ospedali >= o.palermo_ospedali_meta, true) },
-      { controllo: 'Palermo · Notti coperte dal tesoro', valore: notti == null ? null : Math.round(notti * 10) / 10, obiettivo: 'almeno ' + o.notti_minime_tesoro,
+      tenutaRiga('Strade', tenuta('strade', o.napoli_strade_meta)),
+      tenutaRiga('Ospedali', tenuta('ospedali', o.napoli_ospedali_meta)),
+      { controllo: 'Palermo · Salute', valore: pa.salute, obiettivo: fissoPal + ' (indice fissato)', esito: esito(pa.salute >= fissoPal, false) },
+      { controllo: 'Palermo · Ospedali', valore: pa.ospedali, obiettivo: minPal == null ? '—' : 'almeno ' + minPal + ' (per la salute ' + fissoPal + ')',
+        esito: minPal == null ? 'attenzione' : esito(pa.ospedali >= minPal, false) },
+      { controllo: 'Palermo · Notti coperte dal tesoro', valore: notti == null ? null : Math.floor(notti * 10 + 1e-9) / 10, obiettivo: 'almeno ' + o.notti_minime_tesoro,
         esito: notti == null ? 'attenzione' : esito(notti >= o.notti_minime_tesoro, notti >= 1) },
     ];
   },
@@ -1551,7 +1629,7 @@ window.eiPiano = () => {
       ? `Lettura del ${giornoIt(r0.data)}: strade e ospedali sono già agli obiettivi (${r0.strade_meta} e ${r0.ospedali_meta}), oggi non c'è niente da ricostruire.`
       : `Lettura del ${giornoIt(r0.data)}: per tornare agli obiettivi del piano mancano ${r0.strade} strade e ${r0.ospedali} ospedali (di solito 21 e 9 dopo ogni notte). Da inviare = costo − quello che c'è già nel tesoro di Napoli.`;
     const av = document.querySelector('#ni-avviso');
-    av.textContent = `Costruire prima delle 23:00 (mezzanotte del gioco): se a quell'ora nel tesoro di Napoli c'è almeno il mantenimento della notte (${P.fmtE(r0.manutenzione_eur)}), Napoli lo paga e il piano salta per quel giorno.` +
+    av.textContent = `Costruire prima delle ${P.oraAddebito()} (mezzanotte del gioco): se a quell'ora nel tesoro di Napoli c'è almeno il mantenimento della notte (${P.fmtE(r0.manutenzione_eur)}), Napoli lo paga e il piano salta per quel giorno.` +
       (r0.tesoro_eur >= r0.manutenzione_eur ? ` ATTENZIONE: adesso il tesoro (${P.fmtE(r0.tesoro_eur)}) basta già a pagarlo.` : '');
     av.className = 'note ' + (r0.tesoro_eur >= r0.manutenzione_eur ? 'bad' : 'warn');
   }
@@ -1695,7 +1773,7 @@ dash.calc('storico_lungo', {
 
 dash.calc('storico_governi', {
   title: 'Bilancio per governo',
-  description: 'Per ogni governo, sui giorni con i dati di almeno 6 province: gettito, manutenzione, confini e saldo in denaro; donazioni a province e Stato; tesoro dello Stato a fine periodo.',
+  description: 'Per ogni governo, sui giorni chiusi con i dati di almeno 6 province: gettito, manutenzione, confini e saldo in denaro; donazioni a province e Stato; tesoro dello Stato a fine periodo.',
   inputs: ['storico', 'governi'],
   fn: (storico, governi) => {
     const ultimo = storico.map((r) => r.data).sort().slice(-1)[0];
@@ -1704,7 +1782,8 @@ dash.calc('storico_governi', {
       const righe = storico.filter((r) => r.data >= g.inizio && r.data <= al);
       const prov = righe.filter((r) => r.provincia !== 'Stato');
       const conta = new Map();
-      for (const r of prov) if (r.gettito_eur != null) conta.set(r.data, (conta.get(r.data) || 0) + 1);
+      // solo giornate chiuse: quella in corso ha il gettito di poche ore e i costi interi
+      for (const r of prov) if (r.gettito_eur != null && !r.provvisorio) conta.set(r.data, (conta.get(r.data) || 0) + 1);
       const completi = new Set([...conta].filter(([, n]) => n >= 6).map(([d]) => d));
       const s = (k) => prov.filter((r) => completi.has(r.data)).reduce((a, r) => a + (r[k] || 0), 0);
       const tes = righe.filter((r) => r.provincia === 'Stato' && r.tesoro_eur != null).sort((a, b) => a.data.localeCompare(b.data));
@@ -2591,7 +2670,7 @@ const gtLetture = (prov) => {
     m.set(r.ts, l);
   }
   // una lettura vale per il gettito solo se ha tutte le province scelte con il dato dalla mezzanotte
-  return [...m.values()].sort((a, b) => (a.ts < b.ts ? -1 : 1)).map((l) => { if (l.n < prov.size) for (const k of GT_RIS) l.manca.add(k); return l; });
+  return [...m.values()].sort(perOra).map((l) => { if (l.n < prov.size) for (const k of GT_RIS) l.manca.add(k); return l; });
 };
 const gtValore = (o, P) => o == null ? null : GT_RIS.every((k) => o[k] != null) ? GT_RIS.reduce((s, k) => s + o[k] * (k === 'eur' ? 1 : P[k] || 0), 0) : null;
 const gtPrend = (l, voce, k) => { if (!l) return null; if (voce === 'gettito' && l.manca.has(k)) return null; const v = l[voce][k]; return v == null ? null : v; };
@@ -2616,8 +2695,12 @@ const disegnaGettito = () => {
   if (!lett.length) { nota.textContent = 'Nessuna lettura oraria.'; return; }
   const L = lett[lett.length - 1], oggi = L.giorno, ieri = ieriDi(oggi);
   const delGiorno = (g) => lett.filter((l) => l.giorno === g);
-  // ieri alla stessa ora: l'ultima lettura di ieri non oltre l'ora dell'ultima di oggi
-  const ieriL = delGiorno(ieri), Y = ieriL.filter((l) => l.min <= L.min).slice(-1)[0] || null;
+  // ieri alla stessa ora: l'ultima lettura di ieri non oltre l'ora dell'ultima di oggi, al massimo 35 minuti prima
+  // (senza limite oggi alle 01:22 finiva confrontato con ieri alle 00:23, un'ora di gettito in meno)
+  const ieriL = delGiorno(ieri), Y = ieriL.filter((l) => l.min <= L.min && L.min - l.min <= 35).slice(-1)[0] || null;
+  // al cambio dell'ora la giornata dura 25 ore (ultima domenica di ottobre) o 23 (ultima di marzo): l'ora dell'orologio resta il confronto
+  // giusto per la proiezione, ma prima di quell'ora una delle due giornate ha un'ora di notte in più o in meno
+  const durata = (g) => (mezzanotteRoma(isoPiu(g, 1)) - mezzanotteRoma(g)) / 36e5;
   // ieri a fine giornata: totale della giornata chiusa nello storico; se manca, l'ultima lettura di ieri
   const sto = dash.data('storico').data || [];
   const fine = { gettito: {}, don_stato: {}, don_prov: {} };
@@ -2635,7 +2718,9 @@ const disegnaGettito = () => {
   const og = (dash.data('oggi').data || []).filter((r) => gtStato.prov.has(r.provincia));
   const manut = {}; for (const k of GT_RIS) manut[k] = og.filter((r) => r.provincia !== 'Napoli').reduce((s, r) => s + (r['manutenzione_' + k] || 0), 0);
   manut.valore = gtValore(manut, P);
-  const confini = og.reduce((s, r) => s + (r.confini_eur || 0), 0), quota = L.min / 1440; // parte della giornata passata all'ultima lettura
+  // parte della giornata passata all'ultima lettura, con la durata vera della giornata (25 o 23 ore al cambio dell'ora)
+  const confini = og.reduce((s, r) => s + (r.confini_eur || 0), 0), quota = Math.min(1, Math.max(0, (Date.parse(L.ts) - mezzanotteRoma(oggi)) / (durata(oggi) * 36e5)));
+  const oltre = Math.round((Date.parse(L.ts) - mezzanotteRoma(oggi)) / 6e4) - L.min; // +60 o −60 dopo il cambio dell'ora, se no 0
   const riga = (nome, oggiV, ieriV, fineV, k, cl, M) => {
     const proj = oggiV == null || ieriV == null || fineV == null ? null : oggiV + Math.max(0, fineV - ieriV);
     const diff = oggiV == null || ieriV == null ? null : oggiV - ieriV;
@@ -2666,6 +2751,10 @@ const disegnaGettito = () => {
   nota.textContent = `Ultima lettura ${oggi.slice(8, 10)}/${oggi.slice(5, 7)} alle ${oraDi(L.min)}` +
     (Y ? `, confrontata con quella di ieri delle ${oraDi(Y.min)}.` : ': ieri non c\'è una lettura a quell\'ora, il confronto manca.') +
     (L.manca.size ? ' Il gettito dalla mezzanotte non c\'è per tutte le province scelte (serve la lettura di mezzanotte).' : '') +
+    (durata(oggi) !== 24 ? ` Oggi la giornata dura ${durata(oggi)} ore (cambio dell'ora alle 3): ` +
+      (oltre !== 0 ? `a quest'ora dell'orologio è passata un'ora di notte ${oltre > 0 ? 'in più' : 'in meno'} che ieri, tienine conto nella differenza.`
+        : `dopo quell'ora il confronto con ieri avrà un'ora di notte ${durata(oggi) > 24 ? 'in più' : 'in meno'}.`) : '') +
+    (durata(ieri) !== 24 && L.min >= 180 ? ` Ieri la giornata è durata ${durata(ieri)} ore (cambio dell'ora): a quest'ora dell'orologio ieri era passata un'ora di notte ${durata(ieri) > 24 ? 'in più' : 'in meno'}, tienine conto nella differenza.` : '') +
     ` Province: ${gtStato.prov.size === PROV_ORD.length ? 'tutte e 7' : [...gtStato.prov].join(', ')} (le donazioni allo Stato non dipendono dalla scelta).`;
   // tabella per provincia
   const tp = document.querySelector('#gt-prov tbody'); tp.replaceChildren();
@@ -2745,15 +2834,15 @@ const calcolaLimiti = () => {
   const or = dash.data('orario'); if (or.status !== 'ok') return null;
   const righe = or.data.filter((r) => r.provincia !== 'Stato' && r.limite_diamante != null);
   if (!righe.length) return { righe: [], celle: [] };
-  const ultimoTs = righe.map((r) => r.ts).sort().slice(-1)[0], giorno = righe.find((r) => r.ts === ultimoTs).giorno_gioco;
+  const ultimoTs = tsUltimo(righe.map((r) => r.ts)), giorno = righe.find((r) => r.ts === ultimoTs).giorno_gioco;
   const azzera = Date.parse(giorno + 'T00:00:00+03:00'), prossimo = azzera + 864e5;
   const celle = [];
   for (const p of PROV_ORD) {
-    const rr = righe.filter((r) => r.provincia === p && r.giorno_gioco === giorno).sort((a, b) => (a.ts < b.ts ? -1 : 1)), r = rr[rr.length - 1];
+    const rr = righe.filter((r) => r.provincia === p && r.giorno_gioco === giorno).sort(perOra), r = rr[rr.length - 1];
     if (!r) continue;
     const t = Date.parse(r.ts), ore = Math.max((t - azzera) / 36e5, 0.25);
     // ieri alla stessa distanza dall'azzeramento, per il confronto
-    const ieri = righe.filter((x) => x.provincia === p && x.giorno_gioco < giorno).filter((x) => Date.parse(x.ts) - (azzera - 864e5) <= t - azzera).sort((a, b) => (a.ts < b.ts ? -1 : 1)).slice(-1)[0];
+    const ieri = righe.filter((x) => x.provincia === p && x.giorno_gioco < giorno).filter((x) => Date.parse(x.ts) - (azzera - 864e5) <= t - azzera).sort(perOra).slice(-1)[0];
     for (const k of LIM) {
       const resta = r['limite_' + k], max = Math.max(LIM_MAX[k], ...rr.map((x) => x['limite_' + k] || 0));
       if (resta == null) continue;
@@ -2823,7 +2912,7 @@ const disegnaLimiti = () => {
     const tr = document.createElement('tr');
     tr.append(Object.assign(document.createElement('td'), { textContent: new Date(g + 'T12:00Z').toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }) + (g === L.giorno ? ' (in corso)' : '') }));
     for (const p of PROV_ORD) {
-      const rr = L.righe.filter((r) => r.provincia === p && r.giorno_gioco === g).sort((a, b) => (a.ts < b.ts ? -1 : 1));
+      const rr = L.righe.filter((r) => r.provincia === p && r.giorno_gioco === g).sort(perOra);
       const z = rr[rr.length - 1], fin = rr.find((r) => r['limite_' + k] <= 0), td = document.createElement('td');
       td.textContent = !z ? '—' : fin ? 'finito alle ' + fin.ts.slice(11, 16) : fmtN(z['limite_' + k]) + ' alle ' + z.ts.slice(11, 16);
       if (fin) td.className = 'bad';

@@ -12,13 +12,14 @@ hanno anche i totali dalla mezzanotte italiana (gettito_it_*, tassazioni_it), us
 import json
 import re
 import sys
+from statistics import median
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import openpyxl
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from giornata_it import di_mezzanotte, gettito_tra, giorno_gioco, istante  # noqa: E402
+from giornata_it import di_mezzanotte, gettito_tra, giorno_gioco, giorno_it, istante  # noqa: E402
 
 PROV = ["Venezia", "Lombardia", "Marsiglia", "Napoli", "Roma", "Firenze", "Palermo"]
 LIM5 = ("diamante", "pelle", "oro", "petrolio", "nte")  # ordine del riquadro «Limiti delle risorse provinciali»
@@ -111,19 +112,29 @@ RIS5 = ["denaro", "pelle", "oro", "petrolio", "nte"]
 
 
 def donazioni(out_dir):
-    """Da tutti i file donazioni-*.json: righe per giorno e destinatario, totali di sempre, tesoro dello Stato letto."""
-    per_giorno, totali, stato = {}, {}, []
-    for f in sorted(Path(out_dir).glob("donazioni-*.json")):  # i file più recenti sovrascrivono i giorni già visti
+    """Da tutti i file donazioni-*.json: righe per giorno e destinatario, totali di sempre, tesoro dello Stato letto.
+    Il gioco mostra solo le ultime 50 donazioni: con l'elenco pieno il giorno più vecchio è tagliato. Per ogni giorno vale
+    una lettura che lo ha intero e, tra queste, quella con più donazioni, a pari numero la più recente (25/10/2026: lo Stato
+    del 20/10 scendeva da 57.700 a 52.700 oro perché l'ultima lettura aveva quel giorno tagliato)."""
+    per_giorno, rango, totali, stato = {}, {}, {}, []
+    for i, f in enumerate(sorted(Path(out_dir).glob("donazioni-*.json"))):
         for l in json.loads(f.read_text(encoding="utf-8"))["letture"]:
             dest = NOMI_SLUG.get(l["d"], l["d"])
+            tagliato = (l.get("n") or 0) >= 50 and l.get("da")
             for giorno, v in l["g"].items():
+                r = (0 if tagliato and giorno <= l["da"] else 1, v[5], i)
+                if (giorno, dest) in rango and r < rango[(giorno, dest)]:
+                    continue
+                rango[(giorno, dest)] = r
                 per_giorno[(giorno, dest)] = {"chiave": f"{giorno}-{dest}", "data": giorno, "destinatario": dest,
                                               **dict(zip(RIS5, v[:5])), "numero": v[5]}
+            # «l» è l'ora UTC della lettura: la data è quella italiana (alle 00:19 italiane in UTC è ancora il giorno prima)
+            letto = giorno_it(datetime.fromisoformat(l["l"][:16]).replace(tzinfo=timezone.utc)).isoformat()
             if l.get("t"):
-                totali[dest] = {"destinatario": dest, "letto": l["l"][:10], "elenco_dal": l.get("da"),
+                totali[dest] = {"destinatario": dest, "letto": letto, "elenco_dal": l.get("da"),
                                 **{"totale_" + k: x for k, x in zip(RIS5, l["t"])}}
             if l.get("s"):
-                stato.append({"data": l["l"][:10], **{"tesoro_" + k: x for k, x in zip(RIS5, l["s"])}})
+                stato.append({"data": letto, **{"tesoro_" + k: x for k, x in zip(RIS5, l["s"])}})
     righe = sorted(per_giorno.values(), key=lambda r: (r["data"], r["destinatario"]))
     ordine = list(NOMI_SLUG.values())
     return righe, sorted(totali.values(), key=lambda r: ordine.index(r["destinatario"])), stato
@@ -166,11 +177,63 @@ def righe_orarie(foto, gettito, don_lett, quando):
 
 
 def ora_lettura(foto, file_foto):
-    """Ora della fotografia: «AAAA-MM-GG ora HH:MM» se c'è, altrimenti l'ora del file (letture «sera»)."""
+    """Ora della fotografia: «AAAA-MM-GG ora HH:MM» se c'è, altrimenti l'ora del file (letture «sera»).
+    Nell'ora che si ripete al cambio dell'ora (02:00–03:00 dell'ultima domenica di ottobre) «02:20» può essere con l'ora
+    legale o con quella solare: vale quella più vicina all'ora in cui è stato scritto il file."""
     testo = foto.get("data", "")
+    scritto = datetime.fromtimestamp(Path(file_foto).stat().st_mtime).astimezone()
     if " ora " in testo:
-        return datetime.strptime(testo[:10] + " " + testo.split(" ora ")[1][:5], "%Y-%m-%d %H:%M").astimezone()
-    return datetime.fromtimestamp(Path(file_foto).stat().st_mtime).astimezone().replace(second=0, microsecond=0)
+        locale = datetime.strptime(testo[:10] + " " + testo.split(" ora ")[1][:5], "%Y-%m-%d %H:%M")
+        return min((locale.replace(fold=f).astimezone() for f in (0, 1)), key=lambda t: abs((t - scritto).total_seconds()))
+    return scritto.replace(second=0, microsecond=0)
+
+
+def quando_classifica(c, f):
+    """Ora di una classifica salvata: «AAAA-MM-GG ora HH:MM», altrimenti la sera (21:00) o il mezzogiorno di quella data."""
+    testo = str(c.get("data") or f.stem.split("-", 1)[1])
+    ora = testo.split(" ora ")[1][:5] if " ora " in testo else "21:00" if "sera" in testo else "12:00"
+    return istante(testo[:10] + "T" + ora)
+
+
+def tendenze_soglie(file_clas, clas, quando):
+    """Per ogni edificio e posizione della classifica di adesso: di quanti edifici al giorno sale quel posto, dalle classifiche
+    degli ultimi 7 giorni. Il posto si confronta con lo stesso posto della sua fascia (le province in classifica cambiano), la
+    pendenza è la mediana delle pendenze tra ogni coppia di letture lontane almeno 12 ore: una lettura storta non la sposta
+    (25/10/2026: strade 654, 654, 635, 654 davano +19 al giorno con le ultime due). Servono 3 classifiche lungo almeno 36 ore."""
+    serie = []
+    for f in file_clas:
+        try:
+            c = json.loads(f.read_text(encoding="utf-8"))
+            t = quando_classifica(c, f)
+        except (ValueError, OSError):
+            continue
+        if timedelta(0) <= quando - t <= timedelta(days=7):
+            serie.append((t, c))
+    out = {}
+    for e, v in clas.items():
+        b = len(v) // 10
+        punti_lista = [(t, c.get(e) or []) for t, c in serie]
+        punti_lista = [(t, w) for t, w in punti_lista if len(w) >= 0.9 * len(v) and len(w) // 10]
+        res = []
+        for i in range(len(v)):
+            punti = []
+            for t, w in punti_lista:
+                bw = len(w) // 10
+                if not b or i == 0:
+                    i2 = i
+                elif (i - 1) // b < 10:
+                    j, o = divmod(i - 1, b)
+                    i2 = 1 + j * bw + min(o, bw - 1)
+                else:
+                    i2 = i - (1 + 10 * b) + (1 + 10 * bw)
+                if 0 <= i2 < len(w):
+                    punti.append((t, w[i2]))
+            pend = sorted((y2 - y1) / ((t2 - t1).total_seconds() / 86400) for k, (t1, y1) in enumerate(punti)
+                          for t2, y2 in punti[k + 1:] if abs((t2 - t1).total_seconds()) >= 12 * 3600)
+            ok = len(punti) >= 3 and max(t for t, _ in punti) - min(t for t, _ in punti) >= timedelta(hours=36) and pend
+            res.append(round(median(pend), 2) if ok else None)
+        out[e] = res
+    return out
 
 
 def aggiungi_orario(vecchie, nuove):
@@ -356,11 +419,11 @@ def main(xlsx, stat_dir, out_dir):
     # classifica precedente (giorno diverso): serve a misurare quanto salgono le soglie («inflazione» degli indici)
     file_clas = sorted(stat_dir.glob("classifiche-*.json"))
     d_clas = date.fromisoformat(file_clas[-1].stem.split("-", 1)[1])
-    prec, giorni_prec = None, None
+    prec, giorni_prec, f_prec = None, None, None
     for f in reversed(file_clas[:-1]):
         d_f = date.fromisoformat(f.stem.split("-", 1)[1])
         if d_f < d_clas:
-            prec, giorni_prec = json.loads(f.read_text(encoding="utf-8")), (d_clas - d_f).days
+            prec, giorni_prec, f_prec = json.loads(f.read_text(encoding="utf-8")), (d_clas - d_f).days, f
             break
     # lettura incompleta (lo scorrimento non ha caricato tutta la classifica, come le strade del 24/10/2026:
     # 193 province su 230): le soglie verrebbero troppo alte, quindi si tiene la classifica precedente
@@ -373,10 +436,33 @@ def main(xlsx, stat_dir, out_dir):
                       f"uso quella di {giorni_prec} giorni fa")
                 clas[edificio] = prec[edificio]
                 sostituite.add(edificio)
+    tend = tendenze_soglie(file_clas, {e: clas[e] for e in ("scuole", "basi", "strade", "ospedali")},
+                           quando_classifica(clas, file_clas[-1]))
+
+    # edifici di ogni provincia quando è stata letta la classifica (una volta al giorno): la provincia è lì dentro con quel numero.
+    # Se poi ne costruisce o ne perde, la pagina la ricolloca con il numero di adesso (25/10/2026: Palermo era in classifica con
+    # 263 ospedali e ne aveva 274; senza ricollocarla la soglia veniva 264 invece di 265 e le notti al calo 2 invece di 1)
+    t_clas = quando_classifica(clas, file_clas[-1])
+    t_prec = quando_classifica(prec, f_prec) if prec else None
+    letture_def = []
+    for f in (out_dir.parent / "DEF" / "letture").glob("*.json"):
+        try:
+            l = json.loads(f.read_text(encoding="utf-8"))
+            letture_def.append((istante(l["ora"]), l))
+        except (ValueError, KeyError, TypeError, OSError):
+            continue
+    for e, k in (("scuole", "sc"), ("basi", "ba"), ("strade", "st"), ("ospedali", "os")):
+        t_e = t_prec if e in sostituite else t_clas
+        vicine = [(t, l) for t, l in letture_def if abs(t - t_e) <= timedelta(hours=2)]
+        l = min(vicine, key=lambda x: abs(x[0] - t_e))[1] if vicine else {}
+        for o in oggi:
+            dato = ((((l.get("province") or {}).get(o["provincia"]) or {}).get("provincia") or {}).get(k) or {}).get("n")
+            o["in_classifica_" + e] = dato if isinstance(dato, (int, float)) else None
     righe_clas = []
     for edificio in ("scuole", "basi", "strade", "ospedali"):
         for pos, n in enumerate(clas[edificio], start=1):
-            riga = {"edificio": edificio, "posizione": pos, "edifici": n}
+            # crescita_giorno: tendenza del posto (edifici al giorno), usata dalla pagina per l'inflazione degli indici
+            riga = {"edificio": edificio, "posizione": pos, "edifici": n, "crescita_giorno": tend[edificio][pos - 1]}
             if pos == 1:  # per la riga «Salute dei dati» del cruscotto: province lette e classifica sostituita
                 riga.update({"letti": letti[edificio], "sostituita": edificio in sostituite})
             if prec and pos <= len(prec[edificio]):
