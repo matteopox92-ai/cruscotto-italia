@@ -1,0 +1,220 @@
+{
+ "data": "2026-10-26 ora 00:21",
+ "nota": "Gettito fiscale per provincia dalle pagine del gioco",
+ "confini_per_provincia": 1100000,
+ "confini_addebiti": {
+  "2026-10-25": 7420000,
+  "2026-10-24": 7350000,
+  "2026-10-23": 7420000,
+  "2026-10-22": 8470000,
+  "2026-10-21": 8190000,
+  "2026-10-20": 8960000,
+  "2026-10-19": 9800000
+ },
+ "province": {
+  "Venezia": {
+   "provincia": "VENEZIA",
+   "tot7": {
+    "denaro": 48359907,
+    "pelle": 254,
+    "oro": 25996,
+    "petrolio": 1484,
+    "nte": 8535
+   },
+   "giorni": [
+    8100000,
+    8300000,
+    8100000,
+    7300000,
+    7800000,
+    7800000,
+    861000
+   ],
+   "tassazioniOggi": 407,
+   "denaroOggi": 860963,
+   "oggi": {
+    "denaro": 860963,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "lunedì 26 ottobre 2026"
+  },
+  "Lombardia": {
+   "provincia": "LOMBARDIA",
+   "tot7": {
+    "denaro": 21747055,
+    "pelle": 54447,
+    "oro": 6942,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giorni": [
+    3100000,
+    2700000,
+    4400000,
+    3500000,
+    2600000,
+    4800000,
+    617700
+   ],
+   "tassazioniOggi": 402,
+   "denaroOggi": 617727,
+   "oggi": {
+    "denaro": 617727,
+    "pelle": 1148,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "lunedì 26 ottobre 2026"
+  },
+  "Marsiglia": {
+   "provincia": "MARSIGLIA",
+   "tot7": {
+    "denaro": 31869664,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 53544,
+    "nte": 0
+   },
+   "giorni": [
+    7400000,
+    3700000,
+    2300000,
+    4300000,
+    5700000,
+    7900000,
+    669200
+   ],
+   "tassazioniOggi": 360,
+   "denaroOggi": 669216,
+   "oggi": {
+    "denaro": 669216,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 1043,
+    "nte": 0
+   },
+   "giornata": "lunedì 26 ottobre 2026"
+  },
+  "Napoli": {
+   "provincia": "NAPOLI",
+   "tot7": {
+    "denaro": 6538788,
+    "pelle": 9833,
+    "oro": 210,
+    "petrolio": 12460,
+    "nte": 0
+   },
+   "giorni": [
+    514400,
+    401400,
+    598000,
+    963300,
+    2900000,
+    971300,
+    170700
+   ],
+   "tassazioniOggi": 137,
+   "denaroOggi": 170726,
+   "oggi": {
+    "denaro": 170726,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "lunedì 26 ottobre 2026"
+  },
+  "Roma": {
+   "provincia": "ROMA",
+   "tot7": {
+    "denaro": 11995671,
+    "pelle": 312,
+    "oro": 2481,
+    "petrolio": 132,
+    "nte": 144
+   },
+   "giorni": [
+    2700000,
+    2700000,
+    2400000,
+    2300000,
+    826700,
+    1000000,
+    167100
+   ],
+   "tassazioniOggi": 115,
+   "denaroOggi": 167086,
+   "oggi": {
+    "denaro": 167086,
+    "pelle": 13,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "lunedì 26 ottobre 2026"
+  },
+  "Firenze": {
+   "provincia": "FIRENZE",
+   "tot7": {
+    "denaro": 5000352,
+    "pelle": 27209,
+    "oro": 156732,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giorni": [
+    1000000,
+    601600,
+    769800,
+    980900,
+    810300,
+    723800,
+    103100
+   ],
+   "tassazioniOggi": 111,
+   "denaroOggi": 103058,
+   "oggi": {
+    "denaro": 103058,
+    "pelle": 1890,
+    "oro": 635,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "lunedì 26 ottobre 2026"
+  },
+  "Palermo": {
+   "provincia": "PALERMO",
+   "tot7": {
+    "denaro": 4849623,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 223688
+   },
+   "giorni": [
+    861800,
+    662300,
+    738900,
+    637600,
+    802800,
+    1000000,
+    114200
+   ],
+   "tassazioniOggi": 208,
+   "denaroOggi": 114189,
+   "oggi": {
+    "denaro": 114189,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 7126
+   },
+   "giornata": "lunedì 26 ottobre 2026"
+  }
+ },
+ "letto_il": "2026-10-25T23:29:30Z"
+}
