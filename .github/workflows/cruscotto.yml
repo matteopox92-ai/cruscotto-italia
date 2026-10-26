@@ -49,6 +49,11 @@ jobs:
           python strumenti/cruscotto_offline.py build sito/index.html
           sed -i 's#<meta charset="utf-8">#<meta charset="utf-8"><meta name="robots" content="noindex, nofollow">#' sito/index.html
           printf 'User-agent: *\nDisallow: /\n' > sito/robots.txt
+          # Cruscotto 2.0 (26/10/2026): pagina autonoma già costruita sul PC (versione pubblica, senza nomi) in /2/
+          if [ -f dati/cruscotto2/index.html ]; then
+            mkdir -p sito/2
+            sed 's#<meta charset="utf-8">#<meta charset="utf-8"><meta name="robots" content="noindex, nofollow">#' dati/cruscotto2/index.html > sito/2/index.html
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
