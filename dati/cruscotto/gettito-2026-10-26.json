@@ -1,5 +1,5 @@
 {
- "data": "2026-10-26 ora 16:24",
+ "data": "2026-10-26 ora 17:20",
  "nota": "Gettito fiscale per provincia (lettura oraria)",
  "confini_per_provincia": 1100000,
  "confini_addebiti": {
@@ -14,7 +14,7 @@
  "province": {
   "Venezia": {
    "tot7": {
-    "denaro": 53908223,
+    "denaro": 54312949,
     "pelle": 254,
     "oro": 25996,
     "petrolio": 1484,
@@ -27,12 +27,12 @@
     7300000,
     7800000,
     7800000,
-    6400000
+    6800000
    ],
-   "tassazioniOggi": 3092,
-   "denaroOggi": 6409279,
+   "tassazioniOggi": 3291,
+   "denaroOggi": 6814005,
    "oggi": {
-    "denaro": 6409279,
+    "denaro": 6814005,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
@@ -42,7 +42,7 @@
   },
   "Lombardia": {
    "tot7": {
-    "denaro": 25131841,
+    "denaro": 25367940,
     "pelle": 61215,
     "oro": 6942,
     "petrolio": 0,
@@ -55,12 +55,12 @@
     3500000,
     2600000,
     4800000,
-    4000000
+    4200000
    ],
-   "tassazioniOggi": 2674,
-   "denaroOggi": 4002513,
+   "tassazioniOggi": 2835,
+   "denaroOggi": 4238612,
    "oggi": {
-    "denaro": 4002513,
+    "denaro": 4238612,
     "pelle": 7916,
     "oro": 0,
     "petrolio": 0,
@@ -70,10 +70,10 @@
   },
   "Marsiglia": {
    "tot7": {
-    "denaro": 38420016,
+    "denaro": 38789601,
     "pelle": 0,
     "oro": 0,
-    "petrolio": 58976,
+    "petrolio": 59268,
     "nte": 0
    },
    "giorni": [
@@ -83,23 +83,23 @@
     4300000,
     5700000,
     7900000,
-    7200000
+    7600000
    ],
-   "tassazioniOggi": 3731,
-   "denaroOggi": 7219568,
+   "tassazioniOggi": 3922,
+   "denaroOggi": 7589153,
    "oggi": {
-    "denaro": 7219568,
+    "denaro": 7589153,
     "pelle": 0,
     "oro": 0,
-    "petrolio": 6475,
+    "petrolio": 6767,
     "nte": 0
    },
    "giornata": "lunedì 26 ottobre 2026"
   },
   "Napoli": {
    "tot7": {
-    "denaro": 7277963,
-    "pelle": 12150,
+    "denaro": 7302240,
+    "pelle": 12265,
     "oro": 210,
     "petrolio": 12460,
     "nte": 0
@@ -111,13 +111,13 @@
     963300,
     2900000,
     971300,
-    909900
+    934200
    ],
-   "tassazioniOggi": 900,
-   "denaroOggi": 909901,
+   "tassazioniOggi": 939,
+   "denaroOggi": 934178,
    "oggi": {
-    "denaro": 909901,
-    "pelle": 2317,
+    "denaro": 934178,
+    "pelle": 2432,
     "oro": 0,
     "petrolio": 0,
     "nte": 0
@@ -126,7 +126,7 @@
   },
   "Roma": {
    "tot7": {
-    "denaro": 12896022,
+    "denaro": 12952345,
     "pelle": 312,
     "oro": 2481,
     "petrolio": 132,
@@ -141,10 +141,10 @@
     1000000,
     1100000
    ],
-   "tassazioniOggi": 706,
-   "denaroOggi": 1067437,
+   "tassazioniOggi": 748,
+   "denaroOggi": 1123760,
    "oggi": {
-    "denaro": 1067437,
+    "denaro": 1123760,
     "pelle": 13,
     "oro": 0,
     "petrolio": 0,
@@ -154,9 +154,9 @@
   },
   "Firenze": {
    "tot7": {
-    "denaro": 5591470,
-    "pelle": 39375,
-    "oro": 162158,
+    "denaro": 5622956,
+    "pelle": 39512,
+    "oro": 162415,
     "petrolio": 0,
     "nte": 0
    },
@@ -167,14 +167,14 @@
     980900,
     810300,
     723800,
-    694200
+    725700
    ],
-   "tassazioniOggi": 775,
-   "denaroOggi": 694176,
+   "tassazioniOggi": 805,
+   "denaroOggi": 725662,
    "oggi": {
-    "denaro": 694176,
-    "pelle": 14056,
-    "oro": 6061,
+    "denaro": 725662,
+    "pelle": 14193,
+    "oro": 6318,
     "petrolio": 0,
     "nte": 0
    },
@@ -182,11 +182,11 @@
   },
   "Palermo": {
    "tot7": {
-    "denaro": 5610126,
+    "denaro": 5672464,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
-    "nte": 273498
+    "nte": 277131
    },
    "giorni": [
     861800,
@@ -195,19 +195,19 @@
     637600,
     802800,
     1000000,
-    874700
+    937000
    ],
-   "tassazioniOggi": 1638,
-   "denaroOggi": 874692,
+   "tassazioniOggi": 1750,
+   "denaroOggi": 937030,
    "oggi": {
-    "denaro": 874692,
+    "denaro": 937030,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
-    "nte": 56936
+    "nte": 60569
    },
    "giornata": "lunedì 26 ottobre 2026"
   }
  },
- "letto_il": "2026-10-26T15:24:13Z"
+ "letto_il": "2026-10-26T16:23:35Z"
 }

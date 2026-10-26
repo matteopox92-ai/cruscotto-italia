@@ -1,11 +1,11 @@
 {
- "data": "2026-10-26 ora 16:24",
+ "data": "2026-10-26 ora 17:20",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 301,
-   "fab": 91,
+   "gioc": 303,
+   "fab": 92,
    "gov": "Laisius Mathias",
    "ind": [
     2,
@@ -40,7 +40,7 @@
    "st": {
     "n": 852,
     "indice": 8,
-    "prossimo": "+100 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+96 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 363,
@@ -55,7 +55,7 @@
     "17436"
    ],
    "lim": [
-    354,
+    255,
     800,
     800,
     800,
@@ -65,7 +65,7 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 320,
+   "gioc": 324,
    "fab": 124,
    "gov": "Alessio3",
    "ind": [
@@ -101,7 +101,7 @@
    "st": {
     "n": 799,
     "indice": 8,
-    "prossimo": "+153 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+149 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 360,
@@ -116,7 +116,7 @@
     "16893"
    ],
    "lim": [
-    612,
+    532,
     752,
     800,
     800,
@@ -126,7 +126,7 @@
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 51,
+   "gioc": 49,
    "fab": 18,
    "gov": "BULL 1515",
    "ind": [
@@ -136,10 +136,10 @@
     8
    ],
    "tes": [
-    "5.598.539",
+    "5.886.092",
     "25427",
     "15182",
-    "23404",
+    "24404",
     "26401"
    ],
    "bon": [
@@ -162,7 +162,7 @@
    "st": {
     "n": 981,
     "indice": 9,
-    "prossimo": "+213 edifici → Indice 10 (diamante +30% · risorsa +20%)"
+    "prossimo": "+212 edifici → Indice 10 (diamante +30% · risorsa +20%)"
    },
    "os": {
     "n": 276,
@@ -177,17 +177,17 @@
     "17331"
    ],
    "lim": [
-    162,
+    73,
     800,
     800,
-    673,
+    667,
     800
    ],
    "slug": "Marsilya"
   },
   {
    "p": "NAPOLI",
-   "gioc": 284,
+   "gioc": 285,
    "fab": 97,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -223,7 +223,7 @@
    "st": {
     "n": 693,
     "indice": 7,
-    "prossimo": "+84 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+    "prossimo": "+69 edifici → Indice 8 (diamante +24% · risorsa +16%)"
    },
    "os": {
     "n": 276,
@@ -238,8 +238,8 @@
     "14385"
    ],
    "lim": [
-    981,
-    769,
+    963,
+    768,
     800,
     800,
     800
@@ -248,7 +248,7 @@
   },
   {
    "p": "ROMA",
-   "gioc": 305,
+   "gioc": 307,
    "fab": 140,
    "gov": "ORK IL ROSSO",
    "ind": [
@@ -284,7 +284,7 @@
    "st": {
     "n": 693,
     "indice": 7,
-    "prossimo": "+84 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+    "prossimo": "+69 edifici → Indice 8 (diamante +24% · risorsa +16%)"
    },
    "os": {
     "n": 276,
@@ -299,7 +299,7 @@
     "14205"
    ],
    "lim": [
-    1548,
+    1527,
     800,
     800,
     800,
@@ -309,7 +309,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 238,
+   "gioc": 241,
    "fab": 88,
    "gov": "Edda de Astro",
    "ind": [
@@ -345,7 +345,7 @@
    "st": {
     "n": 693,
     "indice": 7,
-    "prossimo": "+84 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+    "prossimo": "+69 edifici → Indice 8 (diamante +24% · risorsa +16%)"
    },
    "os": {
     "n": 276,
@@ -360,9 +360,9 @@
     "12756"
    ],
    "lim": [
-    1169,
-    749,
-    696,
+    1158,
+    748,
+    692,
     800,
     800
    ],
@@ -370,8 +370,8 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 241,
-   "fab": 106,
+   "gioc": 243,
+   "fab": 107,
    "gov": "generale romano",
    "ind": [
     6,
@@ -396,7 +396,7 @@
    "sc": {
     "n": 66,
     "indice": 6,
-    "prossimo": "+10 edifici → Indice 7 (+14%)"
+    "prossimo": "+11 edifici → Indice 7 (+14%)"
    },
    "ba": {
     "n": 32,
@@ -406,7 +406,7 @@
    "st": {
     "n": 799,
     "indice": 8,
-    "prossimo": "+153 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+149 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 276,
@@ -421,14 +421,14 @@
     "14706"
    ],
    "lim": [
-    941,
+    915,
     800,
     800,
     800,
-    341
+    311
    ],
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-26T15:24:13Z"
+ "letto_il": "2026-10-26T16:23:27Z"
 }
