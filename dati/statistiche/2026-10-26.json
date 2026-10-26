@@ -1,10 +1,10 @@
 {
- "data": "2026-10-26 ora 20:24",
+ "data": "2026-10-26 ora 21:20",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 294,
+   "gioc": 296,
    "fab": 92,
    "gov": "Laisius Mathias",
    "ind": [
@@ -30,7 +30,7 @@
    "sc": {
     "n": 15,
     "indice": 2,
-    "prossimo": "+4 edifici → Indice 3 (+6%)"
+    "prossimo": "+5 edifici → Indice 3 (+6%)"
    },
    "ba": {
     "n": 136,
@@ -57,7 +57,7 @@
    "lim": [
     0,
     800,
-    797,
+    794,
     800,
     800
    ],
@@ -65,7 +65,7 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 327,
+   "gioc": 329,
    "fab": 126,
    "gov": "Alessio3",
    "ind": [
@@ -116,8 +116,8 @@
     "16893"
    ],
    "lim": [
-    268,
-    749,
+    176,
+    746,
     800,
     800,
     800
@@ -126,7 +126,7 @@
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 36,
+   "gioc": 37,
    "fab": 18,
    "gov": "BULL 1515",
    "ind": [
@@ -180,14 +180,14 @@
     0,
     800,
     800,
-    646,
+    635,
     800
    ],
    "slug": "Marsilya"
   },
   {
    "p": "NAPOLI",
-   "gioc": 289,
+   "gioc": 290,
    "fab": 94,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -218,7 +218,7 @@
    "ba": {
     "n": 79,
     "indice": 5,
-    "prossimo": "+4 edifici → Indice 6 (+12%)"
+    "prossimo": "+7 edifici → Indice 6 (+12%)"
    },
    "st": {
     "n": 693,
@@ -238,7 +238,7 @@
     "14385"
    ],
    "lim": [
-    921,
+    896,
     766,
     800,
     800,
@@ -299,7 +299,7 @@
     "14205"
    ],
    "lim": [
-    1456,
+    1431,
     800,
     799,
     800,
@@ -360,9 +360,9 @@
     "12756"
    ],
    "lim": [
-    1113,
+    1100,
     740,
-    674,
+    667,
     800,
     800
    ],
@@ -421,14 +421,14 @@
     "14706"
    ],
    "lim": [
-    799,
+    753,
     800,
     800,
     800,
-    212
+    182
    ],
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-26T19:24:34Z"
+ "letto_il": "2026-10-26T20:24:40Z"
 }
