@@ -1,11 +1,11 @@
 {
- "data": "2026-10-26 ora 09:20",
+ "data": "2026-10-26 ora 10:19",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 295,
-   "fab": 91,
+   "gioc": 296,
+   "fab": 92,
    "gov": "Laisius Mathias",
    "ind": [
     2,
@@ -55,7 +55,7 @@
     "17436"
    ],
    "lim": [
-    1002,
+    910,
     800,
     800,
     800,
@@ -65,7 +65,7 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 310,
+   "gioc": 311,
    "fab": 122,
    "gov": "Alessio3",
    "ind": [
@@ -116,8 +116,8 @@
     "16488"
    ],
    "lim": [
-    1136,
-    766,
+    1072,
+    763,
     800,
     800,
     800
@@ -137,10 +137,10 @@
    ],
    "tes": [
     "6.098.539",
-    "3927",
+    "13927",
     "15182",
-    "2404",
-    "4401"
+    "12404",
+    "14401"
    ],
    "bon": [
     "12",
@@ -167,7 +167,7 @@
    "os": {
     "n": 276,
     "indice": 8,
-    "prossimo": "+72 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+73 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "4.300.200",
@@ -177,17 +177,17 @@
     "17271"
    ],
    "lim": [
-    878,
+    769,
     800,
     800,
-    697,
+    694,
     800
    ],
    "slug": "Marsilya"
   },
   {
    "p": "NAPOLI",
-   "gioc": 284,
+   "gioc": 283,
    "fab": 93,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -228,7 +228,7 @@
    "os": {
     "n": 275,
     "indice": 8,
-    "prossimo": "+73 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+74 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "3.552.900",
@@ -238,8 +238,8 @@
     "14190"
    ],
    "lim": [
-    1103,
-    793,
+    1084,
+    789,
     800,
     800,
     800
@@ -249,7 +249,7 @@
   {
    "p": "ROMA",
    "gioc": 292,
-   "fab": 142,
+   "fab": 143,
    "gov": "ORK IL ROSSO",
    "ind": [
     8,
@@ -289,7 +289,7 @@
    "os": {
     "n": 273,
     "indice": 8,
-    "prossimo": "+75 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+76 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "3.491.100",
@@ -299,7 +299,7 @@
     "13956"
    ],
    "lim": [
-    1675,
+    1657,
     800,
     800,
     800,
@@ -350,7 +350,7 @@
    "os": {
     "n": 274,
     "indice": 8,
-    "prossimo": "+74 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+75 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "3.031.200",
@@ -360,9 +360,9 @@
     "12534"
    ],
    "lim": [
-    1257,
-    766,
-    732,
+    1244,
+    763,
+    728,
     800,
     800
    ],
@@ -370,7 +370,7 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 226,
+   "gioc": 229,
    "fab": 104,
    "gov": "generale romano",
    "ind": [
@@ -411,7 +411,7 @@
    "os": {
     "n": 274,
     "indice": 8,
-    "prossimo": "+74 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+75 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
     "3.485.400",
@@ -421,14 +421,14 @@
     "14166"
    ],
    "lim": [
-    1111,
+    1089,
     800,
     800,
     800,
-    523
+    497
    ],
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-26T08:23:37Z"
+ "letto_il": "2026-10-26T09:22:40Z"
 }
