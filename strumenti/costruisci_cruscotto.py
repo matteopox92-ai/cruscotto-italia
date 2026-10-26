@@ -42,6 +42,8 @@ def num(v):
 
 def gioco_num(v):
     s = str(v)
+    if "," in s:  # «4.989,6»: punto delle migliaia e virgola dei decimali (stress test del 26/10/2026)
+        return float(s.replace(".", "").replace(",", "."))
     if "." in s and len(s.split(".")[-1]) == 3:
         return float(s.replace(".", ""))
     return float(s)
@@ -237,13 +239,20 @@ def tendenze_soglie(file_clas, clas, quando):
 
 
 def aggiungi_orario(vecchie, nuove):
-    """Aggiunge le righe di una lettura se non ci sono già (stessa ora, o stessi numeri nello stesso giorno)."""
+    """Aggiunge le righe di una lettura se non ci sono già (stessa ora, o stessi numeri nello stesso giorno a meno di 20 minuti:
+    la stessa lettura salvata due volte). Oltre i 20 minuti due righe con gli stessi numeri sono due ore vere (Napoli col
+    tesoro a 0 di notte rischiava di perderle, stress test del 26/10/2026)."""
     firma = lambda r: (r["provincia"], r.get("data_it"), r.get("tesoro_eur"), r.get("gettito_oggi_eur"),
                        r.get("tassazioni_oggi"), r.get("donazioni_oggi_eur"), r.get("limite_diamante"), r.get("limite_oro"))
-    gia = {(r["provincia"], r["ts"]) for r in vecchie} | {firma(r) for r in vecchie}
+    gia, ore = {(r["provincia"], r["ts"]) for r in vecchie}, {}
+    for r in vecchie:
+        ore.setdefault(firma(r), []).append(datetime.fromisoformat(r["ts"]))
     for r in nuove:
-        if (r["provincia"], r["ts"]) not in gia and firma(r) not in gia:
+        t = datetime.fromisoformat(r["ts"])
+        if (r["provincia"], r["ts"]) not in gia and not any(abs((t - x).total_seconds()) < 1200 for x in ore.get(firma(r), [])):
             vecchie.append(r)
+            gia.add((r["provincia"], r["ts"]))
+            ore.setdefault(firma(r), []).append(t)
     vecchie.sort(key=lambda r: (r["ts"], r["provincia"]))
     return vecchie
 
@@ -342,6 +351,12 @@ def main(xlsx, stat_dir, out_dir):
 
     storico, prezzi, governi = storico_def(xlsx)
     giornate = carica_giornate(out_dir)
+    # prezzi medi di mercato anche dai giorni del DEF aggiornato (giornate.json): nell'xlsx la riga dei prezzi c'era solo fino
+    # al 23/10 e «Da comprare» e il bollettino usavano prezzi vecchi (stress test del 26/10/2026)
+    for g in giornate:
+        pz = ((g.get("voci") or {}).get("mercato") or {}).get("prezzi")
+        if isinstance(pz, list) and len(pz) == 4 and all(isinstance(x, (int, float)) for x in pz):
+            prezzi[g["giorno"]] = {"data": g["giorno"], **dict(zip(("pelle", "oro", "petrolio", "nte"), pz)), "fonte": "DEF (media settimanale)"}
     coperti = {g["giorno"] for g in giornate}  # giorni che vengono dal DEF aggiornato (giornata italiana)
     gia = {(r["data"], r["provincia"]) for r in storico if r.get("gettito_eur") is not None}
     # giorni completi dal gioco (i 6 prima della lettura) che il DEF non ha, da tutti i file di gettito salvati
@@ -461,12 +476,26 @@ def main(xlsx, stat_dir, out_dir):
     nuovo_rif = {}
     for e, k in (("scuole", "sc"), ("basi", "ba"), ("strade", "st"), ("ospedali", "os")):
         t_e, nome_e = (t_prec, f_prec.name) if e in sostituite else (t_clas, file_clas[-1].name)
-        vicine = [(t, l) for t, l in letture_def if abs(t - t_e) <= timedelta(hours=2)]
-        l = min(vicine, key=lambda x: abs(x[0] - t_e))[1] if vicine else None
+        vicine = sorted(((t, l) for t, l in letture_def if abs(t - t_e) <= timedelta(hours=3)), key=lambda x: abs(x[0] - t_e))
         salvati = (rif.get(e) or {}) if (rif.get(e) or {}).get("classifica") == nome_e else {}
+        cl, b10 = clas[e], len(clas[e]) // 10
+        # fascia (indice) di una posizione della classifica (1 = prima), come la pagina: 10 fasce di len // 10 province
+        fascia = lambda pos: next((kk for kk in range(10, 0, -1) if pos <= 1 + (11 - kk) * b10), 1)
+        campo_i = {"scuole": "indice_istruzione", "basi": "indice_militare", "strade": "indice_sviluppo", "ospedali": "indice_salute"}[e]
         for o in oggi:
-            if l is not None:
-                dato = ((((l.get("province") or {}).get(o["provincia"]) or {}).get("provincia") or {}).get(k) or {}).get("n")
+            if vicine:
+                # i numeri della provincia nelle letture vicine all'ora della classifica (la più vicina per prima). Il gioco aggiorna
+                # le sue classifiche in ritardo e non tutte insieme (26/10/2026: alle 00:28 le strade di Napoli erano già 678, gli
+                # ospedali ancora 266 del calo della notte, mentre la lettura delle 00:21 dava 275): vale il primo numero che, al suo
+                # posto in classifica, dà l'indice che il gioco mostra adesso; se nessuno torna, il più vicino
+                cand = []
+                for _, l in vicine:
+                    x = ((((l.get("province") or {}).get(o["provincia"]) or {}).get("provincia") or {}).get(k) or {}).get("n")
+                    if isinstance(x, (int, float)) and x not in cand:
+                        cand.append(x)
+                ind = o.get(campo_i)
+                torna = [x for x in cand if ind is not None and any(fascia(i + 1) == ind for i, y in enumerate(cl) if y == x)]
+                dato = (torna or cand or [None])[0]
             else:
                 dato = (salvati.get("edifici") or {}).get(o["provincia"])
             o["in_classifica_" + e] = dato if isinstance(dato, (int, float)) else None

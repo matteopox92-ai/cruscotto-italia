@@ -697,6 +697,16 @@ const nottiAlCalo = (n, sotto) => { let x = n, k = 0; while (x > sotto && k < 60
 // la manutenzione di una notte è il 3% del costo degli edifici: chi costruisce oggi la paga già stanotte
 // (verificato su Napoli il 25/10/2026: +92.700 € di manutenzione dopo 3.090.000 € di strade e ospedali)
 const manNuovi = (costo) => costo * 3 / 100;
+// meta del piano di Napoli (stress test del 26/10/2026): il minimo m che dopo il calo del 3% della notte (per eccesso) resta sopra
+// la soglia dell'indice fissato, calcolato dalla classifica a ogni lettura; le mete fisse di obiettivi.json (678 strade, 275 ospedali)
+// con le soglie salite lasciavano Napoli a 657 e 266 dopo la notte, cioè sviluppo 6 e salute 7. Senza classifica, la meta fissa.
+const metaNapoli = (o, indici, e) => {
+  const s = (indici.find((r) => r.provincia === 'Napoli' && r.edificio === e) || {}).soglia_entrare;
+  if (s == null) return o['napoli_' + e + '_meta'];
+  let m = s + 1;
+  while (m - Math.ceil(m * 3 / 100) <= s) m++;
+  return m;
+};
 // letture in ordine di tempo (non di testo: nell'ora ripetuta del cambio d'ora «02:40+02:00» viene prima di «02:30+01:00»)
 const perOra = (a, b) => Date.parse(a.ts) - Date.parse(b.ts);
 const tsUltimo = (xs) => xs.filter(Boolean).reduce((m, t) => (m == null || Date.parse(t) > Date.parse(m) ? t : m), null);
@@ -797,8 +807,12 @@ dash.calc('indici', {
         const fisso = INDICI_FISSI[ed] ? INDICI_FISSI[ed][r.provincia] ?? null : null;
         const kr = fisso ?? k; // indice da difendere: quello fissato, altrimenti quello di adesso
         const gioco = r['per_salire_' + ed] ?? null; // edifici all'indice successivo secondo il gioco («+9 edifici → Indice 6»)
-        const sceso = fisso != null && k < fisso; // già sotto l'indice fissato (indice letto dal gioco)
         let sotto = n > 0 && kr >= 1 && kr <= 10 ? vv[ultimo(kr)] : null; // prima provincia della fascia sotto
+        // indice del gioco in ritardo: la classifica del gioco ha ancora il numero vecchio, ricollocata con quello di adesso la
+        // provincia è già nella fascia fissata (26/10/2026: Napoli salute 7 con 275 ospedali, in classifica ancora a 266 dopo
+        // il calo della notte; trattata come «scesa» dava una soglia finta di 275 e «manca 1 ospedale»)
+        const ritardo = fisso != null && k < fisso && iv >= 0 && sotto != null && n > sotto;
+        const sceso = fisso != null && k < fisso && !ritardo; // già sotto l'indice fissato (indice letto dal gioco)
         // indice già sceso: per tornarci bisogna superare l'ultima provincia della fascia fissata (a pari edifici si resta sotto:
         // Palermo ospedali 25/10/2026, ultima della fascia 8 a 265, servono 266, non 265);
         // sceso di un solo indice con il numero del gioco: vale quello, il modello a fasce può sbagliare di qualche edificio
@@ -808,13 +822,17 @@ dash.calc('indici', {
         const notti = sotto == null ? null : nottiAlCalo(n, sotto);
         const sopra = k < 10 ? vv[ultimo(k + 1) - 1] + 1 : null;
         const mancanti = gioco != null ? gioco : sopra == null ? null : Math.max(0, sopra - n); // prima il numero del gioco
+        // per stare nella fascia da difendere bisogna superare l'ultima provincia che ci starebbe senza di lei (classifica senza la
+        // provincia): serve al piano di Napoli, che deve restarci anche dopo il calo del 3% della notte
+        const senza = vecchio == null ? vv : (() => { const x = vv.slice(), j = x.indexOf(n); if (j >= 0) x.splice(j, 1); return x; })();
+        const soglia_entrare = n > 0 && kr >= 1 && kr <= 10 ? senza[ultimo(kr) - 1] ?? null : null;
         const sp = sotto == null || !gp ? null : vp[ultimo(kr)];
         // edifici in più al giorno per restare nella fascia: la tendenza del costruttore, oppure (dati vecchi) le ultime due classifiche
         const crescita = tend ? (sotto == null ? null : tend[ultimo(kr)] ?? null) : sp == null ? null : (sotto - sp) / gp;
         const giorni_inflazione = sceso || margine == null || crescita == null || crescita <= 0 ? null : Math.floor(margine / crescita);
-        righe.push({ provincia: r.provincia, edificio: ed, edifici: n, indice: k, indice_fisso: fisso, sceso, margine, notti_al_calo: notti, mancanti,
+        righe.push({ provincia: r.provincia, edificio: ed, edifici: n, indice: k, indice_fisso: fisso, sceso, ritardo, margine, notti_al_calo: notti, mancanti,
           costo_salire: mancanti == null ? null : Math.round(mancanti * prezzo), crescita_soglia: crescita, giorni_inflazione,
-          soglia_sotto: sotto });
+          soglia_sotto: sotto, soglia_entrare });
       }
     }
     return righe;
@@ -865,7 +883,7 @@ const daMandare = (da_comprare, oggi) => {
         const tes = k === 'denaro' ? o.tesoro_eur : o['tesoro_' + k], man = p === 'Napoli' ? 0 : (k === 'denaro' ? o.manutenzione_eur : o['manutenzione_' + k]);
         const costo = rr.reduce((s, r) => s + r[k], 0);
         // anche la manutenzione dei nuovi edifici, che si paga già stanotte (senza, la provincia non pagava e perdeva il 3%)
-        riga[k] = Math.max(0, Math.ceil(costo + (man || 0) + (p === 'Napoli' ? 0 : manNuovi(costo)) - (tes || 0)));
+        riga[k] = Math.max(0, Math.ceil(costo + (man || 0) + (p === 'Napoli' ? 0 : manNuovi(costo)) - (tes || 0) - 1e-9)); // − 1e-9: somme con decimali
       }
       out.push(riga);
     }
@@ -876,7 +894,8 @@ dash.calc('da_mandare_indici', {
   title: 'Da mandare alle province per gli edifici',
   description: 'Per ogni provincia dello specchietto: costo degli edifici da comprare più la manutenzione di stanotte (compresa quella dei nuovi edifici, 3% del costo), meno il tesoro.',
   inputs: ['da_comprare', 'oggi'],
-  fn: daMandare,
+  // solo strade e ospedali, come lo specchietto «Cosa fare oggi»
+  fn: (da_comprare, oggi) => daMandare(da_comprare.filter((r) => ['strade', 'ospedali'].includes(r.edificio)), oggi),
 });
 
 dash.calc('autonomia', {
@@ -1001,7 +1020,7 @@ dash.calc('cosa_fare', {
       // la manutenzione dei nuovi edifici (3% del costo) si aggiunge già a quella di stanotte
       const manDopo = man + manNuovi(costo);
       riga['costo_' + k] = costo;
-      riga['manda_' + k] = Math.max(0, Math.ceil(costo + manDopo - tes));
+      riga['manda_' + k] = Math.max(0, Math.ceil(costo + manDopo - tes - 1e-9));
       riga['avanza_' + k] = Math.max(0, Math.floor(tes - NOTTI_MAX * manDopo - costo));
     }
     return riga;
@@ -1353,7 +1372,7 @@ const disegnaIndici = () => {
   for (const r of righe) {
     const tr = document.createElement('tr');
     tr.dataset.key = encodeURIComponent(r.provincia) + ',' + encodeURIComponent(r.edificio);
-    const celle = [r.provincia, F.nomeEd[r.edificio], F.fmtN(r.edifici), r.indice > 10 ? '10+' : String(r.indice),
+    const celle = [r.provincia, F.nomeEd[r.edificio], F.fmtN(r.edifici), (r.indice > 10 ? '10+' : String(r.indice)) + (r.ritardo ? ' (gioco in ritardo: ' + r.indice_fisso + ')' : ''),
       r.indice_fisso == null ? '—' : String(r.indice_fisso),
       r.margine == null ? '—' : F.fmtN(r.margine), r.sceso ? 'sceso' : r.notti_al_calo == null ? '—' : String(r.notti_al_calo),
       r.mancanti == null ? 'massimo' : '+' + F.fmtN(r.mancanti), r.costo_salire == null ? '—' : F.fmtE(r.costo_salire)];
@@ -1368,7 +1387,9 @@ const disegnaIndici = () => {
 };
 
 // filtro per edificio e vista compatta (24/10/2026): sul telefono parte compatta; la scelta resta tra un disegno e l'altro
-const dcStato = { ed: 'tutti', vista: matchMedia('(max-width: 700px)').matches ? 'compatta' : 'completa' };
+// filtro iniziale strade e ospedali, gli edifici con l'indice fissato: «Da mandare» coincide con lo specchietto «Cosa fare oggi»
+// (con «Tutti» entravano anche le scuole di Roma, stress test del 26/10/2026)
+const dcStato = { ed: 'strade,ospedali', vista: matchMedia('(max-width: 700px)').matches ? 'compatta' : 'completa' };
 const disegnaComprare = (ord, eds) => {
   const tb = document.querySelector('#tabella-comprare tbody'), tf = document.querySelector('#tabella-comprare tfoot');
   const chipsEd = document.getElementById('dc-ed'), chipsV = document.getElementById('dc-vista'), nota = document.getElementById('dc-nota');
@@ -1525,7 +1546,7 @@ dash.calc('piano_controlli', {
     // Napoli perde ogni notte il 3% (per eccesso) e ricostruisce di giorno: dopo la perdita deve restare sopra la prima provincia
     // della fascia sotto, se no l'indice scende anche con gli obiettivi raggiunti (le soglie salgono: controllo del 25/10/2026)
     const tenuta = (e, meta) => {
-      const s = ix('Napoli', e).soglia_sotto;
+      const x = ix('Napoli', e), s = x.soglia_entrare ?? x.soglia_sotto;
       if (s == null || meta == null) return null;
       const d = meta - Math.ceil(meta * 3 / 100);
       return { d, s, m: d - s - 1 };
@@ -1534,15 +1555,16 @@ dash.calc('piano_controlli', {
       obiettivo: t ? 'più di ' + t.s + ' (soglia dell\'indice)' : 'serve la classifica', esito: !t ? 'attenzione' : esito(t.m >= 2, t.m >= 0) });
     // Palermo: salute all'indice fissato (gli ospedali per la salute 10 non sono stati fatti, decisione dell'utente del 25/10/2026)
     const fissoPal = INDICI_FISSI.ospedali.Palermo, op = ix('Palermo', 'ospedali'), minPal = op.soglia_sotto != null ? op.soglia_sotto + 1 : null;
+    const metaSt = metaNapoli(o, indici, 'strade'), metaOs = metaNapoli(o, indici, 'ospedali');
     return [
       { controllo: 'Napoli · Salute', valore: na.salute, obiettivo: o.napoli_salute, esito: esito(na.salute >= o.napoli_salute, false) },
       { controllo: 'Napoli · Sviluppo', valore: na.sviluppo, obiettivo: o.napoli_sviluppo, esito: esito(na.sviluppo >= o.napoli_sviluppo, false) },
-      { controllo: 'Napoli · Strade', valore: na.strade, obiettivo: o.napoli_strade_meta, esito: esito(na.strade >= o.napoli_strade_meta, na.strade >= o.napoli_strade_meta - o.napoli_strade_giorno) },
-      { controllo: 'Napoli · Ospedali', valore: na.ospedali, obiettivo: o.napoli_ospedali_meta, esito: esito(na.ospedali >= o.napoli_ospedali_meta, na.ospedali >= o.napoli_ospedali_meta - o.napoli_ospedali_giorno) },
+      { controllo: 'Napoli · Strade', valore: na.strade, obiettivo: metaSt, esito: esito(na.strade >= metaSt, na.strade >= metaSt - o.napoli_strade_giorno) },
+      { controllo: 'Napoli · Ospedali', valore: na.ospedali, obiettivo: metaOs, esito: esito(na.ospedali >= metaOs, na.ospedali >= metaOs - o.napoli_ospedali_giorno) },
       { controllo: 'Napoli · Scuole in calo (mantenimento non pagato)', valore: na.scuole, obiettivo: naPrima.scuole != null ? 'meno di ' + naPrima.scuole : 'serve la lettura di domani',
         esito: naPrima.scuole == null ? 'attenzione' : esito(na.scuole < naPrima.scuole, false) },
-      tenutaRiga('Strade', tenuta('strade', o.napoli_strade_meta)),
-      tenutaRiga('Ospedali', tenuta('ospedali', o.napoli_ospedali_meta)),
+      tenutaRiga('Strade', tenuta('strade', metaSt)),
+      tenutaRiga('Ospedali', tenuta('ospedali', metaOs)),
       { controllo: 'Palermo · Salute', valore: pa.salute, obiettivo: fissoPal + ' (indice fissato)', esito: esito(pa.salute >= fissoPal, false) },
       { controllo: 'Palermo · Ospedali', valore: pa.ospedali, obiettivo: minPal == null ? '—' : 'almeno ' + minPal + ' (per la salute ' + fissoPal + ')',
         esito: minPal == null ? 'attenzione' : esito(pa.ospedali >= minPal, false) },
@@ -1555,13 +1577,14 @@ dash.calc('piano_controlli', {
 dash.calc('napoli_invio', {
   title: 'Da inviare a Napoli',
   description: 'Strade e ospedali che mancano a Napoli per tornare agli obiettivi del piano (dall\'ultima lettura), il loro costo, quello che c\'è già nel tesoro di Napoli e la differenza da inviare.',
-  inputs: ['oggi', 'obiettivi', 'costi'],
-  fn: (oggi, obiettivi, costi) => {
+  inputs: ['oggi', 'obiettivi', 'costi', 'indici'],
+  fn: (oggi, obiettivi, costi, indici) => {
     const na = oggi.find((r) => r.provincia === 'Napoli'), o = obiettivi[0];
     if (!na || !o) return [];
-    const strade = Math.max(0, o.napoli_strade_meta - na.strade), ospedali = Math.max(0, o.napoli_ospedali_meta - na.ospedali);
+    const metaSt = metaNapoli(o, indici, 'strade'), metaOs = metaNapoli(o, indici, 'ospedali');
+    const strade = Math.max(0, metaSt - na.strade), ospedali = Math.max(0, metaOs - na.ospedali);
     const c = (e) => costi.find((r) => r.edificio === e) || {};
-    const info = { strade, ospedali, strade_meta: o.napoli_strade_meta, ospedali_meta: o.napoli_ospedali_meta, data: na.data, tesoro_eur: na.tesoro_eur, manutenzione_eur: na.manutenzione_eur };
+    const info = { strade, ospedali, strade_meta: metaSt, ospedali_meta: metaOs, data: na.data, tesoro_eur: na.tesoro_eur, manutenzione_eur: na.manutenzione_eur };
     const costo = { riga: 'costo', ...info }, tesoro = { riga: 'tesoro', ...info }, invio = { riga: 'invio', ...info };
     for (const k of ['denaro', 'pelle', 'oro', 'petrolio', 'nte']) {
       costo[k] = strade * (c('strade')[k] || 0) + ospedali * (c('ospedali')[k] || 0);

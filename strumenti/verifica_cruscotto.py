@@ -69,6 +69,12 @@ def main(cart):
                 # la provincia è ancora nella classifica con il valore vecchio, sopra o sotto
                 pos_bassa, pos_alta = pos_alta, max(1, pos_alta - 1)
             ammessi = {indice_da_posizione(p, b) for p in range(pos_alta, pos_bassa + 1)}
+            # il gioco calcola l'indice sulla sua classifica, che può avere ancora il numero di prima (26/10/2026: Napoli salute 7
+            # con 275 ospedali, in classifica ancora a 266 dopo il calo della notte): vale anche l'indice di quel numero
+            vecchio = r.get("in_classifica_" + e)
+            if isinstance(vecchio, (int, float)) and vecchio != n:
+                pa, pb = 1 + sum(1 for x in v if x > vecchio), sum(1 for x in v if x >= vecchio)
+                ammessi |= {indice_da_posizione(p, b) for p in range(pa, max(pa, pb) + 1)}
             k = r[campo[e]]
             controlla(k in ammessi or (k == 10 and 11 in ammessi),
                       f"{r['provincia']} {e}: {n} edifici, posizione {pos_alta}-{pos_bassa} -> indice {sorted(ammessi)}, gioco {k}")
