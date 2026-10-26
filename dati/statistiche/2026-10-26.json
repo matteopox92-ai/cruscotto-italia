@@ -1,10 +1,10 @@
 {
- "data": "2026-10-26 ora 10:19",
+ "data": "2026-10-26 ora 11:19",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 296,
+   "gioc": 294,
    "fab": 92,
    "gov": "Laisius Mathias",
    "ind": [
@@ -17,7 +17,7 @@
     "15.703.410",
     "49558",
     "23954",
-    "7398",
+    "15398",
     "28607"
    ],
    "bon": [
@@ -35,12 +35,12 @@
    "ba": {
     "n": 136,
     "indice": 8,
-    "prossimo": "+34 edifici → Indice 9 (+18%)"
+    "prossimo": "+31 edifici → Indice 9 (+18%)"
    },
    "st": {
     "n": 852,
     "indice": 8,
-    "prossimo": "+99 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+100 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 363,
@@ -55,7 +55,7 @@
     "17436"
    ],
    "lim": [
-    910,
+    819,
     800,
     800,
     800,
@@ -65,21 +65,21 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 311,
+   "gioc": 312,
    "fab": 122,
    "gov": "Alessio3",
    "ind": [
     9,
-    2,
+    3,
     8,
     10
    ],
    "tes": [
-    "15.438.062",
-    "706",
-    "711",
-    "1337",
-    "410"
+    "13.738.062",
+    "14206",
+    "7711",
+    "13537",
+    "17610"
    ],
    "bon": [
     "16",
@@ -95,13 +95,13 @@
    },
    "ba": {
     "n": 35,
-    "indice": 2,
-    "prossimo": "+8 edifici → Indice 3 (+6%)"
+    "indice": 3,
+    "prossimo": "+22 edifici → Indice 4 (+8%)"
    },
    "st": {
-    "n": 769,
+    "n": 786,
     "indice": 8,
-    "prossimo": "+182 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+    "prossimo": "+166 edifici → Indice 9 (diamante +27% · risorsa +18%)"
    },
    "os": {
     "n": 357,
@@ -109,15 +109,15 @@
     "prossimo": "+234 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
    },
    "man": [
-    "4.106.100",
-    "13830",
+    "4.157.100",
+    "14085",
     "6890.4",
-    "12861",
-    "16488"
+    "13065",
+    "16692"
    ],
    "lim": [
-    1072,
-    763,
+    1005,
+    759,
     800,
     800,
     800
@@ -126,7 +126,7 @@
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 55,
+   "gioc": 54,
    "fab": 18,
    "gov": "BULL 1515",
    "ind": [
@@ -137,10 +137,10 @@
    ],
    "tes": [
     "6.098.539",
-    "13927",
+    "27927",
     "15182",
-    "12404",
-    "14401"
+    "25404",
+    "28401"
    ],
    "bon": [
     "12",
@@ -157,7 +157,7 @@
    "ba": {
     "n": 29,
     "indice": 2,
-    "prossimo": "+14 edifici → Indice 3 (+6%)"
+    "prossimo": "+6 edifici → Indice 3 (+6%)"
    },
    "st": {
     "n": 976,
@@ -177,18 +177,18 @@
     "17271"
    ],
    "lim": [
-    769,
+    658,
     800,
     800,
-    694,
+    691,
     800
    ],
    "slug": "Marsilya"
   },
   {
    "p": "NAPOLI",
-   "gioc": 283,
-   "fab": 93,
+   "gioc": 287,
+   "fab": 96,
    "gov": "Pilerio de Longobardi",
    "ind": [
     8,
@@ -218,28 +218,28 @@
    "ba": {
     "n": 79,
     "indice": 5,
-    "prossimo": "+12 edifici → Indice 6 (+12%)"
+    "prossimo": "+4 edifici → Indice 6 (+12%)"
    },
    "st": {
-    "n": 678,
+    "n": 683,
     "indice": 7,
-    "prossimo": "+85 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+    "prossimo": "+87 edifici → Indice 8 (diamante +24% · risorsa +16%)"
    },
    "os": {
-    "n": 275,
+    "n": 276,
     "indice": 8,
-    "prossimo": "+74 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+73 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
-    "3.552.900",
-    "12189",
-    "5068.8",
-    "11559",
-    "14190"
+    "3.571.200",
+    "12264",
+    "5082",
+    "11628",
+    "14265"
    ],
    "lim": [
-    1084,
-    789,
+    1061,
+    786,
     800,
     800,
     800
@@ -248,8 +248,8 @@
   },
   {
    "p": "ROMA",
-   "gioc": 292,
-   "fab": 143,
+   "gioc": 296,
+   "fab": 144,
    "gov": "ORK IL ROSSO",
    "ind": [
     8,
@@ -258,11 +258,11 @@
     8
    ],
    "tes": [
-    "642.879",
+    "4.642.879",
     "34794",
     "15067",
     "35005",
-    "629"
+    "18629"
    ],
    "bon": [
     "14",
@@ -279,12 +279,12 @@
    "ba": {
     "n": 52,
     "indice": 3,
-    "prossimo": "+7 edifici → Indice 4 (+8%)"
+    "prossimo": "+5 edifici → Indice 4 (+8%)"
    },
    "st": {
     "n": 676,
     "indice": 7,
-    "prossimo": "+87 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+    "prossimo": "+94 edifici → Indice 8 (diamante +24% · risorsa +16%)"
    },
    "os": {
     "n": 273,
@@ -299,7 +299,7 @@
     "13956"
    ],
    "lim": [
-    1657,
+    1641,
     800,
     800,
     800,
@@ -309,8 +309,8 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 235,
-   "fab": 83,
+   "gioc": 236,
+   "fab": 87,
    "gov": "Edda de Astro",
    "ind": [
     3,
@@ -319,11 +319,11 @@
     8
    ],
    "tes": [
-    "72.601",
-    "596",
-    "4892",
-    "2056",
-    "1432"
+    "3.252.601",
+    "10596",
+    "4012",
+    "11056",
+    "13032"
    ],
    "bon": [
     "13",
@@ -340,29 +340,29 @@
    "ba": {
     "n": 10,
     "indice": 1,
-    "prossimo": "+15 edifici → Indice 2 (+4%)"
+    "prossimo": "+7 edifici → Indice 2 (+4%)"
    },
    "st": {
-    "n": 677,
+    "n": 683,
     "indice": 7,
-    "prossimo": "+86 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+    "prossimo": "+87 edifici → Indice 8 (diamante +24% · risorsa +16%)"
    },
    "os": {
-    "n": 274,
+    "n": 276,
     "indice": 8,
-    "prossimo": "+75 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+73 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
-    "3.031.200",
-    "10485",
-    "3880.8",
-    "10710",
-    "12534"
+    "3.055.800",
+    "10575",
+    "3907.2",
+    "10800",
+    "12636"
    ],
    "lim": [
-    1244,
-    763,
-    728,
+    1231,
+    760,
+    721,
     800,
     800
    ],
@@ -370,8 +370,8 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 229,
-   "fab": 104,
+   "gioc": 231,
+   "fab": 105,
    "gov": "generale romano",
    "ind": [
     6,
@@ -380,11 +380,11 @@
     8
    ],
    "tes": [
-    "928.603",
-    "20110",
+    "6.928.603",
+    "28110",
     "5802",
-    "497",
-    "3965"
+    "25497",
+    "28965"
    ],
    "bon": [
     "17",
@@ -401,12 +401,12 @@
    "ba": {
     "n": 32,
     "indice": 2,
-    "prossimo": "+11 edifici → Indice 3 (+6%)"
+    "prossimo": "+3 edifici → Indice 3 (+6%)"
    },
    "st": {
     "n": 758,
     "indice": 7,
-    "prossimo": "+5 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+    "prossimo": "+12 edifici → Indice 8 (diamante +24% · risorsa +16%)"
    },
    "os": {
     "n": 274,
@@ -421,14 +421,14 @@
     "14166"
    ],
    "lim": [
-    1089,
+    1064,
     800,
     800,
     800,
-    497
+    470
    ],
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-26T09:22:40Z"
+ "letto_il": "2026-10-26T10:23:07Z"
 }
