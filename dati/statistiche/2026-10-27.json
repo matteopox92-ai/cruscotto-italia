@@ -1,11 +1,11 @@
 {
- "data": "2026-10-27 ora 19:20",
+ "data": "2026-10-27 ora 20:25",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 286,
-   "fab": 91,
+   "gioc": 292,
+   "fab": 96,
    "gov": "Laisius Mathias",
    "ind": [
     2,
@@ -57,15 +57,15 @@
    "lim": [
     0,
     800,
-    773,
+    772,
     800,
-    797
+    794
    ],
    "slug": "Venedik"
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 321,
+   "gioc": 323,
    "fab": 129,
    "gov": "Alessio3",
    "ind": [
@@ -91,7 +91,7 @@
    "sc": {
     "n": 165,
     "indice": 9,
-    "prossimo": "+186 edifici → Indice 10 (+20%)"
+    "prossimo": "+187 edifici → Indice 10 (+20%)"
    },
    "ba": {
     "n": 35,
@@ -116,9 +116,9 @@
     "16968"
    ],
    "lim": [
-    782,
+    743,
     793,
-    676,
+    670,
     800,
     800
    ],
@@ -126,7 +126,7 @@
   },
   {
    "p": "MARSIGLIA",
-   "gioc": 48,
+   "gioc": 49,
    "fab": 19,
    "gov": "BULL 1515",
    "ind": [
@@ -177,17 +177,17 @@
     "17331"
    ],
    "lim": [
-    281,
+    183,
     800,
     800,
-    642,
+    636,
     800
    ],
    "slug": "Marsilya"
   },
   {
    "p": "NAPOLI",
-   "gioc": 332,
+   "gioc": 331,
    "fab": 106,
    "gov": "Pilerio de Longobardi",
    "ind": [
@@ -238,8 +238,8 @@
     "14055"
    ],
    "lim": [
-    504,
-    794,
+    439,
+    793,
     800,
     800,
     800
@@ -299,7 +299,7 @@
     "14205"
    ],
    "lim": [
-    1217,
+    1185,
     800,
     793,
     800,
@@ -309,8 +309,8 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 260,
-   "fab": 97,
+   "gioc": 262,
+   "fab": 99,
    "gov": "Edda de Astro",
    "ind": [
     3,
@@ -335,7 +335,7 @@
    "sc": {
     "n": 20,
     "indice": 3,
-    "prossimo": "+13 edifici → Indice 4 (+8%)"
+    "prossimo": "+14 edifici → Indice 4 (+8%)"
    },
    "ba": {
     "n": 10,
@@ -360,9 +360,9 @@
     "12756"
    ],
    "lim": [
-    1176,
-    775,
-    686,
+    1169,
+    772,
+    682,
     800,
     800
    ],
@@ -370,7 +370,7 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 270,
+   "gioc": 271,
    "fab": 111,
    "gov": "generale romano",
    "ind": [
@@ -421,14 +421,14 @@
     "14706"
    ],
    "lim": [
-    724,
+    699,
     800,
     800,
     800,
-    334
+    315
    ],
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-27T18:23:40Z"
+ "letto_il": "2026-10-27T19:25:31Z"
 }
