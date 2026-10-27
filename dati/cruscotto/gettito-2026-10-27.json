@@ -1,6 +1,6 @@
 {
- "data": "2026-10-27 ora 10:19",
- "nota": "Gettito fiscale delle province (Vedi Gettito Fiscale) e costo delle frontiere chiuse",
+ "data": "2026-10-27 ora 11:21",
+ "nota": "Gettito fiscale letto dalle pagine delle province",
  "confini_per_provincia": 1080000,
  "confini_addebiti": {
   "2026-10-26": 7700000,
@@ -14,25 +14,46 @@
  "province": {
   "Venezia": {
    "tot7": {
-    "denaro": 53318255,
+    "denaro": 53827975,
     "pelle": 207,
     "oro": 25750,
     "petrolio": 1262,
     "nte": 1069
    },
    "giorni": [
-    8300000,
-    8100000,
-    7300000,
-    7800000,
-    7800000,
-    7900000,
-    6100000
+    [
+     "MER",
+     8300000
+    ],
+    [
+     "GIO",
+     8100000
+    ],
+    [
+     "VEN",
+     7300000
+    ],
+    [
+     "SAB",
+     7800000
+    ],
+    [
+     "DOM",
+     7800000
+    ],
+    [
+     "LUN",
+     7900000
+    ],
+    [
+     "MAR",
+     6600000
+    ]
    ],
-   "tassazioniOggi": 2971,
-   "denaroOggi": 6093058,
+   "tassazioniOggi": 3207,
+   "denaroOggi": 6602778,
    "oggi": {
-    "denaro": 6093058,
+    "denaro": 6602778,
     "pelle": 0,
     "oro": 752,
     "petrolio": 0,
@@ -42,27 +63,48 @@
   },
   "Lombardia": {
    "tot7": {
-    "denaro": 25403510,
-    "pelle": 55827,
-    "oro": 9391,
+    "denaro": 25547426,
+    "pelle": 55885,
+    "oro": 9601,
     "petrolio": 0,
     "nte": 0
    },
    "giorni": [
-    2700000,
-    4400000,
-    3500000,
-    2600000,
-    4800000,
-    5400000,
-    2000000
+    [
+     "MER",
+     2700000
+    ],
+    [
+     "GIO",
+     4400000
+    ],
+    [
+     "VEN",
+     3500000
+    ],
+    [
+     "SAB",
+     2600000
+    ],
+    [
+     "DOM",
+     4800000
+    ],
+    [
+     "LUN",
+     5400000
+    ],
+    [
+     "MAR",
+     2100000
+    ]
    ],
-   "tassazioniOggi": 1565,
-   "denaroOggi": 2004657,
+   "tassazioniOggi": 1683,
+   "denaroOggi": 2148573,
    "oggi": {
-    "denaro": 2004657,
-    "pelle": 1054,
-    "oro": 2449,
+    "denaro": 2148573,
+    "pelle": 1112,
+    "oro": 2659,
     "petrolio": 0,
     "nte": 0
    },
@@ -70,53 +112,95 @@
   },
   "Marsiglia": {
    "tot7": {
-    "denaro": 34917864,
+    "denaro": 35232249,
     "pelle": 0,
     "oro": 0,
-    "petrolio": 51149,
+    "petrolio": 51424,
     "nte": 0
    },
    "giorni": [
-    3700000,
-    2300000,
-    4300000,
-    5700000,
-    7900000,
-    7900000,
-    3200000
+    [
+     "MER",
+     3700000
+    ],
+    [
+     "GIO",
+     2300000
+    ],
+    [
+     "VEN",
+     4300000
+    ],
+    [
+     "SAB",
+     5700000
+    ],
+    [
+     "DOM",
+     7900000
+    ],
+    [
+     "LUN",
+     7900000
+    ],
+    [
+     "MAR",
+     3500000
+    ]
    ],
-   "tassazioniOggi": 1851,
-   "denaroOggi": 3203258,
+   "tassazioniOggi": 2018,
+   "denaroOggi": 3517643,
    "oggi": {
-    "denaro": 3203258,
+    "denaro": 3517643,
     "pelle": 0,
     "oro": 0,
-    "petrolio": 6584,
+    "petrolio": 6859,
     "nte": 0
    },
    "giornata": "martedì 27 ottobre 2026"
   },
   "Napoli": {
    "tot7": {
-    "denaro": 8007221,
+    "denaro": 8137220,
     "pelle": 7018,
     "oro": 189,
     "petrolio": 12430,
     "nte": 0
    },
    "giorni": [
-    401400,
-    598000,
-    963300,
-    2900000,
-    971300,
-    1100000,
-    1100000
+    [
+     "MER",
+     401400
+    ],
+    [
+     "GIO",
+     598000
+    ],
+    [
+     "VEN",
+     963300
+    ],
+    [
+     "SAB",
+     2900000
+    ],
+    [
+     "DOM",
+     971300
+    ],
+    [
+     "LUN",
+     1100000
+    ],
+    [
+     "MAR",
+     1200000
+    ]
    ],
-   "tassazioniOggi": 779,
-   "denaroOggi": 1060604,
+   "tassazioniOggi": 869,
+   "denaroOggi": 1190603,
    "oggi": {
-    "denaro": 1060604,
+    "denaro": 1190603,
     "pelle": 259,
     "oro": 0,
     "petrolio": 0,
@@ -126,25 +210,46 @@
   },
   "Roma": {
    "tot7": {
-    "denaro": 11636255,
+    "denaro": 11742102,
     "pelle": 312,
     "oro": 2438,
     "petrolio": 126,
     "nte": 144
    },
    "giorni": [
-    2700000,
-    2400000,
-    2300000,
-    826700,
-    1000000,
-    1400000,
-    1000000
+    [
+     "MER",
+     2700000
+    ],
+    [
+     "GIO",
+     2400000
+    ],
+    [
+     "VEN",
+     2300000
+    ],
+    [
+     "SAB",
+     826700
+    ],
+    [
+     "DOM",
+     1000000
+    ],
+    [
+     "LUN",
+     1400000
+    ],
+    [
+     "MAR",
+     1100000
+    ]
    ],
-   "tassazioniOggi": 745,
-   "denaroOggi": 1036503,
+   "tassazioniOggi": 820,
+   "denaroOggi": 1142350,
    "oggi": {
-    "denaro": 1036503,
+    "denaro": 1142350,
     "pelle": 0,
     "oro": 56,
     "petrolio": 0,
@@ -154,27 +259,48 @@
   },
   "Firenze": {
    "tot7": {
-    "denaro": 5204370,
-    "pelle": 41841,
-    "oro": 150895,
+    "denaro": 5234208,
+    "pelle": 42252,
+    "oro": 151117,
     "petrolio": 0,
     "nte": 0
    },
    "giorni": [
-    601600,
-    769800,
-    980900,
-    810300,
-    723800,
-    941400,
-    376400
+    [
+     "MER",
+     601600
+    ],
+    [
+     "GIO",
+     769800
+    ],
+    [
+     "VEN",
+     980900
+    ],
+    [
+     "SAB",
+     810300
+    ],
+    [
+     "DOM",
+     723800
+    ],
+    [
+     "LUN",
+     941400
+    ],
+    [
+     "MAR",
+     406300
+    ]
    ],
-   "tassazioniOggi": 331,
-   "denaroOggi": 376440,
+   "tassazioniOggi": 358,
+   "denaroOggi": 406278,
    "oggi": {
-    "denaro": 376440,
-    "pelle": 0,
-    "oro": 3314,
+    "denaro": 406278,
+    "pelle": 411,
+    "oro": 3536,
     "petrolio": 0,
     "nte": 0
    },
@@ -182,32 +308,53 @@
   },
   "Palermo": {
    "tot7": {
-    "denaro": 6302333,
+    "denaro": 6363836,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
-    "nte": 315619
+    "nte": 318823
    },
    "giorni": [
-    662300,
-    738900,
-    637600,
-    802800,
-    1000000,
-    1400000,
-    1000000
+    [
+     "MER",
+     662300
+    ],
+    [
+     "GIO",
+     738900
+    ],
+    [
+     "VEN",
+     637600
+    ],
+    [
+     "SAB",
+     802800
+    ],
+    [
+     "DOM",
+     1000000
+    ],
+    [
+     "LUN",
+     1400000
+    ],
+    [
+     "MAR",
+     1100000
+    ]
    ],
-   "tassazioniOggi": 1153,
-   "denaroOggi": 1014521,
+   "tassazioniOggi": 1251,
+   "denaroOggi": 1076024,
    "oggi": {
-    "denaro": 1014521,
+    "denaro": 1076024,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
-    "nte": 24712
+    "nte": 27916
    },
    "giornata": "martedì 27 ottobre 2026"
   }
  },
- "letto_il": "2026-10-27T09:23:21Z"
+ "letto_il": "2026-10-27T10:23:47Z"
 }
