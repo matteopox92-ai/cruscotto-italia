@@ -95,6 +95,10 @@ select{font:inherit;background:var(--panel);color:var(--fg);border:1px solid var
 // ------------------------------------------------------------------ formati e piccoli componenti
 const R5 = ['denaro', 'pelle', 'oro', 'petrolio', 'nte'], R4 = R5.slice(1);
 const NOME_R = { denaro: 'Denaro', pelle: 'Pelle', oro: 'Oro', petrolio: 'Petrolio', nte: 'NTE', diamanti: 'Diamanti' };
+const SIGLA_R = { pelle: 'pelle', oro: 'oro', petrolio: 'petrolio', nte: 'NTE' };
+// invio in una riga, cifre esatte: «4.059.508 € · 15.785 pelle · 460 oro»
+const daMandare = (m) => { const p = R5.filter((x) => m[x] > 0).map((x) => x === 'denaro' ? `<b>${nf.format(Math.ceil(m[x]))} €</b>` : `${nf.format(Math.ceil(m[x]))} ${SIGLA_R[x]}`);
+  return p.length ? p.join(' · ') : '<span class="ok">niente</span>'; };
 const IND = ['scuole', 'basi', 'strade', 'ospedali'];
 const NOME_I = { scuole: 'Istruzione', basi: 'Militare', strade: 'Sviluppo', ospedali: 'Salute' };
 const nf = new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 });
@@ -232,10 +236,10 @@ const m1 = {
     const totR = (k) => Object.fromEntries(R5.map((r) => [r, somma(righe.map((x) => x[k][r]))]));
     const tm = totR('manda'), ta = totR('avanza');
     const A = settore('A', 'Invii alle province', 'Quanto mandare a ogni provincia prima delle 22:00 perché paghi stanotte e resti 2 notti lontana dal calo. Cifre esatte.',
-      tabella(['Provincia', 'Stato', 'Notti', ...R5.map((r) => NOME_R[r]), 'Valore'], righe.map((r) => riga([r.provincia, st(r.stato, r.motivi[0] || 'OK'), `<span class="${notteCls(r.notti)}">${d1(r.notti)}</span>`,
-        ...R5.map((x) => r.manda[x] ? n(r.manda[x]) : '—'), eur(r.valore_manda)])),
-      riga(['Totale', '', '', ...R5.map((x) => n(tm[x])), eur(somma(righe.map((r) => r.valore_manda)))], 'tot') +
-      riga(['Scorte dello Stato', '', '', ...R5.map((x) => `<span class="${D.TS[x] >= tm[x] ? 'ok' : 'bad'}">${n(D.TS[x])}</span>`), D.basta_stato ? st('verde', 'Lo Stato basta') : st('rosso', 'Non basta')], 'tot')),
+      // vista compatta per il telefono (utente, 28/10/2026): solo cosa mandare, denaro e risorse in una riga per provincia
+      tabella(['Provincia', 'Da mandare'], righe.map((r) => riga([`${st(r.stato, '')}${r.provincia}`, T(daMandare(r.manda))])),
+      riga(['Totale', T(daMandare(tm) + ` <span class="muto">(${eur(somma(righe.map((r) => r.valore_manda)))})</span>`)], 'tot') +
+      riga(['Scorte Stato', T(R5.map((x) => `<span class="${D.TS[x] >= tm[x] ? 'ok' : 'bad'}">${x === 'denaro' ? eur(D.TS[x]) : n(D.TS[x]) + ' ' + SIGLA_R[x]}</span>`).join(' · ') + ' ' + (D.basta_stato ? st('verde', 'basta') : st('rosso', 'non basta')))], 'tot')),
       `<p>Il totale comprende anche l'invio alle province sotto progetto (${[...D.piano].join(', ') || 'nessuna'}): ${eur(D.valore_totale_manda)}.</p>`);
     const B = settore('B', 'Edifici da comprare', 'Strade e ospedali per restare almeno 2 notti lontani dal calo, più quelli per la salita delle soglie (stima), e il loro costo.',
       tabella(['Provincia', 'Strade', '+ per inflazione', 'Ospedali', '+ per inflazione', 'Costo denaro', 'Costo risorse'], righe.map((r) => riga([r.provincia, r.compra_strade || '—', r.inflazione_strade || '—',
