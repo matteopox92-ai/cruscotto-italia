@@ -1,50 +1,50 @@
 {
 "scuole": {
-"classifica": "classifiche-2026-10-26.json",
+"classifica": "classifiche-2026-10-29.json",
 "edifici": {
 "Venezia": 15,
 "Lombardia": 165,
 "Marsiglia": 119,
-"Napoli": 109,
+"Napoli": 97,
 "Roma": 125,
 "Firenze": 20,
-"Palermo": 64
+"Palermo": 72
 }
 },
 "basi": {
-"classifica": "classifiche-2026-10-26.json",
+"classifica": "classifiche-2026-10-29.json",
 "edifici": {
 "Venezia": 136,
 "Lombardia": 35,
 "Marsiglia": 29,
-"Napoli": 79,
+"Napoli": 70,
 "Roma": 52,
 "Firenze": 10,
 "Palermo": 32
 }
 },
 "strade": {
-"classifica": "classifiche-2026-10-26.json",
+"classifica": "classifiche-2026-10-29.json",
 "edifici": {
 "Venezia": 852,
-"Lombardia": 769,
-"Marsiglia": 976,
-"Napoli": 678,
-"Roma": 676,
-"Firenze": 677,
-"Palermo": 758
+"Lombardia": 799,
+"Marsiglia": 981,
+"Napoli": 660,
+"Roma": 693,
+"Firenze": 693,
+"Palermo": 810
 }
 },
 "ospedali": {
-"classifica": "classifiche-2026-10-26.json",
+"classifica": "classifiche-2026-10-29.json",
 "edifici": {
-"Venezia": 363,
-"Lombardia": 357,
+"Venezia": 366,
+"Lombardia": 365,
 "Marsiglia": 276,
-"Napoli": 275,
-"Roma": 273,
-"Firenze": 274,
-"Palermo": 274
+"Napoli": 267,
+"Roma": 276,
+"Firenze": 276,
+"Palermo": 280
 }
 }
 }
