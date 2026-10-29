@@ -54,6 +54,11 @@ jobs:
             mkdir -p sito/2
             sed 's#<meta charset="utf-8">#<meta charset="utf-8"><meta name="robots" content="noindex, nofollow">#' dati/cruscotto2/index.html > sito/2/index.html
           fi
+          # Cruscotto militare (29/10/2026): pagina autonoma costruita sul PC (versione pubblica) in /militare/
+          if [ -f dati/militare/index.html ]; then
+            mkdir -p sito/militare
+            sed 's#<meta charset="utf-8">#<meta charset="utf-8"><meta name="robots" content="noindex, nofollow">#' dati/militare/index.html > sito/militare/index.html
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
