@@ -1,5 +1,5 @@
 {
- "data": "2026-10-29 ora 22:23",
+ "data": "2026-10-29 ora 23:19",
  "nota": "Gettito fiscale delle province (pagine Vedi Gettito)",
  "confini_per_provincia": 1050000,
  "confini_addebiti": {
@@ -14,9 +14,9 @@
  "province": {
   "Venezia": {
    "tot7": {
-    "denaro": 47654489,
+    "denaro": 47961592,
     "pelle": 19,
-    "oro": 25317,
+    "oro": 26090,
     "petrolio": 0,
     "nte": 1668
    },
@@ -27,14 +27,14 @@
     8000000,
     7800000,
     8300000,
-    150000
+    457100
    ],
-   "tassazioniOggi": 77,
-   "denaroOggi": 150029,
+   "tassazioniOggi": 252,
+   "denaroOggi": 457132,
    "oggi": {
-    "denaro": 150029,
+    "denaro": 457132,
     "pelle": 0,
-    "oro": 234,
+    "oro": 1007,
     "petrolio": 0,
     "nte": 0
    },
@@ -42,9 +42,9 @@
   },
   "Lombardia": {
    "tot7": {
-    "denaro": 21184408,
+    "denaro": 21266282,
     "pelle": 14369,
-    "oro": 17887,
+    "oro": 18115,
     "petrolio": 0,
     "nte": 0
    },
@@ -55,14 +55,14 @@
     3500000,
     2600000,
     2300000,
-    31200
+    113100
    ],
-   "tassazioniOggi": 28,
-   "denaroOggi": 31181,
+   "tassazioniOggi": 102,
+   "denaroOggi": 113055,
    "oggi": {
-    "denaro": 31181,
+    "denaro": 113055,
     "pelle": 0,
-    "oro": 76,
+    "oro": 304,
     "petrolio": 0,
     "nte": 0
    },
@@ -70,7 +70,7 @@
   },
   "Marsiglia": {
    "tot7": {
-    "denaro": 44290559,
+    "denaro": 44709031,
     "pelle": 10,
     "oro": 0,
     "petrolio": 37054,
@@ -83,12 +83,12 @@
     7500000,
     7700000,
     7500000,
-    203800
+    622300
    ],
-   "tassazioniOggi": 103,
-   "denaroOggi": 203802,
+   "tassazioniOggi": 313,
+   "denaroOggi": 622274,
    "oggi": {
-    "denaro": 203802,
+    "denaro": 622274,
     "pelle": 0,
     "oro": 0,
     "petrolio": 29,
@@ -98,7 +98,7 @@
   },
   "Napoli": {
    "tot7": {
-    "denaro": 12070524,
+    "denaro": 12105251,
     "pelle": 7068,
     "oro": 8,
     "petrolio": 3857,
@@ -111,12 +111,12 @@
     3000000,
     2700000,
     1400000,
-    13400
+    48200
    ],
-   "tassazioniOggi": 13,
-   "denaroOggi": 13435,
+   "tassazioniOggi": 47,
+   "denaroOggi": 48162,
    "oggi": {
-    "denaro": 13435,
+    "denaro": 48162,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
@@ -126,9 +126,9 @@
   },
   "Roma": {
    "tot7": {
-    "denaro": 9871245,
+    "denaro": 9963135,
     "pelle": 260,
-    "oro": 3179,
+    "oro": 3344,
     "petrolio": 0,
     "nte": 0
    },
@@ -139,14 +139,14 @@
     2200000,
     2100000,
     2200000,
-    36900
+    128800
    ],
-   "tassazioniOggi": 30,
-   "denaroOggi": 36893,
+   "tassazioniOggi": 103,
+   "denaroOggi": 128783,
    "oggi": {
-    "denaro": 36893,
+    "denaro": 128783,
     "pelle": 0,
-    "oro": 50,
+    "oro": 215,
     "petrolio": 0,
     "nte": 0
    },
@@ -154,9 +154,9 @@
   },
   "Firenze": {
    "tot7": {
-    "denaro": 4782281,
-    "pelle": 85103,
-    "oro": 67163,
+    "denaro": 4807692,
+    "pelle": 86375,
+    "oro": 67253,
     "petrolio": 0,
     "nte": 0
    },
@@ -167,14 +167,14 @@
     779500,
     714100,
     802400,
-    10600
+    36000
    ],
-   "tassazioniOggi": 12,
-   "denaroOggi": 10623,
+   "tassazioniOggi": 50,
+   "denaroOggi": 36034,
    "oggi": {
-    "denaro": 10623,
-    "pelle": 146,
-    "oro": 66,
+    "denaro": 36034,
+    "pelle": 1418,
+    "oro": 156,
     "petrolio": 0,
     "nte": 0
    },
@@ -182,11 +182,11 @@
   },
   "Palermo": {
    "tot7": {
-    "denaro": 10233607,
+    "denaro": 10452228,
     "pelle": 0,
     "oro": 339,
     "petrolio": 0,
-    "nte": 419021
+    "nte": 422465
    },
    "giorni": [
     802800,
@@ -195,19 +195,19 @@
     1800000,
     2100000,
     3100000,
-    76200
+    294800
    ],
-   "tassazioniOggi": 75,
-   "denaroOggi": 76155,
+   "tassazioniOggi": 282,
+   "denaroOggi": 294776,
    "oggi": {
-    "denaro": 76155,
+    "denaro": 294776,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
-    "nte": 1356
+    "nte": 4800
    },
    "giornata": "venerdì 30 ottobre 2026"
   }
  },
- "letto_il": "2026-10-29T21:23:22Z"
+ "letto_il": "2026-10-29T22:25:44Z"
 }
