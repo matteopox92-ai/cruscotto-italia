@@ -1,10 +1,10 @@
 {
- "data": "2026-10-29 ora 00:17",
+ "data": "2026-10-29 ora 01:21",
  "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
  "province": [
   {
    "p": "VENEZIA",
-   "gioc": 331,
+   "gioc": 332,
    "fab": 103,
    "gov": "Laisius Mathias",
    "ind": [
@@ -55,7 +55,7 @@
     "17481"
    ],
    "lim": [
-    1689,
+    1592,
     800,
     800,
     800,
@@ -65,7 +65,7 @@
   },
   {
    "p": "LOMBARDIA",
-   "gioc": 341,
+   "gioc": 342,
    "fab": 131,
    "gov": "Alessio3",
    "ind": [
@@ -116,9 +116,9 @@
     "16968"
    ],
    "lim": [
-    1808,
+    1766,
     800,
-    787,
+    781,
     800,
     800
    ],
@@ -136,11 +136,11 @@
     8
    ],
    "tes": [
-    "940.492",
+    "40.940.492",
     "215",
     "540",
     "592",
-    "408"
+    "100408"
    ],
    "bon": [
     "12",
@@ -162,7 +162,7 @@
    "st": {
     "n": 981,
     "indice": 9,
-    "prossimo": "+200 edifici → Indice 10 (diamante +30% · risorsa +20%)"
+    "prossimo": "+201 edifici → Indice 10 (diamante +30% · risorsa +20%)"
    },
    "os": {
     "n": 276,
@@ -177,7 +177,7 @@
     "17331"
    ],
    "lim": [
-    1752,
+    1692,
     800,
     800,
     799,
@@ -187,17 +187,17 @@
   },
   {
    "p": "NAPOLI",
-   "gioc": 332,
+   "gioc": 335,
    "fab": 105,
    "gov": "Pilerio de Longobardi",
    "ind": [
     8,
     4,
-    6,
+    7,
     8
    ],
    "tes": [
-    "3.080.000",
+    "0",
     "0",
     "0",
     "0",
@@ -221,24 +221,24 @@
     "prossimo": "+2 edifici → Indice 5 (+10%)"
    },
    "st": {
-    "n": 660,
-    "indice": 6,
-    "prossimo": "+1 edificio → Indice 7 (diamante +21% · risorsa +14%)"
+    "n": 682,
+    "indice": 7,
+    "prossimo": "+77 edifici → Indice 8 (diamante +24% · risorsa +16%)"
    },
    "os": {
-    "n": 267,
+    "n": 275,
     "indice": 8,
-    "prossimo": "+87 edifici → Indice 10 (+6 HP / 6 min)"
+    "prossimo": "+79 edifici → Indice 10 (+6 HP / 6 min)"
    },
    "man": [
-    "3.404.100",
-    "11694",
-    "4804.8",
-    "11163",
-    "13638"
+    "3.496.500",
+    "12024",
+    "4910.4",
+    "11499",
+    "14022"
    ],
    "lim": [
-    1309,
+    1271,
     800,
     800,
     800,
@@ -248,7 +248,7 @@
   },
   {
    "p": "ROMA",
-   "gioc": 335,
+   "gioc": 336,
    "fab": 148,
    "gov": "ORK IL ROSSO",
    "ind": [
@@ -299,7 +299,7 @@
     "14205"
    ],
    "lim": [
-    1839,
+    1815,
     800,
     799,
     800,
@@ -309,7 +309,7 @@
   },
   {
    "p": "FIRENZE",
-   "gioc": 279,
+   "gioc": 280,
    "fab": 102,
    "gov": "Edda de Astro",
    "ind": [
@@ -360,9 +360,9 @@
     "12756"
    ],
    "lim": [
-    1379,
-    793,
-    776,
+    1370,
+    790,
+    767,
     800,
     800
    ],
@@ -370,7 +370,7 @@
   },
   {
    "p": "PALERMO",
-   "gioc": 305,
+   "gioc": 304,
    "fab": 117,
    "gov": "generale romano",
    "ind": [
@@ -421,14 +421,14 @@
     "14952"
    ],
    "lim": [
-    1289,
+    1237,
     800,
     800,
     800,
-    745
+    722
    ],
    "slug": "Palermo"
   }
  ],
- "letto_il": "2026-10-28T23:25:03Z"
+ "letto_il": "2026-10-29T00:23:07Z"
 }
