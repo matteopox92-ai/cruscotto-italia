@@ -2,7 +2,7 @@
  {
   "giorno": "2026-10-21",
   "chiusa": true,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     null,
@@ -307,7 +307,7 @@
  {
   "giorno": "2026-10-22",
   "chiusa": true,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     "2026-10-22T00:24+02:00",
@@ -611,7 +611,7 @@
  {
   "giorno": "2026-10-23",
   "chiusa": true,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     "2026-10-23T00:22+02:00",
@@ -895,7 +895,7 @@
  {
   "giorno": "2026-10-24",
   "chiusa": true,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     "2026-10-24T00:22+02:00",
@@ -1180,7 +1180,7 @@
  {
   "giorno": "2026-10-25",
   "chiusa": true,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     "2026-10-25T00:24+02:00",
@@ -1464,7 +1464,7 @@
  {
   "giorno": "2026-10-26",
   "chiusa": true,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     "2026-10-26T00:21+01:00",
@@ -1770,7 +1770,7 @@
  {
   "giorno": "2026-10-27",
   "chiusa": true,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     null,
@@ -2077,7 +2077,7 @@
  {
   "giorno": "2026-10-28",
   "chiusa": true,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     null,
@@ -2375,48 +2375,48 @@
  },
  {
   "giorno": "2026-10-29",
-  "chiusa": false,
-  "ultima_lettura": "2026-10-29T23:25+01:00",
+  "chiusa": true,
+  "ultima_lettura": "2026-10-30T00:19+01:00",
   "letture_mezzanotte": {
    "Lombardia": [
     "2026-10-29T00:25+01:00",
-    null
+    "2026-10-30T00:17+01:00"
    ],
    "Marsiglia": [
     "2026-10-29T00:25+01:00",
-    null
+    "2026-10-30T00:18+01:00"
    ],
    "Roma": [
     "2026-10-29T00:25+01:00",
-    null
+    "2026-10-30T00:18+01:00"
    ],
    "Napoli": [
     "2026-10-29T00:25+01:00",
-    null
+    "2026-10-30T00:18+01:00"
    ],
    "Venezia": [
     "2026-10-29T00:25+01:00",
-    null
+    "2026-10-30T00:17+01:00"
    ],
    "Firenze": [
     "2026-10-29T00:25+01:00",
-    null
+    "2026-10-30T00:19+01:00"
    ],
    "Palermo": [
     "2026-10-29T00:25+01:00",
-    null
+    "2026-10-30T00:19+01:00"
    ]
   },
   "voci": {
    "Lombardia": {
     "gettito": [
-     2157648,
+     2207071,
      0,
-     5309,
+     5462,
      0,
      0
     ],
-    "tassazioni": 1805,
+    "tassazioni": 1849,
     "donazioni": [
      0,
      0,
@@ -2441,13 +2441,13 @@
    },
    "Marsiglia": {
     "gettito": [
-     7636692,
+     7878975,
      10,
      0,
-     501,
+     520,
      0
     ],
-    "tassazioni": 3885,
+    "tassazioni": 4007,
     "donazioni": [
      40000000,
      0,
@@ -2472,13 +2472,13 @@
    },
    "Roma": {
     "gettito": [
-     2210290,
+     2268130,
      0,
-     1055,
+     1155,
      0,
      0
     ],
-    "tassazioni": 1522,
+    "tassazioni": 1568,
     "donazioni": [
      2230,
      0,
@@ -2503,13 +2503,13 @@
    },
    "Napoli": {
     "gettito": [
-     1255453,
+     1280480,
      0,
      8,
      0,
      0
     ],
-    "tassazioni": 1197,
+    "tassazioni": 1220,
     "donazioni": [
      4000,
      0,
@@ -2534,13 +2534,13 @@
    },
    "Venezia": {
     "gettito": [
-     7934759,
+     8114221,
      0,
-     5194,
+     5655,
      0,
      62
     ],
-    "tassazioni": 3903,
+    "tassazioni": 4007,
     "donazioni": [
      0,
      0,
@@ -2565,13 +2565,13 @@
    },
    "Firenze": {
     "gettito": [
-     791326,
-     20936,
-     10353,
+     807436,
+     21760,
+     10411,
      0,
      0
     ],
-    "tassazioni": 1076,
+    "tassazioni": 1099,
     "donazioni": [
      100000,
      0,
@@ -2596,13 +2596,13 @@
    },
    "Palermo": {
     "gettito": [
-     3130717,
+     3269526,
      0,
      0,
      0,
-     61938
+     63889
     ],
-    "tassazioni": 3338,
+    "tassazioni": 3466,
     "donazioni": [
      0,
      0,
@@ -2634,11 +2634,11 @@
      49519
     ],
     "tesoro": [
-     889066558,
-     1962126,
-     926643,
-     2553190,
-     3085143
+     889726234,
+     1963030,
+     927374,
+     2553211,
+     3087124
     ]
    },
    "TOTALE": {
@@ -2654,37 +2654,328 @@
    }
   },
   "note": {
-   "Lombardia · gettito": "Provvisorio: dalla lettura di mezzanotte (29/10 00:25) a quella delle 29/10 23:25.",
-   "Marsiglia · gettito": "Provvisorio: dalla lettura di mezzanotte (29/10 00:25) a quella delle 29/10 23:25.",
-   "Roma · gettito": "Provvisorio: dalla lettura di mezzanotte (29/10 00:25) a quella delle 29/10 23:25.",
-   "Napoli · gettito": "Provvisorio: dalla lettura di mezzanotte (29/10 00:25) a quella delle 29/10 23:25.",
-   "Venezia · gettito": "Provvisorio: dalla lettura di mezzanotte (29/10 00:25) a quella delle 29/10 23:25.",
-   "Firenze · gettito": "Provvisorio: dalla lettura di mezzanotte (29/10 00:25) a quella delle 29/10 23:25.",
-   "Palermo · gettito": "Provvisorio: dalla lettura di mezzanotte (29/10 00:25) a quella delle 29/10 23:25.",
-   "Lombardia · tassazioni": "Tassazioni provvisorie, fino alle 29/10 23:25.",
-   "Marsiglia · tassazioni": "Tassazioni provvisorie, fino alle 29/10 23:25.",
-   "Roma · tassazioni": "Tassazioni provvisorie, fino alle 29/10 23:25.",
-   "Napoli · tassazioni": "Tassazioni provvisorie, fino alle 29/10 23:25.",
-   "Venezia · tassazioni": "Tassazioni provvisorie, fino alle 29/10 23:25.",
-   "Firenze · tassazioni": "Tassazioni provvisorie, fino alle 29/10 23:25.",
-   "Palermo · tassazioni": "Tassazioni provvisorie, fino alle 29/10 23:25.",
-   "Stato · donazioni": "Donazioni fino al 29/10 23:25: la giornata non era finita.",
-   "Lombardia · donazioni": "Donazioni fino al 29/10 23:25: la giornata non era finita.",
-   "Marsiglia · donazioni": "Donazioni fino al 29/10 23:25: la giornata non era finita.",
-   "Roma · donazioni": "Donazioni fino al 29/10 23:25: la giornata non era finita.",
-   "Napoli · donazioni": "Donazioni fino al 29/10 23:25: la giornata non era finita.",
-   "Venezia · donazioni": "Donazioni fino al 29/10 23:25: la giornata non era finita.",
-   "Firenze · donazioni": "Donazioni fino al 29/10 23:25: la giornata non era finita.",
-   "Palermo · donazioni": "Donazioni fino al 29/10 23:25: la giornata non era finita.",
-   "Stato · tesoro": "Tesoro letto il 29/10 23:25: la giornata non è finita.",
-   "Lombardia · tesoro": "Tesoro letto il 29/10 23:25: la giornata non è finita.",
-   "Marsiglia · tesoro": "Tesoro letto il 29/10 23:25: la giornata non è finita.",
-   "Roma · tesoro": "Tesoro letto il 29/10 23:25: la giornata non è finita.",
-   "Napoli · tesoro": "Tesoro letto il 29/10 23:25: la giornata non è finita.",
-   "Venezia · tesoro": "Tesoro letto il 29/10 23:25: la giornata non è finita.",
-   "Firenze · tesoro": "Tesoro letto il 29/10 23:25: la giornata non è finita.",
-   "Palermo · tesoro": "Tesoro letto il 29/10 23:25: la giornata non è finita.",
    "Napoli · manutenzione": "Addebito delle 22:00 non pagato: il tesoro era 4.000 € contro 3.496.500 € dovuti, edifici crollati del 3%; il gioco non incassa e fa crollare edifici."
+  }
+ },
+ {
+  "giorno": "2026-10-30",
+  "chiusa": false,
+  "ultima_lettura": "2026-10-30T00:19+01:00",
+  "letture_mezzanotte": {
+   "Lombardia": [
+    "2026-10-30T00:17+01:00",
+    null
+   ],
+   "Marsiglia": [
+    "2026-10-30T00:18+01:00",
+    null
+   ],
+   "Roma": [
+    "2026-10-30T00:18+01:00",
+    null
+   ],
+   "Napoli": [
+    "2026-10-30T00:18+01:00",
+    null
+   ],
+   "Venezia": [
+    "2026-10-30T00:17+01:00",
+    null
+   ],
+   "Firenze": [
+    "2026-10-30T00:19+01:00",
+    null
+   ],
+   "Palermo": [
+    "2026-10-30T00:19+01:00",
+    null
+   ]
+  },
+  "voci": {
+   "Lombardia": {
+    "gettito": [
+     186483,
+     0,
+     532,
+     0,
+     0
+    ],
+    "tassazioni": 168,
+    "donazioni": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tesoro": [
+     11369690,
+     61586,
+     273,
+     53218,
+     6613
+    ],
+    "manutenzione": [
+     4222500,
+     14280,
+     6996,
+     13293,
+     16968
+    ]
+   },
+   "Marsiglia": {
+    "gettito": [
+     989159,
+     0,
+     0,
+     58,
+     0
+    ],
+    "tassazioni": 497,
+    "donazioni": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tesoro": [
+     40625292,
+     811,
+     326,
+     988,
+     100077
+    ],
+    "manutenzione": [
+     4315200,
+     16404,
+     5214,
+     14604,
+     17331
+    ]
+   },
+   "Roma": {
+    "gettito": [
+     216369,
+     0,
+     366,
+     0,
+     0
+    ],
+    "tassazioni": 172,
+    "donazioni": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tesoro": [
+     409471,
+     842,
+     575,
+     609,
+     509
+    ],
+    "manutenzione": [
+     3552000,
+     12363,
+     5293.2,
+     11424,
+     14205
+    ]
+   },
+   "Napoli": {
+    "gettito": [
+     86060,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tassazioni": 82,
+    "donazioni": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tesoro": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "manutenzione": [
+     3489000,
+     12006,
+     4884,
+     11508,
+     14010
+    ]
+   },
+   "Venezia": {
+    "gettito": [
+     723761,
+     0,
+     1692,
+     0,
+     0
+    ],
+    "tassazioni": 407,
+    "donazioni": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tesoro": [
+     5196310,
+     7822,
+     3583,
+     5100,
+     12258
+    ],
+    "manutenzione": [
+     4298400,
+     14184,
+     5029.2,
+     15150,
+     17481
+    ]
+   },
+   "Firenze": {
+    "gettito": [
+     60890,
+     2690,
+     246,
+     0,
+     0
+    ],
+    "tassazioni": 86,
+    "donazioni": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tesoro": [
+     1009401,
+     696,
+     384,
+     376,
+     808
+    ],
+    "manutenzione": [
+     3085800,
+     10725,
+     3907.2,
+     10920,
+     12756
+    ]
+   },
+   "Palermo": {
+    "gettito": [
+     508938,
+     0,
+     0,
+     0,
+     7810
+    ],
+    "tassazioni": 479,
+    "donazioni": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tesoro": [
+     592003,
+     939,
+     189,
+     569,
+     203
+    ],
+    "manutenzione": [
+     3685200,
+     13302,
+     4646.4,
+     12624,
+     14952
+    ]
+   },
+   "Stato": {
+    "donazioni": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "tesoro": [
+     890105094,
+     1963398,
+     927762,
+     2553219,
+     3088192
+    ]
+   },
+   "TOTALE": {
+    "confini": 7350000
+   },
+   "mercato": {
+    "prezzi": [
+     55.37,
+     191,
+     125,
+     86.27
+    ]
+   }
+  },
+  "note": {
+   "Lombardia · gettito": "Gettito: riquadro «Oggi» del gioco letto il 30/10 00:17, perché manca la lettura di mezzanotte.",
+   "Marsiglia · gettito": "Gettito: riquadro «Oggi» del gioco letto il 30/10 00:18, perché manca la lettura di mezzanotte.",
+   "Roma · gettito": "Gettito: riquadro «Oggi» del gioco letto il 30/10 00:18, perché manca la lettura di mezzanotte.",
+   "Napoli · gettito": "Gettito: riquadro «Oggi» del gioco letto il 30/10 00:18, perché manca la lettura di mezzanotte.",
+   "Venezia · gettito": "Gettito: riquadro «Oggi» del gioco letto il 30/10 00:17, perché manca la lettura di mezzanotte.",
+   "Firenze · gettito": "Gettito: riquadro «Oggi» del gioco letto il 30/10 00:19, perché manca la lettura di mezzanotte.",
+   "Palermo · gettito": "Gettito: riquadro «Oggi» del gioco letto il 30/10 00:19, perché manca la lettura di mezzanotte.",
+   "Lombardia · tassazioni": "Tassazioni della giornata del gioco del 30/10 (dalle 22 alle 22), lette il 30/10 00:17: manca la lettura di mezzanotte.",
+   "Marsiglia · tassazioni": "Tassazioni della giornata del gioco del 30/10 (dalle 22 alle 22), lette il 30/10 00:18: manca la lettura di mezzanotte.",
+   "Roma · tassazioni": "Tassazioni della giornata del gioco del 30/10 (dalle 22 alle 22), lette il 30/10 00:18: manca la lettura di mezzanotte.",
+   "Napoli · tassazioni": "Tassazioni della giornata del gioco del 30/10 (dalle 22 alle 22), lette il 30/10 00:18: manca la lettura di mezzanotte.",
+   "Venezia · tassazioni": "Tassazioni della giornata del gioco del 30/10 (dalle 22 alle 22), lette il 30/10 00:17: manca la lettura di mezzanotte.",
+   "Firenze · tassazioni": "Tassazioni della giornata del gioco del 30/10 (dalle 22 alle 22), lette il 30/10 00:19: manca la lettura di mezzanotte.",
+   "Palermo · tassazioni": "Tassazioni della giornata del gioco del 30/10 (dalle 22 alle 22), lette il 30/10 00:19: manca la lettura di mezzanotte.",
+   "Stato · donazioni": "Donazioni fino al 30/10 00:19: la giornata non era finita.",
+   "Lombardia · donazioni": "Donazioni fino al 30/10 00:17: la giornata non era finita.",
+   "Marsiglia · donazioni": "Donazioni fino al 30/10 00:18: la giornata non era finita.",
+   "Roma · donazioni": "Donazioni fino al 30/10 00:18: la giornata non era finita.",
+   "Napoli · donazioni": "Donazioni fino al 30/10 00:18: la giornata non era finita.",
+   "Venezia · donazioni": "Donazioni fino al 30/10 00:17: la giornata non era finita.",
+   "Firenze · donazioni": "Donazioni fino al 30/10 00:19: la giornata non era finita.",
+   "Palermo · donazioni": "Donazioni fino al 30/10 00:19: la giornata non era finita.",
+   "Stato · tesoro": "Tesoro letto il 30/10 00:19: la giornata non è finita.",
+   "Lombardia · tesoro": "Tesoro letto il 30/10 00:17: la giornata non è finita.",
+   "Marsiglia · tesoro": "Tesoro letto il 30/10 00:18: la giornata non è finita.",
+   "Roma · tesoro": "Tesoro letto il 30/10 00:18: la giornata non è finita.",
+   "Napoli · tesoro": "Tesoro letto il 30/10 00:18: la giornata non è finita.",
+   "Venezia · tesoro": "Tesoro letto il 30/10 00:17: la giornata non è finita.",
+   "Firenze · tesoro": "Tesoro letto il 30/10 00:19: la giornata non è finita.",
+   "Palermo · tesoro": "Tesoro letto il 30/10 00:19: la giornata non è finita.",
+   "Lombardia · manutenzione": "Provvisorio: l'addebito delle 22:00 non è ancora avvenuto; manutenzione letta il 30/10 00:17.",
+   "Marsiglia · manutenzione": "Provvisorio: l'addebito delle 22:00 non è ancora avvenuto; manutenzione letta il 30/10 00:18.",
+   "Roma · manutenzione": "Provvisorio: l'addebito delle 22:00 non è ancora avvenuto; manutenzione letta il 30/10 00:18.",
+   "Napoli · manutenzione": "Provvisorio: l'addebito delle 22:00 non è ancora avvenuto; manutenzione letta il 30/10 00:18.",
+   "Venezia · manutenzione": "Provvisorio: l'addebito delle 22:00 non è ancora avvenuto; manutenzione letta il 30/10 00:17.",
+   "Firenze · manutenzione": "Provvisorio: l'addebito delle 22:00 non è ancora avvenuto; manutenzione letta il 30/10 00:19.",
+   "Palermo · manutenzione": "Provvisorio: l'addebito delle 22:00 non è ancora avvenuto; manutenzione letta il 30/10 00:19.",
+   "TOTALE · confini": "Provvisorio: l'addebito non è ancora avvenuto, 7 × 1.050.000 €."
   }
  }
 ]
