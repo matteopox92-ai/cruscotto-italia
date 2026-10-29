@@ -1,5 +1,5 @@
 {
- "data": "2026-10-29 ora 10:21",
+ "data": "2026-10-29 ora 11:19",
  "nota": "Gettito fiscale degli ultimi 7 giorni per provincia (pagine «Vedi Gettito», Claude in Chrome)",
  "confini_per_provincia": 1100000,
  "confini_addebiti": {
@@ -14,9 +14,9 @@
  "province": {
   "Venezia": {
    "tot7": {
-    "denaro": 52222072,
+    "denaro": 52755216,
     "pelle": 95,
-    "oro": 23653,
+    "oro": 23710,
     "petrolio": 200,
     "nte": 1722
    },
@@ -27,14 +27,14 @@
     7900000,
     8000000,
     7800000,
-    5700000
+    6200000
    ],
-   "tassazioniOggi": 2640,
-   "denaroOggi": 5693824,
+   "tassazioniOggi": 2887,
+   "denaroOggi": 6226968,
    "oggi": {
-    "denaro": 5693824,
+    "denaro": 6226968,
     "pelle": 0,
-    "oro": 0,
+    "oro": 57,
     "petrolio": 0,
     "nte": 20
    },
@@ -42,9 +42,9 @@
   },
   "Lombardia": {
    "tot7": {
-    "denaro": 23640842,
+    "denaro": 23704773,
     "pelle": 14487,
-    "oro": 17620,
+    "oro": 17810,
     "petrolio": 0,
     "nte": 0
    },
@@ -55,14 +55,14 @@
     5400000,
     3500000,
     2600000,
-    1300000
+    1400000
    ],
-   "tassazioniOggi": 1041,
-   "denaroOggi": 1291130,
+   "tassazioniOggi": 1096,
+   "denaroOggi": 1355061,
    "oggi": {
-    "denaro": 1291130,
+    "denaro": 1355061,
     "pelle": 0,
-    "oro": 2789,
+    "oro": 2979,
     "petrolio": 0,
     "nte": 0
    },
@@ -70,7 +70,7 @@
   },
   "Marsiglia": {
    "tot7": {
-    "denaro": 44105461,
+    "denaro": 44371650,
     "pelle": 0,
     "oro": 0,
     "petrolio": 49599,
@@ -83,12 +83,12 @@
     7900000,
     7500000,
     7700000,
-    3300000
+    3500000
    ],
-   "tassazioniOggi": 1658,
-   "denaroOggi": 3254640,
+   "tassazioniOggi": 1794,
+   "denaroOggi": 3520829,
    "oggi": {
-    "denaro": 3254640,
+    "denaro": 3520829,
     "pelle": 0,
     "oro": 0,
     "petrolio": 220,
@@ -98,7 +98,7 @@
   },
   "Napoli": {
    "tot7": {
-    "denaro": 12473297,
+    "denaro": 12543121,
     "pelle": 7200,
     "oro": 50,
     "petrolio": 8230,
@@ -111,12 +111,12 @@
     1100000,
     3000000,
     2700000,
-    822800
+    892600
    ],
-   "tassazioniOggi": 779,
-   "denaroOggi": 822826,
+   "tassazioniOggi": 846,
+   "denaroOggi": 892650,
    "oggi": {
-    "denaro": 822826,
+    "denaro": 892650,
     "pelle": 0,
     "oro": 8,
     "petrolio": 0,
@@ -126,7 +126,7 @@
   },
   "Roma": {
    "tot7": {
-    "denaro": 10963999,
+    "denaro": 11068544,
     "pelle": 312,
     "oro": 2465,
     "petrolio": 0,
@@ -139,12 +139,12 @@
     1400000,
     2200000,
     2100000,
-    1100000
+    1200000
    ],
-   "tassazioniOggi": 739,
-   "denaroOggi": 1083903,
+   "tassazioniOggi": 813,
+   "denaroOggi": 1188448,
    "oggi": {
-    "denaro": 1083903,
+    "denaro": 1188448,
     "pelle": 0,
     "oro": 59,
     "petrolio": 0,
@@ -154,9 +154,9 @@
   },
   "Firenze": {
    "tot7": {
-    "denaro": 5318423,
-    "pelle": 74306,
-    "oro": 94619,
+    "denaro": 5353150,
+    "pelle": 74996,
+    "oro": 95093,
     "petrolio": 0,
     "nte": 0
    },
@@ -167,14 +167,14 @@
     941400,
     779500,
     714100,
-    368300
+    403000
    ],
-   "tassazioniOggi": 563,
-   "denaroOggi": 368287,
+   "tassazioniOggi": 609,
+   "denaroOggi": 403014,
    "oggi": {
-    "denaro": 368287,
-    "pelle": 10350,
-    "oro": 6735,
+    "denaro": 403014,
+    "pelle": 11040,
+    "oro": 7209,
     "petrolio": 0,
     "nte": 0
    },
@@ -182,11 +182,11 @@
   },
   "Palermo": {
    "tot7": {
-    "denaro": 9214510,
+    "denaro": 9331401,
     "pelle": 0,
     "oro": 339,
     "petrolio": 0,
-    "nte": 400327
+    "nte": 402657
    },
    "giorni": [
     637600,
@@ -195,19 +195,19 @@
     1400000,
     1800000,
     2100000,
-    1500000
+    1600000
    ],
-   "tassazioniOggi": 1651,
-   "denaroOggi": 1501119,
+   "tassazioniOggi": 1785,
+   "denaroOggi": 1618010,
    "oggi": {
-    "denaro": 1501119,
+    "denaro": 1618010,
     "pelle": 0,
     "oro": 0,
     "petrolio": 0,
-    "nte": 24598
+    "nte": 26928
    },
    "giornata": "giovedì 29 ottobre 2026"
   }
  },
- "letto_il": "2026-10-29T09:26:52Z"
+ "letto_il": "2026-10-29T10:23:29Z"
 }
