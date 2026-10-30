@@ -344,6 +344,8 @@ def main(xlsx, stat_dir, out_dir):
     stat_dir, out_dir = Path(stat_dir), Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     foto = json.loads(sorted(stat_dir.glob("20*.json"))[-1].read_text(encoding="utf-8"))
+    for pr in foto["province"]:  # dal 30/10/2026 il gioco non mostra più la manutenzione: zeri
+        pr["man"] = pr.get("man") or ["0"] * 5
     clas = json.loads(sorted(stat_dir.glob("classifiche-*.json"))[-1].read_text(encoding="utf-8"))
     get = json.loads(sorted(out_dir.glob("gettito-*.json"))[-1].read_text(encoding="utf-8"))
     oggi_data = foto["data"][:10]
