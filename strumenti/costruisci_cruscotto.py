@@ -377,7 +377,7 @@ def main(xlsx, stat_dir, out_dir):
             pr = next(p for p in foto["province"] if NOMI_GIOCO[p["p"]] == nome)
             storico.append({
                 "data": giorno, "provincia": nome,
-                "manutenzione_eur": gioco_num(pr["man"][0]),
+                "manutenzione_eur": gioco_num((pr.get("man") or ["0"])[0]),
                 "confini_eur": conf / 7 if conf else get["confini_per_provincia"],
                 "gettito_eur": v, "tassazioni": None, "donazioni_eur": None, "tesoro_eur": None,
                 "fonte": "gioco · Gettito fiscale (arrotondato)",
@@ -392,7 +392,7 @@ def main(xlsx, stat_dir, out_dir):
             nome = NOMI_GIOCO[pr["p"]]
             riga = next((r for r in storico if r["data"] == giorno and r["provincia"] == nome), None)
             if riga is None:
-                riga = {"data": giorno, "provincia": nome, "manutenzione_eur": gioco_num(pr["man"][0]),
+                riga = {"data": giorno, "provincia": nome, "manutenzione_eur": gioco_num((pr.get("man") or ["0"])[0]),
                         "confini_eur": get["confini_per_provincia"], "gettito_eur": None, "tassazioni": None,
                         "donazioni_eur": None, "fonte": "gioco · fotografia"}
                 storico.append(riga)
@@ -538,7 +538,7 @@ def main(xlsx, stat_dir, out_dir):
                 "chiave": f"{giorno}-{nome}", "data": giorno, "momento": ft["data"][11:] or "", "provincia": nome,
                 "scuole": pr["sc"]["n"], "caserme": pr["ba"]["n"], "strade": pr["st"]["n"], "ospedali": pr["os"]["n"],
                 "istruzione": pr["ind"][0], "militare": pr["ind"][1], "sviluppo": pr["ind"][2], "salute": pr["ind"][3],
-                "tesoro_eur": gioco_num(pr["tes"][0]), "manutenzione_eur": gioco_num(pr["man"][0]),
+                "tesoro_eur": gioco_num(pr["tes"][0]), "manutenzione_eur": gioco_num((pr.get("man") or ["0"])[0]),
                 "fabbriche": pr["fab"], "giocatori": pr["gioc"], "lavori_oggi": g.get("tassazioniOggi"),
             })
 
