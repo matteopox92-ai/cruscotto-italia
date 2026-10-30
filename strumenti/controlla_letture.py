@@ -52,6 +52,9 @@ def statistiche(f, d):
         if not (isinstance(p.get("ind"), list) and len(p["ind"]) == 4 and all(numero(x, 10) for x in p["ind"])):
             errore(f, f"{nome}: indici non validi")
         for k in ("tes", "man"):
+            # dal 30/10/2026 il gioco non ha più il mantenimento delle province: «man» può mancare
+            if k == "man" and p.get(k) is None:
+                continue
             if not (isinstance(p.get(k), list) and len(p[k]) == 5 and all(numero_gioco(x) for x in p[k])):
                 errore(f, f"{nome}: {k} non valido")
         if not (isinstance(p.get("bon"), list) and len(p["bon"]) == 5 and all(str(x).isdigit() for x in p["bon"])):
