@@ -1,0 +1,392 @@
+{
+ "data": "2026-11-01 ora 00:23",
+ "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
+ "province": [
+  {
+   "p": "VENEZIA",
+   "gioc": 349,
+   "fab": 107,
+   "gov": "Ade the Golden Fox of Rome",
+   "ind": [
+    2,
+    7,
+    8,
+    10
+   ],
+   "tes": [
+    "12.535.310",
+    "20142",
+    "24747",
+    "36490",
+    "23168"
+   ],
+   "bon": [
+    "14",
+    "8",
+    "6",
+    "6",
+    "7"
+   ],
+   "sc": {
+    "n": 16,
+    "indice": 2,
+    "prossimo": "+11 edifici → Indice 3 (+6%)"
+   },
+   "ba": {
+    "n": 124,
+    "indice": 7,
+    "prossimo": "+3 edifici → Indice 8 (+16%)"
+   },
+   "st": {
+    "n": 518,
+    "indice": 8,
+    "prossimo": "+3 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 289,
+    "indice": 10,
+    "prossimo": "+162 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1752,
+    800,
+    800,
+    800,
+    800
+   ],
+   "slug": "Venedik"
+  },
+  {
+   "p": "LOMBARDIA",
+   "gioc": 366,
+   "fab": 139,
+   "gov": "Vlad Sangar",
+   "ind": [
+    10,
+    2,
+    8,
+    10
+   ],
+   "tes": [
+    "11.287.000",
+    "20680",
+    "43736",
+    "37018",
+    "32720"
+   ],
+   "bon": [
+    "16",
+    "14",
+    "7",
+    "6",
+    "8"
+   ],
+   "sc": {
+    "n": 264,
+    "indice": 10,
+    "prossimo": "+486 edifici → Indice 10+ · N. 1 al mondo (+30%)"
+   },
+   "ba": {
+    "n": 34,
+    "indice": 2,
+    "prossimo": "+14 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 516,
+    "indice": 8,
+    "prossimo": "+5 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 304,
+    "indice": 10,
+    "prossimo": "+147 edifici → Indice 10+ · N. 1 al mondo (+7 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1823,
+    800,
+    800,
+    800,
+    800
+   ],
+   "slug": "Lombardiya"
+  },
+  {
+   "p": "MARSIGLIA",
+   "gioc": 27,
+   "fab": 22,
+   "gov": "BULL 1515",
+   "ind": [
+    8,
+    2,
+    9,
+    7
+   ],
+   "tes": [
+    "20.333.292",
+    "11660",
+    "4990",
+    "24468",
+    "18817"
+   ],
+   "bon": [
+    "12",
+    "5",
+    "3",
+    "10",
+    "6"
+   ],
+   "sc": {
+    "n": 102,
+    "indice": 8,
+    "prossimo": "+17 edifici → Indice 9 (+18%)"
+   },
+   "ba": {
+    "n": 31,
+    "indice": 2,
+    "prossimo": "+17 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 566,
+    "indice": 9,
+    "prossimo": "+17 edifici → Indice 10 (diamante +30% · risorsa +20%)"
+   },
+   "os": {
+    "n": 205,
+    "indice": 7,
+    "prossimo": "+60 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1830,
+    800,
+    800,
+    800,
+    800
+   ],
+   "slug": "Marsilya"
+  },
+  {
+   "p": "NAPOLI",
+   "gioc": 372,
+   "fab": 108,
+   "gov": "Pilerio de Longobardi",
+   "ind": [
+    7,
+    4,
+    8,
+    7
+   ],
+   "tes": [
+    "15.550.000",
+    "3960",
+    "7623",
+    "13819",
+    "12739"
+   ],
+   "bon": [
+    "9",
+    "13",
+    "4",
+    "9",
+    "6"
+   ],
+   "sc": {
+    "n": 83,
+    "indice": 7,
+    "prossimo": "+4 edifici → Indice 8 (+16%)"
+   },
+   "ba": {
+    "n": 71,
+    "indice": 4,
+    "prossimo": "+5 edifici → Indice 5 (+10%)"
+   },
+   "st": {
+    "n": 516,
+    "indice": 8,
+    "prossimo": "+5 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 208,
+    "indice": 7,
+    "prossimo": "+57 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1358,
+    800,
+    800,
+    786,
+    800
+   ],
+   "slug": "Napoli"
+  },
+  {
+   "p": "ROMA",
+   "gioc": 367,
+   "fab": 156,
+   "gov": "Madara Uchiha Calabrese",
+   "ind": [
+    8,
+    3,
+    8,
+    7
+   ],
+   "tes": [
+    "7.440.000",
+    "27700",
+    "6000",
+    "15760",
+    "19760"
+   ],
+   "bon": [
+    "14",
+    "11",
+    "7",
+    "7",
+    "5"
+   ],
+   "sc": {
+    "n": 107,
+    "indice": 8,
+    "prossimo": "+12 edifici → Indice 9 (+18%)"
+   },
+   "ba": {
+    "n": 49,
+    "indice": 3,
+    "prossimo": "+13 edifici → Indice 4 (+8%)"
+   },
+   "st": {
+    "n": 516,
+    "indice": 8,
+    "prossimo": "+5 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 205,
+    "indice": 7,
+    "prossimo": "+60 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1766,
+    800,
+    794,
+    800,
+    800
+   ],
+   "slug": "Roma"
+  },
+  {
+   "p": "FIRENZE",
+   "gioc": 319,
+   "fab": 122,
+   "gov": "MaxMassi",
+   "ind": [
+    2,
+    1,
+    8,
+    7
+   ],
+   "tes": [
+    "6.846.000",
+    "18700",
+    "4624",
+    "18140",
+    "17060"
+   ],
+   "bon": [
+    "13",
+    "16",
+    "10",
+    "4",
+    "5"
+   ],
+   "sc": {
+    "n": 20,
+    "indice": 2,
+    "prossimo": "+7 edifici → Indice 3 (+6%)"
+   },
+   "ba": {
+    "n": 10,
+    "indice": 1,
+    "prossimo": "+14 edifici → Indice 2 (+4%)"
+   },
+   "st": {
+    "n": 516,
+    "indice": 8,
+    "prossimo": "+5 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 208,
+    "indice": 7,
+    "prossimo": "+57 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1357,
+    780,
+    800,
+    800,
+    800
+   ],
+   "slug": "Floransa"
+  },
+  {
+   "p": "PALERMO",
+   "gioc": 323,
+   "fab": 135,
+   "gov": "AlleMagic77",
+   "ind": [
+    6,
+    2,
+    8,
+    8
+   ],
+   "tes": [
+    "12.692.003",
+    "21679",
+    "6009",
+    "35189",
+    "32953"
+   ],
+   "bon": [
+    "17",
+    "10",
+    "5",
+    "8",
+    "14"
+   ],
+   "sc": {
+    "n": 66,
+    "indice": 6,
+    "prossimo": "+8 edifici → Indice 7 (+14%)"
+   },
+   "ba": {
+    "n": 31,
+    "indice": 2,
+    "prossimo": "+17 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 518,
+    "indice": 8,
+    "prossimo": "+3 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 211,
+    "indice": 8,
+    "prossimo": "+54 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1329,
+    800,
+    800,
+    800,
+    782
+   ],
+   "slug": "Palermo"
+  }
+ ],
+ "letto_il": "2026-10-31T23:30:44Z"
+}
