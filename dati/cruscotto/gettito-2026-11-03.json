@@ -20,15 +20,6 @@
     "petrolio": 0,
     "nte": 1729
    },
-   "giorni": [
-    7800000,
-    8300000,
-    7400000,
-    7600000,
-    4600000,
-    4100000,
-    421300
-   ],
    "tassazioniOggi": 240,
    "denaroOggi": 421270,
    "oggi": {
@@ -38,7 +29,16 @@
     "petrolio": 0,
     "nte": 0
    },
-   "giornata": "martedì 03 novembre 2026"
+   "giornata": "martedì 03 novembre 2026",
+   "giorni": [
+    7800000,
+    8300000,
+    7400000,
+    7600000,
+    4600000,
+    4100000,
+    421300
+   ]
   },
   "Lombardia": {
    "tot7": {
@@ -48,15 +48,6 @@
     "petrolio": 0,
     "nte": 0
    },
-   "giorni": [
-    2600000,
-    2300000,
-    1800000,
-    1300000,
-    1900000,
-    1900000,
-    205500
-   ],
    "tassazioniOggi": 174,
    "denaroOggi": 205522,
    "oggi": {
@@ -66,7 +57,16 @@
     "petrolio": 0,
     "nte": 0
    },
-   "giornata": "martedì 03 novembre 2026"
+   "giornata": "martedì 03 novembre 2026",
+   "giorni": [
+    2600000,
+    2300000,
+    1800000,
+    1300000,
+    1900000,
+    1900000,
+    205500
+   ]
   },
   "Marsiglia": {
    "tot7": {
@@ -76,15 +76,6 @@
     "petrolio": 16363,
     "nte": 0
    },
-   "giorni": [
-    7700000,
-    7500000,
-    7500000,
-    2400000,
-    2400000,
-    2000000,
-    112600
-   ],
    "tassazioniOggi": 83,
    "denaroOggi": 112577,
    "oggi": {
@@ -94,7 +85,16 @@
     "petrolio": 525,
     "nte": 0
    },
-   "giornata": "martedì 03 novembre 2026"
+   "giornata": "martedì 03 novembre 2026",
+   "giorni": [
+    7700000,
+    7500000,
+    7500000,
+    2400000,
+    2400000,
+    2000000,
+    112600
+   ]
   },
   "Napoli": {
    "tot7": {
@@ -104,15 +104,6 @@
     "petrolio": 24383,
     "nte": 0
    },
-   "giorni": [
-    2700000,
-    1400000,
-    966700,
-    718300,
-    816000,
-    716000,
-    73800
-   ],
    "tassazioniOggi": 89,
    "denaroOggi": 73802,
    "oggi": {
@@ -122,7 +113,16 @@
     "petrolio": 429,
     "nte": 0
    },
-   "giornata": "martedì 03 novembre 2026"
+   "giornata": "martedì 03 novembre 2026",
+   "giorni": [
+    2700000,
+    1400000,
+    966700,
+    718300,
+    816000,
+    716000,
+    73800
+   ]
   },
   "Roma": {
    "tot7": {
@@ -132,15 +132,6 @@
     "petrolio": 0,
     "nte": 0
    },
-   "giorni": [
-    2100000,
-    2200000,
-    2500000,
-    3600000,
-    3500000,
-    3800000,
-    521300
-   ],
    "tassazioniOggi": 363,
    "denaroOggi": 521329,
    "oggi": {
@@ -150,7 +141,16 @@
     "petrolio": 0,
     "nte": 0
    },
-   "giornata": "martedì 03 novembre 2026"
+   "giornata": "martedì 03 novembre 2026",
+   "giorni": [
+    2100000,
+    2200000,
+    2500000,
+    3600000,
+    3500000,
+    3800000,
+    521300
+   ]
   },
   "Firenze": {
    "tot7": {
@@ -160,15 +160,6 @@
     "petrolio": 0,
     "nte": 0
    },
-   "giorni": [
-    714100,
-    802400,
-    913100,
-    1600000,
-    1300000,
-    1400000,
-    114500
-   ],
    "tassazioniOggi": 136,
    "denaroOggi": 114478,
    "oggi": {
@@ -178,7 +169,16 @@
     "petrolio": 0,
     "nte": 0
    },
-   "giornata": "martedì 03 novembre 2026"
+   "giornata": "martedì 03 novembre 2026",
+   "giorni": [
+    714100,
+    802400,
+    913100,
+    1600000,
+    1300000,
+    1400000,
+    114500
+   ]
   },
   "Palermo": {
    "tot7": {
@@ -188,15 +188,6 @@
     "petrolio": 0,
     "nte": 245940
    },
-   "giorni": [
-    2100000,
-    3100000,
-    4100000,
-    2100000,
-    2100000,
-    3500000,
-    477800
-   ],
    "tassazioniOggi": 406,
    "denaroOggi": 477757,
    "oggi": {
@@ -206,8 +197,17 @@
     "petrolio": 0,
     "nte": 4192
    },
-   "giornata": "martedì 03 novembre 2026"
+   "giornata": "martedì 03 novembre 2026",
+   "giorni": [
+    2100000,
+    3100000,
+    4100000,
+    2100000,
+    2100000,
+    3500000,
+    477800
+   ]
   }
  },
- "letto_il": "2026-11-02T23:47:32Z"
+ "letto_il": "2026-11-02T23:50:13Z"
 }
