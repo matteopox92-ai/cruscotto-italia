@@ -1305,6 +1305,22 @@ function avvia(dati) {
   prepara(D);
   disegna();
   setInterval(disegna, 60000); // conto alla rovescia e minuti dall'ultima lettura
+  // utente, 04/11/2026: «non si aggiorna il cruscotto» → la pagina aperta ricontrolla da sola se c'è una lettura nuova
+  // (ogni 2 minuti e quando si torna sulla scheda: sul telefono i timer si fermano), senza la cache di GitHub
+  setInterval(ricontrolla, 120000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) ricontrolla(); });
+}
+function ricontrolla() {
+  if (!/^https?:$/.test(location.protocol)) return;
+  const url = (window.DATI ? location.pathname : 'dati.json') + '?t=' + Date.now();
+  fetch(url, { cache: 'no-store' }).then((r) => (r.ok ? r.text() : '')).then((t) => {
+    if (!t) return;
+    let nuovi;
+    if (window.DATI) { const m = t.match(/<script>window\.DATI = ([\s\S]*?);<\/script>/); if (!m) return; nuovi = JSON.parse(m[1]); }
+    else nuovi = JSON.parse(t);
+    const quando = (x) => (x && x.lettura && x.lettura.costruito) || '';
+    if (quando(nuovi) && quando(nuovi) !== quando(D)) { D = nuovi; prepara(D); disegna(); }
+  }).catch(() => {});
 }
 if (window.DATI) avvia(window.DATI);
 else fetch('dati.json', { cache: 'no-store' }).then((r) => r.json()).then(avvia).catch((e) => { document.getElementById('pagina').innerHTML = `<section class="settore"><p class="bad">✕ Dati non caricati: ${esc(e.message)}</p></section>`; });
