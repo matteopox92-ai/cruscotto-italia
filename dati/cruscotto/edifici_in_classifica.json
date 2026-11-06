@@ -1,6 +1,6 @@
 {
 "scuole": {
-"classifica": "classifiche-2026-11-04.json",
+"classifica": "classifiche-2026-11-07.json",
 "edifici": {
 "Venezia": 16,
 "Lombardia": 264,
@@ -12,38 +12,38 @@
 }
 },
 "basi": {
-"classifica": "classifiche-2026-11-04.json",
+"classifica": "classifiche-2026-11-07.json",
 "edifici": {
 "Venezia": 124,
 "Lombardia": 34,
 "Marsiglia": 31,
-"Napoli": 71,
+"Napoli": 80,
 "Roma": 49,
 "Firenze": 10,
 "Palermo": 31
 }
 },
 "strade": {
-"classifica": "classifiche-2026-11-04.json",
+"classifica": "classifiche-2026-11-07.json",
 "edifici": {
 "Venezia": 611,
-"Lombardia": 561,
-"Marsiglia": 566,
+"Lombardia": 597,
+"Marsiglia": 598,
 "Napoli": 516,
 "Roma": 516,
-"Firenze": 561,
-"Palermo": 561
+"Firenze": 598,
+"Palermo": 598
 }
 },
 "ospedali": {
-"classifica": "classifiche-2026-11-04.json",
+"classifica": "classifiche-2026-11-07.json",
 "edifici": {
 "Venezia": 289,
 "Lombardia": 304,
 "Marsiglia": 210,
-"Napoli": 208,
+"Napoli": 210,
 "Roma": 205,
-"Firenze": 208,
+"Firenze": 210,
 "Palermo": 211
 }
 }
