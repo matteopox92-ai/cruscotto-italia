@@ -1,0 +1,213 @@
+{
+ "data": "2026-11-18 ora 00:18",
+ "nota": "Gettito letto dalla pagina «Vedi Gettito Fiscale» di ogni provincia",
+ "confini_per_provincia": 1150000,
+ "confini_addebiti": {
+  "2026-11-17": 7980000,
+  "2026-11-16": 7910000,
+  "2026-11-15": 7980000,
+  "2026-11-14": 7560000,
+  "2026-11-13": 7630000,
+  "2026-11-12": 8260000,
+  "2026-11-11": 8610000
+ },
+ "province": {
+  "Venezia": {
+   "tot7": {
+    "denaro": 33854573,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giorni": [
+    4100000,
+    5900000,
+    5100000,
+    4100000,
+    5500000,
+    8100000,
+    988700
+   ],
+   "tassazioniOggi": 463,
+   "denaroOggi": 987925,
+   "oggi": {
+    "denaro": 987925,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "mercoledì 18 novembre 2026"
+  },
+  "Lombardia": {
+   "tot7": {
+    "denaro": 21921786,
+    "pelle": 0,
+    "oro": 265,
+    "petrolio": 84,
+    "nte": 0
+   },
+   "giorni": [
+    3000000,
+    2900000,
+    3300000,
+    3000000,
+    4000000,
+    5300000,
+    451000
+   ],
+   "tassazioniOggi": 281,
+   "denaroOggi": 451034,
+   "oggi": {
+    "denaro": 451034,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "mercoledì 18 novembre 2026"
+  },
+  "Marsiglia": {
+   "tot7": {
+    "denaro": 24064522,
+    "pelle": 9,
+    "oro": 0,
+    "petrolio": 145728,
+    "nte": 0
+   },
+   "giorni": [
+    6800000,
+    2200000,
+    2900000,
+    4100000,
+    3200000,
+    4300000,
+    685200
+   ],
+   "tassazioniOggi": 403,
+   "denaroOggi": 685156,
+   "oggi": {
+    "denaro": 685156,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 1777,
+    "nte": 0
+   },
+   "giornata": "mercoledì 18 novembre 2026"
+  },
+  "Napoli": {
+   "tot7": {
+    "denaro": 4683016,
+    "pelle": 0,
+    "oro": 355,
+    "petrolio": 3837,
+    "nte": 0
+   },
+   "giorni": [
+    760700,
+    726900,
+    872000,
+    782800,
+    735300,
+    728800,
+    76500
+   ],
+   "tassazioniOggi": 69,
+   "denaroOggi": 76548,
+   "oggi": {
+    "denaro": 76548,
+    "pelle": 0,
+    "oro": 10,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "mercoledì 18 novembre 2026"
+  },
+  "Roma": {
+   "tot7": {
+    "denaro": 19774796,
+    "pelle": 0,
+    "oro": 2311,
+    "petrolio": 4,
+    "nte": 0
+   },
+   "giorni": [
+    3500000,
+    3400000,
+    3700000,
+    3900000,
+    2700000,
+    2400000,
+    208900
+   ],
+   "tassazioniOggi": 138,
+   "denaroOggi": 208911,
+   "oggi": {
+    "denaro": 208911,
+    "pelle": 0,
+    "oro": 6,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "mercoledì 18 novembre 2026"
+  },
+  "Firenze": {
+   "tot7": {
+    "denaro": 18855436,
+    "pelle": 138733,
+    "oro": 4538,
+    "petrolio": 78,
+    "nte": 0
+   },
+   "giorni": [
+    2500000,
+    3700000,
+    3700000,
+    3600000,
+    3400000,
+    1800000,
+    169100
+   ],
+   "tassazioniOggi": 142,
+   "denaroOggi": 169131,
+   "oggi": {
+    "denaro": 169131,
+    "pelle": 2478,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 0
+   },
+   "giornata": "mercoledì 18 novembre 2026"
+  },
+  "Palermo": {
+   "tot7": {
+    "denaro": 19021619,
+    "pelle": 1272,
+    "oro": 116,
+    "petrolio": 0,
+    "nte": 281993
+   },
+   "giorni": [
+    3000000,
+    3200000,
+    4100000,
+    1900000,
+    3600000,
+    3000000,
+    246900
+   ],
+   "tassazioniOggi": 194,
+   "denaroOggi": 246932,
+   "oggi": {
+    "denaro": 246932,
+    "pelle": 0,
+    "oro": 0,
+    "petrolio": 0,
+    "nte": 2545
+   },
+   "giornata": "mercoledì 18 novembre 2026"
+  }
+ },
+ "letto_il": "2026-11-17T23:32:03Z"
+}
