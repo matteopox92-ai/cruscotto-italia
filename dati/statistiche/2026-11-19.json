@@ -1,0 +1,392 @@
+{
+ "data": "2026-11-19 ora 00:19",
+ "fonte": "pagine provincia di diplomacia.com.tr lette con Claude in Chrome",
+ "province": [
+  {
+   "p": "VENEZIA",
+   "gioc": 279,
+   "fab": 87,
+   "gov": "Laisius Mathias",
+   "ind": [
+    2,
+    6,
+    8,
+    9
+   ],
+   "tes": [
+    "18.300.011",
+    "1500",
+    "17355",
+    "9850",
+    "13168"
+   ],
+   "bon": [
+    "14",
+    "8",
+    "6",
+    "6",
+    "7"
+   ],
+   "sc": {
+    "n": 16,
+    "indice": 2,
+    "prossimo": "+7 edifici → Indice 3 (+6%)"
+   },
+   "ba": {
+    "n": 124,
+    "indice": 6,
+    "prossimo": "+11 edifici → Indice 7 (+14%)"
+   },
+   "st": {
+    "n": 620,
+    "indice": 8,
+    "prossimo": "+13 edifici → Indice 9 (diamante +27% · risorsa +18%)"
+   },
+   "os": {
+    "n": 297,
+    "indice": 9,
+    "prossimo": "+31 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1764,
+    800,
+    800,
+    800,
+    800
+   ],
+   "slug": "Venedik"
+  },
+  {
+   "p": "LOMBARDIA",
+   "gioc": 340,
+   "fab": 135,
+   "gov": "Hvfrizite Nvc",
+   "ind": [
+    10,
+    2,
+    9,
+    9
+   ],
+   "tes": [
+    "13.628.000",
+    "900",
+    "16200",
+    "104000",
+    "98580"
+   ],
+   "bon": [
+    "16",
+    "14",
+    "7",
+    "6",
+    "8"
+   ],
+   "sc": {
+    "n": 264,
+    "indice": 10,
+    "prossimo": "+2403 edifici → Indice 10+ · N. 1 al mondo (+30%)"
+   },
+   "ba": {
+    "n": 34,
+    "indice": 2,
+    "prossimo": "+21 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 673,
+    "indice": 9,
+    "prossimo": "+3 edifici → Indice 10 (diamante +30% · risorsa +20%)"
+   },
+   "os": {
+    "n": 327,
+    "indice": 9,
+    "prossimo": "+1 edificio → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1754,
+    800,
+    800,
+    800,
+    800
+   ],
+   "slug": "Lombardiya"
+  },
+  {
+   "p": "MARSIGLIA",
+   "gioc": 66,
+   "fab": 27,
+   "gov": "BULL 1515",
+   "ind": [
+    7,
+    2,
+    10,
+    6
+   ],
+   "tes": [
+    "14.030.000",
+    "33300",
+    "0",
+    "29420",
+    "29420"
+   ],
+   "bon": [
+    "12",
+    "5",
+    "3",
+    "10",
+    "6"
+   ],
+   "sc": {
+    "n": 102,
+    "indice": 7,
+    "prossimo": "+4 edifici → Indice 8 (+16%)"
+   },
+   "ba": {
+    "n": 31,
+    "indice": 2,
+    "prossimo": "+24 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 685,
+    "indice": 10,
+    "prossimo": "+252 edifici → Indice 10+ · N. 1 al mondo (diamante +40% · risorsa +30%)"
+   },
+   "os": {
+    "n": 210,
+    "indice": 6,
+    "prossimo": "+2 edifici → Indice 7 (+5 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1672,
+    800,
+    800,
+    793,
+    800
+   ],
+   "slug": "Marsilya"
+  },
+  {
+   "p": "NAPOLI",
+   "gioc": 309,
+   "fab": 141,
+   "gov": "Pilerio de Longobardi",
+   "ind": [
+    6,
+    4,
+    7,
+    7
+   ],
+   "tes": [
+    "29.073.889",
+    "500",
+    "406",
+    "2570",
+    "50"
+   ],
+   "bon": [
+    "9",
+    "13",
+    "4",
+    "9",
+    "6"
+   ],
+   "sc": {
+    "n": 83,
+    "indice": 6,
+    "prossimo": "+8 edifici → Indice 7 (+14%)"
+   },
+   "ba": {
+    "n": 80,
+    "indice": 4,
+    "prossimo": "+20 edifici → Indice 5 (+10%)"
+   },
+   "st": {
+    "n": 540,
+    "indice": 7,
+    "prossimo": "+10 edifici → Indice 8 (diamante +24% · risorsa +16%)"
+   },
+   "os": {
+    "n": 217,
+    "indice": 7,
+    "prossimo": "+111 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1368,
+    800,
+    800,
+    800,
+    800
+   ],
+   "slug": "Napoli"
+  },
+  {
+   "p": "ROMA",
+   "gioc": 333,
+   "fab": 126,
+   "gov": "Michele Di Gioia",
+   "ind": [
+    9,
+    3,
+    9,
+    8
+   ],
+   "tes": [
+    "387.000",
+    "1217",
+    "1118",
+    "670",
+    "8292"
+   ],
+   "bon": [
+    "14",
+    "11",
+    "7",
+    "7",
+    "5"
+   ],
+   "sc": {
+    "n": 131,
+    "indice": 9,
+    "prossimo": "+126 edifici → Indice 10 (+20%)"
+   },
+   "ba": {
+    "n": 58,
+    "indice": 3,
+    "prossimo": "+22 edifici → Indice 4 (+8%)"
+   },
+   "st": {
+    "n": 674,
+    "indice": 9,
+    "prossimo": "+2 edifici → Indice 10 (diamante +30% · risorsa +20%)"
+   },
+   "os": {
+    "n": 222,
+    "indice": 8,
+    "prossimo": "+106 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1839,
+    800,
+    799,
+    800,
+    800
+   ],
+   "slug": "Roma"
+  },
+  {
+   "p": "FIRENZE",
+   "gioc": 289,
+   "fab": 111,
+   "gov": "Diopane",
+   "ind": [
+    2,
+    1,
+    9,
+    7
+   ],
+   "tes": [
+    "10.000",
+    "0",
+    "0",
+    "0",
+    "0"
+   ],
+   "bon": [
+    "13",
+    "16",
+    "10",
+    "4",
+    "5"
+   ],
+   "sc": {
+    "n": 20,
+    "indice": 2,
+    "prossimo": "+3 edifici → Indice 3 (+6%)"
+   },
+   "ba": {
+    "n": 10,
+    "indice": 1,
+    "prossimo": "+14 edifici → Indice 2 (+4%)"
+   },
+   "st": {
+    "n": 671,
+    "indice": 9,
+    "prossimo": "+5 edifici → Indice 10 (diamante +30% · risorsa +20%)"
+   },
+   "os": {
+    "n": 218,
+    "indice": 7,
+    "prossimo": "+110 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1355,
+    786,
+    790,
+    800,
+    800
+   ],
+   "slug": "Floransa"
+  },
+  {
+   "p": "PALERMO",
+   "gioc": 324,
+   "fab": 99,
+   "gov": "Caesar Santae Urbis Roma",
+   "ind": [
+    5,
+    2,
+    9,
+    7
+   ],
+   "tes": [
+    "1.240.000",
+    "750",
+    "50",
+    "6810",
+    "6810"
+   ],
+   "bon": [
+    "17",
+    "10",
+    "5",
+    "8",
+    "14"
+   ],
+   "sc": {
+    "n": 66,
+    "indice": 5,
+    "prossimo": "+8 edifici → Indice 6 (+12%)"
+   },
+   "ba": {
+    "n": 31,
+    "indice": 2,
+    "prossimo": "+24 edifici → Indice 3 (+6%)"
+   },
+   "st": {
+    "n": 674,
+    "indice": 9,
+    "prossimo": "+2 edifici → Indice 10 (diamante +30% · risorsa +20%)"
+   },
+   "os": {
+    "n": 211,
+    "indice": 7,
+    "prossimo": "+117 edifici → Indice 10 (+6 HP / 6 min)"
+   },
+   "man": null,
+   "lim": [
+    1295,
+    800,
+    800,
+    800,
+    795
+   ],
+   "slug": "Palermo"
+  }
+ ],
+ "letto_il": "2026-11-18T23:27:29Z"
+}
