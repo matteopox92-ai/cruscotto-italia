@@ -23,9 +23,6 @@ concurrency:
 jobs:
   costruisci:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.pubblica.outputs.page_url }}
     env:
       TZ: Europe/Rome
       PYTHONIOENCODING: utf-8
@@ -59,9 +56,37 @@ jobs:
             mkdir -p sito/militare
             sed 's#<meta charset="utf-8">#<meta charset="utf-8"><meta name="robots" content="noindex, nofollow">#' dati/militare/index.html > sito/militare/index.html
           fi
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: sito
-      - id: pubblica
-        uses: actions/deploy-pages@v4
+
+  # Pubblicazione in un passo separato (25/11/2026). Difetto noto di GitHub (actions/deploy-pages#451):
+  # subito dopo il caricamento l'elenco dei pacchetti a volte risulta vuoto per qualche secondo
+  # (fino a ~45 s), e deploy-pages fallisce con «No artifacts named github-pages». Rilanciare il giro
+  # non serve (crea un secondo pacchetto). Quindi: job separato, attesa breve e fino a 3 tentativi.
+  pubblica:
+    needs: costruisci
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.tentativo3.outputs.page_url || steps.tentativo2.outputs.page_url || steps.tentativo1.outputs.page_url }}
+    steps:
+      - name: Attendi che GitHub veda il pacchetto
+        run: sleep 10
+      - id: tentativo1
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+      - name: Attendi e riprova
+        if: steps.tentativo1.outcome == 'failure'
+        run: sleep 30
+      - id: tentativo2
+        if: steps.tentativo1.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+      - name: Attendi e riprova ancora
+        if: steps.tentativo1.outcome == 'failure' && steps.tentativo2.outcome == 'failure'
+        run: sleep 60
+      - id: tentativo3
+        if: steps.tentativo1.outcome == 'failure' && steps.tentativo2.outcome == 'failure'
+        uses: actions/deploy-pages@v5
